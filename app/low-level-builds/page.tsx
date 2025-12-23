@@ -1,106 +1,46 @@
 import Link from "next/link";
+import { EXPANSIONS } from "../data/expansions";
 
-type Expansion = {
-  id: "vanilla" | "tbc" | "wotlk" | "cata" | "mop";
-  title: string;
-  subtitle: string;
-  logo: string; // path from /public
-};
-
-const EXPANSIONS: Expansion[] = [
-  {
-    id: "vanilla",
-    title: "Vanilla / Era",
-    subtitle: "Classic Era level 1 BiS builds",
-    logo: "/expansion-logos/vanilla.png",
-  },
-  {
-    id: "tbc",
-    title: "The Burning Crusade",
-    subtitle: "TBC level 1 twink builds",
-    logo: "/expansion-logos/tbc.png",
-  },
-  {
-    id: "wotlk",
-    title: "Wrath of the Lich King",
-    subtitle: "WotLK level 1 builds (coming soon)",
-    logo: "/expansion-logos/wotlk.png",
-  },
-  {
-    id: "cata",
-    title: "Cataclysm",
-    subtitle: "Cata level 1 builds (coming soon)",
-    logo: "/expansion-logos/cata.png",
-  },
-  {
-    id: "mop",
-    title: "Mists of Pandaria",
-    subtitle: "MoP level 1 builds (coming soon)",
-    logo: "/expansion-logos/mop.png",
-  },
-];
-
-export default function LowLevelBuildsIndexPage() {
+export default function LowLevelBuildsPage() {
   return (
-    <main style={{ maxWidth: 980, margin: "0 auto", padding: "48px 20px" }}>
-      <div style={{ marginBottom: 24 }}>
-        <Link href="/" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none" }}>
-          ← Back
-        </Link>
-      </div>
+    <main className="min-h-screen bg-black text-white">
+      <div className="mx-auto max-w-5xl px-6 py-14">
+        <div className="mb-10">
+          <h1 className="text-5xl font-semibold tracking-tight">Low Level Builds</h1>
+          <p className="mt-3 text-lg text-white/60">Pick an expansion.</p>
+        </div>
 
-      <h1 style={{ fontSize: 56, lineHeight: 1.05, margin: 0 }}>Low Level Builds</h1>
-      <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 18, marginTop: 10 }}>
-        Pick an expansion.
-      </p>
-
-      <div style={{ display: "grid", gap: 16, marginTop: 24 }}>
-        {EXPANSIONS.map((exp) => (
-          <Link
-            key={exp.id}
-            href={`/low-level-builds/${exp.id}`}
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: 24,
-              padding: 22,
-              background: "rgba(255,255,255,0.03)",
-              display: "flex",
-              alignItems: "center",
-              gap: 18,
-            }}
-          >
-            <div
-  style={{
-    width: 52,
-    height: 52,
-    borderRadius: 14,
-    background: "rgba(255,255,255,0.06)",
-    display: "grid",
-    placeItems: "center",
-    flex: "0 0 auto",
-    overflow: "hidden",
-  }}
->
+        <div className="space-y-6">
+          {EXPANSIONS.map((exp) => (
+            <Link
+              key={exp.id}
+              href={`/low-level-builds/${exp.id}`}
+              className="group block rounded-3xl border border-white/15 bg-white/[0.03] p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.05)] transition hover:border-white/25 hover:bg-white/[0.05]"
+            >
+              <div className="flex items-center gap-6">
+                <div className="h-14 w-14 overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
+                 {/* eslint-disable-next-line @next/next/no-img-element */}
+{exp.logoSrc ? (
   <img
-    src={exp.logo}
-    alt={`${exp.title} logo`}
-    width={38}
-    height={38}
-    style={{ display: "block" }}
+    src={exp.logoSrc}
+    alt={`${exp.name} logo`}
+    className="h-full w-full object-contain p-2"
   />
-</div>
+) : null}
 
+                </div>
 
-            <div style={{ flex: "1 1 auto" }}>
-              <div style={{ fontSize: 34, fontWeight: 700, lineHeight: 1.1 }}>{exp.title}</div>
-              <div style={{ color: "rgba(255,255,255,0.6)", marginTop: 6, fontSize: 16 }}>
-                {exp.subtitle} →
+                <div className="min-w-0">
+                  <div className="flex items-baseline gap-3">
+                    <h2 className="truncate text-3xl font-semibold">{exp.name}</h2>
+                    <span className="text-white/60">→</span>
+                  </div>
+                  <p className="mt-1 text-base text-white/55">{exp.subtitle}</p>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
       </div>
     </main>
   );

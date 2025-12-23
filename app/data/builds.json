@@ -1,22 +1,54 @@
 {
   "expansions": [
     {
+      "id": "vanilla",
+      "name": "Vanilla",
+      "builds": [
+        {
+          "id": "level-1-bis",
+          "name": "Level 1 BiS",
+          "title": "Level 1 BiS",
+          "subtitle": "Classic Era level 1 BiS builds",
+          "description": "Best in Slot Level 1 build for Vanilla.",
+          "gear": [
+            { "slot": "Head", "itemName": "Red Defias Mask", "itemId": 7997, "iconName": "inv_misc_bandana_03" },
+            { "slot": "Back", "itemName": "Linen Cloak", "itemId": 2570, "iconName": "inv_misc_cape_14" },
+            { "slot": "Chest", "itemName": "Cracked Leather Vest", "itemId": 2127, "iconName": "inv_shirt_06" },
+            { "slot": "Wrists", "itemName": "Cracked Leather Bracers", "itemId": 2124, "iconName": "inv_bracer_12" },
+            { "slot": "Hands", "itemName": "Worn Leather Gloves", "itemId": 1422, "iconName": "inv_gauntlets_18" },
+            { "slot": "Waist", "itemName": "Squealer's Belt", "itemId": 4951, "iconName": "inv_belt_04" },
+            { "slot": "Legs", "itemName": "Cracked Leather Pants", "itemId": 2126, "iconName": "inv_pants_10" },
+            { "slot": "Feet", "itemName": "Goblin Rocket Boots", "itemId": 7189, "iconName": "inv_gizmo_rocketboot_01" }
+          ],
+          "buffs": [],
+          "consumables": []
+        }
+      ]
+    },
+    {
       "id": "tbc",
       "name": "The Burning Crusade",
       "builds": [
         {
           "id": "level-1-haste",
           "name": "Level 1 Haste",
+          "title": "Level 1 Haste",
+          "subtitle": "TBC — Haste",
           "description": "Static BiS list + enchants. Click items to open Wowhead.",
+          "notes": [
+  "Requires TBC or later (haste rating exists).",
+  "Check the video: https://youtu.be/jqCpS9oS310?si=KcHkzZah-TKFMNIW",
+  "Click any gear item to open Wowhead."
+],
           "gear": [
-            { "slot": "Head", "itemName": "Ruby Shades", "itemId": 38089, "iconName": "inv_helmet_47", "enchant": "+10 Haste Rating" },
-            { "slot": "Back", "itemName": "Wispy Cloak", "itemId": 3322, "iconName": "inv_misc_cape_11", "enchant": "+3 Agility" },
-            { "slot": "Chest", "itemName": "Haliscan Jacket", "itemId": 38277, "iconName": "inv_shirt_black_01", "enchant": "+150 Health" },
-            { "slot": "Wrists", "itemName": "Flimsy Chain Bracers", "itemId": 2651, "iconName": "inv_bracer_03", "enchant": "+9 Stamina" },
-            { "slot": "Hands", "itemName": "Rusted Chain Gloves", "itemId": 2391, "iconName": "inv_gauntlets_04", "enchant": "+15 Agility" },
-            { "slot": "Waist", "itemName": "Rusted Chain Belt", "itemId": 2387, "iconName": "inv_belt_06" },
-            { "slot": "Legs", "itemName": "Rusted Chain Leggings", "itemId": 2388, "iconName": "inv_pants_03", "enchant": "+50 AP & +12 Crit Rating" },
-            { "slot": "Feet", "itemName": "Rusted Chain Boots", "itemId": 2389, "iconName": "inv_boots_01", "enchant": "+7 Stamina" }
+            { "slot": "Head",  "itemName": "Ruby Shades",         "itemId": 38089, "iconName": "inv_helmet_47",       "enchant": "+10 Haste Rating" },
+            { "slot": "Back",  "itemName": "Wispy Cloak",         "itemId": 3322,  "iconName": "inv_misc_cape_11",    "enchant": "+3 Agility" },
+            { "slot": "Chest", "itemName": "Haliscan Jacket",     "itemId": 38277, "iconName": "inv_shirt_black_01",  "enchant": "+150 Health" },
+            { "slot": "Wrists","itemName": "Flimsy Chain Bracers","itemId": 2651,  "iconName": "inv_bracer_03",       "enchant": "+9 Stamina" },
+            { "slot": "Hands", "itemName": "Rusted Chain Gloves", "itemId": 2391,  "iconName": "inv_gauntlets_04",    "enchant": "+15 Agility" },
+            { "slot": "Waist", "itemName": "Rusted Chain Belt",   "itemId": 2387,  "iconName": "inv_belt_06" },
+            { "slot": "Legs",  "itemName": "Rusted Chain Leggings","itemId": 2388, "iconName": "inv_pants_03",        "enchant": "+50 AP & +12 Crit Rating" },
+            { "slot": "Feet",  "itemName": "Rusted Chain Boots",  "itemId": 2389,  "iconName": "inv_boots_01",        "enchant": "+7 Stamina" }
           ],
           "buffs": [],
           "consumables": []
