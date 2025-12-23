@@ -1,0 +1,27 @@
+{
+  "expansions": [
+    {
+      "id": "tbc",
+      "name": "The Burning Crusade",
+      "builds": [
+        {
+          "id": "level-1-haste",
+          "name": "Level 1 Haste",
+          "description": "Static BiS list + enchants. Click items to open Wowhead.",
+          "gear": [
+            { "slot": "Head", "itemName": "Ruby Shades", "itemId": 38089, "iconName": "inv_helmet_47", "enchant": "+10 Haste Rating" },
+            { "slot": "Back", "itemName": "Wispy Cloak", "itemId": 3322, "iconName": "inv_misc_cape_11", "enchant": "+3 Agility" },
+            { "slot": "Chest", "itemName": "Haliscan Jacket", "itemId": 38277, "iconName": "inv_shirt_black_01", "enchant": "+150 Health" },
+            { "slot": "Wrists", "itemName": "Flimsy Chain Bracers", "itemId": 2651, "iconName": "inv_bracer_03", "enchant": "+9 Stamina" },
+            { "slot": "Hands", "itemName": "Rusted Chain Gloves", "itemId": 2391, "iconName": "inv_gauntlets_04", "enchant": "+15 Agility" },
+            { "slot": "Waist", "itemName": "Rusted Chain Belt", "itemId": 2387, "iconName": "inv_belt_06" },
+            { "slot": "Legs", "itemName": "Rusted Chain Leggings", "itemId": 2388, "iconName": "inv_pants_03", "enchant": "+50 AP & +12 Crit Rating" },
+            { "slot": "Feet", "itemName": "Rusted Chain Boots", "itemId": 2389, "iconName": "inv_boots_01", "enchant": "+7 Stamina" }
+          ],
+          "buffs": [],
+          "consumables": []
+        }
+      ]
+    }
+  ]
+}
