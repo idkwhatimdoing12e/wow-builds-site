@@ -27,12 +27,11 @@ export default async function ExpansionPage({
 }: {
   params: Promise<{ expansion: string }>;
 }) {
-  const { expansion } = await params; // IMPORTANT: fixes your 404/notFound
+  const { expansion } = await params;
 
   const expId = norm(expansion);
   const expansions = data.expansions ?? [];
   const exp = expansions.find((e) => norm(e.id) === expId);
-
   if (!exp) notFound();
 
   return (
@@ -42,7 +41,7 @@ export default async function ExpansionPage({
           href="/low-level-builds"
           className="text-sm text-white/70 hover:text-white"
         >
-          ← Back to expansions
+          ← Back
         </Link>
 
         <h1 className="mt-4 text-5xl font-semibold tracking-tight">
@@ -63,7 +62,9 @@ export default async function ExpansionPage({
             return (
               <Link
                 key={build.id}
-                href={`/low-level-builds/${exp.id}/${build.id}`}
+                href={`/low-level-builds/${encodeURIComponent(
+                  exp.id
+                )}/${encodeURIComponent(build.id)}`}
                 className="group block rounded-3xl border border-white/15 bg-white/[0.03] p-6 transition hover:border-white/25 hover:bg-white/[0.06]"
               >
                 <div className="flex items-center justify-between gap-4">
