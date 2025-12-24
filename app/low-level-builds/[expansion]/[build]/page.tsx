@@ -41,50 +41,6 @@ function wowIconUrl(iconName: string) {
   return `https://wow.zamimg.com/images/wow/icons/large/${safe}.jpg`;
 }
 
-/**
- * Turns plain-text notes into React nodes, auto-linking any http(s) URLs.
- * Keeps everything safe: no HTML injection, just <a>.
- */
-function renderNoteText(text: string) {
-  const urlRegex = /(https?:\/\/[^\s)]+)(\))?/g;
-  const parts: Array<string | { url: string; trailingParen: boolean }> = [];
-
-  let lastIndex = 0;
-  for (const match of text.matchAll(urlRegex)) {
-    const url = match[1];
-    const trailingParen = Boolean(match[2]);
-    const idx = match.index ?? 0;
-
-    if (idx > lastIndex) parts.push(text.slice(lastIndex, idx));
-    parts.push({ url, trailingParen });
-
-    lastIndex = idx + match[0].length;
-  }
-  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
-
-  return (
-    <>
-      {parts.map((p, i) => {
-        if (typeof p === "string") return <span key={i}>{p}</span>;
-
-        return (
-          <span key={i}>
-            <a
-              href={p.url}
-              target="_blank"
-              rel="noreferrer"
-              className="underline decoration-white/30 underline-offset-4 hover:decoration-white/70 text-white"
-            >
-              {p.url}
-            </a>
-            {p.trailingParen ? ")" : ""}
-          </span>
-        );
-      })}
-    </>
-  );
-}
-
 export default async function BuildPage({
   params,
 }: {
@@ -101,7 +57,7 @@ export default async function BuildPage({
 
   const title = buildObj.title ?? buildObj.name ?? buildObj.id;
   const subtitle = buildObj.subtitle ?? buildObj.description ?? "";
-  const notes = Array.isArray(buildObj.notes) ? buildObj.notes : [];
+  const notes = buildObj.notes ?? [];
   const gear: GearItem[] = Array.isArray(buildObj.gear) ? buildObj.gear : [];
 
   return (
@@ -119,11 +75,10 @@ export default async function BuildPage({
 
         <section className="mt-10 rounded-[2rem] border border-white/10 bg-white/[0.03] p-8">
           <h2 className="text-2xl font-semibold">Notes</h2>
-
           {notes.length ? (
             <ul className="mt-4 list-disc space-y-2 pl-6 text-white/75">
               {notes.map((n, i) => (
-                <li key={i}>{renderNoteText(String(n))}</li>
+                <li key={i}>{n}</li>
               ))}
             </ul>
           ) : (
