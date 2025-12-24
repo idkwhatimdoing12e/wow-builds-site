@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import buildsData from "../data/builds.json"; // from app/[expansion]/[build] -> app/data
+import buildsData from "../../data/builds.json"; // from app/[expansion]/[build] -> app/data
 
 type GearItem = {
   slot: string;
