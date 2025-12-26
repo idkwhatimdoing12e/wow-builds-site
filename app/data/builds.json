@@ -92,7 +92,7 @@
               "enchant": "Fiery Weapon"
             }
           ],
-           "buffs": [
+          "buffs": [
             {
               "name": "Spirit of Zandalar (ZG)",
               "spellId": 24425,
@@ -109,7 +109,7 @@
               "name": "Warchief's Blessing (Rend)",
               "spellId": 16609,
               "iconName": "spell_arcane_teleportorgrimmar",
-              "note": "+ Haste, + HP"
+              "note": "+ Melee Haste, + HP"
             }
           ],
           "seasonalBuffs": [
@@ -126,89 +126,89 @@
               "note": "+25% Stamina"
             },
             {
-  "name": "Smitten (Love is in the Air)",
-  "spellId": 27572,
-  "iconName": "inv_ammo_arrow_02",
-  "note": "+200 Health"
-}
+              "name": "Smitten (Love is in the Air)",
+              "spellId": 27572,
+              "iconName": "inv_ammo_arrow_02",
+              "note": "+200 Health"
+            }
           ],
           "consumables": [
-  {
-    "name": "Elixir of Lion's Strength",
-    "itemId": 2454,
-    "iconName": "inv_potion_56",
-    "note": "+4 Strength"
-  },
-  {
-    "name": "Weak Troll's Blood Potion",
-    "itemId": 3382,
-    "iconName": "inv_potion_79",
-    "note": "Health regen"
-  },
-  {
-    "name": "Scroll of Protection",
-    "itemId": 3013,
-    "iconName": "inv_scroll_07",
-    "note": "+ Armor"
-  },
-  {
-    "name": "Rumsey Rum Black Label",
-    "itemId": 21151,
-    "iconName": "inv_drink_04",
-    "note": "+15 Stamina"
-  },
-  {
-    "name": "Herb Baked Egg",
-    "itemId": 6888,
-    "iconName": "inv_egg_03",
-    "note": "+2 Spirit"
-  },
-  {
-    "name": "Minor Healing Potion",
-    "itemId": 118,
-    "iconName": "inv_potion_49"
-  },
-  {
-    "name": "Bogling Root",
-    "itemId": 5206,
-    "iconName": "inv_misc_herb_07",
-    "note": "+Melee"
-  },
-  {
-    "name": "Heavy Runecloth Bandage",
-    "itemId": 14530,
-    "iconName": "inv_misc_bandage_12"
-  },
-  {
-    "name": "Explosive Rocket",
-    "itemId": 1178,
-    "iconName": "inv_ammo_bullet_01",
-    "note": ""
-  },
-  {
-    "name": "Rough Sharpening Stone",
-    "itemId": 2863,
-    "iconName": "inv_stone_sharpeningstone_01"
-  },
-  {
-    "name": "Deviate Fish",
-    "itemId": 6522,
-    "iconName": "inv_misc_monsterhead_01",
-    "note": "+400 HP chance"
-  },
-  {
-    "name": "Magic Candle",
-    "itemId": 6533,
-    "iconName": "inv_misc_candle_01",
-    "note": "Shares CD with rockets"
-  },
-  {
-    "name": "Discombobulator Ray",
-    "itemId": 4388,
-    "iconName": "inv_misc_spyglass_02",
-    "note": ""
-  }
-]
+            {
+              "name": "Elixir of Lion's Strength",
+              "itemId": 2454,
+              "iconName": "inv_potion_56",
+              "note": "+4 Strength"
+            },
+            {
+              "name": "Weak Troll's Blood Potion",
+              "itemId": 3382,
+              "iconName": "inv_potion_79",
+              "note": "Health regen"
+            },
+            {
+              "name": "Scroll of Protection",
+              "itemId": 3013,
+              "iconName": "inv_scroll_07",
+              "note": "+ Armor"
+            },
+            {
+              "name": "Rumsey Rum Black Label",
+              "itemId": 21151,
+              "iconName": "inv_drink_04",
+              "note": "+15 Stamina"
+            },
+            {
+              "name": "Herb Baked Egg",
+              "itemId": 6888,
+              "iconName": "inv_egg_03",
+              "note": "+2 Stamina"
+            },
+            {
+              "name": "Minor Healing Potion",
+              "itemId": 118,
+              "iconName": "inv_potion_49"
+            },
+            {
+              "name": "Bogling Root",
+              "itemId": 5206,
+              "iconName": "inv_misc_herb_07",
+              "note": "+Melee"
+            },
+            {
+              "name": "Heavy Runecloth Bandage",
+              "itemId": 14530,
+              "iconName": "inv_misc_bandage_12"
+            },
+            {
+              "name": "Explosive Rocket",
+              "itemId": 1178,
+              "iconName": "inv_ammo_bullet_01",
+              "note": ""
+            },
+            {
+              "name": "Rough Sharpening Stone",
+              "itemId": 2863,
+              "iconName": "inv_stone_sharpeningstone_01"
+            },
+            {
+              "name": "Deviate Fish",
+              "itemId": 6522,
+              "iconName": "inv_misc_monsterhead_01",
+              "note": "+400 HP chance"
+            },
+            {
+              "name": "Magic Candle",
+              "itemId": 6533,
+              "iconName": "inv_misc_candle_01",
+              "note": "Shares CD with rockets"
+            },
+            {
+              "name": "Discombobulator Ray",
+              "itemId": 4388,
+              "iconName": "inv_misc_spyglass_02",
+              "note": ""
+            }
+          ]
         }
       ]
     },
@@ -301,7 +301,7 @@
               "name": "Warchief's Blessing (Rend)",
               "spellId": 16609,
               "iconName": "spell_arcane_teleportorgrimmar",
-              "note": "+ Haste, + HP"
+              "note": "+ Melee Haste, + HP"
             }
           ],
           "seasonalBuffs": [
@@ -311,97 +311,328 @@
               "iconName": "inv_summerfest_firespirit",
               "note": "+ 30 Stamina"
             },
-            {
-              "name": "Invocation of the Wickerman (Hallow's End)",
-              "spellId": 24705,
-              "iconName": "inv_waepon_bow_zulgrub_d_02",
-              "note": "+25% Stamina"
-            },
-            {
-  "name": "Smitten (Love is in the Air)",
-  "spellId": 27572,
-  "iconName": "inv_ammo_arrow_02",
-  "note": "+200 Health"
-}
             
+            {
+              "name": "Smitten (Love is in the Air)",
+              "spellId": 27572,
+              "iconName": "inv_ammo_arrow_02",
+              "note": "+200 Health"
+            }
           ],
           "consumables": [
+            {
+              "name": "Elixir of Lion's Strength",
+              "itemId": 2454,
+              "iconName": "inv_potion_56",
+              "note": "+4 Strength"
+            },
+            {
+              "name": "Weak Troll's Blood Potion",
+              "itemId": 3382,
+              "iconName": "inv_potion_79",
+              "note": "Health regen"
+            },
+            {
+              "name": "Scroll of Protection",
+              "itemId": 3013,
+              "iconName": "inv_scroll_07",
+              "note": "+ Armor"
+            },
+            {
+              "name": "Rumsey Rum Black Label",
+              "itemId": 21151,
+              "iconName": "inv_drink_04",
+              "note": "+15 Stamina"
+            },
+            {
+              "name": "Herb Baked Egg",
+              "itemId": 6888,
+              "iconName": "inv_egg_03",
+              "note": "+2 Stamina"
+            },
+            {
+              "name": "Minor Healing Potion",
+              "itemId": 118,
+              "iconName": "inv_potion_49"
+            },
+            {
+              "name": "Bogling Root",
+              "itemId": 5206,
+              "iconName": "inv_misc_herb_07",
+              "note": "+Melee"
+            },
+            {
+              "name": "Heavy Runecloth Bandage",
+              "itemId": 14530,
+              "iconName": "inv_misc_bandage_12"
+            },
+            {
+              "name": "Explosive Rocket",
+              "itemId": 1178,
+              "iconName": "inv_ammo_bullet_01",
+              "note": ""
+            },
+            {
+              "name": "Rough Sharpening Stone",
+              "itemId": 2863,
+              "iconName": "inv_stone_sharpeningstone_01"
+            },
+            {
+              "name": "Deviate Fish",
+              "itemId": 6522,
+              "iconName": "inv_misc_monsterhead_01",
+              "note": "+400 HP chance"
+            },
+            {
+              "name": "Magic Candle",
+              "itemId": 6533,
+              "iconName": "inv_misc_candle_01",
+              "note": "Shares CD with rockets"
+            },
+            {
+              "name": "Discombobulator Ray",
+              "itemId": 4388,
+              "iconName": "inv_misc_spyglass_02",
+              "note": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wotlk",
+      "name": "Wrath of the Lich King",
+      "builds": [
+        {
+          "id": "level-1-haste-hunter",
+          "name": "Level 1 Haste Hunter",
+          "title": "Level 1 Haste Hunter",
+          "subtitle": "Wrath of the Lich King — Heirloom Haste Build",
+          "description": "Level 1 Hunter build using Wrath heirlooms. Any heirloom in the listed slots is typically fine.",
+          "notes": [
+            "Be a troll for Berserking",
+            "Someone casting Drums of Battle on you to reach max. potential",
+            "Get Herbalism to get Lifeblood healing",
+            "This requires the Midsummer Sausage",
+            "Patch 3.3.5, enchants on legs and other tricks have been patched out"
+          ],
+          "gear": [
   {
-    "name": "Elixir of Lion's Strength",
-    "itemId": 2454,
-    "iconName": "inv_potion_56",
-    "note": "+4 Strength"
+    "slot": "Head",
+    "itemName": "Purple Turban",
+    "itemId":44648,
+    "iconName": "inv_helmet_62",
+    "enchant": ""
   },
   {
-    "name": "Weak Troll's Blood Potion",
-    "itemId": 3382,
-    "iconName": "inv_potion_79",
-    "note": "Health regen"
+    "slot": "Shoulders",
+    "itemName": "Stained Shadowcraft Spaulders",
+    "itemId": 42952,
+    "iconName": "inv_shoulder_07",
+    "enchant": "Heirloom"
   },
   {
-    "name": "Scroll of Protection",
-    "itemId": 3013,
-    "iconName": "inv_scroll_07",
-    "note": "+ Armor"
+    "slot": "Back",
+    "itemName": "Linen / Wispy Cloak",
+    "itemId": 2570,
+    "iconName": "inv_misc_cape_19",
+    "enchant": "+3 Agility"
   },
   {
-    "name": "Rumsey Rum Black Label",
-    "itemId": 21151,
-    "iconName": "inv_drink_04",
-    "note": "+15 Stamina"
+    "slot": "Chest",
+    "itemName": "Stained Shadowcraft Tunic",
+    "itemId": 48689,
+    "iconName": "inv_chest_leather_07",
+    "enchant": "+100 HP"
   },
   {
-    "name": "Herb Baked Egg",
-    "itemId": 6888,
-    "iconName": "inv_egg_03",
-    "note": "+2 Spirit"
+    "slot": "Wrists",
+    "itemName": "Cracked Leather Bracers",
+    "itemId": 2124,
+    "iconName": "inv_bracer_12",
+    "enchant": "+9 Stamina"
   },
   {
-    "name": "Minor Healing Potion",
-    "itemId": 118,
-    "iconName": "inv_potion_49"
+    "slot": "Hands",
+    "itemName": "Cracked Leather Gloves",
+    "itemId": 2125,
+    "iconName": "inv_gauntlets_18",
+    "enchant": "+10 Haste Rating"
   },
   {
-    "name": "Bogling Root",
-    "itemId": 5206,
-    "iconName": "inv_misc_herb_07",
-    "note": "+Melee"
+    "slot": "Waist",
+    "itemName": "Cracked Leather Belt",
+    "itemId": 2122,
+    "iconName": "inv_belt_04"
   },
   {
-    "name": "Heavy Runecloth Bandage",
-    "itemId": 14530,
-    "iconName": "inv_misc_bandage_12"
+    "slot": "Legs",
+    "itemName": "Haliscan Pantaloons",
+    "itemId": 38278,
+    "iconName": "inv_pants_11",
+    "enchant": "+40 Armor"
   },
   {
-    "name": "Explosive Rocket",
-    "itemId": 1178,
-    "iconName": "inv_ammo_bullet_01",
-    "note": ""
+    "slot": "Feet",
+    "itemName": "Cracked Leather Boots",
+    "itemId": 2123,
+    "iconName": "inv_boots_01",
+    "enchant": "+7 Stamina"
   },
   {
-    "name": "Rough Sharpening Stone",
-    "itemId": 2863,
-    "iconName": "inv_stone_sharpeningstone_01"
+    "slot": "Weapon",
+    "itemName": "Bloodied Arcanite Reaper",
+    "itemId": 42943,
+    "iconName": "inv_axe_09",
+    "enchant": "Counterweight (+20 Haste Rating)"
   },
   {
-    "name": "Deviate Fish",
-    "itemId": 6522,
-    "iconName": "inv_misc_monsterhead_01",
-    "note": "+400 HP chance"
+    "slot": "Ranged",
+    "itemName": "Heirloom Gun / Bow",
+    "itemId": 44093,
+    "iconName": "inv_weapon_rifle_09",
+    "enchant": "Heirloom"
   },
   {
-    "name": "Magic Candle",
-    "itemId": 6533,
-    "iconName": "inv_misc_candle_01",
-    "note": "Shares CD with rockets"
+    "slot": "Trinket",
+    "itemName": "Swift Hand of Justice",
+    "itemId": 42991,
+    "iconName": "inv_jewelry_talisman_01",
+    "enchant": "Heirloom"
   },
   {
-    "name": "Discombobulator Ray",
-    "itemId": 4388,
-    "iconName": "inv_misc_spyglass_02",
-    "note": ""
-  }
-]
+    "slot": "Trinket",
+    "itemName": "Swift Hand of Justice",
+    "itemId": 42991,
+    "iconName": "inv_jewelry_talisman_01",
+    "enchant": "Heirloom"
+  },
+  {
+    "slot": "Ammo",
+    "itemName": "Exploding Shot / Feathered Arrow",
+    "itemId": 3464,
+    "iconName": "inv_ammo_bullet_02",
+    "enchant": "Quest Reward"
+    }
+],
+          "buffs": [
+            {
+              "name": "Spirit of Zandalar (ZG)",
+              "spellId": 24425,
+              "iconName": "ability_creature_poison_05",
+              "note": "+ Stats"
+            },
+            {
+              "name": "Rallying Cry of the Dragonslayer (Onyxia/Nefarian)",
+              "spellId": 22888,
+              "iconName": "inv_misc_head_dragon_01",
+              "note": "+ AP, 100% Crit"
+            },
+            {
+              "name": "Warchief's Blessing (Rend)",
+              "spellId": 16609,
+              "iconName": "spell_arcane_teleportorgrimmar",
+              "note": "+ Melee Haste, + HP"
+            }
+          ],
+          "seasonalBuffs": [
+            {
+              "name": "Fire Festival Fortitude (Midsummer)",
+              "spellId": 29235,
+              "iconName": "inv_summerfest_firespirit",
+              "note": "+ 30 Stamina"
+            },
+            
+            {
+              "name": "Smitten (Love is in the Air)",
+              "spellId": 27572,
+              "iconName": "inv_ammo_arrow_02",
+              "note": "+200 Health"
+            }
+          ],
+          "consumables": [{
+              "name": "Elixir of Lion's Strength",
+              "itemId": 2454,
+              "iconName": "inv_potion_56",
+              "note": "+4 Strength"
+            },
+            {
+              "name": "Weak Troll's Blood Potion",
+              "itemId": 3382,
+              "iconName": "inv_potion_79",
+              "note": "Health regen"
+            },
+            {
+              "name": "Scroll of Protection",
+              "itemId": 3013,
+              "iconName": "inv_scroll_07",
+              "note": "+ Armor"
+            },
+            {
+              "name": "Rumsey Rum Black Label",
+              "itemId": 21151,
+              "iconName": "inv_drink_04",
+              "note": "+15 Stamina"
+            },
+            {
+              "name": "Herb Baked Egg",
+              "itemId": 6888,
+              "iconName": "inv_egg_03",
+              "note": "+2 Stamina"
+            },
+            {
+              "name": "Minor Healing Potion",
+              "itemId": 118,
+              "iconName": "inv_potion_49"
+            },
+            {
+              "name": "Bogling Root",
+              "itemId": 5206,
+              "iconName": "inv_misc_herb_07",
+              "note": "+Melee"
+            },
+            {
+              "name": "Heavy Runecloth Bandage",
+              "itemId": 14530,
+              "iconName": "inv_misc_bandage_12"
+            },
+            {
+              "name": "Explosive Rocket",
+              "itemId": 1178,
+              "iconName": "inv_ammo_bullet_01",
+              "note": ""
+            },
+            {
+              "name": "Rough Sharpening Stone",
+              "itemId": 2863,
+              "iconName": "inv_stone_sharpeningstone_01"
+            },
+            {
+              "name": "Deviate Fish",
+              "itemId": 6522,
+              "iconName": "inv_misc_monsterhead_01",
+              "note": "+400 HP chance"
+            },
+            {
+              "name": "Magic Candle",
+              "itemId": 6533,
+              "iconName": "inv_misc_candle_01",
+              "note": "Shares CD with rockets"
+            },
+            {
+              "name": "Discombobulator Ray",
+              "itemId": 4388,
+              "iconName": "inv_misc_spyglass_02",
+              "note": ""
+            },
+            {
+              "name": "Midsummer Sausage",
+              "itemId": 23326,
+              "iconName": "inv_misc_food_53",
+              "note": "Only during Midsummer Festival"
+              }
+
+        ]
         }
       ]
     }
