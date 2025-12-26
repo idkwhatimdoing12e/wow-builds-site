@@ -3,53 +3,83 @@ import { EXPANSIONS } from "../data/expansions";
 
 export default function LowLevelBuildsPage() {
   return (
-    <main className="min-h-screen bg-black text-white">
-      <div className="mx-auto max-w-5xl px-6 py-14">
-        {/* BACK BUTTON */}
+    <main
+      style={{
+        minHeight: "100vh",
+        padding: "56px 24px",
+        background:
+          "radial-gradient(1200px 600px at 30% 0%, #1a1a1a 0%, #0b0b0b 55%, #070707 100%)",
+        color: "#fff",
+      }}
+    >
+      <div style={{ maxWidth: 980, margin: "0 auto" }}>
         <Link
           href="/"
-          className="mb-6 inline-block text-sm text-white/70 hover:text-white"
+          style={{
+            display: "inline-block",
+            marginBottom: 24,
+            color: "rgba(255,255,255,0.65)",
+            textDecoration: "none",
+          }}
         >
           ← Back
         </Link>
 
-        <div className="mb-10">
-          <h1 className="text-5xl font-semibold tracking-tight">
-            Low Level Builds
-          </h1>
-          <p className="mt-3 text-lg text-white/60">Pick an expansion.</p>
-        </div>
+        <h1 style={{ fontSize: 56, lineHeight: 1.05, margin: 0 }}>
+          Low Level Builds
+        </h1>
+        <p
+          style={{
+            marginTop: 12,
+            marginBottom: 28,
+            color: "rgba(255,255,255,0.65)",
+            fontSize: 18,
+          }}
+        >
+          Pick an expansion.
+        </p>
 
-        <div className="space-y-6">
-          {EXPANSIONS.map((exp) => (
+        <div style={{ display: "grid", gap: 16 }}>
+          {EXPANSIONS.map((e) => (
             <Link
-              key={exp.id}
-              href={`/low-level-builds/${exp.id}`}
-              className="group block rounded-3xl border border-white/15 bg-white/[0.03] p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.05)] transition hover:border-white/25 hover:bg-white/[0.05]"
+              key={e.id}
+              href={`/low-level-builds/${e.id}`}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 18,
+                padding: "22px 22px",
+                borderRadius: 18,
+                border: "1px solid rgba(255,255,255,0.18)",
+                background: "rgba(0,0,0,0.25)",
+                textDecoration: "none",
+                color: "#fff",
+              }}
             >
-              <div className="flex items-center gap-6">
-                <div className="h-14 w-14 overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  {exp.logoSrc ? (
-                    <img
-                      src={exp.logoSrc}
-                      alt={`${exp.name} logo`}
-                      className="h-full w-full object-contain p-2"
-                    />
-                  ) : null}
-                </div>
+              <img
+                src={e.logoSrc}
+                alt={`${e.name} logo`}
+                width={54}
+                height={54}
+                style={{
+                  borderRadius: 12,
+                  border: "1px solid rgba(255,255,255,0.15)",
+                }}
+              />
 
-                <div className="min-w-0">
-                  <div className="flex items-baseline gap-3">
-                    <h2 className="truncate text-3xl font-semibold">
-                      {exp.name}
-                    </h2>
-                    <span className="text-white/60">→</span>
-                  </div>
-                  <p className="mt-1 text-base text-white/55">
-                    {exp.subtitle}
-                  </p>
+              <div style={{ flex: 1 }}>
+                <div
+                  style={{ fontSize: 28, fontWeight: 800, letterSpacing: -0.3 }}
+                >
+                  {e.name}
                 </div>
+                <div style={{ marginTop: 6, color: "rgba(255,255,255,0.65)" }}>
+                  {e.subtitle}
+                </div>
+              </div>
+
+              <div style={{ color: "rgba(255,255,255,0.65)", fontSize: 18 }}>
+                →
               </div>
             </Link>
           ))}
