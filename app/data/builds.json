@@ -16,198 +16,106 @@
             "Check the full guide: https://youtu.be/hZsF4z-rw8Y?si=PDP9QyPEMpm49tUT"
           ],
           "gear": [
-            {
-              "slot": "Head",
-              "itemName": "Red Defias Mask",
-              "itemId": 7997,
-              "iconName": "inv_misc_bandana_03",
-              "enchant": "+1% Haste"
-            },
-            {
-              "slot": "Back",
-              "itemName": "Linen Cloak",
-              "itemId": 2570,
-              "iconName": "inv_misc_cape_14",
-              "enchant": "+3 Agility"
-            },
-            {
-              "slot": "Chest",
-              "itemName": "Cracked Leather Vest",
-              "itemId": 2127,
-              "iconName": "inv_shirt_06",
-              "enchant": "+100 Health"
-            },
-            {
-              "slot": "Wrists",
-              "itemName": "Cracked Leather Bracers",
-              "itemId": 2124,
-              "iconName": "inv_bracer_12",
-              "enchant": "+9 Stamina"
-            },
-            {
-              "slot": "Hands",
-              "itemName": "Worn Leather Gloves",
-              "itemId": 1422,
-              "iconName": "inv_gauntlets_18",
-              "enchant": "+15 Agility"
-            },
-            {
-              "slot": "Waist",
-              "itemName": "Squealer's Belt",
-              "itemId": 4951,
-              "iconName": "inv_belt_04"
-            },
-            {
-              "slot": "Legs",
-              "itemName": "Cracked Leather Pants",
-              "itemId": 2126,
-              "iconName": "inv_pants_10",
-              "enchant": "+8 Agility"
-            },
-            {
-              "slot": "Feet",
-              "itemName": "Goblin Rocket Boots",
-              "itemId": 7189,
-              "iconName": "inv_gizmo_rocketboot_01",
-              "enchant": "+7 Stamina"
-            },
-            {
-              "slot": "Trinket",
-              "itemName": "Insignia of the Alliance",
-              "itemId": 18857,
-              "iconName": "inv_jewelry_trinketpvp_01"
-            },
-            {
-              "slot": "Ranged",
-              "itemName": "Cadet's Bow",
-              "itemId": 8179,
-              "iconName": "inv_weapon_bow_05",
-              "enchant": "+1 Scope"
-            },
-            {
-              "slot": "Weapon",
-              "itemName": "Simple Dagger",
-              "itemId": 4565,
-              "iconName": "inv_weapon_shortblade_01",
-              "enchant": "Fiery Weapon"
-            }
+            { "slot": "Head", "itemName": "Red Defias Mask", "itemId": 7997, "iconName": "inv_misc_bandana_03", "enchant": "+1% Haste" },
+            { "slot": "Back", "itemName": "Linen Cloak", "itemId": 2570, "iconName": "inv_misc_cape_14", "enchant": "+3 Agility" },
+            { "slot": "Chest", "itemName": "Cracked Leather Vest", "itemId": 2127, "iconName": "inv_shirt_06", "enchant": "+100 Health" },
+            { "slot": "Wrists", "itemName": "Cracked Leather Bracers", "itemId": 2124, "iconName": "inv_bracer_12", "enchant": "+9 Stamina" },
+            { "slot": "Hands", "itemName": "Worn Leather Gloves", "itemId": 1422, "iconName": "inv_gauntlets_18", "enchant": "+15 Agility" },
+            { "slot": "Waist", "itemName": "Squealer's Belt", "itemId": 4951, "iconName": "inv_belt_04" },
+            { "slot": "Legs", "itemName": "Cracked Leather Pants", "itemId": 2126, "iconName": "inv_pants_10", "enchant": "+8 Agility" },
+            { "slot": "Feet", "itemName": "Goblin Rocket Boots", "itemId": 7189, "iconName": "inv_gizmo_rocketboot_01", "enchant": "+7 Stamina" },
+            { "slot": "Trinket", "itemName": "Insignia of the Alliance", "itemId": 18857, "iconName": "inv_jewelry_trinketpvp_01" },
+            { "slot": "Ranged", "itemName": "Cadet's Bow", "itemId": 8179, "iconName": "inv_weapon_bow_05", "enchant": "+1 Scope" },
+            { "slot": "Weapon", "itemName": "Simple Dagger", "itemId": 4565, "iconName": "inv_weapon_shortblade_01", "enchant": "Fiery Weapon" },
+             { "slot": "Ammo", "itemName": "Feathered Arrow", "itemId": 2512, "iconName": "inv_ammo_arrow_02", "enchant": "Ammo" }
           ],
           "buffs": [
-            {
-              "name": "Spirit of Zandalar (ZG)",
-              "spellId": 24425,
-              "iconName": "ability_creature_poison_05",
-              "note": "+ Stats"
-            },
-            {
-              "name": "Rallying Cry of the Dragonslayer (Onyxia/Nefarian)",
-              "spellId": 22888,
-              "iconName": "inv_misc_head_dragon_01",
-              "note": "+ AP, 100% Crit"
-            },
-            {
-              "name": "Warchief's Blessing (Rend)",
-              "spellId": 16609,
-              "iconName": "spell_arcane_teleportorgrimmar",
-              "note": "+ Melee Haste, + HP"
-            }
+            { "name": "Spirit of Zandalar (ZG)", "spellId": 24425, "iconName": "ability_creature_poison_05", "note": "+ Stats" },
+            { "name": "Rallying Cry of the Dragonslayer (Onyxia/Nefarian)", "spellId": 22888, "iconName": "inv_misc_head_dragon_01", "note": "+ AP, 100% Crit" },
+            { "name": "Warchief's Blessing (Rend)", "spellId": 16609, "iconName": "spell_arcane_teleportorgrimmar", "note": "+ Melee Haste, + HP" }
           ],
           "seasonalBuffs": [
-            {
-              "name": "Fire Festival Fortitude (Midsummer)",
-              "spellId": 29235,
-              "iconName": "inv_summerfest_firespirit",
-              "note": "+ 30 Stamina"
-            },
-            {
-              "name": "Invocation of the Wickerman (Hallow's End)",
-              "spellId": 24705,
-              "iconName": "inv_waepon_bow_zulgrub_d_02",
-              "note": "+25% Stamina"
-            },
-            {
+            { "name": "Fire Festival Fortitude (Midsummer)", "spellId": 29235, "iconName": "inv_summerfest_firespirit", "note": "+ 30 Stamina" },
+            { "name": "Invocation of the Wickerman (Hallow's End)", "spellId": 24705, "iconName": "inv_waepon_bow_zulgrub_d_02", "note": "+25% Stamina" },
+            { "name": "Smitten (Love is in the Air)", "spellId": 27572, "iconName": "inv_ammo_arrow_02", "note": "+200 Health" },
+          {
+              "name": "Darnassus/Ogrimmar Gift Collection (Love is in the Air)",
+              "spellId": 22133,
+              "iconName": "inv_misc_gift_02",
+              "note": "+30 Agility"
+            }
+        ],
+          "consumables": [
+            { "name": "Elixir of Lion's Strength", "itemId": 2454, "iconName": "inv_potion_56", "note": "+4 Strength" },
+            { "name": "Weak Troll's Blood Potion", "itemId": 3382, "iconName": "inv_potion_79", "note": "Health regen" },
+            { "name": "Scroll of Protection", "itemId": 3013, "iconName": "inv_scroll_07", "note": "+ Armor" },
+            { "name": "Rumsey Rum Black Label", "itemId": 21151, "iconName": "inv_drink_04", "note": "+15 Stamina" },
+            { "name": "Herb Baked Egg", "itemId": 6888, "iconName": "inv_egg_03", "note": "+2 Stamina" },
+            { "name": "Minor Healing Potion", "itemId": 118, "iconName": "inv_potion_49" },
+            { "name": "Bogling Root", "itemId": 5206, "iconName": "inv_misc_herb_07", "note": "+Melee" },
+            { "name": "Heavy Runecloth Bandage", "itemId": 14530, "iconName": "inv_misc_bandage_12" },
+            { "name": "Explosive Rocket", "itemId": 1178, "iconName": "inv_ammo_bullet_01", "note": "" },
+            { "name": "Rough Sharpening Stone", "itemId": 2863, "iconName": "inv_stone_sharpeningstone_01" },
+            { "name": "Deviate Fish", "itemId": 6522, "iconName": "inv_misc_monsterhead_01", "note": "+400 HP chance" },
+            { "name": "Magic Candle", "itemId": 6533, "iconName": "inv_misc_candle_01", "note": "Shares CD with rockets" },
+            { "name": "Discombobulator Ray", "itemId": 4388, "iconName": "inv_misc_spyglass_02", "note": "" }
+          ]
+        },
+        {
+          "id": "lv-10-100-dodge-rogue",
+          "name": "Lv 10 100% Dodge Rogue",
+          "title": "Lv 10 100% Dodge Rogue",
+          "subtitle": "Vanilla — Level 10",
+          "description": "Level 10 Rogue set focused on reaching extremely high dodge uptime in PvP.",
+          "notes": [
+            "Night elf for high base agility",
+"Valentine + 30 Agility Gifts required",
+"1 point of Agility at lv 10 = 0.57% Dodge",
+"Video guide: https://youtu.be/65oLy6FG1Dk?si=eao2arpSGN7wcJnk"
+        
+          ],
+          "gear": [
+            { "slot": "Helm", "itemName": "Green Tinted Goggles", "itemId": 4385, "iconName": "inv_helmet_47", "enchant": "+8 Agility" },
+            { "slot": "Back", "itemName": "Buckskin Cape", "itemId": 1355, "iconName": "inv_misc_pelt_bear_02", "enchant": "+3 Agility" },
+            { "slot": "Chest", "itemName": "Pioneer Tunic of Agility", "itemId": 6268, "iconName": "inv_shirt_06", "enchant": "+4 All Stats" },
+            { "slot": "Bracers", "itemName": "Bard's Bracers of Agility", "itemId": 6556, "iconName": "inv_bracer_05", "enchant": "+1 Agility" },
+            { "slot": "Gloves", "itemName": "Hunting Gloves", "itemId": 2976, "iconName": "inv_gauntlets_05", "enchant": "+15 Agility" },
+            { "slot": "Belt", "itemName": "Bard's Belt of the Tiger", "itemId": 6558, "iconName": "inv_belt_03", "enchant": "" },
+            { "slot": "Pants", "itemName": "Gypsy Trousers of the Monkey", "itemId": 9756, "iconName": "inv_pants_05", "enchant": "+8 Agility" },
+            { "slot": "Boots", "itemName": "Embossed Leather Boots", "itemId": 2309, "iconName": "inv_boots_05", "enchant": "+7 Agility" },
+            { "slot": "Ring 1", "itemName": "The 1 Ring", "itemId": 8350, "iconName": "inv_jewelry_ring_03", "enchant": "" },
+            { "slot": "Ring 2", "itemName": "The 1 Ring", "itemId": 8350, "iconName": "inv_jewelry_ring_03", "enchant": "" },
+            { "slot": "Weapon", "itemName": "Ritual Blade", "itemId": 5112, "iconName": "inv_weapon_shortblade_02", "enchant": "+15 Agility" },
+            { "slot": "OffHand", "itemName": "Blade of Cunning", "itemId": 7298, "iconName": "inv_weapon_shortblade_26", "enchant": "+15 Agility" },
+            { "slot": "Ranged", "itemName": "Cadet's Bow", "itemId": 8179, "iconName": "inv_weapon_bow_05", "enchant": "+1 Scope" },
+            { "slot": "Ammo", "itemName": "Feathered Arrow", "itemId": 2512, "iconName": "inv_ammo_arrow_02", "enchant": "Ammo" }
+          ],
+          "buffs": [
+            
+            { "name": "Spirit of Zandalar (ZG)", "spellId": 24425, "iconName": "ability_creature_poison_05", "note": "+ Stats" },
+            { "name": "Rallying Cry of the Dragonslayer (Onyxia/Nefarian)", "spellId": 22888, "iconName": "inv_misc_head_dragon_01", "note": "+ AP, 100% Crit" },
+            { "name": "Warchief's Blessing (Rend)", "spellId": 16609, "iconName": "spell_arcane_teleportorgrimmar", "note": "+ Melee Haste, + HP" }
+          ],
+          
+          "seasonalBuffs": [
+ {
               "name": "Smitten (Love is in the Air)",
               "spellId": 27572,
               "iconName": "inv_ammo_arrow_02",
               "note": "+200 Health"
+            },
+
+             {
+              "name": "Darnassus Gift Collection (Love is in the Air)",
+              "spellId": 22133,
+              "iconName": "inv_misc_gift_02",
+              "note": "+30 Agility"
             }
+
           ],
           "consumables": [
-            {
-              "name": "Elixir of Lion's Strength",
-              "itemId": 2454,
-              "iconName": "inv_potion_56",
-              "note": "+4 Strength"
-            },
-            {
-              "name": "Weak Troll's Blood Potion",
-              "itemId": 3382,
-              "iconName": "inv_potion_79",
-              "note": "Health regen"
-            },
-            {
-              "name": "Scroll of Protection",
-              "itemId": 3013,
-              "iconName": "inv_scroll_07",
-              "note": "+ Armor"
-            },
-            {
-              "name": "Rumsey Rum Black Label",
-              "itemId": 21151,
-              "iconName": "inv_drink_04",
-              "note": "+15 Stamina"
-            },
-            {
-              "name": "Herb Baked Egg",
-              "itemId": 6888,
-              "iconName": "inv_egg_03",
-              "note": "+2 Stamina"
-            },
-            {
-              "name": "Minor Healing Potion",
-              "itemId": 118,
-              "iconName": "inv_potion_49"
-            },
-            {
-              "name": "Bogling Root",
-              "itemId": 5206,
-              "iconName": "inv_misc_herb_07",
-              "note": "+Melee"
-            },
-            {
-              "name": "Heavy Runecloth Bandage",
-              "itemId": 14530,
-              "iconName": "inv_misc_bandage_12"
-            },
-            {
-              "name": "Explosive Rocket",
-              "itemId": 1178,
-              "iconName": "inv_ammo_bullet_01",
-              "note": ""
-            },
-            {
-              "name": "Rough Sharpening Stone",
-              "itemId": 2863,
-              "iconName": "inv_stone_sharpeningstone_01"
-            },
-            {
-              "name": "Deviate Fish",
-              "itemId": 6522,
-              "iconName": "inv_misc_monsterhead_01",
-              "note": "+400 HP chance"
-            },
-            {
-              "name": "Magic Candle",
-              "itemId": 6533,
-              "iconName": "inv_misc_candle_01",
-              "note": "Shares CD with rockets"
-            },
-            {
-              "name": "Discombobulator Ray",
-              "itemId": 4388,
-              "iconName": "inv_misc_spyglass_02",
-              "note": ""
-            }
+{ "name": "Elixir of Minor Agility", "itemId": 2457, "iconName": "inv_potion_91", "note": "+4 Agility" }
+            
           ]
         }
       ]
