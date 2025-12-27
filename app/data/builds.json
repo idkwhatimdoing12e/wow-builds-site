@@ -60,7 +60,14 @@
   "itemId": 22133,
   "iconName": "inv_misc_gift_02",
   "note": "+30 Agility (Love is in the Air)"
+},
+{
+  "name": "Chronoboon Displacer",
+  "itemId": 184937,
+  "iconName": "inv_misc_enggizmos_21",
+  "note": "Save World Buffs"
 }
+
           ]
         },
         {
@@ -213,6 +220,12 @@
   "itemId": 22133,
   "iconName": "inv_misc_gift_02",
   "note": "+30 Agility (Love is in the Air)"
+},
+{
+  "name": "Chronoboon Displacer",
+  "itemId": 184937,
+  "iconName": "inv_misc_enggizmos_21",
+  "note": "Save World Buffs"
 }
 
   ]
@@ -693,6 +706,12 @@
   "itemId": 4384,
   "iconName": "spell_nature_polymorph",
   "note": "AoE Damage (150 Engineering)"
+},
+{
+  "name": "Chronoboon Displacer",
+  "itemId": 184937,
+  "iconName": "inv_misc_enggizmos_21",
+  "note": "Save World Buffs"
 }
 
       ]
@@ -711,7 +730,7 @@
           "description": "Level 1 Hunter build using Wrath heirlooms. Any heirloom in the listed slots is typically fine.",
           "notes": [
             "Be a troll for Berserking",
-            "Someone casting Drums of Battle on you to reach max. potential",
+            "Have someone casting Drums of Battle on you to reach max. potential",
             "Get Herbalism to get Lifeblood healing",
             "This requires the Midsummer Sausage",
             "Patch 3.3.5, enchants on legs and other tricks have been patched out"
@@ -932,7 +951,13 @@
               "itemId": 185848,
               "iconName": "inv_misc_drum_02",
               "note": "+80 Haste, someone must cast it on you"
-              }
+              },
+              {
+  "name": "Chronoboon Displacer",
+  "itemId": 184937,
+  "iconName": "inv_misc_enggizmos_21",
+  "note": "Save World Buffs"
+}
 
         ]
         }

@@ -189,11 +189,13 @@ function BuffColumn({
               />
 
               <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-medium">{b.name}</div>
-                {b.note ? (
-                  <div className="truncate text-xs text-white/55">{b.note}</div>
-                ) : null}
-              </div>
+  <div className="truncate text-sm font-medium">{b.name}</div>
+  {b.note ? (
+    <div className="text-xs text-white/55 whitespace-normal break-words">
+      {b.note}
+    </div>
+  ) : null}
+</div>
 
               <div className="text-white/40">↗</div>
             </a>
@@ -315,9 +317,9 @@ export default async function BuildPage({
                     </div>
 
                     {g.enchant ? (
-                      <div className="mt-1 truncate text-sm leading-tight text-white/60">
-                        {g.enchant}
-                      </div>
+                      <div className="mt-1 text-sm leading-tight text-white/60 whitespace-normal break-words">
+  {g.enchant}
+</div>
                     ) : null}
                   </div>
 
@@ -362,9 +364,9 @@ export default async function BuildPage({
                     </div>
 
                     {c.note ? (
-                      <div className="mt-1 truncate text-sm leading-tight text-white/60">
-                        {c.note}
-                      </div>
+                      <div className="mt-1 text-xs leading-tight text-white/55 whitespace-normal break-words">
+  {c.note}
+</div>
                     ) : null}
                   </div>
 
