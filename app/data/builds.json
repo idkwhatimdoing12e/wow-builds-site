@@ -43,7 +43,7 @@
         ],
           "consumables": [
             { "name": "Elixir of Lion's Strength", "itemId": 2454, "iconName": "inv_potion_56", "note": "+4 Strength" },
-            { "name": "Weak Troll's Blood Potion", "itemId": 3382, "iconName": "inv_potion_79", "note": "Health regen" },
+            { "name": "Weak Troll's Blood Potion", "itemId": 3382, "iconName": "inv_potion_77", "note": "Health regen" },
             { "name": "Scroll of Protection", "itemId": 3013, "iconName": "inv_scroll_07", "note": "+ Armor" },
             { "name": "Rumsey Rum Black Label", "itemId": 21151, "iconName": "inv_drink_04", "note": "+15 Stamina" },
             { "name": "Herb Baked Egg", "itemId": 6888, "iconName": "inv_egg_03", "note": "+2 Stamina" },
@@ -51,7 +51,7 @@
             { "name": "Bogling Root", "itemId": 5206, "iconName": "inv_misc_herb_07", "note": "+Melee" },
             { "name": "Heavy Runecloth Bandage", "itemId": 14530, "iconName": "inv_misc_bandage_12" },
             { "name": "Explosive Rocket", "itemId": 1178, "iconName": "inv_ammo_bullet_01", "note": "" },
-            { "name": "Rough Sharpening Stone", "itemId": 2863, "iconName": "inv_stone_sharpeningstone_01" },
+            { "name": "Rough Sharpening Stone", "itemId": 2862, "iconName": "inv_stone_sharpeningstone_01" },
             { "name": "Deviate Fish", "itemId": 6522, "iconName": "inv_misc_monsterhead_01", "note": "+400 HP chance" },
             { "name": "Magic Candle", "itemId": 6533, "iconName": "inv_misc_candle_01", "note": "Shares CD with rockets" },
             { "name": "Discombobulator Ray", "itemId": 4388, "iconName": "inv_misc_spyglass_02", "note": "" },
@@ -142,7 +142,7 @@
     {
       "name": "Weak Troll's Blood Potion",
       "itemId": 3382,
-      "iconName": "inv_potion_79",
+      "iconName": "inv_potion_77",
       "note": "Health regen"
     },
     {
@@ -187,7 +187,7 @@
     },
     {
       "name": "Rough Sharpening Stone",
-      "itemId": 2863,
+      "itemId": 2862,
       "iconName": "inv_stone_sharpeningstone_01"
     },
     {
@@ -214,6 +214,7 @@
   "iconName": "inv_misc_gift_02",
   "note": "+30 Agility (Love is in the Air)"
 }
+
   ]
 },
         {
@@ -242,7 +243,13 @@
             { "slot": "Ring 2", "itemName": "The 1 Ring", "itemId": 8350, "iconName": "inv_jewelry_ring_03", "enchant": "" },
             { "slot": "Weapon", "itemName": "Ritual Blade", "itemId": 5112, "iconName": "inv_weapon_shortblade_02", "enchant": "+15 Agility" },
             { "slot": "OffHand", "itemName": "Blade of Cunning", "itemId": 7298, "iconName": "inv_weapon_shortblade_26", "enchant": "+15 Agility" },
-            { "slot": "Ranged", "itemName": "Cadet's Bow", "itemId": 8179, "iconName": "inv_weapon_bow_05", "enchant": "+1 Scope" },
+            {
+    "slot": "Weapon",
+    "itemName": "Heavy Shortbow",
+    "itemId": 3036,
+    "iconName": "inv_weapon_bow_12",
+    "enchant": "+1 Scope"
+  },
             { "slot": "Ammo", "itemName": "Feathered Arrow", "itemId": 3464, "iconName": "inv_ammo_arrow_02", "enchant": "Ammo" }
           ],
           "buffs": [
@@ -395,7 +402,7 @@
             {
               "name": "Weak Troll's Blood Potion",
               "itemId": 3382,
-              "iconName": "inv_potion_79",
+              "iconName": "inv_potion_77",
               "note": "Health regen"
             },
             {
@@ -440,7 +447,7 @@
             },
             {
               "name": "Rough Sharpening Stone",
-              "itemId": 2863,
+              "itemId": 2862,
               "iconName": "inv_stone_sharpeningstone_01"
             },
             {
@@ -460,9 +467,236 @@
               "itemId": 4388,
               "iconName": "inv_misc_spyglass_02",
               "note": ""
-            }
+            }   
+            
           ]
-        }
+        },
+            {
+      "id": "level-10-max-haste-rogue",
+      "name": "Level 10 Max Haste Rogue",
+      "title": "Level 10 Max Haste Rogue",
+      "subtitle": "",
+      "description": "Reach Haste cap and go Bgs",
+      "notes": [
+"Reach Haste cap and go Battlegrounds",
+"You don't need to get all the BiS gear, just focus on the Haste gains and weapons",
+"Leveling past 10 will ruin the build, careful as you can't lock XP in TBC",
+"Check the video: https://youtu.be/j5jrgI-PX-o?si=nEIuAoPNIn859uL6"
+
+      ],
+      "gear": [
+{
+              "slot": "Head",
+              "itemName": "Green Tinted Goggles",
+              "itemId": 4385,
+              "iconName": "inv_helmet_47",
+              "enchant": "+10 Haste Rating"
+            },
+            {
+              "slot": "Back",
+              "itemName": "Fine Leather Cloak",
+              "itemId": 2308,
+              "iconName": "inv_misc_cape_10",
+              "enchant": "+3 Agility"
+            },
+            {
+              "slot": "Chest",
+              "itemName": "Haliscan Jacket",
+              "itemId": 38277,
+              "iconName": "inv_shirt_black_01",
+              "enchant": "+15 Resilience"
+            },
+            {
+              "slot": "Wrists",
+              "itemName": "Bard's Bracers of the Monkey",
+              "itemId": 6556,
+              "iconName": "inv_bracer_05",
+              "enchant": "+9 Stamina"
+            },
+            {
+              "slot": "Hands",
+              "itemName": "Hunting Gloves",
+              "itemId": 2976,
+              "iconName": "inv_gauntlets_05",
+              "enchant": "+10 Haste Rating"
+            },
+            {
+              "slot": "Waist",
+              "itemName": "Beastmaster's Girdle",
+              "itemId": 5355,
+              "iconName": "inv_belt_06",
+              "enchant": "Horde only, long quest chain"
+            },
+            {
+              "slot": "Waist",
+              "itemName": "Lupine Cord of the Monkey",
+              "itemId": 15011,
+              "iconName": "inv_belt_03",
+              "enchant": "Both factions"
+            },
+            {
+              "slot": "Legs",
+              "itemName": "Kodo Hunter's Leggings",
+              "itemId": 4909,
+              "iconName": "inv_pants_02",
+              "enchant": "+10 Haste Rating"
+            },
+           { "slot": "Boots", "itemName": "Embossed Leather Boots", "itemId": 2309, "iconName": "inv_boots_05", "enchant": "+7 Stamina" },
+           { "slot": "Ring 1", "itemName": "The 1 Ring", "itemId": 8350, "iconName": "inv_jewelry_ring_03", "enchant": "" },
+            { "slot": "Ring 2", "itemName": "The 1 Ring", "itemId": 8350, "iconName": "inv_jewelry_ring_03", "enchant": "" },
+            { "slot": "Ammo", "itemName": "Arena Grand Master", "itemId": 19024, "iconName": "inv_misc_armorkit_04", "enchant": "1k Damage Absorb" },
+            {
+    "slot": "Weapon",
+    "itemName": "Left-Handed Brass Knuckles",
+    "itemId": 15906,
+    "iconName": "inv_gauntlets_04",
+    "enchant": "Fiery Weapon"
+  },
+  {
+    "slot": "Weapon",
+    "itemName": "Right-Handed Brass Knuckles",
+    "itemId": 15905,
+    "iconName": "inv_gauntlets_04",
+    "enchant": "Fiery Weapon"
+  },
+  {
+    "slot": "Weapon",
+    "itemName": "Heavy Shortbow",
+    "itemId": 3036,
+    "iconName": "inv_weapon_bow_12",
+    "enchant": "+1 Scope"
+  },
+  { "slot": "Ammo", "itemName": "Feathered Arrow", "itemId": 3464, "iconName": "inv_ammo_arrow_02", "enchant": "Ammo" }
+      ],
+      "buffs": [
+{
+              "name": "Spirit of Zandalar (ZG)",
+              "spellId": 24425,
+              "iconName": "ability_creature_poison_05",
+              "note": "+ Stats"
+            },
+            {
+              "name": "Rallying Cry of the Dragonslayer (Onyxia/Nefarian)",
+              "spellId": 22888,
+              "iconName": "inv_misc_head_dragon_01",
+              "note": "+ AP, 100% Crit"
+            },
+            {
+              "name": "Warchief's Blessing (Rend)",
+              "spellId": 16609,
+              "iconName": "spell_arcane_teleportorgrimmar",
+              "note": "+ Melee Haste, + HP"
+            }
+
+      ],
+      "seasonalBuffs": [
+ {
+              "name": "Fire Festival Fortitude (Midsummer)",
+              "spellId": 29235,
+              "iconName": "inv_summerfest_firespirit",
+              "note": "+ 30 Stamina"
+            },
+            
+            {
+              "name": "Smitten (Love is in the Air)",
+              "spellId": 27572,
+              "iconName": "inv_ammo_arrow_02",
+              "note": "+200 Health"
+            }
+
+      ],
+      "consumables": [
+ {
+      "name": "Elixir of Giant Growth",
+      "itemId": 6662,
+      "iconName": "inv_potion_10",
+      "note": "+8 Strength"
+    },
+    { "name": "Elixir of Minor Agility", "itemId": 2457, "iconName": "inv_potion_91", "note": "+4 Agility" },
+    {
+      "name": "Elixir of Minor Fortitude",
+      "itemId": 2458,
+      "iconName": "inv_potion_42",
+      "note": "+27 HP"
+    },
+    {
+      "name": "Scroll of Protection",
+      "itemId": 3013,
+      "iconName": "inv_scroll_07",
+      "note": "+ Armor"
+    },
+    {
+      "name": "Rumsey Rum Black Label",
+      "itemId": 21151,
+      "iconName": "inv_drink_04",
+      "note": "+15 Stamina"
+    },
+    {
+      "name": "Herb Baked Egg",
+      "itemId": 6888,
+      "iconName": "inv_egg_03",
+      "note": "+2 Stamina"
+    },
+    {
+      "name": "Lesser Healing Potion",
+      "itemId": 858,
+      "iconName": "inv_potion_50"
+    },
+    {
+      "name": "Bogling Root",
+      "itemId": 5206,
+      "iconName": "inv_misc_herb_07",
+      "note": "+Melee"
+    },
+    {
+      "name": "Heavy Runecloth Bandage",
+      "itemId": 14530,
+      "iconName": "inv_misc_bandage_12"
+    },
+    {
+      "name": "Swiftness Potion",
+      "itemId": 2459,
+      "iconName": "inv_potion_95",
+      "note": ""
+    },
+    {
+      "name": "Coarse Sharpening Stone",
+      "itemId": 2863,
+      "iconName": "inv_stone_sharpeningstone_02"
+    },
+    {
+      "name": "Deviate Fish",
+      "itemId": 6522,
+      "iconName": "inv_misc_monsterhead_01",
+      "note": "+400 HP chance"
+    },
+    {
+      "name": "Rough Copper Bomb",
+      "itemId": 4360,
+      "iconName": "inv_misc_bomb_09",
+      "note": "AoE Disorient (30 Engineering)"
+    },
+    {
+      "name": "Discombobulator Ray",
+      "itemId": 4388,
+      "iconName": "inv_misc_spyglass_02",
+      "note": ""
+    },
+    {
+  "name": "Thistle Tea",
+  "itemId": 7676,
+  "iconName": "inv_drink_milk_05",
+  "note": "+ Energy"
+},
+{
+  "name": "Explosive Sheep",
+  "itemId": 4384,
+  "iconName": "spell_nature_polymorph",
+  "note": "AoE Damage (150 Engineering)"
+}
+
+      ]
+    }
       ]
     },
     {
@@ -625,7 +859,7 @@
             {
               "name": "Weak Troll's Blood Potion",
               "itemId": 3382,
-              "iconName": "inv_potion_79",
+              "iconName": "inv_potion_77",
               "note": "Health regen"
             },
             {
@@ -668,11 +902,7 @@
               "iconName": "inv_ammo_bullet_01",
               "note": ""
             },
-            {
-              "name": "Rough Sharpening Stone",
-              "itemId": 2863,
-              "iconName": "inv_stone_sharpeningstone_01"
-            },
+
             {
               "name": "Deviate Fish",
               "itemId": 6522,
