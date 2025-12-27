@@ -122,7 +122,9 @@ export default async function ExpansionBuildsPage({
                 >
                   <div className="flex items-center justify-between gap-6">
                     <div className="min-w-0">
-                      <h2 className="truncate text-3xl font-semibold">{title}</h2>
+                      <h2 className="text-2xl sm:text-3xl font-semibold leading-tight break-words">
+  {title}
+</h2>
                       {subtitle ? (
                         <p className="mt-1 text-base text-white/55">{subtitle}</p>
                       ) : null}

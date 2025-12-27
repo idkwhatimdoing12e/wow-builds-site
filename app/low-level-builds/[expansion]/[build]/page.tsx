@@ -270,7 +270,7 @@ export default async function BuildPage({
         <section className="mt-8 rounded-[2rem] border border-white/10 bg-white/[0.03] p-8">
           <div className="flex items-end justify-between gap-6">
             <h2 className="text-2xl font-semibold">Buffs</h2>
-            <p className="text-sm text-white/50">World buffs + seasonal buffs</p>
+            
           </div>
 
           <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
