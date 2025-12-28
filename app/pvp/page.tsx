@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { EXPANSIONS } from "../data/expansions";
 
-export default function ArenaLandingPage() {
+export default function PvpLandingPage() {
   const arenaExpansions = EXPANSIONS.filter((e) => e.id !== "vanilla");
 
   return (
@@ -27,18 +27,8 @@ export default function ArenaLandingPage() {
           ← Back
         </Link>
 
-        <h1 style={{ fontSize: 56, lineHeight: 1.05, margin: 0 }}>
-          Arena PvP Builds
-        </h1>
-
-        <p
-          style={{
-            marginTop: 12,
-            marginBottom: 28,
-            color: "rgba(255,255,255,0.65)",
-            fontSize: 18,
-          }}
-        >
+        <h1 style={{ fontSize: 56, lineHeight: 1.05, margin: 0 }}>Arena PvP Builds</h1>
+        <p style={{ marginTop: 12, marginBottom: 28, color: "rgba(255,255,255,0.65)", fontSize: 18 }}>
           Pick an expansion.
         </p>
 
@@ -64,40 +54,17 @@ export default function ArenaLandingPage() {
                 alt={`${e.name} logo`}
                 width={54}
                 height={54}
-                style={{
-                  borderRadius: 12,
-                  border: "1px solid rgba(255,255,255,0.15)",
-                }}
+                style={{ borderRadius: 12, border: "1px solid rgba(255,255,255,0.15)" }}
               />
 
               <div style={{ flex: 1 }}>
-                <div
-                  style={{
-                    fontSize: 28,
-                    fontWeight: 800,
-                    letterSpacing: -0.3,
-                  }}
-                >
-                  {e.name}
-                </div>
-                <div
-                  style={{
-                    marginTop: 6,
-                    color: "rgba(255,255,255,0.65)",
-                  }}
-                >
+                <div style={{ fontSize: 28, fontWeight: 800, letterSpacing: -0.3 }}>{e.name}</div>
+                <div style={{ marginTop: 6, color: "rgba(255,255,255,0.65)" }}>
                   Arena builds (coming soon)
                 </div>
               </div>
 
-              <div
-                style={{
-                  color: "rgba(255,255,255,0.65)",
-                  fontSize: 18,
-                }}
-              >
-                →
-              </div>
+              <div style={{ color: "rgba(255,255,255,0.65)", fontSize: 18 }}>→</div>
             </Link>
           ))}
         </div>
