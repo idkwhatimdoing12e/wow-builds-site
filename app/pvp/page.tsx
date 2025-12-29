@@ -1,9 +1,6 @@
 import Link from "next/link";
-import { EXPANSIONS } from "../data/expansions";
 
 export default function PvpLandingPage() {
-  const arenaExpansions = EXPANSIONS.filter((e) => e.id !== "vanilla");
-
   return (
     <main
       style={{
@@ -27,46 +24,46 @@ export default function PvpLandingPage() {
           ← Back
         </Link>
 
-        <h1 style={{ fontSize: 56, lineHeight: 1.05, margin: 0 }}>Arena PvP Builds</h1>
+        <h1 style={{ fontSize: 56, lineHeight: 1.05, margin: 0 }}>PvP</h1>
         <p style={{ marginTop: 12, marginBottom: 28, color: "rgba(255,255,255,0.65)", fontSize: 18 }}>
           Pick an expansion.
         </p>
 
         <div style={{ display: "grid", gap: 16 }}>
-          {arenaExpansions.map((e) => (
-            <Link
-              key={e.id}
-              href={`/pvp/${e.id}`}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 18,
-                padding: "22px 22px",
-                borderRadius: 18,
-                border: "1px solid rgba(255,255,255,0.18)",
-                background: "rgba(0,0,0,0.25)",
-                textDecoration: "none",
-                color: "#fff",
-              }}
-            >
-              <img
-                src={e.logoSrc}
-                alt={`${e.name} logo`}
-                width={54}
-                height={54}
-                style={{ borderRadius: 12, border: "1px solid rgba(255,255,255,0.15)" }}
-              />
-
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 28, fontWeight: 800, letterSpacing: -0.3 }}>{e.name}</div>
-                <div style={{ marginTop: 6, color: "rgba(255,255,255,0.65)" }}>
-                  Arena builds (coming soon)
-                </div>
+          <Link
+            href="/pvp/tbc"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "22px 22px",
+              borderRadius: 18,
+              border: "1px solid rgba(255,255,255,0.18)",
+              background: "rgba(0,0,0,0.25)",
+              textDecoration: "none",
+              color: "#fff",
+            }}
+          >
+            <div>
+              <div style={{ fontSize: 30, fontWeight: 900, letterSpacing: -0.3 }}>The Burning Crusade</div>
+              <div style={{ marginTop: 6, color: "rgba(255,255,255,0.65)" }}>
+                Tier list + spec pages
               </div>
+            </div>
+            <div style={{ color: "rgba(255,255,255,0.65)", fontSize: 18 }}>→</div>
+          </Link>
 
-              <div style={{ color: "rgba(255,255,255,0.65)", fontSize: 18 }}>→</div>
-            </Link>
-          ))}
+          <div
+            style={{
+              padding: "22px 22px",
+              borderRadius: 18,
+              border: "1px solid rgba(255,255,255,0.12)",
+              background: "rgba(0,0,0,0.18)",
+              color: "rgba(255,255,255,0.5)",
+            }}
+          >
+            Wrath / Cata / MoP coming later.
+          </div>
         </div>
       </div>
     </main>
