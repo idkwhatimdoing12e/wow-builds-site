@@ -22,6 +22,7 @@ type ClassBuildPageData = {
 
   talentsNote?: string[];
   talentsEmbedUrl?: string;
+  talentsImage?: string;
 
   gear: GearItem[];
 };
@@ -54,6 +55,7 @@ const DATA: Record<string, ClassBuildPageData> = {
 
     talentsEmbedUrl:
       "https://www.wowhead.com/tbc/talent-calc/embed/priest/5050313130525102031501-230051-04",
+      talentsImage: "/pvp-talents/tbc/disc-priest.png",
 
     gear: [
       { slot: "Neck", itemName: "Light-Collar of the Incarnate", note: "+22 Spell Damage, +14 Spell Hit" },
@@ -125,7 +127,13 @@ function NotesList({ notes }: { notes: string[] }) {
  * This avoids dead space on mobile AND avoids chopping by allowing internal scroll.
  * No external “Open calculator” button.
  */
-function TalentsEmbed({ embedUrl }: { embedUrl?: string }) {
+function TalentsEmbed({
+  embedUrl,
+  imageUrl,
+}: {
+  embedUrl?: string;
+  imageUrl?: string;
+}) {
   const [blocked, setBlocked] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(false);
 
@@ -136,6 +144,31 @@ function TalentsEmbed({ embedUrl }: { embedUrl?: string }) {
     return () => window.removeEventListener("resize", update);
   }, []);
 
+  // MOBILE: show image (no dead space)
+  if (isMobile && imageUrl) {
+    return (
+      <div
+        style={{
+          borderRadius: 16,
+          border: "1px solid rgba(255,255,255,0.08)",
+          background: "rgba(0,0,0,0.35)",
+          overflow: "hidden",
+        }}
+      >
+        <img
+          src={imageUrl}
+          alt="Talents"
+          style={{
+            width: "100%",
+            height: "auto",
+            display: "block",
+          }}
+        />
+      </div>
+    );
+  }
+
+  // DESKTOP/TABLET: iframe
   if (!embedUrl || blocked) {
     return (
       <div style={{ color: "rgba(255,255,255,0.70)", fontSize: 14, lineHeight: 1.35 }}>
@@ -143,8 +176,6 @@ function TalentsEmbed({ embedUrl }: { embedUrl?: string }) {
       </div>
     );
   }
-
-  const height = isMobile ? 420 : 760;
 
   return (
     <div
@@ -159,10 +190,10 @@ function TalentsEmbed({ embedUrl }: { embedUrl?: string }) {
         src={embedUrl}
         title="Talents"
         loading="lazy"
-        scrolling="yes"
+        scrolling="no"
         style={{
           width: "100%",
-          height,
+          height: 760,
           border: 0,
           display: "block",
           background: "transparent",
@@ -375,7 +406,7 @@ export default function TbcClassPage() {
             </ul>
           ) : null}
 
-          <TalentsEmbed embedUrl={data.talentsEmbedUrl} />
+          <TalentsEmbed embedUrl={data.talentsEmbedUrl} imageUrl={data.talentsImage} />
         </SectionCard>
 
         <SectionCard title="Gear">
