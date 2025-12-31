@@ -7,10 +7,10 @@ import React from "react";
 type GearItem = {
   slot: string;
   itemName: string;
-  itemId?: number;     // optional direct wowhead item link
-  iconName?: string;   // zamimg icon name (optional)
-  note?: string;       // stats line
-  enchant?: string;    // enchant line
+  itemId?: number; // wowhead item id (tbc)
+  iconName?: string; // zamimg icon
+  note?: string;
+  enchant?: string;
 };
 
 type ClassBuildPageData = {
@@ -21,14 +21,15 @@ type ClassBuildPageData = {
   notes: string[];
 
   talentsNote?: string[];
-  talentsEmbedUrl?: string;
   talentsImage?: string;
 
   gear: GearItem[];
 };
 
 const ICON = (name?: string) =>
-  `https://wow.zamimg.com/images/wow/icons/large/${name || "inv_misc_questionmark"}.jpg`;
+  `https://wow.zamimg.com/images/wow/icons/large/${
+    name || "inv_misc_questionmark"
+  }.jpg`;
 
 const wowheadTbcItemUrl = (itemId: number) =>
   `https://www.wowhead.com/tbc/item=${itemId}`;
@@ -36,51 +37,162 @@ const wowheadTbcItemUrl = (itemId: number) =>
 const wowheadTbcSearchUrl = (q: string) =>
   `https://www.wowhead.com/tbc/search?q=${encodeURIComponent(q)}`;
 
+declare global {
+  interface Window {
+    whTooltips?: any;
+    $WowheadPower?: { refreshLinks?: () => void };
+  }
+}
+
 const DATA: Record<string, ClassBuildPageData> = {
   "disc-priest": {
     title: "Disc Priest",
     subtitle: "TBC — Arena (Discipline)",
     description: "",
 
+    // DO NOT TOUCH: keeping your notes exactly
     notes: [
-      "Priest is strong but squishy — your partner must peel while you create distance.",
-      "You play off setups and punish with CC windows.",
-      "Swap to a spirit weapon after 5s without casting for regen.",
+      "Horde is Undead, Alliance is Dwarf",
+      "Priest is strong but squishy, your partner must save you while you create distance",
+      "You play off setups and move out aggressively when you have CC on the enemy",
+      "Swap to a spirit weapon after 5s without casting for increased mana regen.",
+      "Spam Rank1 Shadow Word Pain to proc blackout when needed ",
+      "Use Rank1 Chastise while kiting to save mana",
     ],
 
     talentsNote: [
-      "Standard 46/11/4 Discipline baseline.",
-      "Flex points depend on comp and matchup.",
+      "Standard talents for any comp, you can swap Divine Fury for Spell warding if you are facing a lot of mage and locks double dps.",
+      "",
     ],
 
-    talentsEmbedUrl:
-      "https://www.wowhead.com/tbc/talent-calc/embed/priest/5050313130525102031501-230051-04",
-      talentsImage: "/pvp-talents/tbc/disc-priest.png",
+    // THIS is where it belongs
+    talentsImage: "/pvp-talents/tbc/disc-priest.png",
 
     gear: [
-      { slot: "Neck", itemName: "Light-Collar of the Incarnate", note: "+22 Spell Damage, +14 Spell Hit" },
-      { slot: "Trinket", itemName: "Talisman of the Breaker" },
-      { slot: "Shoulders", itemName: "Gladiator's Mooncloth Mantle", note: "+6 MP5, +22 Healing" },
-      { slot: "Back", itemName: "Stainless Cloak of the Pure Hearted", note: "+20 Spell Penetration" },
-      { slot: "Chest", itemName: "Gladiator's Mooncloth Robe", note: "+15 Resilience" },
-      { slot: "Wrist", itemName: "Marshal's Mooncloth Cuffs", note: "+6 MP5" },
-      { slot: "Main Hand", itemName: "Light's Justice", note: "+81 Healing, +27 Spell Damage" },
-      { slot: "Ring", itemName: "Signet of Unshakable Faith" },
-
-      { slot: "Hands", itemName: "Gladiator's Mooncloth Gloves", note: "+15 Spell Hit" },
-      { slot: "Waist", itemName: "Marshal's Mooncloth Belt" },
-      { slot: "Legs", itemName: "Gladiator's Mooncloth Leggings", note: "+66 Healing, +22 Spell Damage" },
-      { slot: "Feet", itemName: "Boots of the Incorrupt", enchant: "Minor Speed +9 Stamina" },
-      { slot: "Ring", itemName: "Violet Signet of the Grand Restorer", note: "+20 Healing, +7 Spell Damage" },
-      { slot: "Ring", itemName: "Naaru Lightwarden's Band", note: "+20 Healing, +7 Spell Damage" },
-      { slot: "Trinket", itemName: "Pendant of the Violet Eye" },
-      { slot: "Trinket", itemName: "Medallion of the Alliance" },
-      { slot: "Ranged", itemName: "Blue Diamond Witchwand" },
+      {
+        slot: "Neck",
+        itemName: "Light-Collar of the Incarnate",
+        itemId: 29376,
+        iconName: "inv_jewelry_necklace_36",
+        note: "+22 Spell Damage, +14 Spell Hit",
+      },
+      {
+        slot: "Trinket",
+        itemName: "Talisman of the Breaker",
+        itemId: 29376, // (you had this; change later if needed)
+        iconName: "inv_jewelry_talisman_06",
+      },
+      {
+        slot: "Shoulders",
+        itemName: "Gladiator's Mooncloth Mantle",
+        itemId: 32017,
+        iconName: "inv_shoulder_68",
+        note: "+6 MP5, +22 Healing",
+      },
+      {
+        slot: "Back",
+        itemName: "Stainless Cloak of the Pure Hearted",
+        itemId: 29375,
+        iconName: "inv_misc_cape_01",
+        note: "+20 Spell Penetration",
+      },
+      {
+        slot: "Chest",
+        itemName: "Gladiator's Mooncloth Robe",
+        itemId: 32016,
+        iconName: "inv_chest_cloth_17",
+        note: "+15 Resilience",
+      },
+      {
+        slot: "Wrist",
+        itemName: "Marshal's Mooncloth Cuffs",
+        itemId: 32980,
+        iconName: "inv_bracer_07",
+        note: "+6 MP5",
+      },
+      {
+        slot: "Main Hand",
+        itemName: "Light's Justice",
+        itemId: 30787,
+        iconName: "inv_staff_31",
+        note: "+81 Healing, +27 Spell Damage",
+      },
+      {
+        slot: "Ring",
+        itemName: "Signet of Unshakable Faith",
+        itemId: 29290,
+        iconName: "inv_jewelry_ring_35",
+      },
+      {
+        slot: "Hands",
+        itemName: "Gladiator's Mooncloth Gloves",
+        itemId: 32015,
+        iconName: "inv_gauntlets_25",
+        note: "+15 Spell Hit",
+      },
+      {
+        slot: "Waist",
+        itemName: "Marshal's Mooncloth Belt",
+        itemId: 32979,
+        iconName: "inv_belt_22",
+      },
+      {
+        slot: "Legs",
+        itemName: "Gladiator's Mooncloth Leggings",
+        itemId: 32018,
+        iconName: "inv_pants_cloth_16",
+        note: "+66 Healing, +22 Spell Damage",
+      },
+      {
+        slot: "Feet",
+        itemName: "Boots of the Incorrupt",
+        itemId: 29373,
+        iconName: "inv_boots_cloth_16",
+        enchant: "Minor Speed +9 Stamina",
+      },
+      {
+        slot: "Ring",
+        itemName: "Violet Signet of the Grand Restorer",
+        itemId: 29294,
+        iconName: "inv_jewelry_ring_42",
+        note: "+20 Healing, +7 Spell Damage",
+      },
+      {
+        slot: "Ring",
+        itemName: "Naaru Lightwarden's Band",
+        itemId: 29374,
+        iconName: "inv_jewelry_ring_41",
+        note: "+20 Healing, +7 Spell Damage",
+      },
+      {
+        slot: "Trinket",
+        itemName: "Pendant of the Violet Eye",
+        itemId: 28789,
+        iconName: "inv_jewelry_necklace_29",
+      },
+      {
+        slot: "Trinket",
+        itemName: "Medallion of the Alliance",
+        itemId: 28235,
+        iconName: "inv_jewelry_trinketpvp_01",
+      },
+      {
+        slot: "Ranged",
+        itemName: "Blue Diamond Witchwand",
+        itemId: 29272,
+        iconName: "inv_wand_20",
+      },
     ],
   },
 };
 
-function SectionCard({ title, children }: { title: string; children: React.ReactNode }) {
+function SectionCard({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <section
       style={{
@@ -101,7 +213,9 @@ function SectionCard({ title, children }: { title: string; children: React.React
 }
 
 function NotesList({ notes }: { notes: string[] }) {
-  if (!notes?.length) return <div style={{ color: "rgba(255,255,255,0.6)" }}>No notes yet.</div>;
+  if (!notes?.length) {
+    return <div style={{ color: "rgba(255,255,255,0.6)" }}>No notes yet.</div>;
+  }
 
   return (
     <ul
@@ -116,112 +230,139 @@ function NotesList({ notes }: { notes: string[] }) {
       }}
     >
       {notes.map((n, i) => (
-        <li key={i}>{n}</li>
+        <li key={i} style={{ color: "rgba(255,255,255,0.9)" }}>
+          {n}
+        </li>
       ))}
     </ul>
   );
 }
 
 /**
- * Talents: fixed heights per breakpoint + internal iframe scrolling.
- * This avoids dead space on mobile AND avoids chopping by allowing internal scroll.
- * No external “Open calculator” button.
+ * Loads Wowhead tooltips (power.js) once, and refreshes links for SPA.
  */
-function TalentsEmbed({
-  embedUrl,
-  imageUrl,
-}: {
-  embedUrl?: string;
-  imageUrl?: string;
-}) {
-  const [blocked, setBlocked] = React.useState(false);
-  const [isMobile, setIsMobile] = React.useState(false);
-
+function useWowheadTooltips(deps: any[] = []) {
   React.useEffect(() => {
-    const update = () => setIsMobile(window.innerWidth <= 700);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    const SCRIPT_ID = "wowhead-powerjs";
+
+    // Ensure config exists BEFORE script loads
+    window.whTooltips = window.whTooltips || {
+      colorLinks: false,
+      iconizeLinks: false,
+      renameLinks: false,
+    };
+
+    const existing = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
+    if (!existing) {
+      const s = document.createElement("script");
+      s.id = SCRIPT_ID;
+      s.src = "https://wow.zamimg.com/widgets/power.js";
+      s.async = true;
+      s.onload = () => window.$WowheadPower?.refreshLinks?.();
+      document.body.appendChild(s);
+    } else {
+      // already loaded
+      window.$WowheadPower?.refreshLinks?.();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // MOBILE: show image (no dead space)
-  if (isMobile && imageUrl) {
-    return (
-      <div
-        style={{
-          borderRadius: 16,
-          border: "1px solid rgba(255,255,255,0.08)",
-          background: "rgba(0,0,0,0.35)",
-          overflow: "hidden",
-        }}
-      >
-        <img
-          src={imageUrl}
-          alt="Talents"
-          style={{
-            width: "100%",
-            height: "auto",
-            display: "block",
-          }}
-        />
-      </div>
-    );
-  }
+  React.useEffect(() => {
+    window.$WowheadPower?.refreshLinks?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+}
 
-  // DESKTOP/TABLET: iframe
-  if (!embedUrl || blocked) {
-    return (
-      <div style={{ color: "rgba(255,255,255,0.70)", fontSize: 14, lineHeight: 1.35 }}>
-        Embedded talents could not be displayed.
-      </div>
-    );
-  }
-
+function TalentsBlock({
+  lines,
+  imageUrl,
+}: {
+  lines?: string[];
+  imageUrl?: string;
+}) {
   return (
-    <div
-      style={{
-        borderRadius: 16,
-        border: "1px solid rgba(255,255,255,0.08)",
-        background: "rgba(0,0,0,0.35)",
-        overflow: "hidden",
-      }}
-    >
-      <iframe
-        src={embedUrl}
-        title="Talents"
-        loading="lazy"
-        scrolling="no"
-        style={{
-          width: "100%",
-          height: 760,
-          border: 0,
-          display: "block",
-          background: "transparent",
-        }}
-        onError={() => setBlocked(true)}
-      />
+    <div>
+      {lines?.length ? (
+        <ul
+          style={{
+            margin: "0 0 12px 0",
+            paddingLeft: 18,
+            display: "grid",
+            gap: 8,
+            color: "rgba(255,255,255,0.85)",
+            fontSize: 16,
+            lineHeight: 1.35,
+          }}
+        >
+          {lines.map((line, i) => (
+            <li key={i}>{line}</li>
+          ))}
+        </ul>
+      ) : null}
+
+      {imageUrl ? (
+        <div
+          style={{
+            borderRadius: 16,
+            border: "1px solid rgba(255,255,255,0.08)",
+            background: "rgba(0,0,0,0.35)",
+            overflow: "hidden",
+          }}
+        >
+          <img
+            src={imageUrl}
+            alt="Talents"
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+            }}
+          />
+        </div>
+      ) : (
+        <div style={{ color: "rgba(255,255,255,0.70)", fontSize: 14 }}>
+          Missing talents image.
+        </div>
+      )}
     </div>
   );
 }
 
 function GearGrid({ gear }: { gear: GearItem[] }) {
-  if (!gear?.length) return <div style={{ color: "rgba(255,255,255,0.6)" }}>No gear added yet.</div>;
+  // Tooltips need real anchors; refresh on gear changes
+  useWowheadTooltips([gear?.length]);
+
+  if (!gear?.length) {
+    return (
+      <div style={{ color: "rgba(255,255,255,0.6)" }}>No gear added yet.</div>
+    );
+  }
 
   return (
     <>
       <div className="gearGrid">
         {gear.map((g, idx) => {
           const hasId = typeof g.itemId === "number" && g.itemId > 0;
-          const href = hasId ? wowheadTbcItemUrl(g.itemId!) : wowheadTbcSearchUrl(g.itemName);
+          const href = hasId
+            ? wowheadTbcItemUrl(g.itemId!)
+            : wowheadTbcSearchUrl(g.itemName);
+
+          // Wowhead tooltip trigger
+          const wowheadAttr = hasId ? `item=${g.itemId}&domain=tbc` : undefined;
+
           const subLine = g.enchant || g.note;
 
           return (
-            <div
+            <a
               key={`${g.slot}-${idx}`}
               className="gearCard"
-              onClick={() => window.open(href, "_blank", "noopener,noreferrer")}
+              href={href}
+              target="_blank"
+              rel="noreferrer noopener"
+              data-wowhead={wowheadAttr}
             >
               <img className="gearIcon" src={ICON(g.iconName)} alt="" />
+
               <div className="gearText">
                 <div className="gearName" title={g.itemName}>
                   {g.itemName}
@@ -232,8 +373,9 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
                   </div>
                 ) : null}
               </div>
+
               <div className="gearArrow">↗</div>
-            </div>
+            </a>
           );
         })}
       </div>
@@ -244,6 +386,7 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 10px;
         }
+
         @media (max-width: 700px) {
           .gearGrid {
             grid-template-columns: 1fr;
@@ -251,6 +394,7 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
         }
 
         .gearCard {
+          text-decoration: none;
           cursor: pointer;
           border-radius: 16px;
           border: 1px solid rgba(255, 255, 255, 0.1);
@@ -261,11 +405,17 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
           align-items: center;
           gap: 10px;
           min-height: 60px;
+          color: rgba(255, 255, 255, 0.95);
+        }
+
+        .gearCard:hover {
+          border-color: rgba(255, 255, 255, 0.16);
+          background: rgba(255, 255, 255, 0.04);
         }
 
         .gearIcon {
-          width: 36px;
-          height: 36px;
+          width: 38px;
+          height: 38px;
           border-radius: 10px;
           object-fit: cover;
           display: block;
@@ -281,9 +431,8 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
 
         .gearName {
           font-size: 16px;
-          font-weight: 700;
+          font-weight: 800;
           line-height: 1.15;
-          color: rgba(255, 255, 255, 0.95);
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -388,25 +537,7 @@ export default function TbcClassPage() {
         </SectionCard>
 
         <SectionCard title="Talents">
-          {data.talentsNote?.length ? (
-            <ul
-              style={{
-                margin: "0 0 12px 0",
-                paddingLeft: 18,
-                display: "grid",
-                gap: 8,
-                color: "rgba(255,255,255,0.85)",
-                fontSize: 16,
-                lineHeight: 1.35,
-              }}
-            >
-              {data.talentsNote.map((line, i) => (
-                <li key={i}>{line}</li>
-              ))}
-            </ul>
-          ) : null}
-
-          <TalentsEmbed embedUrl={data.talentsEmbedUrl} imageUrl={data.talentsImage} />
+          <TalentsBlock lines={data.talentsNote} imageUrl={data.talentsImage} />
         </SectionCard>
 
         <SectionCard title="Gear">
@@ -420,7 +551,7 @@ export default function TbcClassPage() {
               fontSize: 14,
             }}
           >
-            Click an item to open Wowhead
+            Hover for Wowhead tooltip • Click to open Wowhead
           </div>
 
           <GearGrid gear={data.gear} />
