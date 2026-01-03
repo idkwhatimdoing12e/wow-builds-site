@@ -690,10 +690,15 @@ function TalentsBlock({ lines, embedUrl }: { lines?: string[]; embedUrl?: string
   }
 
   @media (max-width: 700px) {
-    .talentsFrame {
-      height: 520px;               /* keep it tall enough on mobile */
-    }
+  .talentsFrame {
+    height: 520px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
+}
+  html, body {
+  overflow-x: hidden;
+}
 `}</style>
         </>
       ) : (
@@ -1017,20 +1022,16 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
         }
 
         .gearArrow {
-          opacity: 0.45;
-          font-size: 14px;
-          justify-self: end;
-          align-self: start;
-          padding-top: 2px;
-          @media (max-width: 700px) {
-  .gearArrow {
-    display: none;
-
-    @media (max-width: 700px) {
-  .gearCard {
-    padding-right: 12px;
-  }
+  opacity: 0.45;
+  font-size: 14px;
+  justify-self: end;
+  align-self: start;
+  padding-top: 2px;
 }
+
+@media (max-width: 700px) {
+  .gearArrow {
+    display: none !important;
   }
 }
         }
