@@ -116,11 +116,13 @@ const SLUG_ALIASES: Record<string, string> = {
 const GEM_FALLBACK_ICON: Record<GemColor, string> = {
   red: "inv_jewelcrafting_gem_02",
   blue: "inv_jewelcrafting_gem_04",
-  yellow: "inv_jewelcrafting_gem_03",
-  meta: "inv_jewelcrafting_gem_01",
+  yellow: "inv_jewelcrafting_dawnstone_03",
+  meta: "inv_misc_gem_diamond_06",
   purple: "inv_jewelcrafting_gem_09",
   orange: "inv_jewelcrafting_gem_06",
   green: "inv_jewelcrafting_gem_11",
+  pearl: "inv_misc_gem_pearl_07",
+  yellowpvp: "inv_misc_gem_topaz_01"
 };
 
 const SOCKET_ICON: Record<SocketColor, string> = {
@@ -178,69 +180,28 @@ function useWowheadTooltips(deps: any[] = []) {
 
 const DISC_S1: GearItem[] = [
   {
-    slot: "Neck",
+    slot: "Head",
     itemName: "Light-Collar of the Incarnate",
     itemId: 29049,
     iconName: "inv_crown_01",
     note: "+22 Spell Damage, +14 Spell Hit",
     sockets: [
       {
-        socketColor: "red",
-        gemColor: "red",
-        name: "Runed Living Ruby",
-        note: "+9 Spell Damage",
-        itemId: 24030,
+        socketColor: "meta",
+        gemColor: "meta",
+        name: "Insightful Earthstorm Diamond",
+        note: "+12 Intellect & Chance to restore mana on spellcast",
+        itemId: 25901,
       },
       {
-        socketColor: "yellow",
-        gemColor: "yellow",
-        name: "Great Dawnstone",
-        note: "+8 Spell Crit Rating",
-        itemId: 24047,
+        socketColor: "pearl",
+        gemColor: "pearl",
+        name: "Purified Shadow Pearl",
+        note: "+9 healing +3 Spell Damage and +4 Spirit",
+        itemId: 32836,
       },
+     
     ],
-  },
-  {
-    slot: "Shoulders",
-    itemName: "Gladiator's Mooncloth Mantle",
-    itemId: 31412,
-    iconName: "inv_shoulder_02",
-    note: "+6 MP5, +22 Healing",
-  },
-  {
-    slot: "Back",
-    itemName: "Stainless Cloak of the Pure Hearted",
-    itemId: 28765,
-    iconName: "inv_misc_cape_06",
-    note: "+20 Spell Penetration",
-  },
-  {
-    slot: "Chest",
-    itemName: "Gladiator's Mooncloth Robe",
-    itemId: 31413,
-    iconName: "inv_chest_cloth_43",
-    note: "+15 Resilience",
-  },
-  {
-    slot: "Wrist",
-    itemName: "Marshal's Mooncloth Cuffs",
-    itemId: 32977,
-    iconName: "inv_bracer_07",
-    note: "+6 MP5",
-  },
-  {
-    slot: "Main Hand",
-    itemName: "Light's Justice",
-    itemId: 28771,
-    iconName: "inv_mace_46",
-    note: "+81 Healing, +27 Spell Damage",
-  },
-  {
-    slot: "Ring",
-    itemName: "Naaru Lightwarden's Band",
-    itemId: 28790,
-    iconName: "inv_jewelry_ring_70",
-    note: "+20 Healing, +7 Spell Damage",
   },
   {
     slot: "Hands",
@@ -249,8 +210,33 @@ const DISC_S1: GearItem[] = [
     iconName: "inv_gauntlets_15",
     note: "+15 Spell Hit",
   },
-  { slot: "Waist", itemName: "Marshal's Mooncloth Belt", itemId: 32976, iconName: "inv_belt_17" },
-  {
+  { slot: "Trinket", itemName: "Talisman of the Breaker", itemId: 29347, iconName: "ability_hunter_mastermarksman" },
+    { slot: "Waist", itemName: "Marshal's Mooncloth Belt", itemId: 32976, iconName: "inv_belt_17" },
+{
+    slot: "Shoulders",
+    itemName: "Gladiator's Mooncloth Mantle",
+    itemId: 31412,
+    iconName: "inv_shoulder_02",
+    note: "+6 MP5, +22 Healing",
+     sockets: [
+       {
+        socketColor: "pearl",
+        gemColor: "pearl",
+        name: "Purified Shadow Pearl",
+        note: "+9 healing +3 Spell Damage and +4 Spirit",
+        itemId: 32836,
+      },
+      {
+        socketColor: "yellow",
+        gemColor: "yellow",
+        name: "Mystyc Dawnstone",
+        note: "+8 Resilience",
+        itemId: 24053,
+      },
+
+      ],
+  },
+    {
     slot: "Legs",
     itemName: "Gladiator's Mooncloth Leggings",
     itemId: 31411,
@@ -258,6 +244,13 @@ const DISC_S1: GearItem[] = [
     note: "+66 Healing, +22 Spell Damage",
   },
   {
+    slot: "Back",
+    itemName: "Stainless Cloak of the Pure Hearted",
+    itemId: 28765,
+    iconName: "inv_misc_cape_06",
+    note: "+20 Spell Penetration",
+  },
+   {
     slot: "Feet",
     itemName: "Boots of the Incorrupt",
     itemId: 28663,
@@ -265,15 +258,91 @@ const DISC_S1: GearItem[] = [
     enchant: "Minor Speed +9 Stamina",
   },
   {
+    slot: "Chest",
+    itemName: "Gladiator's Mooncloth Robe",
+    itemId: 31413,
+    iconName: "inv_chest_cloth_43",
+    note: "+15 Resilience",
+    sockets: [
+       {
+        socketColor: "pearl",
+        gemColor: "pearl",
+        name: "Purified Shadow Pearl",
+        note: "+9 healing +3 Spell Damage and +4 Spirit",
+        itemId: 32836,
+      },
+       {
+        socketColor: "yellowpvp",
+        gemColor: "yellowpvp",
+        name: "Sublime Mystic Dawnstone",
+        note: "+10 Resilience",
+        itemId: 27679,
+      },
+      {
+        socketColor: "yellow",
+        gemColor: "yellow",
+        name: "Great Dawnstone",
+        note: "+8 Spell Hit",
+        itemId: 31861,
+      },
+
+      ],
+  },
+   {
     slot: "Ring",
     itemName: "Violet Signet of the Grand Restorer",
     itemId: 29290,
     iconName: "inv_jewelry_ring_62",
     note: "+20 Healing, +7 Spell Damage",
   },
-  { slot: "Trinket", itemName: "Talisman of the Breaker", itemId: 29347, iconName: "ability_hunter_mastermarksman" },
+  {
+    slot: "Wrist",
+    itemName: "Marshal's Mooncloth Cuffs",
+    itemId: 32977,
+    iconName: "inv_bracer_07",
+    note: "+6 MP5",
+     sockets: [
+     
+      {
+        socketColor: "yellow",
+        gemColor: "yellow",
+        name: "Mystyc Dawnstone",
+        note: "+8 Resilience",
+        itemId: 24053,
+      },
+      ],
+  },
+    {
+    slot: "Ring",
+    itemName: "Naaru Lightwarden's Band",
+    itemId: 28790,
+    iconName: "inv_jewelry_ring_70",
+    note: "+20 Healing, +7 Spell Damage",
+  },
   { slot: "Trinket", itemName: "Pendant of the Violet Eye", itemId: 28727, iconName: "inv_trinket_naxxramas02" },
   { slot: "Trinket", itemName: "Medallion of the Alliance", itemId: 30349, iconName: "inv_jewelry_trinketpvp_01" },
+  {
+    slot: "Main Hand",
+    itemName: "Light's Justice",
+    itemId: 28771,
+    iconName: "inv_mace_46",
+    note: "+81 Healing, +27 Spell Damage",
+  },
+  {
+    slot: "Off Hand",
+    itemName: "Gladiator's Reprieve",
+    itemId: 32452,
+    iconName: "inv_misc_book_06",
+    note: "",
+  },
+
+  
+
+ 
+ 
+  
+  
+  
   { slot: "Ranged", itemName: "Gladiator's Touch of Defeat", itemId: 28320, iconName: "inv_wand_09" },
 ];
 
@@ -717,9 +786,7 @@ function SocketsRow({ sockets }: { sockets?: SocketInfo[] }) {
                 {s.note ? <div className="sockGemNote">{s.note}</div> : null}
               </div>
 
-              {s.socketColor ? (
-                <img className="sockSocketIcon" src={socketIconUrl(s.socketColor)} alt="" title={`Socket: ${s.socketColor}`} />
-              ) : null}
+              
             </a>
           );
         })}
@@ -912,23 +979,29 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
         }
 
         .gearName {
-          font-size: 16px;
-          font-weight: 800;
-          line-height: 1.15;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.15;
 
-        .gearSub {
-          margin-top: 4px;
-          font-size: 13px;
-          color: rgba(255, 255, 255, 0.65);
-          line-height: 1.2;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
+  /* 2-line clamp instead of single-line ellipsis */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+  white-space: normal;
+}
+
+       .gearSub {
+  margin-top: 4px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.2;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
         /* sockets aligned to the top of the card, right after text */
         .gearSockets {
