@@ -304,7 +304,7 @@
           "id": "level-1-haste",
           "name": "Level 1 Haste",
           "title": "Level 1 Haste",
-          "subtitle": "TBC — Haste",
+          "subtitle": "",
           "description": "Static BiS list + enchants. Click items to open Wowhead.",
           "notes": [
             "Replace items to fit your armor type, enchants and buffs matter the most",
@@ -727,7 +727,7 @@
           "id": "level-1-haste-hunter",
           "name": "Level 1 Haste Hunter",
           "title": "Level 1 Haste Hunter",
-          "subtitle": "Wrath of the Lich King — Heirloom Haste Build",
+          "subtitle": "",
           "description": "Level 1 Hunter build using Wrath heirlooms. Any heirloom in the listed slots is typically fine.",
           "notes": [
             "Be a troll for Berserking",
@@ -962,7 +962,7 @@
   "id": "level-1-bis",
   "name": "Level 1 BiS Rogue",
   "title": "Level 1 BiS Rogue",
-  "subtitle": "WotLK — Level 1",
+  "subtitle": "",
   "description": "Best in Slot Level 1 build for Wrath of the Lich King.",
   "notes": [
     "Lock your XP in Stormwind or Orgrimmar",
