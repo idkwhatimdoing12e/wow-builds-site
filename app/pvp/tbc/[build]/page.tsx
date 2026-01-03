@@ -1022,6 +1022,17 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
           justify-self: end;
           align-self: start;
           padding-top: 2px;
+          @media (max-width: 700px) {
+  .gearArrow {
+    display: none;
+
+    @media (max-width: 700px) {
+  .gearCard {
+    padding-right: 12px;
+  }
+}
+  }
+}
         }
 
         /* Mobile: sockets go under, keep card compact */
