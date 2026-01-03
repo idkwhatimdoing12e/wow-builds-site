@@ -8,7 +8,7 @@ import React from "react";
 // TYPES
 // =======================
 
-type SocketColor = "red" | "blue" | "yellow" | "meta";
+type SocketColor = "red" | "blue" | "yellow" | "meta"| "pearl" | "yellowpvp";
 type GemColor = SocketColor | "purple" | "orange" | "green" | "pearl" | "yellowpvp";
 
 type SocketInfo = {
@@ -122,7 +122,7 @@ const GEM_FALLBACK_ICON: Record<GemColor, string> = {
   orange: "inv_jewelcrafting_gem_06",
   green: "inv_jewelcrafting_gem_11",
   pearl: "inv_misc_gem_pearl_07",
-  yellowpvp: "inv_misc_gem_topaz_01"
+  yellowpvp: "inv_misc_gem_topaz_01",
 };
 
 const SOCKET_ICON: Record<SocketColor, string> = {
@@ -130,6 +130,8 @@ const SOCKET_ICON: Record<SocketColor, string> = {
   blue: "inv_jewelcrafting_gem_04",
   yellow: "inv_jewelcrafting_gem_03",
   meta: "inv_jewelcrafting_gem_01",
+  yellowpvp: "inv_misc_gem_topaz_01",
+  pearl: "inv_misc_gem_pearl_07",
 };
 
 const gemIconUrl = (gemColor?: GemColor, iconName?: string) => {
