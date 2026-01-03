@@ -654,21 +654,23 @@ function TalentsBlock({ lines, embedUrl }: { lines?: string[]; embedUrl?: string
 
       {embedUrl ? (
         <>
-          <div className="talentsFrame">
-            <iframe
-              src={embedUrl}
-              title="Talents"
-              loading="lazy"
-              scrolling="yes"
-              style={{
-                width: "100%",
-                height: "100%",
-                border: 0,
-                display: "block",
-                background: "transparent",
-              }}
-            />
-          </div>
+          <div className="talentsScroller">
+  <div className="talentsFrame">
+    <iframe
+      src={embedUrl}
+      title="Talents"
+      loading="lazy"
+      scrolling="yes"
+      style={{
+        width: 980,          // key: force a width that may exceed mobile
+        height: "100%",
+        border: 0,
+        display: "block",
+        background: "transparent",
+      }}
+    />
+  </div>
+</div>
 
           <style jsx>{`
             .talentsFrame {
@@ -1124,6 +1126,7 @@ export default function TbcClassPage() {
           padding: "56px 24px",
           background: "radial-gradient(1200px 600px at 30% 0%, #1a1a1a 0%, #0b0b0b 55%, #070707 100%)",
           color: "#fff",
+          overflowX: "hidden", 
         }}
       >
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
