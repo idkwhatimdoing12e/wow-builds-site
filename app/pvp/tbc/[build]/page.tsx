@@ -1203,6 +1203,13 @@ function CompsGrid({ comps }: { comps?: CompCard[] }) {
           background: rgba(255, 255, 255, 0.03);
           padding: 10px 12px;
         }
+         
+  @media (max-width: 700px) {
+  .gearArrow {
+    display: none !important;
+  }
+
+}
       `}</style>
     </>
   );
