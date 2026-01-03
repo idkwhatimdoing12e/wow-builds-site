@@ -678,11 +678,17 @@ function TalentsBlock({ lines, embedUrl }: { lines?: string[]; embedUrl?: string
               overflow: hidden;
               height: 760px;
             }
-            @media (max-width: 1000px) {
-              .talentsFrame {
-                height: 650px;
-              }
-            }
+            @media (max-width: 700px) {
+  .talentsFrame {
+    height: auto;          /* stop forcing dead space */
+    aspect-ratio: 4 / 3;   /* gives a nice stable height */
+    min-height: 320px;     /* safety */
+  }
+  .talentsFrame iframe {
+    width: 100%;
+    height: 100%;
+  }
+}
             @media (max-width: 700px) {
               .talentsFrame {
                 height: 520px;
@@ -842,22 +848,19 @@ function SocketsRow({ sockets }: { sockets?: SocketInfo[] }) {
         }
 
         .sockGemName {
-          font-size: 12px;
-          font-weight: 850;
-          line-height: 1.1;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: normal;        /* allow wrapping */
+  overflow: visible;          /* no clipping */
+}
 
-        .sockGemNote {
-          font-size: 11px;
-          color: rgba(255, 255, 255, 0.65);
-          line-height: 1.1;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
+.sockGemNote {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.2;
+  white-space: normal;        /* allow wrapping */
+}
 
         .sockSocketIcon {
           width: 14px;
