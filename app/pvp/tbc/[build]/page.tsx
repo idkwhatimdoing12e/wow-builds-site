@@ -1183,6 +1183,8 @@ export default function TbcClassPage() {
             Feel free to replace PvE items for more PvP if you are facing a lot of double DPS comps
             <br />
             Swap weapons accordingly, if you see double DPS just switch to the Gladiator mace
+            <br />
+            3% Spell Hit Cap
           </div>
 
           <SeasonTabs value={season} onChange={setSeason} />
