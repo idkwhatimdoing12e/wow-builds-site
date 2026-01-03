@@ -194,8 +194,9 @@ const DISC_S1: GearItem[] = [
         itemId: 25901,
       },
       {
-        socketColor: "pearl",
-        gemColor: "pearl",
+       socketColor: "blue",          // or remove this line entirely
+gemColor: "purple",           // shadow pearl is purple in TBC
+iconName: "inv_misc_gem_pearl_07", // optional: forces a pearl-looking icon,
         name: "Purified Shadow Pearl",
         note: "+9 healing +3 Spell Damage and +4 Spirit",
         itemId: 32836,
@@ -220,8 +221,9 @@ const DISC_S1: GearItem[] = [
     note: "+6 MP5, +22 Healing",
      sockets: [
        {
-        socketColor: "pearl",
-        gemColor: "pearl",
+        socketColor: "blue",          // or remove this line entirely
+gemColor: "purple",           // shadow pearl is purple in TBC
+iconName: "inv_misc_gem_pearl_07",
         name: "Purified Shadow Pearl",
         note: "+9 healing +3 Spell Damage and +4 Spirit",
         itemId: 32836,
@@ -265,8 +267,9 @@ const DISC_S1: GearItem[] = [
     note: "+15 Resilience",
     sockets: [
        {
-        socketColor: "pearl",
-        gemColor: "pearl",
+        socketColor: "blue",          // or remove this line entirely
+gemColor: "purple",           // shadow pearl is purple in TBC
+iconName: "inv_misc_gem_pearl_07",
         name: "Purified Shadow Pearl",
         note: "+9 healing +3 Spell Damage and +4 Spirit",
         itemId: 32836,
