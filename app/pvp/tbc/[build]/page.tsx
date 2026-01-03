@@ -9,7 +9,7 @@ import React from "react";
 // =======================
 
 type SocketColor = "red" | "blue" | "yellow" | "meta";
-type GemColor = SocketColor | "purple" | "orange" | "green";
+type GemColor = SocketColor | "purple" | "orange" | "green" | "pearl" | "yellowpvp";
 
 type SocketInfo = {
   // optional socket type icon shown on the right of the gem pill
