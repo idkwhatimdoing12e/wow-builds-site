@@ -4,6 +4,25 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
 
+// =======================
+// TYPES
+// =======================
+
+type SocketColor = "red" | "blue" | "yellow" | "meta";
+type GemColor = SocketColor | "purple" | "orange" | "green";
+
+type SocketInfo = {
+  // optional socket type icon shown on the right of the gem pill
+  socketColor?: SocketColor;
+
+  // gem display
+  name: string;
+  note?: string;
+  itemId?: number; // wowhead gem item id (tbc)
+  iconName?: string; // zamimg icon override
+  gemColor?: GemColor; // fallback icon mapping
+};
+
 type GearItem = {
   slot: string;
   itemName: string;
@@ -11,6 +30,9 @@ type GearItem = {
   iconName?: string; // zamimg icon
   note?: string;
   enchant?: string;
+
+  // OPTIONAL: if omitted or empty => nothing shows
+  sockets?: SocketInfo[];
 };
 
 type CompCard = {
@@ -36,12 +58,15 @@ type ClassBuildPageData = {
   comps3v3?: CompCard[];
 };
 
+// =======================
+// HELPERS
+// =======================
+
 const ICON = (name?: string) =>
   `https://wow.zamimg.com/images/wow/icons/large/${name || "inv_misc_questionmark"}.jpg`;
 
 const wowheadTbcItemUrl = (itemId: number) => `https://www.wowhead.com/tbc/item=${itemId}`;
-const wowheadTbcSearchUrl = (q: string) =>
-  `https://www.wowhead.com/tbc/search?q=${encodeURIComponent(q)}`;
+const wowheadTbcSearchUrl = (q: string) => `https://www.wowhead.com/tbc/search?q=${encodeURIComponent(q)}`;
 
 declare global {
   interface Window {
@@ -51,53 +76,104 @@ declare global {
 }
 
 /**
- * Slugs your tier page uses must exist in DATA.
- * Aliases map incoming slugs to your canonical keys.
+ * Slugs must exist in DATA.
+ * Aliases map incoming slugs to canonical keys.
  */
 const SLUG_ALIASES: Record<string, string> = {
-  // priest
   "disc-priest": "disc-priest",
   "discipline-priest": "disc-priest",
   disc: "disc-priest",
 
-  // warlock
   "aff-warlock": "aff-warlock",
   "affliction-warlock": "aff-warlock",
   "affli-warlock": "aff-warlock",
 
-  // druid
   "resto-druid": "resto-druid",
   "restoration-druid": "resto-druid",
   "feral-druid": "feral-druid",
   resto: "resto-druid",
 
-  // warrior
   "arms-warrior": "arms-warrior",
 
-  // rogue
   "sub-rogue": "sub-rogue",
   "subtlety-rogue": "sub-rogue",
 
-  // mage
   "frost-mage": "frost-mage",
   "fire-mage": "fire-mage",
 
-  // hunter
   "mm-hunter": "mm-hunter",
   "marksman-hunter": "mm-hunter",
   "bm-hunter": "bm-hunter",
 
-  // paladin
   "holy-paladin": "holy-paladin",
   "ret-paladin": "ret-paladin",
 
-  // shaman
   "resto-shaman": "resto-shaman",
   "restoration-shaman": "resto-shaman",
 };
 
+// Fallback icons by gem color (swap anytime)
+const GEM_FALLBACK_ICON: Record<GemColor, string> = {
+  red: "inv_jewelcrafting_gem_02",
+  blue: "inv_jewelcrafting_gem_04",
+  yellow: "inv_jewelcrafting_gem_03",
+  meta: "inv_jewelcrafting_gem_01",
+  purple: "inv_jewelcrafting_gem_09",
+  orange: "inv_jewelcrafting_gem_06",
+  green: "inv_jewelcrafting_gem_11",
+};
+
+const SOCKET_ICON: Record<SocketColor, string> = {
+  red: "inv_jewelcrafting_gem_02",
+  blue: "inv_jewelcrafting_gem_04",
+  yellow: "inv_jewelcrafting_gem_03",
+  meta: "inv_jewelcrafting_gem_01",
+};
+
+const gemIconUrl = (gemColor?: GemColor, iconName?: string) => {
+  const name = iconName || (gemColor ? GEM_FALLBACK_ICON[gemColor] : "inv_misc_questionmark");
+  return ICON(name);
+};
+
+const socketIconUrl = (socketColor: SocketColor) => ICON(SOCKET_ICON[socketColor]);
+
 // =======================
-// GEAR LISTS
+// WOWHEAD TOOLTIP HOOK
+// =======================
+
+function useWowheadTooltips(deps: any[] = []) {
+  React.useEffect(() => {
+    const SCRIPT_ID = "wowhead-powerjs";
+
+    window.whTooltips = {
+      colorLinks: false,
+      iconizeLinks: false,
+      renameLinks: false,
+      tooltipOffsetX: 6,
+      tooltipOffsetY: 6,
+    };
+
+    const existing = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
+    if (!existing) {
+      const s = document.createElement("script");
+      s.id = SCRIPT_ID;
+      s.src = "https://wow.zamimg.com/widgets/power.js";
+      s.async = true;
+      s.onload = () => window.$WowheadPower?.refreshLinks?.();
+      document.body.appendChild(s);
+    } else {
+      window.$WowheadPower?.refreshLinks?.();
+    }
+  }, []);
+
+  React.useEffect(() => {
+    window.$WowheadPower?.refreshLinks?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+}
+
+// =======================
+// GEAR LISTS (keep your data)
 // =======================
 
 const DISC_S1: GearItem[] = [
@@ -107,6 +183,22 @@ const DISC_S1: GearItem[] = [
     itemId: 29049,
     iconName: "inv_crown_01",
     note: "+22 Spell Damage, +14 Spell Hit",
+    sockets: [
+      {
+        socketColor: "red",
+        gemColor: "red",
+        name: "Runed Living Ruby",
+        note: "+9 Spell Damage",
+        itemId: 24030,
+      },
+      {
+        socketColor: "yellow",
+        gemColor: "yellow",
+        name: "Great Dawnstone",
+        note: "+8 Spell Crit Rating",
+        itemId: 24047,
+      },
+    ],
   },
   {
     slot: "Shoulders",
@@ -188,56 +280,40 @@ const DISC_S1: GearItem[] = [
 const FROST_MAGE_S1: GearItem[] = [
   { slot: "Head", itemName: "Gladiator's Silk Cowl", itemId: 25854, iconName: "inv_helmet_48", note: "+22 Spell Damage and +14 Spell Hit Rating" },
   { slot: "Neck", itemName: "Talisman of the Breaker", itemId: 29347, iconName: "inv_jewelry_necklace_21" },
-
   { slot: "Shoulders", itemName: "Gladiator's Silk Amice", itemId: 25855, iconName: "inv_shoulder_23", note: "+18 Spell Damage and +10 Spell Crit Rating" },
   { slot: "Back", itemName: "Ruby Drape of the Mysticant", iconName: "inv_misc_cape_17", note: "+20 Spell Penetration" },
-
   { slot: "Chest", itemName: "Gladiator's Silk Raiment", itemId: 25856, iconName: "inv_chest_cloth_43", note: "+15 Resilience Rating" },
   { slot: "Wrist", itemName: "General's Silk Cuffs", iconName: "inv_bracer_07", note: "+15 Spell Damage" },
-
   { slot: "Hands", itemName: "Gladiator's Silk Handguards", itemId: 25857, iconName: "inv_gauntlets_19", note: "+20 Spell Damage" },
   { slot: "Waist", itemName: "General's Silk Belt", iconName: "inv_belt_22" },
-
   { slot: "Legs", itemName: "Breeches of the Occultist", iconName: "inv_pants_cloth_05", note: "+35 Spell Damage and +20 Stamina" },
   { slot: "Feet", itemName: "General's Silk Footguards", itemId: 28410, iconName: "inv_boots_fabric_01", enchant: "Minor Speed and +9 Stamina" },
-
   { slot: "Ring", itemName: "Ring of Recurrence", iconName: "inv_jewelry_ring_51", note: "+12 Spell Damage" },
   { slot: "Ring", itemName: "Violet Signet of the Archmage", iconName: "inv_jewelry_ring_62", note: "+12 Spell Damage" },
-
   { slot: "Trinket", itemName: "Icon of the Silver Crescent", iconName: "inv_trinket_naxxramas01" },
   { slot: "Trinket", itemName: "Medallion of the Horde", iconName: "inv_jewelry_trinketpvp_02" },
-
   { slot: "Main Hand", itemName: "Nathrezim Mindblade", iconName: "inv_sword_53", note: "+40 Spell Damage" },
   { slot: "Off Hand", itemName: "Karaborian Talisman", iconName: "inv_offhand_outlandraid_01" },
-
   { slot: "Ranged", itemName: "Gladiator's Touch of Defeat", itemId: 28320, iconName: "inv_wand_09" },
 ];
 
 const SUB_ROGUE_S1: GearItem[] = [
   { slot: "Head", itemName: "Gladiator's Leather Helm", itemId: 28320, iconName: "inv_helmet_41", note: "+34 Attack Power and +16 Hit Rating" },
   { slot: "Neck", itemName: "Choker of Vile Intent", iconName: "inv_jewelry_necklace_04" },
-
   { slot: "Shoulders", itemName: "Gladiator's Leather Spaulders", iconName: "inv_shoulder_04", note: "+30 Attack Power and +10 Crit Rating" },
   { slot: "Back", itemName: "Drape of the Dark Reavers", iconName: "inv_misc_cape_18", note: "Improved Stealth" },
-
   { slot: "Chest", itemName: "Gladiator's Leather Tunic", iconName: "inv_chest_leather_05", note: "+15 Resilience Rating" },
   { slot: "Wrist", itemName: "General's Leather Bracers", iconName: "inv_bracer_07", note: "+24 Attack Power" },
-
   { slot: "Hands", itemName: "Gladiator's Leather Gloves", iconName: "inv_gauntlets_15", note: "+15 Agility" },
   { slot: "Waist", itemName: "General's Leather Belt", iconName: "inv_belt_17" },
-
   { slot: "Legs", itemName: "Skulker's Greaves", iconName: "inv_pants_leather_20", note: "+50 Attack Power and +12 Crit Rating" },
   { slot: "Feet", itemName: "The Master's Treads", iconName: "inv_boots_leather_02", enchant: "Surefooted" },
-
   { slot: "Ring", itemName: "Ring of the Recalcitrant", iconName: "inv_jewelry_ring_60", note: "No Enchant" },
   { slot: "Ring", itemName: "Garona's Signet Ring", iconName: "inv_jewelry_ring_55", note: "No Enchant" },
-
   { slot: "Trinket", itemName: "Medallion of the Horde", iconName: "inv_jewelry_trinketpvp_02" },
   { slot: "Trinket", itemName: "Figurine - Nightseye Panther", iconName: "inv_jewelcrafting_nightseye_02" },
-
   { slot: "Main Hand", itemName: "Spiteblade", iconName: "inv_sword_12", enchant: "Mongoose" },
   { slot: "Off Hand", itemName: "Gladiator's Shiv", iconName: "inv_weapon_shortblade_63", enchant: "Mongoose" },
-
   { slot: "Ranged", itemName: "Gladiator's War Edge", iconName: "inv_throwingaxe_04" },
 ];
 
@@ -295,15 +371,8 @@ const DATA: Record<string, ClassBuildPageData> = {
     talentsNote: ["Template talents — edit later."],
     talentsEmbedUrl: "https://www.wowhead.com/tbc/talent-calc/embed/mage/2500050300230150330125050000000000000000",
     gearBySeason: { S1: FROST_MAGE_S1, S2: [...FROST_MAGE_S1], S3: [...FROST_MAGE_S1], S4: [...FROST_MAGE_S1] },
-    comps2v2: [{ name: "Mage/DiscPriest", note: "Template — edit later." },
-      { name: "Mage/Rogue", note: "Template — edit later." },
-      { name: "Mage/Warlock", note: "Template — edit later." }
-    ],
-    comps3v3: [{ name: "Mage/Rogue/DiscPriest", note: "Template — edit later." },
-      { name: "Mage/Rogue/Resto Druid", note: "Template — edit later." },
-      { name: "Mage/Warlock/DiscPriest", note: "Template — edit later." },
-      { name: "Mage/Warlock/RestoDruid", note: "Template — edit later." }
-    ],
+    comps2v2: [{ name: "Mage/DiscPriest", note: "Template — edit later." }],
+    comps3v3: [{ name: "Mage/Rogue/DiscPriest", note: "Template — edit later." }],
   },
 
   "sub-rogue": {
@@ -314,21 +383,8 @@ const DATA: Record<string, ClassBuildPageData> = {
     talentsNote: ["Template talents — edit later."],
     talentsEmbedUrl: "https://www.wowhead.com/tbc/talent-calc/embed/rogue/3052031050021005221050000000000000000000",
     gearBySeason: { S1: SUB_ROGUE_S1, S2: [...SUB_ROGUE_S1], S3: [...SUB_ROGUE_S1], S4: [...SUB_ROGUE_S1] },
-    comps2v2: [{ name: "Rogue/DiscPriest", note: "Template — edit later." },
-      { name: "Rogue/Resto Druid", note: "Template — edit later." },
-      { name: "Rogue/Rogue", note: "Template — edit later." },
-      { name: "Rogue/Frost Mage", note: "Template — edit later." },
-      { name: "Rogue/Feral Druid", note: "Template — edit later." },
-      { name: "Rogue/Warlock", note: "Template — edit later." }
-    ],
-    comps3v3: [{ name: "Rogue/Mage/DiscPriest", note: "Template — edit later." },
-      { name: "Rogue/Warlock/DiscPriest", note: "Template — edit later." },
-      { name: "Rogue/Mage/Resto Druid", note: "Template — edit later." },
-      { name: "Rogue/Warlock/Resto Druid", note: "Template — edit later." },
-      { name: "Rogue/Warrior/Resto Druid", note: "Template — edit later." },
-      { name: "Rogue/Rogue/Resto Druid", note: "Template — edit later." },
-      { name: "Rogue/Rogue/DiscPriest", note: "Template — edit later." },
-    ],
+    comps2v2: [{ name: "Rogue/DiscPriest", note: "Template — edit later." }],
+    comps3v3: [{ name: "Rogue/Mage/DiscPriest", note: "Template — edit later." }],
   },
 
   // placeholders to stop 404s
@@ -501,37 +557,6 @@ function NotesList({ notes }: { notes: string[] }) {
   );
 }
 
-function useWowheadTooltips(deps: any[] = []) {
-  React.useEffect(() => {
-    const SCRIPT_ID = "wowhead-powerjs";
-
-    window.whTooltips = {
-      colorLinks: false,
-      iconizeLinks: false,
-      renameLinks: false,
-      tooltipOffsetX: 6,
-      tooltipOffsetY: 6,
-    };
-
-    const existing = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
-    if (!existing) {
-      const s = document.createElement("script");
-      s.id = SCRIPT_ID;
-      s.src = "https://wow.zamimg.com/widgets/power.js";
-      s.async = true;
-      s.onload = () => window.$WowheadPower?.refreshLinks?.();
-      document.body.appendChild(s);
-    } else {
-      window.$WowheadPower?.refreshLinks?.();
-    }
-  }, []);
-
-  React.useEffect(() => {
-    window.$WowheadPower?.refreshLinks?.();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
-}
-
 function TalentsBlock({ lines, embedUrl }: { lines?: string[]; embedUrl?: string }) {
   return (
     <>
@@ -659,6 +684,134 @@ function SeasonTabs({ value, onChange }: { value: SeasonKey; onChange: (s: Seaso
   );
 }
 
+function SocketsRow({ sockets }: { sockets?: SocketInfo[] }) {
+  useWowheadTooltips([sockets?.length || 0]);
+  if (!sockets?.length) return null;
+
+  return (
+    <>
+      <div className="socketsRow" aria-label="Sockets">
+        {sockets.map((s, i) => {
+          const hasGemId = typeof s.itemId === "number" && s.itemId > 0;
+          const href = hasGemId ? wowheadTbcItemUrl(s.itemId!) : wowheadTbcSearchUrl(s.name);
+          const wowheadAttr = hasGemId ? `item=${s.itemId}&domain=tbc` : undefined;
+
+          const iconSrc = gemIconUrl(s.gemColor, s.iconName);
+          const title = [s.name, s.note].filter(Boolean).join(" — ");
+
+          return (
+            <a
+              key={`${s.name}-${i}`}
+              className="sockGem"
+              href={href}
+              target="_blank"
+              rel="noreferrer noopener"
+              data-wowhead={wowheadAttr}
+              title={title}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img className="sockGemIcon" src={iconSrc} alt="" />
+
+              <div className="sockGemText">
+                <div className="sockGemName">{s.name}</div>
+                {s.note ? <div className="sockGemNote">{s.note}</div> : null}
+              </div>
+
+              {s.socketColor ? (
+                <img className="sockSocketIcon" src={socketIconUrl(s.socketColor)} alt="" title={`Socket: ${s.socketColor}`} />
+              ) : null}
+            </a>
+          );
+        })}
+      </div>
+
+      <style jsx>{`
+        /* KEY: no margin-left:auto, no justify to far right */
+        .socketsRow {
+          display: grid;
+          gap: 8px;
+          align-content: start;
+          justify-items: stretch; /* all socket cards same width */
+          width: 220px; /* keeps them compact next to the text */
+        }
+
+        .sockGem {
+          text-decoration: none;
+          display: grid;
+          grid-template-columns: 18px minmax(0, 1fr) 14px;
+          align-items: center;
+          gap: 8px;
+
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.04);
+
+          padding: 6px 10px;
+          color: rgba(255, 255, 255, 0.92);
+          min-width: 0;
+        }
+
+        .sockGem:hover {
+          border-color: rgba(255, 255, 255, 0.16);
+          background: rgba(255, 255, 255, 0.06);
+        }
+
+        .sockGemIcon {
+          width: 18px;
+          height: 18px;
+          border-radius: 6px;
+          border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .sockGemText {
+          min-width: 0;
+          display: grid;
+          gap: 1px;
+        }
+
+        .sockGemName {
+          font-size: 12px;
+          font-weight: 850;
+          line-height: 1.1;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .sockGemNote {
+          font-size: 11px;
+          color: rgba(255, 255, 255, 0.65);
+          line-height: 1.1;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .sockSocketIcon {
+          width: 14px;
+          height: 14px;
+          opacity: 0.85;
+          border-radius: 4px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          justify-self: end;
+        }
+
+        /* Mobile: sockets go under and become a 2-col grid (no huge card height) */
+        @media (max-width: 700px) {
+          .socketsRow {
+            width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+          }
+          .sockGem {
+            padding: 6px 8px;
+          }
+        }
+      `}</style>
+    </>
+  );
+}
+
 function GearGrid({ gear }: { gear: GearItem[] }) {
   useWowheadTooltips([gear?.length]);
 
@@ -685,6 +838,7 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
               data-wowhead={wowheadAttr}
             >
               <img className="gearIcon" src={ICON(g.iconName)} alt="" />
+
               <div className="gearText">
                 <div className="gearName" title={g.itemName}>
                   {g.itemName}
@@ -695,6 +849,13 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
                   </div>
                 ) : null}
               </div>
+
+              {g.sockets?.length ? (
+                <div className="gearSockets">
+                  <SocketsRow sockets={g.sockets} />
+                </div>
+              ) : null}
+
               <div className="gearArrow">↗</div>
             </a>
           );
@@ -713,6 +874,7 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
           }
         }
 
+        /* KEY: grid layout removes "dead space" and keeps sockets tight */
         .gearCard {
           text-decoration: none;
           cursor: pointer;
@@ -721,11 +883,13 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
           background: rgba(0, 0, 0, 0.35);
           box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
           padding: 12px;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          min-height: 60px;
           color: rgba(255, 255, 255, 0.95);
+
+          display: grid;
+          grid-template-columns: 38px minmax(0, 1fr) auto 16px;
+          align-items: center;
+          column-gap: 12px;
+          min-height: 76px; /* gives room for 2 stacked sockets without making it huge */
         }
 
         .gearCard:hover {
@@ -739,14 +903,12 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
           border-radius: 10px;
           object-fit: cover;
           display: block;
-          flex: 0 0 auto;
           border: 1px solid rgba(255, 255, 255, 0.12);
           background: rgba(255, 255, 255, 0.04);
         }
 
         .gearText {
           min-width: 0;
-          flex: 1 1 auto;
         }
 
         .gearName {
@@ -768,11 +930,31 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
           white-space: nowrap;
         }
 
+        /* sockets aligned to the top of the card, right after text */
+        .gearSockets {
+          align-self: start;
+        }
+
         .gearArrow {
-          flex: 0 0 auto;
           opacity: 0.45;
           font-size: 14px;
-          padding-left: 4px;
+          justify-self: end;
+          align-self: start;
+          padding-top: 2px;
+        }
+
+        /* Mobile: sockets go under, keep card compact */
+        @media (max-width: 700px) {
+          .gearCard {
+            grid-template-columns: 38px minmax(0, 1fr) 16px;
+            grid-template-rows: auto auto;
+            row-gap: 10px;
+            min-height: 0;
+          }
+
+          .gearSockets {
+            grid-column: 1 / -1;
+          }
         }
       `}</style>
     </>
@@ -912,9 +1094,7 @@ export default function TbcClassPage() {
         <div style={{ marginBottom: 8 }}>
           <h1 style={{ fontSize: 54, margin: 0 }}>{data.title}</h1>
           <div style={{ marginTop: 10, color: "rgba(255,255,255,0.60)" }}>{data.subtitle}</div>
-          {data.description ? (
-            <div style={{ marginTop: 10, color: "rgba(255,255,255,0.70)" }}>{data.description}</div>
-          ) : null}
+          {data.description ? <div style={{ marginTop: 10, color: "rgba(255,255,255,0.70)" }}>{data.description}</div> : null}
         </div>
 
         <SectionCard title="Notes">
@@ -926,14 +1106,7 @@ export default function TbcClassPage() {
         </SectionCard>
 
         <SectionCard title="Gear">
-          <div
-            style={{
-              marginTop: -6,
-              marginBottom: 14,
-              fontSize: 15,
-              color: "rgba(255,255,255,0.65)",
-            }}
-          >
+          <div style={{ marginTop: -6, marginBottom: 14, fontSize: 15, color: "rgba(255,255,255,0.65)" }}>
             Feel free to replace PvE items for more PvP if you are facing a lot of double DPS comps
             <br />
             Swap weapons accordingly, if you see double DPS just switch to the Gladiator mace
@@ -941,16 +1114,7 @@ export default function TbcClassPage() {
 
           <SeasonTabs value={season} onChange={setSeason} />
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: -2,
-              marginBottom: 10,
-              color: "rgba(255,255,255,0.55)",
-              fontSize: 14,
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: -2, marginBottom: 10, color: "rgba(255,255,255,0.55)", fontSize: 14 }}>
             Hover for Wowhead tooltip • Click to open Wowhead
           </div>
 
