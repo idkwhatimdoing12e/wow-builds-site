@@ -1205,9 +1205,22 @@ function CompsGrid({ comps }: { comps?: CompCard[] }) {
         }
          
   @media (max-width: 700px) {
+  /* Arrow: OFF by default (mobile-first) */
+.gearArrow {
+  display: none !important;
+}
+
+/* Arrow: only shows on desktop */
+@media (min-width: 701px) {
   .gearArrow {
-    display: none !important;
+    display: block !important;
+    opacity: 0.45;
+    font-size: 14px;
+    justify-self: end;
+    align-self: start;
+    padding-top: 2px;
   }
+}
 
 }
       `}</style>
