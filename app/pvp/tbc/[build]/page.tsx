@@ -679,21 +679,42 @@ function TalentsBlock({ lines, embedUrl }: { lines?: string[]; embedUrl?: string
     -webkit-overflow-scrolling: touch;
     border-radius: 16px;
   }
-  .talentsFrame {
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(0, 0, 0, 0.35);
-    overflow: hidden;
+ .talentsFrame {
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.35);
 
-    /* Desktop */
-    height: 760px;
-  }
+  /* IMPORTANT */
+  overflow: hidden;              /* prevents page-level sideways bleed */
+}
 
-  @media (max-width: 1000px) {
-    .talentsFrame {
-      height: 720px;
-    }
-  }
+/* This is the horizontal scroll container */
+.talentsPan {
+  width: 100%;
+  overflow-x: auto;              /* ✅ horizontal scroll is back */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain; /* stops “scroll chaining” to page */
+  touch-action: pan-x;            /* iOS: allow horizontal swipe here */
+}
+
+/* Make iframe wider than the phone so there's something to pan */
+.talentsIframe {
+  border: 0;
+  display: block;
+  background: transparent;
+
+  width: 980px;                  /* ✅ forces horizontal pan on mobile */
+  height: 760px;
+}
+
+@media (max-width: 1000px) {
+  .talentsIframe { height: 650px; }
+}
+
+@media (max-width: 700px) {
+  .talentsIframe { height: 520px; }
+}
 
   /* Mobile (iOS-friendly): scale to screen height so no giant dead space */
   @media (max-width: 700px) {
@@ -1260,6 +1281,8 @@ export default function TbcClassPage() {
           color: "#fff",
           overflowX: "hidden", 
         }}
+
+        
       >
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Link
