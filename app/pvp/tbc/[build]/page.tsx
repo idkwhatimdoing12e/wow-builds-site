@@ -679,27 +679,33 @@ function TalentsBlock({ lines, embedUrl }: { lines?: string[]; embedUrl?: string
     -webkit-overflow-scrolling: touch;
     border-radius: 16px;
   }
-
   .talentsFrame {
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background: rgba(0, 0, 0, 0.35);
     overflow: hidden;
+
+    /* Desktop */
     height: 760px;
-    width: fit-content;            /* frame sizes to the iframe width */
   }
 
-  @media (max-width: 700px) {
-  .talentsFrame {
-    height: 520px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+  @media (max-width: 1000px) {
+    .talentsFrame {
+      height: 720px;
+    }
   }
-}
-  html, body {
-  overflow-x: hidden;
-}
+
+  /* Mobile (iOS-friendly): scale to screen height so no giant dead space */
+  @media (max-width: 700px) {
+    .talentsFrame {
+      /* Use svh so iOS address bar doesn’t create layout bugs */
+      height: min(78svh, 820px);
+      /* But keep it tall enough so the last rows are reachable */
+      min-height: 680px;
+    }
+  }
 `}</style>
+`
         </>
       ) : (
         <div style={{ color: "rgba(255,255,255,0.70)", fontSize: 14 }}>Missing talents embed URL.</div>
