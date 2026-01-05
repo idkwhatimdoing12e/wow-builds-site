@@ -654,79 +654,54 @@ function TalentsBlock({ lines, embedUrl }: { lines?: string[]; embedUrl?: string
 
       {embedUrl ? (
         <>
-          <div className="talentsScroller">
-  <div className="talentsFrame">
-    <iframe
-      src={embedUrl}
-      title="Talents"
-      loading="lazy"
-      scrolling="yes"
-      style={{
-        width: 980,          // key: force a width that may exceed mobile
-        height: "100%",
-        border: 0,
-        display: "block",
-        background: "transparent",
-      }}
-    />
-  </div>
-</div>
+          <div className="talentsFrame">
+            <div className="talentsPan">
+              <iframe className="talentsIframe" src={embedUrl} title="Talents" loading="lazy" scrolling="no" />
+            </div>
+          </div>
 
           <style jsx>{`
-  .talentsScroller {
-    overflow-x: auto;              /* only this area can scroll sideways */
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    border-radius: 16px;
-  }
- .talentsFrame {
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.35);
+            /* Frame keeps the page from sideways scrolling */
+            .talentsFrame {
+              border-radius: 16px;
+              border: 1px solid rgba(255, 255, 255, 0.08);
+              background: rgba(0, 0, 0, 0.35);
+              overflow: hidden; /* IMPORTANT: stops page-level horizontal scroll */
+            }
 
-  /* IMPORTANT */
-  overflow: hidden;              /* prevents page-level sideways bleed */
-}
+            /* Only THIS element can pan sideways */
+            .talentsPan {
+              width: 100%;
+              overflow-x: auto;
+              overflow-y: hidden;
+              -webkit-overflow-scrolling: touch;
+              overscroll-behavior-x: contain;
+              touch-action: pan-x;
+            }
 
-/* This is the horizontal scroll container */
-.talentsPan {
-  width: 100%;
-  overflow-x: auto;              /* ✅ horizontal scroll is back */
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain; /* stops “scroll chaining” to page */
-  touch-action: pan-x;            /* iOS: allow horizontal swipe here */
-}
+            /* Make iframe wider than the phone so horizontal scroll exists */
+            .talentsIframe {
+              display: block;
+              border: 0;
+              background: transparent;
 
-/* Make iframe wider than the phone so there's something to pan */
-.talentsIframe {
-  border: 0;
-  display: block;
-  background: transparent;
+              width: 980px;
+              height: 760px;
+            }
 
-  width: 980px;                  /* ✅ forces horizontal pan on mobile */
-  height: 760px;
-}
+            @media (max-width: 1000px) {
+              .talentsIframe {
+                height: 680px;
+              }
+            }
 
-@media (max-width: 1000px) {
-  .talentsIframe { height: 650px; }
-}
-
-@media (max-width: 700px) {
-  .talentsIframe { height: 520px; }
-}
-
-  /* Mobile (iOS-friendly): scale to screen height so no giant dead space */
-  @media (max-width: 700px) {
-    .talentsFrame {
-      /* Use svh so iOS address bar doesn’t create layout bugs */
-      height: min(78svh, 820px);
-      /* But keep it tall enough so the last rows are reachable */
-      min-height: 680px;
-    }
-  }
-`}</style>
-`
+            /* Mobile: tall enough so last rows are visible, but not “giant dead space” */
+            @media (max-width: 700px) {
+              .talentsIframe {
+                height: 640px;
+              }
+            }
+          `}</style>
         </>
       ) : (
         <div style={{ color: "rgba(255,255,255,0.70)", fontSize: 14 }}>Missing talents embed URL.</div>
@@ -1315,6 +1290,7 @@ export default function TbcClassPage() {
         padding: "56px 24px",
         background: "radial-gradient(1200px 600px at 30% 0%, #1a1a1a 0%, #0b0b0b 55%, #070707 100%)",
         color: "#fff",
+        overflowX: "hidden",
       }}
     >
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
