@@ -936,7 +936,7 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
                 </div>
               ) : null}
 
-              <div className="gearArrow">↗</div>
+              
             </a>
           );
         })}
