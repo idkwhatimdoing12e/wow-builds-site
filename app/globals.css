@@ -24,3 +24,59 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* =========================================================
+   FORCE class card backgrounds (prevents mobile overrides)
+   ========================================================= */
+
+.buildCard {
+  /* the actual color comes from --card-bg set inline per card */
+  background-color: var(--card-bg) !important;
+  background: var(--card-bg) !important;
+  background-image: none !important;
+
+  /* kill any accidental global effects */
+  filter: none !important;
+  -webkit-filter: none !important;
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+
+  /* keeps iOS paint stable */
+  transform: translateZ(0);
+}
+
+/* Text colors (kept simple + consistent) */
+.buildCardTitle {
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.1;
+  color: rgba(11, 11, 11, 0.95);
+}
+
+.buildCardDetail {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: normal;
+  word-break: break-word;
+  color: rgba(11, 11, 11, 0.85);
+}
+
+.buildCardRole {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.25;
+  white-space: normal;
+  word-break: break-word;
+  color: rgba(11, 11, 11, 0.70);
+}
+
+/* If background is dark (e.g., Shaman blue), make text white automatically */
+.buildCard[style*="#0070DE"] .buildCardTitle,
+.buildCard[style*="#0070DE"] .buildCardDetail,
+.buildCard[style*="#0070DE"] .buildCardRole {
+  color: rgba(255, 255, 255, 0.92);
+}
+.buildCard[style*="#0070DE"] .buildCardRole {
+  color: rgba(255, 255, 255, 0.72);
+}
