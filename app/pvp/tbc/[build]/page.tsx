@@ -904,45 +904,49 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
   return (
     <>
       <div className="gearGrid">
-        {gear.map((g, idx) => {
-          const hasId = typeof g.itemId === "number" && g.itemId > 0;
-          const href = hasId ? wowheadTbcItemUrl(g.itemId!) : wowheadTbcSearchUrl(g.itemName);
-          const wowheadAttr = hasId ? `item=${g.itemId}&domain=tbc` : undefined;
-          const subLine = g.enchant || g.note;
+  {gear.map((g, idx) => {
+    const hasId = typeof g.itemId === "number" && g.itemId > 0;
+    const href = hasId ? wowheadTbcItemUrl(g.itemId!) : wowheadTbcSearchUrl(g.itemName);
+    const wowheadAttr = hasId ? `item=${g.itemId}&domain=tbc` : undefined;
+    const subLine = g.enchant || g.note;
 
-          return (
-            <a
-              key={`${g.slot}-${idx}`}
-              className="gearCard"
-              href={href}
-              target="_blank"
-              rel="noreferrer noopener"
-              data-wowhead={wowheadAttr}
-            >
-              <img className="gearIcon" src={ICON(g.iconName)} alt="" />
+    return (
+      <div
+        key={`${g.slot}-${g.itemId ?? "noid"}-${idx}`}
+        className="gearCard"
+        role="link"
+        tabIndex={0}
+        data-wowhead={wowheadAttr}
+        onClick={() => window.open(href, "_blank", "noopener,noreferrer")}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            window.open(href, "_blank", "noopener,noreferrer");
+          }
+        }}
+      >
+        <img className="gearIcon" src={ICON(g.iconName)} alt="" />
 
-              <div className="gearText">
-                <div className="gearName" title={g.itemName}>
-                  {g.itemName}
-                </div>
-                {subLine ? (
-                  <div className="gearSub" title={subLine}>
-                    {subLine}
-                  </div>
-                ) : null}
-              </div>
+        <div className="gearText">
+          <div className="gearName" title={g.itemName}>
+            {g.itemName}
+          </div>
+          {subLine ? (
+            <div className="gearSub" title={subLine}>
+              {subLine}
+            </div>
+          ) : null}
+        </div>
 
-              {g.sockets?.length ? (
-                <div className="gearSockets">
-                  <SocketsRow sockets={g.sockets} />
-                </div>
-              ) : null}
-
-              
-            </a>
-          );
-        })}
+        {g.sockets?.length ? (
+          <div className="gearSockets" onClick={(e) => e.stopPropagation()}>
+            <SocketsRow sockets={g.sockets} />
+          </div>
+        ) : null}
       </div>
+    );
+  })}
+</div>
 
       <style jsx>{`
         /* =========================

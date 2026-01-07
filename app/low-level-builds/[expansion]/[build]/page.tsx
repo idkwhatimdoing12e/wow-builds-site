@@ -173,33 +173,33 @@ function BuffColumn({
 
       {items.length ? (
         <div className="mt-4 grid grid-cols-1 gap-2">
-          {items.map((b) => (
-            <a
-              key={`${b.spellId}-${b.name}`}
-              href={wowheadSpellUrl(b.spellId, expansionId)}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3 py-2 transition hover:bg-white/[0.04]"
-            >
-              <img
-                src={wowIconUrl(b.iconName)}
-                alt={b.name}
-                className="h-9 w-9 shrink-0 rounded-lg border border-white/10 bg-white/[0.03]"
-                loading="lazy"
-              />
+          {items.map((b, i) => (
+  <a
+    key={`${b.spellId}-${b.name}-${i}`}
+    href={wowheadSpellUrl(b.spellId, expansionId)}
+    target="_blank"
+    rel="noreferrer"
+    className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3 py-2 transition hover:bg-white/[0.04]"
+  >
+    <img
+      src={wowIconUrl(b.iconName)}
+      alt={b.name}
+      className="h-9 w-9 shrink-0 rounded-lg border border-white/10 bg-white/[0.03]"
+      loading="lazy"
+    />
 
-              <div className="min-w-0 flex-1">
-  <div className="truncate text-sm font-medium">{b.name}</div>
-  {b.note ? (
-    <div className="text-xs text-white/55 whitespace-normal break-words">
-      {b.note}
+    <div className="min-w-0 flex-1">
+      <div className="truncate text-sm font-medium">{b.name}</div>
+      {b.note ? (
+        <div className="text-xs text-white/55 whitespace-normal break-words">
+          {b.note}
+        </div>
+      ) : null}
     </div>
-  ) : null}
-</div>
 
-              <div className="text-white/40">↗</div>
-            </a>
-          ))}
+    <div className="text-white/40">↗</div>
+  </a>
+))}
         </div>
       ) : (
         <p className="mt-3 text-sm text-white/60">No buffs listed yet.</p>

@@ -5,7 +5,7 @@ type BuildCard = {
   detail: string;
   role: string;
   href: string;
-  bg: string;
+  bg: string; // hex
   iconClass: string;
   iconSpec: string;
 };
@@ -24,7 +24,7 @@ const COLORS = {
   HUNTER: "#ABD473",
   PALADIN: "#F58CBA",
   SHAMAN: "#0070DE",
-};
+} as const;
 
 const S_TIER: BuildCard[] = [
   {
@@ -79,7 +79,7 @@ const S_TIER: BuildCard[] = [
     href: "/pvp/tbc/aff-warlock",
     bg: COLORS.WARLOCK,
     iconClass: "classicon_warlock",
-    iconSpec: "spell_shadow_gathershadows", // Soul Link
+    iconSpec: "spell_shadow_gathershadows",
   },
   {
     title: "MM Hunter",
@@ -118,7 +118,7 @@ const A_TIER: BuildCard[] = [
     href: "/pvp/tbc/resto-shaman",
     bg: COLORS.SHAMAN,
     iconClass: "classicon_shaman",
-    iconSpec: "spell_nature_healingwavegreater", // Healing Wave
+    iconSpec: "spell_nature_healingwavegreater",
   },
   {
     title: "Feral Druid",
@@ -155,8 +155,12 @@ function TierSection({ title, cards }: { title: string; cards: BuildCard[] }) {
   const iconGap = 10;
   const rightInset = 22;
 
-  // space reserved on the right for icons (so text never goes underneath)
   const reservedRight = rightInset + iconSize * 2 + iconGap + 14;
+
+  // Always black text (your request)
+  const TITLE = "rgba(11,11,11,0.95)";
+  const SUB = "rgba(11,11,11,0.75)";
+  const BORDER = "rgba(0,0,0,0.12)";
 
   return (
     <section style={{ marginTop: 28 }}>
@@ -185,8 +189,17 @@ function TierSection({ title, cards }: { title: string; cards: BuildCard[] }) {
             style={{
               textDecoration: "none",
               borderRadius: 16,
-              background: c.bg,
-              color: "#0b0b0b",
+
+              // Use backgroundColor to avoid any shorthand weirdness on mobile
+              backgroundColor: c.bg,
+
+              // Prevent inherited filters/blends affecting the card on iOS
+              filter: "none",
+              WebkitFilter: "none",
+              mixBlendMode: "normal",
+
+              color: TITLE,
+              border: `1px solid ${BORDER}`,
               boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
               position: "relative",
               overflow: "hidden",
@@ -194,16 +207,16 @@ function TierSection({ title, cards }: { title: string; cards: BuildCard[] }) {
               padding: 18,
               paddingRight: reservedRight,
               display: "flex",
-              alignItems: "center", // helps overall balance
+              alignItems: "center",
+              transform: "translateZ(0)",
             }}
           >
             {/* TEXT */}
             <div style={{ minWidth: 0 }}>
-              <div style={{ fontSize: 22, fontWeight: 900, lineHeight: 1.1 }}>
+              <div style={{ fontSize: 22, fontWeight: 900, lineHeight: 1.1, color: TITLE }}>
                 {c.title}
               </div>
 
-              {/* allow wrapping (NO ellipsis) */}
               <div
                 style={{
                   marginTop: 10,
@@ -212,6 +225,7 @@ function TierSection({ title, cards }: { title: string; cards: BuildCard[] }) {
                   lineHeight: 1.25,
                   whiteSpace: "normal",
                   wordBreak: "break-word",
+                  color: TITLE,
                 }}
               >
                 {c.detail}
@@ -221,17 +235,17 @@ function TierSection({ title, cards }: { title: string; cards: BuildCard[] }) {
                 style={{
                   marginTop: 6,
                   fontSize: 14,
-                  opacity: 0.8,
                   lineHeight: 1.25,
                   whiteSpace: "normal",
                   wordBreak: "break-word",
+                  color: SUB,
                 }}
               >
                 {c.role}
               </div>
             </div>
 
-            {/* ICONS (vertically centered) */}
+            {/* ICONS */}
             <div
               style={{
                 position: "absolute",
@@ -247,6 +261,7 @@ function TierSection({ title, cards }: { title: string; cards: BuildCard[] }) {
                 src={ICON(c.iconClass)}
                 width={iconSize}
                 height={iconSize}
+                alt=""
                 style={{
                   borderRadius: 10,
                   objectFit: "cover",
@@ -257,6 +272,7 @@ function TierSection({ title, cards }: { title: string; cards: BuildCard[] }) {
                 src={ICON(c.iconSpec)}
                 width={iconSize}
                 height={iconSize}
+                alt=""
                 style={{
                   borderRadius: 10,
                   objectFit: "cover",
@@ -300,11 +316,10 @@ export default function PvpTbcPage() {
             src="/expansion-logos/tbc.png"
             width={46}
             height={46}
+            alt=""
             style={{ borderRadius: 10 }}
           />
-          <h1 style={{ fontSize: 42, margin: 0 }}>
-            The Burning Crusade – Arena Builds
-          </h1>
+          <h1 style={{ fontSize: 42, margin: 0 }}>The Burning Crusade – Arena Builds</h1>
         </div>
 
         <TierSection title="S Tier" cards={S_TIER} />
