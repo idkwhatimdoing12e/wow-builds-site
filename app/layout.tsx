@@ -1,38 +1,39 @@
 import "./globals.css";
 import Link from "next/link";
-import GlobalHomeLink from "./components/GlobalHomeLink";
+import GlobalNav from "./components/GlobalNav";
 
 export const metadata = {
   title: "WoW Builds",
   description: "Curated level 1 twink builds across expansions.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className="bg-black text-white min-h-screen">
-        {/* Sticky top-center Home link (hidden on /) */}
-        <GlobalHomeLink />
+      <body className="bg-black text-white flex flex-col min-h-screen">
+        {/* Fixed global nav (Discord always, Home everywhere except landing) */}
+        <GlobalNav />
 
-        {/* Page content */}
-        <div className="min-h-screen flex flex-col">
-          <div className="flex-grow">{children}</div>
+        <div className="flex-grow">{children}</div>
 
-          <footer className="border-t border-white/10">
-            <div className="mx-auto max-w-4xl px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/50">
-              <div>© {new Date().getFullYear()} WoW Builds</div>
+        <footer className="border-t border-white/10">
+          <div className="mx-auto max-w-4xl px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/50">
+            <div>© {new Date().getFullYear()} WoW Builds</div>
 
-              <div className="flex gap-6">
-                <Link href="/about" className="hover:text-white">
-                  About
-                </Link>
-                <Link href="/privacy" className="hover:text-white">
-                  Privacy
-                </Link>
-              </div>
+            <div className="flex gap-6">
+              <Link href="/about" className="hover:text-white">
+                About
+              </Link>
+              <Link href="/privacy" className="hover:text-white">
+                Privacy
+              </Link>
             </div>
-          </footer>
-        </div>
+          </div>
+        </footer>
       </body>
     </html>
   );

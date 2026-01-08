@@ -904,253 +904,140 @@ function GearGrid({ gear }: { gear: GearItem[] }) {
   return (
     <>
       <div className="gearGrid">
-  {gear.map((g, idx) => {
-    const hasId = typeof g.itemId === "number" && g.itemId > 0;
-    const href = hasId ? wowheadTbcItemUrl(g.itemId!) : wowheadTbcSearchUrl(g.itemName);
-    const wowheadAttr = hasId ? `item=${g.itemId}&domain=tbc` : undefined;
-    const subLine = g.enchant || g.note;
+        {gear.map((g, idx) => {
+          const hasId = typeof g.itemId === "number" && g.itemId > 0;
+          const href = hasId ? wowheadTbcItemUrl(g.itemId!) : wowheadTbcSearchUrl(g.itemName);
+          const wowheadAttr = hasId ? `item=${g.itemId}&domain=tbc` : undefined;
+          const subLine = g.enchant || g.note;
 
-    return (
-      <div
-        key={`${g.slot}-${g.itemId ?? "noid"}-${idx}`}
-        className="gearCard"
-        role="link"
-        tabIndex={0}
-        data-wowhead={wowheadAttr}
-        onClick={() => window.open(href, "_blank", "noopener,noreferrer")}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            window.open(href, "_blank", "noopener,noreferrer");
-          }
-        }}
-      >
-        <img className="gearIcon" src={ICON(g.iconName)} alt="" />
+          return (
+            <div key={`${g.slot}-${g.itemId ?? "noid"}-${idx}`} className="gearCard">
+              {/* MAIN ITEM LINK (Wowhead tooltip attaches here) */}
+              <a
+                className="gearMainLink"
+                href={href}
+                target="_blank"
+                rel="noreferrer noopener"
+                data-wowhead={wowheadAttr}
+              >
+                <img className="gearIcon" src={ICON(g.iconName)} alt="" />
 
-        <div className="gearText">
-          <div className="gearName" title={g.itemName}>
-            {g.itemName}
-          </div>
-          {subLine ? (
-            <div className="gearSub" title={subLine}>
-              {subLine}
+                <div className="gearText">
+                  <div className="gearName" title={g.itemName}>
+                    {g.itemName}
+                  </div>
+                  {subLine ? (
+                    <div className="gearSub" title={subLine}>
+                      {subLine}
+                    </div>
+                  ) : null}
+                </div>
+              </a>
+
+              {/* SOCKETS (each gem is its own <a>, so tooltips work) */}
+              {g.sockets?.length ? (
+                <div className="gearSockets">
+                  <SocketsRow sockets={g.sockets} />
+                </div>
+              ) : null}
             </div>
-          ) : null}
-        </div>
-
-        {g.sockets?.length ? (
-          <div className="gearSockets" onClick={(e) => e.stopPropagation()}>
-            <SocketsRow sockets={g.sockets} />
-          </div>
-        ) : null}
+          );
+        })}
       </div>
-    );
-  })}
-</div>
 
       <style jsx>{`
-        /* =========================
-   GEAR GRID
-========================= */
-/* =========================
-   GEAR GRID
-========================= */
-.gearGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
+        .gearGrid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+        }
+        @media (max-width: 700px) {
+          .gearGrid {
+            grid-template-columns: 1fr;
+          }
+        }
 
-@media (max-width: 700px) {
-  .gearGrid {
-    grid-template-columns: 1fr;
-  }
-}
+        .gearCard {
+          border-radius: 16px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(0, 0, 0, 0.35);
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+          padding: 12px;
+          color: rgba(255, 255, 255, 0.95);
 
-/* =========================
-   GEAR CARD
-   3 columns: icon | text | sockets
-   - no absolute positioning
-   - no overlap
-   - left content is vertically centered to avoid "dead space" feeling
-========================= */
-.gearCard {
-  text-decoration: none;
-  cursor: pointer;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(0, 0, 0, 0.35);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.40);
-  padding: 12px;
-  color: rgba(255, 255, 255, 0.95);
+          display: grid;
+          grid-template-columns: 1fr auto;
+          gap: 12px;
+          align-items: center;
+        }
 
-  display: grid;
-  grid-template-columns: 38px minmax(0, 1fr) auto;
-  column-gap: 12px;
+        .gearCard:hover {
+          border-color: rgba(255, 255, 255, 0.16);
+          background: rgba(255, 255, 255, 0.04);
+        }
 
-  /* IMPORTANT: makes text sit nicely even when sockets make the card taller */
-  align-items: center;
-}
+        .gearMainLink {
+          text-decoration: none;
+          color: inherit;
 
-.gearCard:hover {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.04);
-}
+          display: grid;
+          grid-template-columns: 38px minmax(0, 1fr);
+          gap: 12px;
+          align-items: center;
+          min-width: 0;
+        }
 
-/* =========================
-   ICON
-========================= */
-.gearIcon {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  object-fit: cover;
-  display: block;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  align-self: center;
-}
+        .gearIcon {
+          width: 38px;
+          height: 38px;
+          border-radius: 10px;
+          object-fit: cover;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.04);
+        }
 
-/* =========================
-   TEXT
-========================= */
-.gearText {
-  min-width: 0;
-  align-self: center;
-}
+        .gearText {
+          min-width: 0;
+        }
 
-.gearName {
-  font-size: 16px;
-  font-weight: 800;
-  line-height: 1.15;
+        .gearName {
+          font-size: 16px;
+          font-weight: 800;
+          line-height: 1.15;
 
-  /* 2-line clamp (no ugly single-line ellipsis) */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
 
-  overflow: hidden;
-  white-space: normal;
-}
+          overflow: hidden;
+          white-space: normal;
+        }
 
-.gearSub {
-  margin-top: 4px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
-  line-height: 1.2;
+        .gearSub {
+          margin-top: 4px;
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.65);
+          line-height: 1.2;
 
-  /* 2-line clamp */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
 
-  overflow: hidden;
-  white-space: normal;
-}
+          overflow: hidden;
+          white-space: normal;
+        }
 
-/* =========================
-   SOCKETS (desktop: right column)
-   - top-aligned so the stack is clean
-   - constrained width so it doesn’t explode the layout
-========================= */
-.gearSockets {
-  justify-self: end;
-  align-self: start;
+        .gearSockets {
+          align-self: start;
+        }
 
-  display: grid;
-  gap: 8px;
-
-  width: 260px;      /* fixed “nice” column width */
-  max-width: 260px;
-}
-
-@media (max-width: 1000px) {
-  .gearSockets {
-    width: 220px;
-    max-width: 220px;
-  }
-}
-
-/* socket pill */
-.socketCard {
-  display: grid;
-  grid-template-columns: 18px minmax(0, 1fr);
-  gap: 8px;
-  align-items: start;
-
-  padding: 8px 10px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-}
-
-.socketIcon {
-  width: 18px;
-  height: 18px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-/* IMPORTANT: no cutoff -> clamp to 2 lines */
-.sockGemName {
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1.15;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-
-  overflow: hidden;
-  white-space: normal;
-}
-
-.sockGemNote {
-  margin-top: 2px;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.65);
-  line-height: 1.15;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-
-  overflow: hidden;
-  white-space: normal;
-}
-
-/* =========================
-   MOBILE
-   - sockets go UNDER the item
-   - 2-up only when there is space
-========================= */
-@media (max-width: 700px) {
-  .gearCard {
-    grid-template-columns: 38px minmax(0, 1fr);
-    grid-template-rows: auto auto;
-    row-gap: 10px;
-    align-items: start; /* natural stacking on mobile */
-  }
-
-  .gearSockets {
-    grid-column: 1 / -1;
-    justify-self: start;
-    align-self: start;
-    width: 100%;
-    max-width: 100%;
-
-    display: grid;
-    gap: 8px;
-    grid-template-columns: 1fr; /* default: 1-up */
-  }
-
-  /* If screen is wide enough, allow 2-up */
-  @media (min-width: 420px) {
-    .gearSockets {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-}
+        @media (max-width: 700px) {
+          .gearCard {
+            grid-template-columns: 1fr;
+            gap: 10px;
+            align-items: start;
+          }
+        }
       `}</style>
     </>
   );
