@@ -3,17 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const DISCORD_INVITE = "https://discord.gg/YOURINVITE"; // <-- replace
+const DISCORD_INVITE = "https://discord.gg/YOURINVITE"; // <-- change this
 
 function DiscordIcon({ size = 22 }: { size?: number }) {
-  // Clean Discord mark (no scuffed clipping) – uses a well-behaved viewBox
   return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 127.14 96.36"
       aria-hidden="true"
-      focusable="false"
       className="block"
     >
       <path
@@ -30,63 +28,64 @@ export default function GlobalNav() {
 
   return (
     <>
-      {/* Top-left Discord (always) */}
+      {/* TOP RIGHT – Discord */}
       <a
         href={DISCORD_INVITE}
         target="_blank"
         rel="noreferrer noopener"
-        className="globalDiscord"
         aria-label="Discord"
-        title="Discord"
+        className="globalDiscord"
       >
-        <DiscordIcon size={24} />
+        <DiscordIcon size={26} />
       </a>
 
-      {/* Top-center Home (NOT on landing) */}
-      {showHome ? (
+      {/* TOP CENTER – Home (not on landing) */}
+      {showHome && (
         <div className="globalHomeWrap">
           <Link href="/" className="globalHome">
             Home
           </Link>
         </div>
-      ) : null}
+      )}
 
-      {/* Global CSS (NOT styled-jsx, so it works in layout) */}
+      {/* Global styles */}
       <style jsx global>{`
+        /* ===== DISCORD (top-right, fixed) ===== */
         .globalDiscord {
           position: fixed;
           top: calc(14px + env(safe-area-inset-top));
-          left: calc(14px + env(safe-area-inset-left));
+          right: calc(14px + env(safe-area-inset-right));
           z-index: 9999;
 
-          width: 46px;
-          height: 46px;
+          width: 48px;
+          height: 48px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
 
           border-radius: 999px;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          background: rgba(0, 0, 0, 0.35);
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          background: rgba(0, 0, 0, 0.4);
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
 
-          color: rgba(255, 255, 255, 0.92);
+          color: rgba(255, 255, 255, 0.95);
           text-decoration: none;
         }
 
         .globalDiscord:hover {
-          border-color: rgba(255, 255, 255, 0.22);
-          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(255, 255, 255, 0.25);
+          background: rgba(255, 255, 255, 0.08);
         }
 
+        /* ===== HOME (top-center, fixed) ===== */
         .globalHomeWrap {
           position: fixed;
           top: calc(14px + env(safe-area-inset-top));
           left: 50%;
           transform: translateX(-50%);
           z-index: 9999;
-          pointer-events: none; /* lets you still click content behind except the button */
+          pointer-events: none;
         }
 
         .globalHome {
@@ -99,23 +98,23 @@ export default function GlobalNav() {
           font-weight: 800;
           letter-spacing: 0.04em;
 
-          padding: 8px 12px;
+          padding: 8px 14px;
           border-radius: 999px;
 
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          background: rgba(0, 0, 0, 0.35);
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          background: rgba(0, 0, 0, 0.4);
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
 
           color: rgba(255, 255, 255, 0.9);
           text-decoration: none;
-          opacity: 0.8;
+          opacity: 0.85;
         }
 
         .globalHome:hover {
           opacity: 1;
-          border-color: rgba(255, 255, 255, 0.22);
-          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(255, 255, 255, 0.25);
+          background: rgba(255, 255, 255, 0.08);
         }
       `}</style>
     </>
