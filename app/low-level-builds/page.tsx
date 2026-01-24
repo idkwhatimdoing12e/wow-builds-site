@@ -2,6 +2,11 @@ import Link from "next/link";
 import { EXPANSIONS } from "../data/expansions";
 
 export default function LowLevelBuildsPage() {
+  // Hide these expansions for now (match by id)
+  const HIDDEN = new Set(["cata", "mop"]);
+
+  const visibleExpansions = EXPANSIONS.filter((e) => !HIDDEN.has(String(e.id).toLowerCase()));
+
   return (
     <main
       style={{
@@ -40,7 +45,7 @@ export default function LowLevelBuildsPage() {
         </p>
 
         <div style={{ display: "grid", gap: 16 }}>
-          {EXPANSIONS.map((e) => (
+          {visibleExpansions.map((e) => (
             <Link
               key={e.id}
               href={`/low-level-builds/${e.id}`}

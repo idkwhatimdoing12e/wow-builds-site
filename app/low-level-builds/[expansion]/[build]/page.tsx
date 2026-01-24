@@ -296,12 +296,12 @@ export default async function BuildPage({
 
           {gear.length ? (
             <div className="mt-5 grid grid-cols-1 md:grid-cols-2 md:gap-3">
-              {gear.map((g) => (
-                <a
-                  key={`${g.slot}-${g.itemId}`}
-                  href={wowheadItemUrl(g.itemId, exp.id)}
-                  target="_blank"
-                  rel="noreferrer"
+              {gear.map((g, idx) => (
+  <a
+    key={`${g.slot}-${g.itemId ?? "noid"}-${idx}`}
+    href={wowheadItemUrl(g.itemId, exp.id)}
+    target="_blank"
+    rel="noopener noreferrer"
                   className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3 transition hover:bg-white/[0.04]"
                 >
                   <img

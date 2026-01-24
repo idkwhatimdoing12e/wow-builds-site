@@ -11,7 +11,7 @@
           "subtitle": "",
           "description": "Best in Slot Level 1 build for Vanilla.",
           "notes": [
-            "Rogue is the best class by far",
+            "Gnome/Undead/Troll are the best races",
             "Boots can break, bring multiple in your bags",
             "Check the full guide: https://youtu.be/hZsF4z-rw8Y?si=PDP9QyPEMpm49tUT"
           ],
@@ -714,9 +714,129 @@
   "iconName": "inv_misc_enggizmos_21",
   "note": "Save World Buffs"
 }
-
       ]
-    }
+    },
+    {
+  "id": "level-10-max-haste-warrior",
+  "name": "Level 10 Max Haste Warrior",
+  "title": "Level 10 Max Haste Warrior",
+  "subtitle": "",
+  "description": "Reach Haste cap and go Battlegrounds",
+  "notes": [
+    "Reach Haste cap and go Battlegrounds",
+    "Leveling past 10 will ruin the build, careful as you can't lock XP in TBC"
+  ],
+  "gear": [{
+              "slot": "Head",
+              "itemName": "Green Tinted Goggles",
+              "itemId": 4385,
+              "iconName": "inv_helmet_47",
+              "enchant": "+10 Haste Rating"
+            },
+            {
+              "slot": "Back",
+              "itemName": "Fine Leather Cloak",
+              "itemId": 2308,
+              "iconName": "inv_misc_cape_10",
+              "enchant": "+3 Agility"
+            },
+            {
+              "slot": "Chest",
+              "itemName": "Wax-polished Armor",
+              "itemId": 6195,
+              "iconName": "inv_chest_chain",
+              "enchant": "+15 Resilience"
+            },
+            {
+              "slot": "Wrists",
+              "itemName": "Bloodspattered Wristbands of Strength",
+              "itemId": 15495,
+              "iconName": "inv_bracer_10",
+              "enchant": "+9 Strength"
+            },
+            {
+              "slot": "Hands",
+              "itemName": "Gemmed Copper Gauntlets of the Bear",
+              "itemId": 3474,
+              "iconName": "inv_gauntlets_05",
+              "enchant": "+10 Haste Rating"
+            },
+            
+            {
+              "slot": "Waist",
+              "itemName": "Cinched Belt",
+              "itemId": 5328,
+              "iconName": "inv_belt_03",
+              "enchant": "Horde Only"
+            },
+            {
+              "slot": "Legs",
+              "itemName": "Runed Copper Pants",
+              "itemId": 3473,
+              "iconName": "inv_pants_03",
+              "enchant": "+10 Haste Rating"
+            },
+           { "slot": "Boots", "itemName": "Padded Lamellar Boots", "itemId": 5320, "iconName": "inv_boots_01", "enchant": "+7 Stamina" },
+           { "slot": "Ring 1", "itemName": "The 1 Ring", "itemId": 8350, "iconName": "inv_jewelry_ring_03", "enchant": "" },
+            { "slot": "Ring 2", "itemName": "The 1 Ring", "itemId": 8350, "iconName": "inv_jewelry_ring_03", "enchant": "" },
+            { "slot": "Ammo", "itemName": "Arena Grand Master", "itemId": 19024, "iconName": "inv_misc_armorkit_04", "enchant": "1k Damage Absorb" },
+            { "slot": "Ammo", "itemName": "Insignia of the Horde", "itemId": 18834, "iconName": "inv_jewelry_trinketpvp_02", "enchant": "" },
+            {
+    "slot": "Weapon",
+    "itemName": "Crescent Staff",
+    "itemId": 6505,
+    "iconName": "inv_staff_04",
+    "enchant": "Horde Only, Crusader"
+  },
+
+  {
+    "slot": "Weapon",
+    "itemName": "Heavy Shortbow",
+    "itemId": 3036,
+    "iconName": "inv_weapon_bow_12",
+    "enchant": "+1 Scope"
+  },
+  { "slot": "Ammo", "itemName": "Feathered Arrow", "itemId": 3464, "iconName": "inv_ammo_arrow_02", "enchant": "Ammo" }
+      ],
+  "buffs": [
+{
+              "name": "Spirit of Zandalar (ZG)",
+              "spellId": 24425,
+              "iconName": "ability_creature_poison_05",
+              "note": "+ Stats"
+            },
+            {
+              "name": "Rallying Cry of the Dragonslayer (Onyxia/Nefarian)",
+              "spellId": 22888,
+              "iconName": "inv_misc_head_dragon_01",
+              "note": "+ AP, 100% Crit"
+            },
+            {
+              "name": "Warchief's Blessing (Rend)",
+              "spellId": 16609,
+              "iconName": "spell_arcane_teleportorgrimmar",
+              "note": "+ Melee Haste, + HP"
+            }
+
+      ],
+      "seasonalBuffs": [
+ {
+              "name": "Fire Festival Fortitude (Midsummer)",
+              "spellId": 29235,
+              "iconName": "inv_summerfest_firespirit",
+              "note": "+ 30 Stamina"
+            },
+            
+            {
+              "name": "Smitten (Love is in the Air)",
+              "spellId": 27572,
+              "iconName": "inv_ammo_arrow_02",
+              "note": "+200 Health"
+            }
+
+      ],
+  "consumables": []
+}
       ]
     },
     {

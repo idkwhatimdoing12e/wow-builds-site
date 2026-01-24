@@ -1,20 +1,20 @@
 import "./globals.css";
 import Link from "next/link";
 import GlobalNav from "./components/GlobalNav";
+import WowheadInit from "./components/WowheadInit";
 
 export const metadata = {
   title: "WoW Builds",
   description: "Curated level 1 twink builds across expansions.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="bg-black text-white flex flex-col min-h-screen">
+        {/* Must be mounted once globally for tooltips */}
+        <WowheadInit />
+
         {/* Fixed global nav (Discord always, Home everywhere except landing) */}
         <GlobalNav />
 

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const DISCORD_INVITE = "https://discord.gg/YOURINVITE"; // <-- change this
+const DISCORD_INVITE = "https://discord.com/invite/7jp7U4VqHK"; // <-- change this
 
 function DiscordIcon({ size = 22 }: { size?: number }) {
   return (

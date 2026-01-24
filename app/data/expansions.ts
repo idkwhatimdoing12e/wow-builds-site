@@ -12,21 +12,21 @@ export const EXPANSIONS: ExpansionNav[] = [
   {
     id: "vanilla",
     name: "Vanilla / Era",
-    subtitle: "Classic Era level 1 BiS builds",
+    subtitle: "Era Level 1 / 10 Builds",
     logoSrc: "/expansion-logos/vanilla.png",
     enabled: true,
   },
   {
     id: "tbc",
     name: "The Burning Crusade",
-    subtitle: "TBC level 1 twink builds",
+    subtitle: "TBC Level 1 / 10 Builds",
     logoSrc: "/expansion-logos/tbc.png",
     enabled: true,
   },
   {
     id: "wotlk",
     name: "Wrath of the Lich King",
-    subtitle: "WotLK level 1 builds",
+    subtitle: "WotLK Level 1 / 10 Builds",
     logoSrc: "/expansion-logos/wotlk.png",
     enabled: true, // <-- MUST be true to show the card
   },

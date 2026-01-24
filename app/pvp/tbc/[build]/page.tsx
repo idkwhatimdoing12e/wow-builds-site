@@ -403,12 +403,13 @@ const DATA: Record<string, ClassBuildPageData> = {
     subtitle: "TBC — Arena (Discipline)",
     description: "",
     notes: [
-      "Horde is Undead, Alliance is Dwarf",
+      "Alliance is dwarf, Horde is undead BUT if you plan on playing priest/lock then troll is the best",
       "Priest is strong but squishy, your partner must save you while you create distance",
       "You play off setups and move out aggressively when you have CC on the enemy",
       "Swap to a spirit weapon after 5s without casting for increased mana regen.",
       "Spam Rank1 Shadow Word Pain to proc blackout when needed ",
       "Use Rank1 Chastise while kiting to save mana",
+      "Downrank Fear to R1 or R2"
     ],
     talentsNote: [
       "Standard talents for any comp, you can swap Divine Fury for Spell warding if you are facing a lot of mage and locks double dps.",
@@ -419,41 +420,58 @@ const DATA: Record<string, ClassBuildPageData> = {
     comps2v2: [
       {
         name: "Disc/Warlock",
-        note: "Hyper aggressive comp; dispel the kill target to keep momentum. Versus warriors especially, don’t let the pet die.",
+        note: "Hyper aggressive comp; spam dispel the kill target to keep momentum, if you fall behind, especially vs Warriors which you have a hard time getting off you, you will lose. Games need to be fast.",
       },
       {
         name: "Disc/Frost Mage",
-        note: "Sheep/CS/Fear on healer while nuking the other target. Mage must help you live by controlling enemy DPS.",
+        note: "Balanced comp where you have a lot of control, you want to sheep/counterspell/fear the healer while killing the DPS, you can reset and run a lot thanks to the mage peels, your real weakness is Viper Sting from hunters, and lock/druid.",
       },
-      { name: "Disc/Rogue", note: "Balanced comp; fear healer after kidney to deny heals while rogue regens energy and DRs." },
-      { name: "Disc/Hunter", note: "Trap/scatter control; play around Viper Sting. Weak vs War/Sham and Druid/Warlock." },
+      { name: "Disc/Rogue", note: "The best priest comp, you can win anything but it's heavily depedendant on how good the rogue is. One trick if you're going healer is to fear him after kidney so that he can't heal and the rogue can regen energy and DRs." },
+      { name: "Disc/Hunter", note: "Control heavy comp, you will play around Hunter's Viper Sting and try to run and CC as much as possible while draining mages/healers mana, once someone is oom keep the pressure up to score a kill. Don't let the pet die." },
     ],
     comps3v3: [
-      { name: "Disc/Mage/Rogue", note: "RMP. Win in opener or stabilize for long games; control 2 targets while nuking 1." },
-      { name: "Disc/Warlock/Rogue", note: "Aggressive. Spam dispel kill target, keep tongues on healer, finish fast." },
-      { name: "Disc/RestoDruid/Hunter", note: "Control + mana drain. Once someone is OOM, deny drinks and kill. Protect pet." },
-      { name: "Disc/RestoDruid/Warrior", note: "Double healer aggressive. Help warrior connect; if you aren’t offensive you fall behind." },
-      { name: "Disc/Rogue/Rogue", note: "Stronger with PvE (glaives). Force cooldowns early; reset with vanish. PI + dispel." },
+      { name: "Disc/Mage/Rogue", note: "Best comp in the game, most of the time you will probably win in the opener, but as you keep climbing it will get harder and harder and you need to learn to stabilize and reset your goes, you basically want to CC 2 targets while nuking 1. Hard to play correctly, but if done right unbeatable" },
+      { name: "Disc/Warlock/Rogue", note: "Super aggressive comp, your job is to spam dispel the kill target while running him down, games need to be fast, warlock can fel dom for double counterspell to close the game asap." },
+      { name: "Disc/RestoDruid/Hunter", note: "Frost trap + Viper Sting + Mana Burn, while druid helps denying the DPS with cyclones and roots. Once someone is out of mana, deny drinks and kill. It's important to rotate your cooldowns with the Resto Druid, for example if you both use your trinkets at the same time you will lose. Don't let the pet die. Strong against mages." },
+      { name: "Disc/RestoDruid/Warrior", note: "Double healer aggressive. Help warrior connect with dispels and feral charge, if you let your warriors eat too much cc you will fall behind and lose. Rotate your cooldowns with the Druid" },
+      { name: "Disc/Rogue/Rogue", note: "This comp gets stronger the more pve gear becomes available, especially with Glaives. If you get a double sap in the opener it's most likely a free win, you need to force cds/kill in the opener then vanish reset with shields on your rogues, then win on the second go." },
     ],
   },
 
   "frost-mage": {
     title: "Frost Mage",
-    subtitle: "TBC — Arena",
+    subtitle: "",
     description: "",
-    notes: ["Template page — edit later."],
+    notes: ["Horde is Undead, Alliance is Gnome, though human can still see play thanks to perception, but removing slows is overall better",
+      "Spam Rank1 Frostbolts to slow a target and to stack winter's chill debuffs, especially good to do against warlocks before sheeping so they can't easily devour dispell your sheep",
+      "Use Rank1 Blizzard to fish for rogues out of stealth, stop drinks behind a pillar, or to slow a target (Blizzard's slow can't be dispelled)",
+      "Don't randomly blink against rogues as they can capitalize on that and full kidney you",
+      "You can make a /cancelaura Ice Block macro and bind it to any of your spells, it's better than keeping it on the Ice Block key as you can randomly cancel it if you are spamming it"
+    ],
     talentsNote: ["Template talents — edit later."],
     talentsEmbedUrl: "https://www.wowhead.com/tbc/talent-calc/embed/mage/2500050300230150330125050000000000000000",
     gearBySeason: { S1: FROST_MAGE_S1, S2: [...FROST_MAGE_S1], S3: [...FROST_MAGE_S1], S4: [...FROST_MAGE_S1] },
-    comps2v2: [{ name: "Mage/DiscPriest", note: "Template — edit later." }],
-    comps3v3: [{ name: "Mage/Rogue/DiscPriest", note: "Template — edit later." }],
+    comps2v2: [{ name: "Mage/DiscPriest", note: "Balanced comp where you have a lot of control, you want to sheep/counterspell/fear the healer while killing the DPS, you can reset and run a lot thanks your sheep and slows, your real weakness is Viper Sting from hunters, and lock/druid." },
+      { name: "Mage/Rogue", note: "Strong comp with a lot of control, you can kill most non resto druid teams in the opener, mage can counterspell during kidney shot so that the healer trinket becomes useless, keep nova/sheep/blind on the DPS while nuking. If you fail to kill you can run and reset and wait for DRs before going again, but this time they most likely won't have trinkets so you should win. Weak to warlocks." },
+      { name: "Mage/Warlock", note: "Super heavy CC comp, you want to spam your sheep/fear/double counterspell on the healer while nuking the DPS down, weak to rogues and warlock/healer comps" },
+    ],
+    comps3v3: [{ name: "Mage/Rogue/DiscPriest", note: "Best comp in the game, most of the time you will probably win in the opener, but as you keep climbing it will get harder and harder and you need to learn to stabilize and reset your goes, you basically want to CC 2 targets while nuking 1. Hard to play correctly, but if done right unbeatable" },
+      { name: "Mage/Rogue/RestoDruid", note: "You will be less aggressive than the Priest version, but you have more room for mistakes and outlasting potential thanks to the druid healing and cc, survive until you can set up the right CC chain to score a kill" },
+      { name: "Mage/Warlock/DiscPriest", note: "Very aggressive comp, your double (potential triple with fel dom) counterspell is a huge threat to any non resto druid comps, you can have a lot of pressure on a target while the healer is scared to cast for the whole game. Priest spam dispels the kill target and try to score a fast win." },
+      { name: "Mage/Warlock/Resto Druid", note: "As always, resto druid is less aggressive than priest but makes it easier for you to survive and play a longer game" },
+      { name: "Mage/Warrior/RestoDruid", note: "Balanced comp, survive and keep the pressure up on the target while threatening counterspells on the healer, sometimes it's stronger to hold a counterspell just to keep the healer scared for the whole game" },
+    ],
   },
 
   "sub-rogue": {
     title: "Subtlety Rogue",
     subtitle: "TBC — Arena",
     description: "",
-    notes: ["Template page — edit later."],
+    notes: ["Alliance is Human, Horde is Undead",
+      "You need to make sap and cheap shot /target arena1 etc.. to spam while stealthed to win stealth wars",
+      
+      "Vanishing while fishing for rogues in stealth with Perception is to be considered as you enter improved stealth for 3 seconds",
+    ],
     talentsNote: ["Template talents — edit later."],
     talentsEmbedUrl: "https://www.wowhead.com/tbc/talent-calc/embed/rogue/3052031050021005221050000000000000000000",
     gearBySeason: { S1: SUB_ROGUE_S1, S2: [...SUB_ROGUE_S1], S3: [...SUB_ROGUE_S1], S4: [...SUB_ROGUE_S1] },
@@ -478,12 +496,29 @@ const DATA: Record<string, ClassBuildPageData> = {
     title: "Restoration Druid",
     subtitle: "TBC — Arena",
     description: "",
-    notes: ["Template page — edit later."],
+    notes: ["If you're in trouble and the target that's hitting you has no trinket, it's way better to use Nature's Swiftness a Cyclone to completely stop damage and run away, than a panic Healing Touch.",
+       "One of the most important skills to learn as Resto Druid is getting a feel of your Cyclone casting time, so that when you are chain cloning a target you leave no gap, meaning he can't use a global in between.",
+       "Use Rank1 Roots" 
+    ],
     talentsNote: ["Template talents — edit later."],
     talentsEmbedUrl: "https://www.wowhead.com/tbc/talent-calc/embed/druid/51002230000000000000050000331000105003",
     gearBySeason: { ...TEMPLATE_GEAR },
-    comps2v2: [{ name: "Druid/Warrior", note: "Template — edit later." }],
-    comps3v3: [{ name: "WLD / Druid teams", note: "Template — edit later." }],
+    comps2v2: [{ name: "Druid/Warrior", note: "Well balanced comp, the classic of TBC, you need to CC the off target with cyclones and roots, feral charge to kick incoming CC on your warrior (very important to stop sheep), you want your warriors to have as much uptime as possible. Cloning a low health target while your warrior is stuck is important as it stops all heals while the warrior comes back. Your hardest matchup is Mage/Rogue as they can stop your warrior forever." },
+      { name: "Druid/Hunter", note: "Strong comp that revolves around draining your opponents' mana, use your strong control to stop damage while you run down the healer/mage with Viper Stings. " },
+      { name: "Druid/Rogue", note: "If played well this comp has no real counters, it can beat anything in the game, depends on how good your rogue is, a bad opener against double rogue or rogue mage will make the game really hard. Overall you want to control the game until your rogue can setup a kill, as long as you rotate through your cds properly, especially against casters, you are really hard to kill. Eventually you want them to not have their trinkets and you can kill with a blind/cylone rotation on the second target. For this comp it's adviced to play a Restokin talent build, which means you will skip feral charge and get moonkin form, so that you can assist your rogue in damage and be way more aggressive." },
+      { name: "Druid/Warlock", note: "Your CC is really strong, a full fear followed by cyclone/bash on the healer can end the game. Warriors are the hardest class for you and that's where you need to be on point with your CC, if they get too much uptime on your warlock you will lose. Remember Warlocks mobility is non existant in TBC. You will counter every mage/hunter healer comp pretty easily." },
+      
+    ],
+
+    comps3v3: [{ name: "Druid/Warlock/Rogue", note: "Strong comp that revolves around draining your opponents' mana, use your strong control to stop damage while you run down the healer/mage with Viper Stings. " },
+      { name: "Druid/Warlock/Warrior", note: "Strong comp that revolves around draining your opponents' mana, use your strong control to stop damage while you run down the healer/mage with Viper Stings. " },
+      { name: "Druid/Mage/Rogue", note: "Strong comp that revolves around draining your opponents' mana, use your strong control to stop damage while you run down the healer/mage with Viper Stings. " },
+      { name: "Druid/Mage/Warrior", note: "Strong comp that revolves around draining your opponents' mana, use your strong control to stop damage while you run down the healer/mage with Viper Stings. " },
+      { name: "Druid/Rogue/Warrior", note: "Strong comp that revolves around draining your opponents' mana, use your strong control to stop damage while you run down the healer/mage with Viper Stings. " },
+      { name: "Druid/Rogue/Rogue", note: "Strong comp that revolves around draining your opponents' mana, use your strong control to stop damage while you run down the healer/mage with Viper Stings. " },
+      { name: "Druid/DiscPriest/Hunter", note: "Strong comp that revolves around draining your opponents' mana, use your strong control to stop damage while you run down the healer/mage with Viper Stings. " },
+      { name: "Druid/DiscPriest/Warrior", note: "Strong comp that revolves around draining your opponents' mana, use your strong control to stop damage while you run down the healer/mage with Viper Stings. " }
+    ],
   },
 
   "arms-warrior": {
@@ -572,14 +607,17 @@ const DATA: Record<string, ClassBuildPageData> = {
 
   "fire-mage": {
     title: "Fire Mage",
-    subtitle: "TBC — Arena",
+    subtitle: "",
     description: "",
-    notes: ["Template page — edit later."],
+    notes: ["Undead or Troll for Horde, Gnome for alliance",
+      "You are the real 2006 Youtube Pyroblast Mage"
+
+    ],
     talentsNote: ["Template talents — edit later."],
     talentsEmbedUrl: "https://www.wowhead.com/tbc/talent-calc/embed/mage/2300050300230150330125050000000000000000",
     gearBySeason: { ...TEMPLATE_GEAR },
-    comps2v2: [{ name: "Mage/Healer", note: "Template — edit later." }],
-    comps3v3: [{ name: "Mage teams", note: "Template — edit later." }],
+    comps2v2: [{ name: "Fire Mage/Resto Shaman", note: "Your only viable comp, you need to wait until you get a Clearcasting proc so that you can get 30% more crit from Arcane Potency, then try to setup the kill with an instant Pyroblast on the target and counterspell the healer. Use Bloodlust at this moment, the shaman needs to help with the kill. You just need to survive until this moment. The comp is way better on Horde" }],
+    
   },
 };
 
