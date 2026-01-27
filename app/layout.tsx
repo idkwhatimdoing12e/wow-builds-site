@@ -1,5 +1,6 @@
 import "./globals.css";
 import Link from "next/link";
+import Script from "next/script";
 import GlobalNav from "./components/GlobalNav";
 import WowheadInit from "./components/WowheadInit";
 
@@ -11,6 +12,22 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        {/* Google Analytics (GA4) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-WZL8YR2L05"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-WZL8YR2L05');
+          `}
+        </Script>
+      </head>
+
       <body className="bg-black text-white flex flex-col min-h-screen">
         {/* Must be mounted once globally for tooltips */}
         <WowheadInit />
