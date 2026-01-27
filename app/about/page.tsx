@@ -13,8 +13,8 @@ export default function AboutPage() {
         </h1>
 
         <p className="mt-6 text-white/70 leading-relaxed">
-          <strong>wowbuilds.pro</strong> is a fan-made World of Warcraft build hub focused on
-          optimized setups across different expansions.
+          <strong>wowbuilds.pro</strong> is a fan-made World of Warcraft hub focused on fun low level
+          builds from vanilla to wrath (for now).
         </p>
 
         <p className="mt-4 text-white/70 leading-relaxed">
