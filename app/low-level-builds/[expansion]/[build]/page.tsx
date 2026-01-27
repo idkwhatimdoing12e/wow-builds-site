@@ -168,7 +168,7 @@ function BuffColumn({
     <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
       <div className="flex items-end justify-between gap-4">
         <h3 className="text-lg font-semibold">{title}</h3>
-        <span className="text-xs text-white/45">Click to open Wowhead</span>
+        <span className="text-xs text-white/45"></span>
       </div>
 
       {items.length ? (
@@ -197,7 +197,7 @@ function BuffColumn({
       ) : null}
     </div>
 
-    <div className="text-white/40">↗</div>
+    
   </a>
 ))}
         </div>
@@ -323,7 +323,7 @@ export default async function BuildPage({
                     ) : null}
                   </div>
 
-                  <div className="text-white/40">↗</div>
+                  
                 </a>
               ))}
             </div>
@@ -370,7 +370,7 @@ export default async function BuildPage({
                     ) : null}
                   </div>
 
-                  <div className="text-white/40">↗</div>
+                  
                 </a>
               ))}
             </div>
