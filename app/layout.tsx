@@ -6,7 +6,7 @@ import WowheadInit from "./components/WowheadInit";
 
 export const metadata = {
   title: "WoW Builds",
-  description: "Curated level 1 twink builds across expansions.",
+  description: "Fun low level builds from Vanilla to Wrath",
 };
 
 export default function RootLayout({

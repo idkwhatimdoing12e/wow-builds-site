@@ -14,7 +14,7 @@ export default function HomePage() {
             </h1>
 
             <p className="mt-4 text-lg text-white/60">
-              Curated wow builds across expansions
+              Fun low level builds from Vanilla to Wrath
             </p>
 
             {/* Card */}
@@ -28,7 +28,7 @@ export default function HomePage() {
                 </h2>
 
                 <p className="mt-3 text-white/70">
-                  Level 1 / 10 optimized builds, gear, enchants, and consumables.
+                  Level 1 / 10 optimized builds, gear, enchants, and consumables
                 </p>
 
                 <p className="mt-6 text-white/90">
