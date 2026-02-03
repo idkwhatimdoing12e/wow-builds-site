@@ -747,7 +747,7 @@
               "itemName": "Wax-polished Armor",
               "itemId": 6195,
               "iconName": "inv_chest_chain",
-              "enchant": "+15 Resilience"
+              "enchant": "+100 Health"
             },
             {
               "slot": "Wrists",
