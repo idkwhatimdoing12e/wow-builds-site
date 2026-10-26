@@ -1,0 +1,28 @@
+{
+ "cards": {
+  "Scarlet Monastery: Library": "/journal/art/scarlet-monastery-library-card.webp",
+  "Scarlet Monastery: Cathedral": "/journal/art/scarlet-monastery-cathedral-card.webp",
+  "Upper Blackrock Spire": "/journal/art/upper-blackrock-spire-card.webp",
+  "Scholomance": "/journal/art/scholomance-card.webp",
+  "Razorfen Downs": "/journal/art/razorfen-downs-card.webp",
+  "Dire Maul: West": "/journal/art/dire-maul-west-card.webp",
+  "Blackmaw Hold": "/journal/art/blackmaw-hold-card.webp",
+  "Shaper's Terrace": "/journal/art/shapers-terrace-card.webp",
+  "Maraudon": "/journal/art/maraudon-card.webp",
+  "Scarlet Monastery: Graveyard": "/journal/art/scarlet-monastery-graveyard-card.webp",
+  "Stratholme: Undead": "/journal/art/stratholme-undead-card.webp",
+  "Dire Maul: North": "/journal/art/dire-maul-north-card.webp",
+  "Sunken Temple": "/journal/art/sunken-temple-card.webp",
+  "Stratholme: Living": "/journal/art/stratholme-living-card.webp",
+  "Lower Blackrock Spire": "/journal/art/lower-blackrock-spire-card.webp",
+  "The Drowned City": "/journal/art/the-drowned-city-card.webp",
+  "Blackrock Depths": "/journal/art/blackrock-depths-card.webp",
+  "Dire Maul: East": "/journal/art/dire-maul-east-card.webp",
+  "Scarlet Monastery: Armory": "/journal/art/scarlet-monastery-armory-card.webp",
+  "Zul'Farrak": "/journal/art/zulfarrak-card.webp",
+  "Krol'dok Stronghold": "/journal/art/kroldok-stronghold-card.webp",
+  "Uldaman": "/journal/art/uldaman-card.webp",
+  "Alcaz Prison": "/journal/art/alcaz-prison-card.webp"
+ },
+ "pages": {}
+}
