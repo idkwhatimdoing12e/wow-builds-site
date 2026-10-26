@@ -22,15 +22,21 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
   const [bossIdx, setBossIdx] = useState(0); // index into bosses; bosses.length = trash
   const detailRef = useRef<HTMLDivElement>(null);
 
-  // Deep links: #bosses, #quests, #quest-<id>, #boss-<n>
+  // Deep links: #bosses, #quest-<id>. Applied on the next frame so the
+  // server-rendered markup hydrates first (the lint rule's cascading-render concern).
   useEffect(() => {
-    const h = window.location.hash.replace("#", "");
-    if (h === "bosses") setTab("bosses");
-    if (h.startsWith("quest-")) {
-      const id = parseInt(h.slice(6), 10);
-      const i = d.quests.findIndex((q) => q.id === id);
-      if (i >= 0) { setTab("quests"); setQuestIdx(i); }
-    }
+    const apply = () => {
+      const h = window.location.hash.replace("#", "");
+      if (h === "bosses") setTab("bosses");
+      if (h.startsWith("quest-")) {
+        const id = parseInt(h.slice(6), 10);
+        const i = d.quests.findIndex((q) => q.id === id);
+        if (i >= 0) { setTab("quests"); setQuestIdx(i); }
+      }
+    };
+    const raf = requestAnimationFrame(apply);
+    window.addEventListener("hashchange", apply);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("hashchange", apply); };
   }, [d.quests]);
 
   const quests = d.quests.filter((q) => faction === "all" || q.faction === "Both" || q.faction === faction);
