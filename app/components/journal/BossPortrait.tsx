@@ -1,6 +1,5 @@
 "use client";
 
-import { NPC_RENDER_URL } from "@/app/lib/site";
 import { LevelBadge } from "./Window";
 
 function initials(name: string) {
@@ -15,32 +14,23 @@ function hideIfBroken(img: HTMLImageElement | null) {
 }
 
 /**
- * The round face itself: Wowhead's model render zoomed onto the head with a
- * precomputed crop, over the boss's initials. Fills its parent.
+ * The round face itself: the boss's head portrait (public/journal/portraits,
+ * cut from Wowhead's model renders) over its initials. Fills its parent.
  */
-export function PortraitFace({
-  name,
-  displayId,
-  crop,
-}: {
-  name: string;
-  displayId?: number;
-  crop?: [number, number, number];
-}) {
-  const [side, left, top] = crop ?? [300, 0, 0];
-  const scale = 100 / side; // % of the portrait per render pixel
+export function PortraitFace({ name, displayId }: { name: string; displayId?: number }) {
   return (
     <span className="wf-portrait-clip">
       <span className="wf-portrait-initials">{initials(name)}</span>
       {displayId && (
         <img
           className="wf-portrait-img"
-          src={NPC_RENDER_URL(displayId)}
+          src={`/journal/portraits/${displayId}.webp`}
           alt=""
+          width={96}
+          height={96}
           loading="lazy"
           ref={hideIfBroken}
           onError={(e) => { e.currentTarget.hidden = true; }}
-          style={{ width: `${300 * scale}%`, left: `${-left * scale}%`, top: `${-top * scale}%` }}
         />
       )}
     </span>
@@ -48,20 +38,10 @@ export function PortraitFace({
 }
 
 /** Round boss portrait like the addon's list (SetPortraitTextureFromCreatureDisplayID). */
-export function BossPortrait({
-  name,
-  displayId,
-  crop,
-  level,
-}: {
-  name: string;
-  displayId?: number;
-  crop?: [number, number, number];
-  level?: string;
-}) {
+export function BossPortrait({ name, displayId, level }: { name: string; displayId?: number; level?: string }) {
   return (
     <span className="wf-portrait" aria-hidden>
-      <PortraitFace name={name} displayId={displayId} crop={crop} />
+      <PortraitFace name={name} displayId={displayId} />
       <LevelBadge level={level} size={22} />
     </span>
   );

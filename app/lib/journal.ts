@@ -2,7 +2,6 @@
 // straight from the addon's Data/*.lua files. Nothing here is hand-maintained.
 
 import raw from "@/data/journal.json";
-import portraitsFile from "@/data/npc-portraits.json";
 
 /* ---------- raw shapes (mirror the Lua tables) ---------- */
 
@@ -162,7 +161,6 @@ export interface MapBossPin {
   /** Index into Dungeon.bosses, when the pin is a journal boss. */
   bossIndex?: number;
   displayId?: number;
-  portraitCrop?: [number, number, number];
 }
 export interface DungeonMap {
   floors: string[]; // image URLs, level 1 first
@@ -239,10 +237,8 @@ export function questIsFor(questFaction: string | undefined, faction: Faction): 
 export interface Boss {
   name: string;
   npcID?: number;
-  /** Creature display ID (the addon's STATIC_DISPLAY_IDS), for the portrait render. */
+  /** Creature display ID (the addon's STATIC_DISPLAY_IDS): portrait at /journal/portraits/<id>.webp. */
   displayId?: number;
-  /** Head crop of the 300x300 render: [side, left, top] in px. */
-  portraitCrop?: [number, number, number];
   description?: string;
   level?: string;
   rare: boolean;
@@ -310,7 +306,6 @@ function buildMap(name: string, slug: string, bosses: Boss[]): DungeonMap | unde
       name: b.name,
       bossIndex: bossIndex >= 0 ? bossIndex : undefined,
       displayId,
-      portraitCrop: displayId ? PORTRAIT_CROPS[String(displayId)] : undefined,
     };
   });
   const startFloor = Math.min(Math.max(entrances[0]?.floor ?? 1, 1), floors.length);
@@ -318,7 +313,6 @@ function buildMap(name: string, slug: string, bosses: Boss[]): DungeonMap | unde
   return { floors, floorLabels, startFloor, entrances, transitions, bosses: pins };
 }
 
-const PORTRAIT_CROPS = (portraitsFile as unknown as { crops: Record<string, [number, number, number]> }).crops;
 
 function minLevelOf(range: string): number {
   const m = range.match(/\d+/);
@@ -384,7 +378,6 @@ export function getDungeon(slug: string): Dungeon | null {
       name: b.name,
       npcID: b.npcID,
       displayId,
-      portraitCrop: displayId ? PORTRAIT_CROPS[String(displayId)] : undefined,
       description: b.description,
       level: levels[b.name],
       rare: !!b.rare,

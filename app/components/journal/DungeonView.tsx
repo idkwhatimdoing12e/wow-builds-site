@@ -163,7 +163,7 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
               {bossItems.map((b, i) => (
                 <li key={b.name}>
                   <a href={`#boss-${i}`} className={`wf-row ${bossIdx === i ? "wf-row-selected" : ""}`} onClick={pick(setBossIdx, i)}>
-                    <BossPortrait name={b.name} displayId={b.displayId} crop={b.portraitCrop} level={b.level} />
+                    <BossPortrait name={b.name} displayId={b.displayId} level={b.level} />
                     <span className="wf-row-text">
                       <span className="wf-row-name">{b.name}</span>
                       {(b.rare || b.factionOnly) && (

@@ -20,9 +20,4 @@ export const LINKS = {
 export const FOREVER_ITEM_URL = (id: number) => `https://www.wowhead.com/forever/item=${id}`;
 export const CLASSIC_ITEM_URL = (id: number) => `https://www.wowhead.com/classic/item=${id}`;
 
-// Wowhead's pre-rendered creature models (300x300, transparent), keyed by
-// creature display ID. Used for the boss portraits.
-export const NPC_RENDER_URL = (displayId: number) =>
-  `https://wow.zamimg.com/modelviewer/classicplus/webthumbs/npc/${displayId & 255}/${displayId}.webp`;
-
 export const ADSENSE_CLIENT = "ca-pub-7979214898290780";

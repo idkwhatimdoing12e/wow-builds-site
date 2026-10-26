@@ -82,7 +82,7 @@ export default function MapPane({ map, onBoss }: { map: DungeonMap; onBoss: (bos
                   style={{ left: `${b.x * 100}%`, top: `${b.y * 100}%` }}
                   onClick={() => b.bossIndex !== undefined && onBoss(b.bossIndex)}
                 >
-                  <PortraitFace name={b.name} displayId={b.displayId} crop={b.portraitCrop} />
+                  <PortraitFace name={b.name} displayId={b.displayId} />
                   <img className="wm-ring" src="/journal/ui/map-ring.png" alt="" width={28} height={28} />
                 </button>
               ))}
