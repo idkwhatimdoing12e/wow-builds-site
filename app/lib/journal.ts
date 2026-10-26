@@ -114,7 +114,63 @@ interface JournalData {
   FOREVER_QUEST_XP_FALLBACK: Record<string, number>;
   FOREVER_QUEST_BASE_XP: Record<string, number>;
   SHARED_BY_BOSS: Record<string, Record<string, LootTuple[]>>;
+  DUNGEON_MAPS?: Record<string, RawDungeonMap>;
+  MAP_LABELS?: Record<string, string>;
   meta: { addonVersion: string; dungeonCount: number };
+}
+
+/* ---------- Map tab (the addon's FDJ.DUNGEON_MAPS) ---------- */
+
+interface RawMapPoint {
+  floor?: number;
+  x: number;
+  y: number;
+}
+type RawEntrance = RawMapPoint & { angle?: number; labelPos?: string; labelKey?: string; color?: number[] };
+interface RawDungeonMap {
+  floors: unknown[];
+  entrance?: RawEntrance;
+  entrances?: RawEntrance[];
+  transitions?: (RawMapPoint & { to?: number; note?: boolean; labelKey?: string })[];
+  bosses?: (RawMapPoint & { name: string; npcID?: number })[];
+}
+
+export interface MapEntrance {
+  floor: number;
+  x: number;
+  y: number;
+  label: string;
+  /** Where the label sits relative to the swirl, from the addon's angle/labelPos. */
+  side: "left" | "right" | "top";
+  color?: string;
+}
+export interface MapTransition {
+  floor: number;
+  x: number;
+  y: number;
+  to?: number;
+  /** Shown above the ladder ("Level 2"); empty for note-only markers. */
+  label: string;
+  /** Hover text. */
+  tip: string;
+}
+export interface MapBossPin {
+  floor: number;
+  x: number;
+  y: number;
+  name: string;
+  /** Index into Dungeon.bosses, when the pin is a journal boss. */
+  bossIndex?: number;
+  displayId?: number;
+  portraitCrop?: [number, number, number];
+}
+export interface DungeonMap {
+  floors: string[]; // image URLs, level 1 first
+  floorLabels: string[]; // "Level 1", "Level 2", ...
+  startFloor: number;
+  entrances: MapEntrance[];
+  transitions: MapTransition[];
+  bosses: MapBossPin[];
 }
 
 const data = raw as unknown as JournalData;
@@ -208,6 +264,58 @@ export interface Dungeon extends DungeonSummary {
   hiddenQuests: Quest[];
   bosses: Boss[];
   trash: TrashDrop[];
+  map?: DungeonMap;
+}
+
+function mapLabel(key: string | undefined, fallback: string, n?: number): string {
+  const text = (key && data.MAP_LABELS?.[key]) || data.MAP_LABELS?.[fallback] || fallback;
+  return n === undefined ? text : text.replace("%d", String(n));
+}
+
+function buildMap(name: string, slug: string, bosses: Boss[]): DungeonMap | undefined {
+  const m = data.DUNGEON_MAPS?.[name];
+  if (!m || !m.floors?.length) return undefined;
+  const floors = m.floors.map((_, i) => `/journal/maps/${slug}-${i + 1}.webp`);
+  const entrances = (m.entrances ?? (m.entrance ? [m.entrance] : [])).map((e) => {
+    const rad = ((e.angle ?? 0) * Math.PI) / 180;
+    const side: MapEntrance["side"] = e.labelPos === "top" ? "top" : Math.cos(rad) < -0.3 ? "left" : "right";
+    const c = e.color;
+    return {
+      floor: e.floor ?? 1,
+      x: e.x,
+      y: e.y,
+      label: mapLabel(e.labelKey, "MAP_ENTRANCE"),
+      side,
+      color: c ? `rgb(${c.map((v) => Math.round(v * 255)).join(",")})` : undefined,
+    };
+  });
+  const transitions = (m.transitions ?? [])
+    .filter((t) => t.note || (t.to && t.to <= floors.length))
+    .map((t) => ({
+      floor: t.floor ?? 1,
+      x: t.x,
+      y: t.y,
+      to: t.note ? undefined : t.to,
+      label: t.note ? "" : mapLabel(t.labelKey, "MAP_FLOOR", t.to),
+      tip: t.note ? mapLabel(t.labelKey, "") : mapLabel(undefined, "MAP_FLOOR", t.to),
+    }));
+  const pins = (m.bosses ?? []).map((b) => {
+    const bossIndex = bosses.findIndex((x) => x.name === b.name);
+    const boss = bosses[bossIndex];
+    const displayId = boss?.displayId ?? (b.npcID ? data.STATIC_DISPLAY_IDS[String(b.npcID)] : undefined);
+    return {
+      floor: b.floor ?? 1,
+      x: b.x,
+      y: b.y,
+      name: b.name,
+      bossIndex: bossIndex >= 0 ? bossIndex : undefined,
+      displayId,
+      portraitCrop: displayId ? PORTRAIT_CROPS[String(displayId)] : undefined,
+    };
+  });
+  const startFloor = Math.min(Math.max(entrances[0]?.floor ?? 1, 1), floors.length);
+  const floorLabels = floors.map((_, i) => mapLabel(undefined, "MAP_FLOOR", i + 1));
+  return { floors, floorLabels, startFloor, entrances, transitions, bosses: pins };
 }
 
 const PORTRAIT_CROPS = (portraitsFile as unknown as { crops: Record<string, [number, number, number]> }).crops;
@@ -288,7 +396,8 @@ export function getDungeon(slug: string): Dungeon | null {
     });
   }
 
-  return { ...summary, entrance: d.entrance, quests, hiddenQuests, bosses, trash };
+  const map = buildMap(summary.name, summary.slug, bosses);
+  return { ...summary, entrance: d.entrance, quests, hiddenQuests, bosses, trash, ...(map ? { map } : {}) };
 }
 
 /* ---------- quests ---------- */

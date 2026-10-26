@@ -15,9 +15,39 @@ function hideIfBroken(img: HTMLImageElement | null) {
 }
 
 /**
- * Round boss portrait like the addon's list (SetPortraitTextureFromCreatureDisplayID):
- * Wowhead's model render, zoomed onto the head with a precomputed crop.
+ * The round face itself: Wowhead's model render zoomed onto the head with a
+ * precomputed crop, over the boss's initials. Fills its parent.
  */
+export function PortraitFace({
+  name,
+  displayId,
+  crop,
+}: {
+  name: string;
+  displayId?: number;
+  crop?: [number, number, number];
+}) {
+  const [side, left, top] = crop ?? [300, 0, 0];
+  const scale = 100 / side; // % of the portrait per render pixel
+  return (
+    <span className="wf-portrait-clip">
+      <span className="wf-portrait-initials">{initials(name)}</span>
+      {displayId && (
+        <img
+          className="wf-portrait-img"
+          src={NPC_RENDER_URL(displayId)}
+          alt=""
+          loading="lazy"
+          ref={hideIfBroken}
+          onError={(e) => { e.currentTarget.hidden = true; }}
+          style={{ width: `${300 * scale}%`, left: `${-left * scale}%`, top: `${-top * scale}%` }}
+        />
+      )}
+    </span>
+  );
+}
+
+/** Round boss portrait like the addon's list (SetPortraitTextureFromCreatureDisplayID). */
 export function BossPortrait({
   name,
   displayId,
@@ -29,24 +59,9 @@ export function BossPortrait({
   crop?: [number, number, number];
   level?: string;
 }) {
-  const [side, left, top] = crop ?? [300, 0, 0];
-  const scale = 100 / side; // % of the portrait per render pixel
   return (
     <span className="wf-portrait" aria-hidden>
-      <span className="wf-portrait-clip">
-        <span className="wf-portrait-initials">{initials(name)}</span>
-        {displayId && (
-        <img
-          className="wf-portrait-img"
-          src={NPC_RENDER_URL(displayId)}
-          alt=""
-          loading="lazy"
-          ref={hideIfBroken}
-          onError={(e) => { e.currentTarget.hidden = true; }}
-          style={{ width: `${300 * scale}%`, left: `${-left * scale}%`, top: `${-top * scale}%` }}
-        />
-        )}
-      </span>
+      <PortraitFace name={name} displayId={displayId} crop={crop} />
       <LevelBadge level={level} size={22} />
     </span>
   );

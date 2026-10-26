@@ -13,6 +13,7 @@ Requires: pip install lupa
 """
 import json
 import os
+import re
 import sys
 
 from lupa import LuaRuntime
@@ -97,6 +98,17 @@ def main():
         chunk("ForeverDungeonJournal", fdj)
         print(f"loaded {rel}")
 
+    # The dungeon map pages (Map tab) live in Core/Journal.lua, not Data/: run
+    # just that table. It ends at the first "}" in column 0 after its start.
+    journal_lua = os.path.join(addon_dir, "Core", "Journal.lua")
+    if os.path.exists(journal_lua):
+        lines = open(journal_lua, encoding="utf-8").read().split("\n")
+        start = next(i for i, l in enumerate(lines) if l.startswith("FDJ.DUNGEON_MAPS = {"))
+        end = next(i for i in range(start + 1, len(lines)) if lines[i] == "}")
+        block = "local _, FDJ = ...\n" + "\n".join(lines[start:end + 1])
+        lua.eval("function(src) return load(src, '@Core/Journal.lua (DUNGEON_MAPS)') end")(block)("ForeverDungeonJournal", fdj)
+        print("loaded DUNGEON_MAPS from Core/Journal.lua")
+
     export_keys = [
         "DB", "ORDER", "BOSS_LEVELS", "STATIC_DISPLAY_IDS",
         "QUEST_START_MAPS", "QUEST_PREREQ_CHAINS", "QUEST_PREREQ_DETAILS",
@@ -111,6 +123,14 @@ def main():
         val = fdj[key]
         if val is not None:
             result[key] = lua_to_py(val, lua)
+
+    # English map labels ("Entrance", "Level %d", ...) from the addon's locale table.
+    labels = {}
+    loc = os.path.join(addon_dir, "Localization", "Localization.lua")
+    if os.path.exists(loc):
+        for m in re.finditer(r'^\s*(MAP_[A-Z0-9_]+)\s*=\s*"((?:[^"\\]|\\.)*)"', open(loc, encoding="utf-8").read(), re.M):
+            labels.setdefault(m.group(1), m.group(2))  # first occurrence is enUS
+    result["MAP_LABELS"] = labels
 
     # Version from the TOC.
     toc = os.path.join(addon_dir, "ForeverDungeonJournal.toc")

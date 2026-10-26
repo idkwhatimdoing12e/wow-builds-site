@@ -44,3 +44,18 @@ them in the manifest as long as the file is there.
   display ID ([side, left, top] in px of the 300×300 render), measured from each
   render's opaque pixels. A boss without a crop shows the whole render; one whose
   render fails to load shows its initials.
+
+## Map tab
+
+```bash
+python3 scripts/lua-to-json.py "<path>/ForeverDungeonJournal"      # also exports FDJ.DUNGEON_MAPS
+python3 scripts/convert-maps.py "<path>/ForeverDungeonJournal" "<path>/wow-ui-textures"
+```
+
+`lua-to-json.py` reads the addon's `FDJ.DUNGEON_MAPS` table out of `Core/Journal.lua`
+(boss pins, entrances, ladders between levels) together with the English map labels.
+`convert-maps.py` then draws one picture per dungeon level into `public/journal/maps/`:
+the addon's own map art from `Media/`, or the game's map tiles stitched from an export
+of the game's UI textures (https://github.com/Gethe/wow-ui-textures, `classic` branch),
+with the addon's `MapPatches` painted over the game's own skulls. Re-run both after
+changing map positions in the addon.

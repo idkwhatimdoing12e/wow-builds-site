@@ -7,9 +7,10 @@ import { FactionCrest } from "./Window";
 import QuestPanel from "./QuestPanel";
 import { BossPanel, TrashPanel } from "./BossPanel";
 import { BossPortrait } from "./BossPortrait";
+import MapPane from "./MapPane";
 import { setFaction, useFaction } from "./useFaction";
 
-type Tab = "quests" | "bosses";
+type Tab = "map" | "quests" | "bosses";
 
 export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { name: string; slug: string } | null; next: { name: string; slug: string } | null }) {
   const [tab, setTab] = useState<Tab>(d.quests.length > 0 ? "quests" : "bosses");
@@ -20,12 +21,13 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
   const [bossIdx, setBossIdx] = useState(0); // index into bosses; bosses.length = trash
   const detailRef = useRef<HTMLDivElement>(null);
 
-  // Deep links: #bosses, #quest-<id>. Applied on the next frame so the
+  // Deep links: #map, #bosses, #quest-<id>. Applied on the next frame so the
   // server-rendered markup hydrates first (the lint rule's cascading-render concern).
   useEffect(() => {
     const apply = () => {
       const h = window.location.hash.replace("#", "");
       if (h === "bosses") setTab("bosses");
+      if (h === "map" && d.map) setTab("map");
       if (h.startsWith("quest-")) {
         const id = parseInt(h.slice(6), 10);
         const target = d.quests.find((q) => q.id === id);
@@ -39,7 +41,18 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
     const raf = requestAnimationFrame(apply);
     window.addEventListener("hashchange", apply);
     return () => { cancelAnimationFrame(raf); window.removeEventListener("hashchange", apply); };
-  }, [d.quests]);
+  }, [d.quests, d.map]);
+
+  // A boss portrait on the map opens that boss in the Bosses tab, like the addon.
+  const openBoss = (i: number) => {
+    setTab("bosses");
+    setBossIdx(i);
+    requestAnimationFrame(() => {
+      if (!window.matchMedia("(min-width: 860px)").matches) {
+        document.querySelector('[data-pane="bosses"] .wf-pane-detail')?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  };
 
   const quests = d.quests.filter((q) => questIsFor(q.faction, faction));
   const selectedQuest = quests.find((q) => q.id === questId) ?? quests[0];
@@ -68,6 +81,11 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
         </div>
         {!d.previewOnly && (
           <div className="wf-dtabs">
+            {d.map && (
+              <button type="button" data-tab="map" className={`wf-btn wf-tab ${tab === "map" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("map")}>
+                <img className="wf-tab-ico" src="/journal/ui/map-tab.png" alt="" width={24} height={24} /> Map
+              </button>
+            )}
             <button type="button" data-tab="bosses" className={`wf-btn wf-tab ${tab === "bosses" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("bosses")}>
               <img className="wf-tab-ico" src="/journal/ui/skull.png" alt="" width={24} height={24} /> Bosses
             </button>
@@ -85,6 +103,13 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
         </div>
       ) : (
         <>
+        {d.map && (
+          <div className="wf-panes wf-panes-one" data-pane="map" hidden={tab !== "map"}>
+            <div className="wf-pane wm-pane">
+              <MapPane map={d.map} onBoss={openBoss} />
+            </div>
+          </div>
+        )}
         <div className="wf-panes" data-pane="quests" hidden={tab !== "quests"}>
           <div className="wf-pane wf-pane-list">
             <div className="wf-pane-head">

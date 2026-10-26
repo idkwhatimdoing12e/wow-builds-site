@@ -636,3 +636,110 @@ body {
   .wf-card-name { font-size: 15px; }
   .wf-round-label span:last-child { display: none; }
 }
+
+/* ---- Map tab (the addon's dungeon map panel) ---- */
+.wf-panes-one { grid-template-columns: 1fr; }
+.wm-pane { padding: 8px; background: #120d09; }
+.wm { position: relative; }
+.wm-floors {
+  position: absolute; top: 8px; left: 8px; z-index: 30;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.wm-stage {
+  position: relative;
+  /* fit the window like the addon's map panel: whole map visible without scrolling */
+  max-width: min(1002px, max(560px, calc((100vh - 360px) * 1.5)));
+  margin: 0 auto;
+  --pin: 0.9;
+}
+.wm-art { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 2px; }
+
+/* boss portraits: round face in the minimap tracking ring */
+.wm-boss {
+  position: absolute; z-index: 10;
+  width: calc(max(26px, 6.33%) * var(--pin));
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  padding: 0; border: 0; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #4a3822, #15100b 75%);
+  font-family: var(--font-title); font-weight: 700; font-size: 11px; color: #e9cf8c;
+  cursor: pointer;
+}
+.wm-boss:hover { z-index: 20; filter: brightness(1.15); }
+.wm-ring {
+  position: absolute; left: 50%; top: 50%;
+  width: 136%; height: 136%; max-width: none;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* entrance swirl + gold label */
+.wm-ent {
+  position: absolute; z-index: 15;
+  width: max(22px, 5%); aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.wm-ent > img { width: 100%; height: 100%; }
+.wm-ent-label {
+  position: absolute; white-space: nowrap;
+  font-family: var(--font-title); font-weight: 800; font-size: clamp(13px, 1.7vw, 19px);
+  color: #ffd100;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 4px #000;
+}
+.wm-ent-right .wm-ent-label { left: calc(100% + 3px); top: 50%; transform: translateY(-50%); }
+.wm-ent-left .wm-ent-label { right: calc(100% + 3px); top: 50%; transform: translateY(-50%); }
+.wm-ent-top .wm-ent-label { bottom: calc(100% + 1px); left: 50%; transform: translateX(-50%); }
+
+/* ladders between levels */
+.wm-ladder {
+  position: absolute; z-index: 14;
+  width: max(28px, 6.67%); aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  padding: 0; border: 0; background: none; cursor: pointer;
+}
+.wm-ladder > img { width: 100%; height: 100%; filter: drop-shadow(0 1px 2px #000); }
+.wm-ladder:hover > img { filter: drop-shadow(0 0 5px #5f5); }
+.wm-ladder-label {
+  position: absolute; bottom: calc(100% + 1px); left: 50%; transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-title); font-weight: 700; font-size: clamp(11px, 1.3vw, 14px);
+  color: #59ff59;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+/* game-style tooltip for pins and ladders */
+.wm-boss[data-tip]:hover::after, .wm-ladder[data-tip]:hover::after {
+  content: attr(data-tip);
+  position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%);
+  white-space: nowrap; z-index: 40;
+  padding: 5px 9px;
+  background: rgba(8, 8, 20, 0.94);
+  border: 1px solid #8a8a99; border-radius: 4px;
+  box-shadow: 0 0 0 1px #000;
+  font-family: var(--font-body); font-weight: 600; font-size: 14px; color: #fff;
+  pointer-events: none;
+}
+.wm-ladder[data-tip]:hover::after { color: #59ff59; }
+
+/* "Boss icons" size control, bottom-left like the addon */
+.wm-size {
+  position: absolute; left: 8px; bottom: 8px; z-index: 30;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 5px 8px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid #3a2c1a; border-radius: 3px;
+  font-size: 11px; color: #f1e3c8;
+}
+.wm-size-row { display: flex; align-items: center; gap: 6px; }
+.wm-size-row button {
+  width: 18px; height: 18px; line-height: 1;
+  border: 1px solid #000; border-radius: 2px;
+  background: linear-gradient(180deg, var(--wf-red), var(--wf-red-dark));
+  color: #ffd77a; font-weight: 700; cursor: pointer;
+}
+.wm-size-row button:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 859px) {
+  .wm-floors { position: static; flex-direction: row; flex-wrap: wrap; margin-bottom: 6px; }
+  .wm-size { position: static; flex-direction: row; justify-content: center; margin-top: 6px; }
+}
