@@ -13,11 +13,16 @@ export const LINKS = {
   youtube: "https://www.youtube.com/@Exehn",
 };
 
-// Wowhead's Classic database covers original-vanilla item IDs. Items added by
-// Forever (IDs in the 200000+ range) have no public database yet; they render
-// as plain text until one exists. Flip this to a URL template when it does.
+// Wowhead hosts WoW Forever's database under /forever/ (dataEnv 16); its
+// power.js tooltips pick these links up on hover. A few items the addon lists
+// aren't in that database yet; those link to Wowhead Classic instead
+// (data/item-icons.json records which database each item was found in).
+export const FOREVER_ITEM_URL = (id: number) => `https://www.wowhead.com/forever/item=${id}`;
 export const CLASSIC_ITEM_URL = (id: number) => `https://www.wowhead.com/classic/item=${id}`;
-export const FOREVER_ITEM_URL: ((id: number) => string) | null = null;
-export const FOREVER_ITEM_ID_MIN = 200000;
+
+// Wowhead's pre-rendered creature models (300x300, transparent), keyed by
+// creature display ID. Used for the boss portraits.
+export const NPC_RENDER_URL = (displayId: number) =>
+  `https://wow.zamimg.com/modelviewer/classicplus/webthumbs/npc/${displayId & 255}/${displayId}.webp`;
 
 export const ADSENSE_CLIENT = "ca-pub-7979214898290780";

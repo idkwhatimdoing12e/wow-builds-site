@@ -3,17 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { Dungeon } from "@/app/lib/journal";
-import { FactionCrest, LevelBadge } from "./Window";
+import { FactionCrest } from "./Window";
 import QuestPanel from "./QuestPanel";
 import { BossPanel, TrashPanel } from "./BossPanel";
+import { BossPortrait } from "./BossPortrait";
 
 type Tab = "quests" | "bosses";
 type FactionFilter = "all" | "Alliance" | "Horde";
-
-function initials(name: string) {
-  const parts = name.replace(/[^A-Za-z' ]/g, "").split(/\s+/).filter(Boolean);
-  return parts.slice(0, 2).map((p) => p[0]!.toUpperCase()).join("");
-}
 
 export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { name: string; slug: string } | null; next: { name: string; slug: string } | null }) {
   const [tab, setTab] = useState<Tab>(d.quests.length > 0 ? "quests" : "bosses");
@@ -130,10 +126,7 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
               {bossItems.map((b, i) => (
                 <li key={b.name}>
                   <a href={`#boss-${i}`} className={`wf-row ${bossIdx === i ? "wf-row-selected" : ""}`} onClick={pick(setBossIdx, i)}>
-                    <span className="wf-portrait" aria-hidden>
-                      {initials(b.name)}
-                      <LevelBadge level={b.level} size={22} />
-                    </span>
+                    <BossPortrait name={b.name} displayId={b.displayId} crop={b.portraitCrop} level={b.level} />
                     <span className="wf-row-text">
                       <span className="wf-row-name">{b.name}</span>
                       {(b.rare || b.factionOnly) && (

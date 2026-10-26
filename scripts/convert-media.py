@@ -34,7 +34,7 @@ def addon_media_path(addon_dir, ref):
     m = re.match(r"Interface\\AddOns\\ForeverDungeonJournal\\(.+)$", ref)
     if not m:
         return None
-    rel = m.group(1).replace("\\", "/")
+    rel = re.sub(r"\.(tga|png|blp)$", "", m.group(1).replace("\\", "/"), flags=re.I)
     for ext in (".tga", ".png", ".blp"):
         p = os.path.join(addon_dir, rel + ext)
         if os.path.exists(p):
@@ -76,6 +76,14 @@ def main():
         out = f"art/{slugify(name)}-page.webp"
         im.save(os.path.join(OUT, out), "WEBP", quality=82)
         manifest["pages"][name] = "/journal/" + out
+
+    # Dungeons whose card is a Blizzard loading screen (numeric file ID or
+    # Interface\\Glues\\...) can't be read from the addon folder. Their cards are
+    # extracted once and committed to public/journal/art/; keep them in the manifest.
+    for name in data.get("ORDER", []):
+        rel = f"art/{slugify(name)}-card.webp"
+        if name not in manifest["cards"] and os.path.exists(os.path.join(OUT, rel)):
+            manifest["cards"][name] = "/journal/" + rel
 
     # Faction crests, parchment, small icons the UI uses.
     for src, out in [

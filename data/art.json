@@ -14,6 +14,7 @@
   "Dire Maul: North": "/journal/art/dire-maul-north-card.webp",
   "Sunken Temple": "/journal/art/sunken-temple-card.webp",
   "Stratholme: Living": "/journal/art/stratholme-living-card.webp",
+  "Ruins of Lordaeron": "/journal/art/ruins-of-lordaeron-card.webp",
   "Lower Blackrock Spire": "/journal/art/lower-blackrock-spire-card.webp",
   "The Drowned City": "/journal/art/the-drowned-city-card.webp",
   "Blackrock Depths": "/journal/art/blackrock-depths-card.webp",
@@ -22,7 +23,21 @@
   "Zul'Farrak": "/journal/art/zulfarrak-card.webp",
   "Krol'dok Stronghold": "/journal/art/kroldok-stronghold-card.webp",
   "Uldaman": "/journal/art/uldaman-card.webp",
-  "Alcaz Prison": "/journal/art/alcaz-prison-card.webp"
+  "Alcaz Prison": "/journal/art/alcaz-prison-card.webp",
+  "Hall of Thanes": "/journal/art/hall-of-thanes-card.webp",
+  "Ragefire Chasm": "/journal/art/ragefire-chasm-card.webp",
+  "The Deadmines": "/journal/art/the-deadmines-card.webp",
+  "Wailing Caverns": "/journal/art/wailing-caverns-card.webp",
+  "Shadowfang Keep": "/journal/art/shadowfang-keep-card.webp",
+  "Blackfathom Deeps": "/journal/art/blackfathom-deeps-card.webp",
+  "Excavation Site: Wetlands": "/journal/art/excavation-site-wetlands-card.webp",
+  "The Stockade": "/journal/art/the-stockade-card.webp",
+  "City of Dalaran": "/journal/art/city-of-dalaran-card.webp",
+  "Gnomeregan": "/journal/art/gnomeregan-card.webp",
+  "Razorfen Kraul": "/journal/art/razorfen-kraul-card.webp"
  },
- "pages": {}
+ "pages": {
+  "Hall of Thanes": "/journal/art/hall-of-thanes-page.webp",
+  "Ruins of Lordaeron": "/journal/art/ruins-of-lordaeron-page.webp"
+ }
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ItemRef, Quest, RewardTuple } from "@/app/lib/journal";
-import ItemLink from "./ItemLink";
+import ItemLink, { ItemIcon } from "./ItemLink";
 import { FactionCrest } from "./Window";
 
 function titleCase(s: string) {
@@ -15,7 +15,7 @@ function Rewards({ items, header }: { items: RewardTuple[]; header: string }) {
       <ul className="wp-reward-list">
         {items.map(([id, name, quality, note]) => (
           <li key={id} className="wp-reward">
-            <span className="wp-icon" aria-hidden />
+            <ItemIcon id={id} quality={quality} />
             <span>
               <ItemLink id={id} name={name} quality={quality} />
               {note && <span className="wp-note"> {note}</span>}
@@ -33,7 +33,7 @@ function RefLine({ label, item }: { label: string; item?: ItemRef }) {
   return (
     <p className="wp-line">
       <span className="wp-label">{label}</span>{" "}
-      <ItemLink id={id} name={name} quality={quality} />
+      <ItemLink id={id} name={name} quality={quality} icon />
       {source && <span className="wp-note"> — {source}</span>}
     </p>
   );

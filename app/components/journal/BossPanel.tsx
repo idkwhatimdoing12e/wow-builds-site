@@ -1,12 +1,13 @@
 import type { Boss, LootTuple, TrashDrop } from "@/app/lib/journal";
-import ItemLink from "./ItemLink";
+import ItemLink, { ItemIcon } from "./ItemLink";
 import { LevelBadge } from "./Window";
+import { BossModel } from "./BossPortrait";
 
 function LootRow({ item, note }: { item: LootTuple; note?: string }) {
   const [id, name, slot, quality] = item;
   return (
     <li className="wb-loot">
-      <span className="wp-icon" aria-hidden />
+      <ItemIcon id={id} quality={quality} />
       <span className="wb-loot-text">
         <ItemLink id={id} name={name} quality={quality} />
         <span className="wb-slot">
@@ -22,13 +23,18 @@ function LootRow({ item, note }: { item: LootTuple; note?: string }) {
 export function BossPanel({ boss }: { boss: Boss }) {
   return (
     <div className="wb">
-      <h2 className="wb-title">{boss.name}</h2>
-      <div className="wb-meta">
-        <LevelBadge level={boss.level} size={30} />
-        {boss.rare && <span className="wb-tag">Rare</span>}
-        {boss.factionOnly && <span className="wb-tag">{boss.factionOnly} only</span>}
+      <div className={boss.displayId ? "wb-head wb-head-model" : "wb-head"}>
+        <div className="wb-head-text">
+          <h2 className="wb-title">{boss.name}</h2>
+          <div className="wb-meta">
+            <LevelBadge level={boss.level} size={30} />
+            {boss.rare && <span className="wb-tag">Rare</span>}
+            {boss.factionOnly && <span className="wb-tag">{boss.factionOnly} only</span>}
+          </div>
+          {boss.description && <p className="wb-desc">{boss.description}</p>}
+        </div>
+        <BossModel name={boss.name} displayId={boss.displayId} />
       </div>
-      {boss.description && <p className="wb-desc">{boss.description}</p>}
 
       {boss.loot.length === 0 && boss.shared.length === 0 && boss.recipes.length === 0 && (
         <p className="wb-desc">No loot recorded yet.</p>

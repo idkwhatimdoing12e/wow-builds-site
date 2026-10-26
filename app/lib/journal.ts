@@ -2,6 +2,7 @@
 // straight from the addon's Data/*.lua files. Nothing here is hand-maintained.
 
 import raw from "@/data/journal.json";
+import portraitsFile from "@/data/npc-portraits.json";
 
 /* ---------- raw shapes (mirror the Lua tables) ---------- */
 
@@ -106,6 +107,7 @@ interface JournalData {
   DB: Record<string, RawDungeon>;
   ORDER: string[];
   BOSS_LEVELS: Record<string, Record<string, string>>;
+  STATIC_DISPLAY_IDS: Record<string, number>;
   QUEST_START_MAPS: Record<string, MapPoint>;
   QUEST_PREREQ_CHAINS: Record<string, ChainStep[]>;
   QUEST_PREREQ_DETAILS: Record<string, PrereqDetail>;
@@ -172,6 +174,10 @@ export interface DungeonSummary {
 export interface Boss {
   name: string;
   npcID?: number;
+  /** Creature display ID (the addon's STATIC_DISPLAY_IDS), for the portrait render. */
+  displayId?: number;
+  /** Head crop of the 300x300 render: [side, left, top] in px. */
+  portraitCrop?: [number, number, number];
   description?: string;
   level?: string;
   rare: boolean;
@@ -194,6 +200,8 @@ export interface Dungeon extends DungeonSummary {
   bosses: Boss[];
   trash: TrashDrop[];
 }
+
+const PORTRAIT_CROPS = (portraitsFile as unknown as { crops: Record<string, [number, number, number]> }).crops;
 
 function minLevelOf(range: string): number {
   const m = range.match(/\d+/);
@@ -249,9 +257,12 @@ export function getDungeon(slug: string): Dungeon | null {
     const sharedRaw = asList<LootTuple>(sharedByBoss[b.name]);
     const seen = new Set(loot.map((it) => it[0]));
     const shared = sharedRaw.filter((it) => !seen.has(it[0]));
+    const displayId = b.npcID ? data.STATIC_DISPLAY_IDS[String(b.npcID)] : undefined;
     bosses.push({
       name: b.name,
       npcID: b.npcID,
+      displayId,
+      portraitCrop: displayId ? PORTRAIT_CROPS[String(displayId)] : undefined,
       description: b.description,
       level: levels[b.name],
       rare: !!b.rare,

@@ -37,7 +37,6 @@ export default function JournalHome({ dungeons, addonVersion }: Props) {
       <div className="wf-toolbar">
         <div className="wf-tabs-round">
           <span className="wf-round wf-round-active" title="WoW Forever">W</span>
-          <span className="wf-round wf-round-off" title="TBC Anniversary — in the addon">W</span>
           <span className="wf-round wf-round-off wf-round-label" title="Raids open December 9">
             <span className="wf-skull" aria-hidden>☠</span>
             <span>RAIDS</span>
