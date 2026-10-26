@@ -39,13 +39,13 @@ them in the manifest as long as the file is there.
   add `[icon, env]` entries and the missing icon files. Unknown items show a question mark.
 - **Item links** go to `wowhead.com/forever/item=<id>` (Classic for env-4 items);
   Wowhead's `power.js` shows the tooltip on hover.
-- **Boss portraits** are 96px head shots in `public/journal/portraits/<displayId>.webp`
-  (the creature display ID from the addon's `STATIC_DISPLAY_IDS`), cut from Wowhead's
-  model renders with the head crop in `data/npc-portraits.json`
-  ([side, left, top] in px of the 300×300 render). They're stored on the site so they
-  show everywhere; a boss without a file shows its initials. For a new boss, take
-  `https://wow.zamimg.com/modelviewer/classicplus/webthumbs/npc/<id & 255>/<id>.webp`,
-  crop it to the head and save it under its display ID.
+- **Boss pictures** are Wowhead's model previews, stored on the site so they show
+  everywhere: `public/journal/npc/<displayId>.webp` is the whole model (shown in the
+  boss pane) and `public/journal/portraits/<displayId>.webp` the same model framed on
+  its upper body (the round portraits in the boss list and on the map). The display
+  ID comes from the addon's `STATIC_DISPLAY_IDS`; a boss without a file shows its
+  initials. Source for a new boss:
+  `https://wow.zamimg.com/modelviewer/classicplus/webthumbs/npc/<id & 255>/<id>.webp`.
 
 ## Map tab
 

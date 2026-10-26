@@ -109,6 +109,15 @@ def main():
         lua.eval("function(src) return load(src, '@Core/Journal.lua (DUNGEON_MAPS)') end")(block)("ForeverDungeonJournal", fdj)
         print("loaded DUNGEON_MAPS from Core/Journal.lua")
 
+    # The Forever emblem's filter list (Systems/ForeverFilter.lua): read just the table.
+    ff = os.path.join(addon_dir, "Systems", "ForeverFilter.lua")
+    if os.path.exists(ff):
+        m = re.search(r"FDJ\.FOREVER_DUNGEONS = \{.*?\n\}", open(ff, encoding="utf-8").read(), re.S)
+        if m:
+            lua.eval("function(src) return load(src, '@Systems/ForeverFilter.lua (FOREVER_DUNGEONS)') end")(
+                "local _, FDJ = ...\n" + m.group(0))("ForeverDungeonJournal", fdj)
+            print("loaded FOREVER_DUNGEONS from Systems/ForeverFilter.lua")
+
     export_keys = [
         "DB", "ORDER", "BOSS_LEVELS", "STATIC_DISPLAY_IDS",
         "QUEST_START_MAPS", "QUEST_PREREQ_CHAINS", "QUEST_PREREQ_DETAILS",
@@ -116,7 +125,7 @@ def main():
         "PREREQ_REWARD_ITEMS_FALLBACK", "PREREQ_REWARD_MONEY_FALLBACK",
         "QUEST_SHAREABILITY_AUDIT", "SHARED_BY_BOSS", "ENTRANCES", "ROUTES",
         "THEMES", "DUNGEON_HOME_ART", "DUNGEON_HOME_TEXCOORD",
-        "DUNGEON_PAGE_ART", "DUNGEON_PAGE_TEXCOORD", "DUNGEON_MAPS",
+        "DUNGEON_PAGE_ART", "DUNGEON_PAGE_TEXCOORD", "DUNGEON_MAPS", "FOREVER_DUNGEONS",
     ]
     result = {}
     for key in export_keys:
@@ -124,11 +133,12 @@ def main():
         if val is not None:
             result[key] = lua_to_py(val, lua)
 
-    # English map labels ("Entrance", "Level %d", ...) from the addon's locale table.
+    # English UI labels (map labels, the Forever emblem's tooltip...) from the addon's locale table.
     labels = {}
     loc = os.path.join(addon_dir, "Localization", "Localization.lua")
     if os.path.exists(loc):
-        for m in re.finditer(r'^\s*(MAP_[A-Z0-9_]+)\s*=\s*"((?:[^"\\]|\\.)*)"', open(loc, encoding="utf-8").read(), re.M):
+        keys = r"MAP_[A-Z0-9_]+|FOREVER_FILTER_[A-Z]+|RAIDS_TITLE|COMING_SOON"
+        for m in re.finditer(r'^\s*(' + keys + r')\s*=\s*"((?:[^"\\]|\\.)*)"', open(loc, encoding="utf-8").read(), re.M):
             labels.setdefault(m.group(1), m.group(2))  # first occurrence is enUS
     result["MAP_LABELS"] = labels
 

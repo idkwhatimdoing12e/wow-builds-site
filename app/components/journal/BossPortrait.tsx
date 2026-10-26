@@ -14,8 +14,8 @@ function hideIfBroken(img: HTMLImageElement | null) {
 }
 
 /**
- * The round face itself: the boss's head portrait (public/journal/portraits,
- * cut from Wowhead's model renders) over its initials. Fills its parent.
+ * The round portrait: the boss's Wowhead model preview framed on its upper body
+ * (public/journal/portraits, transparent) over its initials. Fills its parent.
  */
 export function PortraitFace({ name, displayId }: { name: string; displayId?: number }) {
   return (
@@ -38,6 +38,21 @@ export function PortraitFace({ name, displayId }: { name: string; displayId?: nu
 }
 
 /** Round boss portrait like the addon's list (SetPortraitTextureFromCreatureDisplayID). */
+/** The full Wowhead model preview (public/journal/npc, transparent), for the boss pane. */
+export function BossPreview({ name, displayId }: { name: string; displayId?: number }) {
+  if (!displayId) return null;
+  return (
+    <img
+      className="wb-preview"
+      src={`/journal/npc/${displayId}.webp`}
+      alt={name}
+      loading="lazy"
+      ref={hideIfBroken}
+      onError={(e) => { e.currentTarget.hidden = true; }}
+    />
+  );
+}
+
 export function BossPortrait({ name, displayId, level }: { name: string; displayId?: number; level?: string }) {
   return (
     <span className="wf-portrait" aria-hidden>

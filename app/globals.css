@@ -482,6 +482,7 @@ body {
   position: absolute; inset: 0;
   width: 100%; height: 100%; max-width: none;
   object-fit: cover;
+  background: radial-gradient(circle at 50% 40%, #5a4429, #1b140c 72%);
 }
 .wf-portrait .wf-lvl { position: absolute; left: -8px; bottom: -8px; z-index: 1; }
 .wf-portrait-trash img { width: 34px; height: 34px; }
@@ -502,6 +503,18 @@ body {
 .wf-pager { display: flex; justify-content: space-between; gap: 8px; margin-top: 14px; }
 
 /* ---- boss pane ---- */
+.wb-head { display: flex; align-items: center; gap: 10px; }
+.wb-head-text { flex: 1 1 auto; min-width: 0; }
+.wb-head-text .wb-meta { justify-content: center; }
+/* Wowhead's model preview of the boss */
+.wb-preview {
+  flex: 0 0 auto;
+  max-width: 132px; max-height: 132px;
+  object-fit: contain;
+  margin: -6px 0 6px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.75));
+}
+@media (max-width: 520px) { .wb-preview { max-width: 96px; max-height: 96px; } }
 .wb-title { text-align: center; font-family: var(--font-title); font-weight: 800; font-size: 20px; color: var(--wf-text); margin: 6px 0 8px; }
 .wb-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .wb-tag { font-size: 12px; letter-spacing: 0.05em; color: #ffd77a; border: 1px solid var(--wf-border); padding: 2px 8px; border-radius: 999px; }
@@ -743,3 +756,54 @@ body {
   .wm-floors { position: static; flex-direction: row; flex-wrap: wrap; margin-bottom: 6px; }
   .wm-size { position: static; flex-direction: row; justify-content: center; margin-top: 6px; }
 }
+
+/* ---- home emblems (the addon's ForeverFilter.lua) ---- */
+.wf-emblems { display: flex; align-items: center; gap: 14px; padding-left: 4px; }
+.wf-forever, .wf-raids {
+  position: relative;
+  width: 40px; height: 40px;
+  padding: 0; border: 0; background: none;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.wf-forever { cursor: pointer; }
+.wf-forever-icon { position: relative; z-index: 2; width: 40px; height: 40px; transition: filter 0.1s; }
+.wf-forever:hover .wf-forever-icon { filter: brightness(1.35); }
+.wf-forever:active .wf-forever-icon { transform: translate(1px, 1px); }
+/* soft gold halo, always on so it reads as clickable; brighter while the filter is on */
+.wf-forever-halo {
+  position: absolute; z-index: 0; left: 50%; top: 50%;
+  width: 192%; height: 192%; max-width: none;
+  transform: translate(-50%, -50%);
+  opacity: 0.75; pointer-events: none;
+  mix-blend-mode: screen;
+}
+.wf-forever.on .wf-forever-halo { width: 215%; height: 215%; opacity: 1; }
+/* gold action-button ring, only while on */
+.wf-forever-ring {
+  position: absolute; z-index: 1; left: 50%; top: 50%;
+  width: 192%; height: 192%; max-width: none;
+  transform: translate(-50%, -50%);
+  opacity: 0; pointer-events: none;
+  mix-blend-mode: screen;
+}
+.wf-forever.on .wf-forever-ring { opacity: 0.95; }
+.wf-raids img { width: 40px; height: 40px; filter: grayscale(1); opacity: 0.45; transition: opacity 0.1s; }
+.wf-raids:hover img, .wf-raids:focus img { opacity: 0.6; }
+
+/* game-style tooltip */
+.wf-tip {
+  display: none;
+  position: absolute; z-index: 60; left: calc(100% + 10px); top: 50%; transform: translateY(-50%);
+  width: max-content; max-width: 260px;
+  flex-direction: column; gap: 3px;
+  padding: 7px 10px;
+  background: rgba(8, 8, 20, 0.95);
+  border: 1px solid #8a8a99; border-radius: 4px;
+  box-shadow: 0 0 0 1px #000;
+  font-family: var(--font-body); font-size: 13px; font-weight: 500; line-height: 1.35;
+  color: #fff; text-align: left; white-space: normal;
+  pointer-events: none;
+}
+.wf-tip-title { color: #ffd100; font-weight: 700; font-size: 14px; }
+.wf-forever:hover .wf-tip, .wf-forever:focus-visible .wf-tip,
+.wf-raids:hover .wf-tip, .wf-raids:focus .wf-tip { display: flex; }

@@ -115,6 +115,7 @@ interface JournalData {
   SHARED_BY_BOSS: Record<string, Record<string, LootTuple[]>>;
   DUNGEON_MAPS?: Record<string, RawDungeonMap>;
   MAP_LABELS?: Record<string, string>;
+  FOREVER_DUNGEONS?: Record<string, boolean>;
   meta: { addonVersion: string; dungeonCount: number };
 }
 
@@ -222,6 +223,8 @@ export interface DungeonSummary {
   previewOnly: boolean;
   fullItemsTBD: boolean;
   questCount: number;
+  /** New in WoW Forever (the addon's FDJ.FOREVER_DUNGEONS), for the Forever emblem filter. */
+  forever: boolean;
   /** Quests the addon's home card counts for each faction (no repeatables). */
   questsByFaction: Record<Faction, number>;
   bossCount: number;
@@ -335,6 +338,7 @@ export function getDungeonSummaries(): DungeonSummary[] {
       previewOnly: !!d.previewOnly,
       fullItemsTBD: !!d.fullItemsTBD,
       questCount: quests.filter((q) => !q.hideFromMainList).length,
+      forever: !!data.FOREVER_DUNGEONS?.[name],
       questsByFaction: {
         Alliance: counted.filter((q) => questIsFor(q.faction, "Alliance")).length,
         Horde: counted.filter((q) => questIsFor(q.faction, "Horde")).length,
@@ -546,3 +550,8 @@ export function getQuestBySlug(slug: string): QuestPage | null {
 }
 
 export const journalMeta = data.meta;
+
+/** English UI text from the addon's locale table (tooltips of the home emblems). */
+export function uiLabel(key: string, fallback: string): string {
+  return data.MAP_LABELS?.[key] ?? fallback;
+}

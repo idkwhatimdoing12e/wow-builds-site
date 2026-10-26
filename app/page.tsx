@@ -1,4 +1,4 @@
-import { getDungeonSummaries, journalMeta } from "@/app/lib/journal";
+import { getDungeonSummaries, journalMeta, uiLabel } from "@/app/lib/journal";
 import { cardArt, cardGradient } from "@/app/lib/art";
 import JournalHome from "@/app/components/journal/JournalHome";
 
@@ -10,7 +10,17 @@ export default function HomePage() {
   }));
   return (
     <div className="journal wf-page">
-      <JournalHome dungeons={dungeons} addonVersion={journalMeta.addonVersion} />
+      <JournalHome
+        dungeons={dungeons}
+        addonVersion={journalMeta.addonVersion}
+        emblemText={{
+          foreverTitle: uiLabel("FOREVER_FILTER_TITLE", "WoW Forever Dungeons"),
+          foreverTip: uiLabel("FOREVER_FILTER_TIP", "Click to show only the dungeons that are new in WoW Forever."),
+          foreverOn: uiLabel("FOREVER_FILTER_ON", "Showing only WoW Forever dungeons. Click to show all dungeons again."),
+          raidsTitle: uiLabel("RAIDS_TITLE", "Raids"),
+          comingSoon: uiLabel("COMING_SOON", "Coming Soon"),
+        }}
+      />
     </div>
   );
 }

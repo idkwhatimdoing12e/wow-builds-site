@@ -6,21 +6,28 @@ import type { DungeonSummary } from "@/app/lib/journal";
 import { LINKS } from "@/app/lib/site";
 import Window from "./Window";
 import { setFaction, useFaction } from "./useFaction";
+import HomeEmblems, { FOREVER_ONLY_KEY, type EmblemText } from "./HomeEmblems";
+import { useStoredFlag } from "./useStoredFlag";
 
 interface Props {
   dungeons: (DungeonSummary & { art: string | null; gradient: string })[];
   addonVersion: string;
+  emblemText: EmblemText;
 }
 
-export default function JournalHome({ dungeons, addonVersion }: Props) {
+export default function JournalHome({ dungeons, addonVersion, emblemText }: Props) {
   const [q, setQ] = useState("");
   const faction = useFaction();
   const crest = faction === "Horde" ? "/journal/horde.png" : "/journal/alliance.png";
+  const foreverOnly = useStoredFlag(FOREVER_ONLY_KEY);
   const shown = useMemo(() => {
     const s = q.trim().toLowerCase();
-    if (!s) return dungeons;
-    return dungeons.filter((d) => d.name.toLowerCase().includes(s) || d.location.toLowerCase().includes(s));
-  }, [q, dungeons]);
+    return dungeons.filter(
+      (d) =>
+        (!foreverOnly || d.forever) &&
+        (!s || d.name.toLowerCase().includes(s) || d.location.toLowerCase().includes(s)),
+    );
+  }, [q, dungeons, foreverOnly]);
 
   const search = (
     <label className="wf-search">
@@ -39,11 +46,7 @@ export default function JournalHome({ dungeons, addonVersion }: Props) {
     <Window search={search}>
       <div className="wf-toolbar">
         <div className="wf-tabs-round">
-          <span className="wf-round wf-round-active" title="WoW Forever">W</span>
-          <span className="wf-round wf-round-off wf-round-label" title="Raids open December 9">
-            <span className="wf-skull" aria-hidden>☠</span>
-            <span>RAIDS</span>
-          </span>
+          <HomeEmblems text={emblemText} />
         </div>
         <div className="wf-faction-pick" role="group" aria-label="Count quests for">
           {(["Alliance", "Horde"] as const).map((f) => (
