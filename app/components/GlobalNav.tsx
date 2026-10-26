@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const DISCORD_INVITE = "https://discord.com/invite/7jp7U4VqHK"; // <-- change this
+import { LINKS } from "@/app/lib/site";
+
+const DISCORD_INVITE = LINKS.discord;
 
 function DiscordIcon({ size = 22 }: { size?: number }) {
   return (

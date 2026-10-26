@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* The site is dark in every color scheme; the old light default made
+     light-mode browsers render white text on a white page. */
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 @theme inline {
@@ -94,4 +96,163 @@ body {
 }
 .buildCard[style*="#0070DE"] * {
   color: rgba(255, 255, 255, 0.92) !important;
+}
+/* =========================================================
+   DUNGEON JOURNAL
+   Dark parchment: near-black ground, warm gold accent, serif display.
+   ========================================================= */
+
+:root {
+  --gold: #d9b45a;
+  --gold-soft: rgba(217, 180, 90, 0.14);
+  --ink: #0b0a08;
+  --card: rgba(255, 255, 255, 0.035);
+  --card-border: rgba(255, 255, 255, 0.1);
+}
+
+.journal {
+  color: #efeae0;
+}
+
+.journal .display {
+  font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.journal .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.journal .section-title {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.journal .card {
+  display: block;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  border-radius: 14px;
+  padding: 16px 18px;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.journal a.card:hover {
+  border-color: rgba(217, 180, 90, 0.45);
+  background: rgba(217, 180, 90, 0.06);
+}
+
+.journal .card-row {
+  padding: 12px 16px;
+}
+
+.journal .card-preview {
+  border-style: dashed;
+  opacity: 0.8;
+}
+
+.journal .lvl {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--gold);
+  background: var(--gold-soft);
+  border: 1px solid rgba(217, 180, 90, 0.3);
+  border-radius: 999px;
+  padding: 2px 9px;
+  white-space: nowrap;
+}
+
+.journal .badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid;
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.journal .step {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.journal .step-final {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.journal .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+}
+
+.journal .btn:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.journal .btn-primary {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+}
+
+.journal .btn-primary:hover {
+  background: #e6c16a;
+  border-color: #e6c16a;
+}
+
+.journal details > summary {
+  list-style: none;
+}
+
+.journal details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.journal details > summary::before {
+  content: "▸ ";
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.journal details[open] > summary::before {
+  content: "▾ ";
+}
+
+.journal .line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
