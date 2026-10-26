@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { LINKS } from "@/app/lib/site";
 
 /**
- * The addon's window: black title bar with the journal title, search on the
- * left, Report on the right; a bordered brown body below.
+ * The addon's window: black title bar with the WoW Forever logo on the left,
+ * the journal title in the middle and search (home page) on the right; a
+ * bordered brown body below.
  */
 export default function Window({
   children,
@@ -19,13 +19,11 @@ export default function Window({
   return (
     <div className={`wf-window ${className}`} style={style}>
       <div className="wf-titlebar">
-        <div className="wf-titlebar-left">{search}</div>
+        <Link href="/" className="wf-logo" aria-label="Dungeon Journal home">
+          <img src="/journal/wow-forever-logo.webp" alt="World of Warcraft: Forever" width={76} height={62} />
+        </Link>
         <Link href="/" className="wf-title">Dungeon Journal</Link>
-        <div className="wf-titlebar-right">
-          <a href={LINKS.discord} target="_blank" rel="noreferrer noopener" className="wf-btn wf-btn-dark wf-btn-sm" title="Report a bug on Discord">
-            <span className="wf-dot" aria-hidden /> Report
-          </a>
-        </div>
+        <div className="wf-titlebar-right">{search}</div>
       </div>
       <div className="wf-body">{children}</div>
     </div>

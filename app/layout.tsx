@@ -24,11 +24,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Journal fonts: Cinzel for titles, Alegreya for body text */}
+        {/* Blizzard's forum fonts: Noto Sans for text; Manrope stands in for Object Sans
+            (Blizzard's licensed heading font) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
           rel="stylesheet"
         />
 
@@ -80,9 +81,6 @@ export default function RootLayout({
               </a>
               <Link href="/supporters" className="hover:text-white">
                 Supporters
-              </Link>
-              <Link href="/low-level-builds" className="hover:text-white">
-                Twink builds
               </Link>
               <Link href="/about" className="hover:text-white">
                 About

@@ -21,6 +21,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
-    { url: `${SITE_URL}/low-level-builds`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
   ];
 }
