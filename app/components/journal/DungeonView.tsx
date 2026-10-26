@@ -66,10 +66,10 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
         </div>
         {!d.previewOnly && (
           <div className="wf-dtabs">
-            <button type="button" className={`wf-btn wf-tab ${tab === "bosses" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("bosses")}>
+            <button type="button" data-tab="bosses" className={`wf-btn wf-tab ${tab === "bosses" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("bosses")}>
               <span className="wf-tab-ico" aria-hidden>☠</span> Bosses
             </button>
-            <button type="button" className={`wf-btn wf-tab ${tab === "quests" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("quests")}>
+            <button type="button" data-tab="quests" className={`wf-btn wf-tab ${tab === "quests" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("quests")}>
               <span className="wf-tab-ico wf-tab-ico-q" aria-hidden>!</span> Quests
             </button>
           </div>
@@ -81,8 +81,9 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
           <p className="wf-ptext">{d.description}</p>
           <p className="wf-note">Opens with WoW Forever on November 4. Quests, bosses and loot are added to the addon and this page as they are verified.</p>
         </div>
-      ) : tab === "quests" ? (
-        <div className="wf-panes">
+      ) : (
+        <>
+        <div className="wf-panes" data-pane="quests" hidden={tab !== "quests"}>
           <div className="wf-pane wf-pane-list">
             <div className="wf-pane-head">
               <span>Quests <span className="wf-sep">|</span> {quests.length}</span>
@@ -122,8 +123,7 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
             {selectedQuest ? <QuestPanel q={selectedQuest} /> : <p className="wf-note">No quests for this faction.</p>}
           </div>
         </div>
-      ) : (
-        <div className="wf-panes">
+        <div className="wf-panes" data-pane="bosses" hidden={tab !== "bosses"}>
           <div className="wf-pane wf-pane-list">
             <div className="wf-pane-head"><span>Bosses</span></div>
             <ul className="wf-rows">
@@ -159,6 +159,7 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
             {bossIdx < bossItems.length ? <BossPanel boss={bossItems[bossIdx]} /> : <TrashPanel trash={d.trash} />}
           </div>
         </div>
+        </>
       )}
 
       {d.fullItemsTBD && !d.previewOnly && (
