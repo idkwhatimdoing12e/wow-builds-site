@@ -168,7 +168,16 @@ export interface DungeonSummary {
   previewOnly: boolean;
   fullItemsTBD: boolean;
   questCount: number;
+  /** Quests the addon's home card counts for each faction (no repeatables). */
+  questsByFaction: Record<Faction, number>;
   bossCount: number;
+}
+
+export type Faction = "Alliance" | "Horde";
+
+/** The addon's QuestMatchesFaction: shared quests count for both sides. */
+export function questIsFor(questFaction: string | undefined, faction: Faction): boolean {
+  return !questFaction || questFaction === "Both" || questFaction === "Neutral" || questFaction === faction;
 }
 
 export interface Boss {
@@ -213,6 +222,7 @@ export function getDungeonSummaries(): DungeonSummary[] {
     const d = data.DB[name];
     const quests = asList<RawQuest>(d.quests).filter((q) => q && q.id);
     const bosses = asList<RawBoss>(d.bosses).filter((b) => b && !b.trash);
+    const counted = quests.filter((q) => !q.hideFromMainList && !q.repeatable);
     return {
       slug: slugify(name),
       name,
@@ -223,6 +233,10 @@ export function getDungeonSummaries(): DungeonSummary[] {
       previewOnly: !!d.previewOnly,
       fullItemsTBD: !!d.fullItemsTBD,
       questCount: quests.filter((q) => !q.hideFromMainList).length,
+      questsByFaction: {
+        Alliance: counted.filter((q) => questIsFor(q.faction, "Alliance")).length,
+        Horde: counted.filter((q) => questIsFor(q.faction, "Horde")).length,
+      },
       bossCount: bosses.length,
     };
   });

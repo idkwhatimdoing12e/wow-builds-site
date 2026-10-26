@@ -51,20 +51,3 @@ export function BossPortrait({
     </span>
   );
 }
-
-/** Full model render shown beside the boss name in the detail pane. */
-export function BossModel({ name, displayId }: { name: string; displayId?: number }) {
-  if (!displayId) return null;
-  return (
-    <img
-      className="wb-model"
-      src={NPC_RENDER_URL(displayId)}
-      alt={name}
-      width={150}
-      height={150}
-      loading="lazy"
-      ref={hideIfBroken}
-      onError={(e) => { e.currentTarget.hidden = true; }}
-    />
-  );
-}

@@ -242,8 +242,7 @@ body {
 .wf-btn-dark { background: linear-gradient(180deg, #2a2420, #15110e); color: #e9dcc2; }
 .wf-tab-active { background: linear-gradient(180deg, #4a4a4a, #262626); color: #fff; cursor: default; }
 .wf-tab-active:hover { filter: none; }
-.wf-tab-ico { font-size: 16px; line-height: 1; }
-.wf-tab-ico-q { color: #ffd100; font-weight: 900; font-size: 18px; }
+.wf-tab-ico { width: 24px; height: 24px; object-fit: contain; margin-left: -6px; filter: drop-shadow(0 1px 1px #000); }
 .wf-dot { width: 10px; height: 10px; border-radius: 50%; background: #4aa3ff; box-shadow: 0 0 6px #4aa3ff; }
 
 /* ---- home toolbar + cards ---- */
@@ -259,6 +258,26 @@ body {
 }
 
 .wf-tabs-round { display: flex; align-items: center; gap: 10px; }
+.wf-toolbar > .wf-tabs-round, .wf-toolbar > .wf-toolbar-right { flex: 1 1 0; }
+.wf-toolbar > .wf-toolbar-right { justify-content: flex-end; }
+
+/* Alliance / Horde picker: which faction the dungeon tiles count quests for */
+.wf-faction-pick { display: flex; gap: 8px; flex: 0 0 auto; }
+.wf-faction-pick button, .wf-faction-toggle button {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 3px; border: 1px solid #000;
+  box-shadow: inset 0 0 0 1px rgba(255, 215, 130, 0.25);
+  background: linear-gradient(180deg, #2a2420, #15110e);
+  cursor: pointer;
+}
+.wf-faction-pick button { width: 44px; height: 40px; }
+.wf-faction-pick button img { width: 30px; height: 30px; opacity: 0.55; }
+.wf-faction-pick button.on, .wf-faction-toggle button.on {
+  background: linear-gradient(180deg, var(--wf-red), var(--wf-red-dark));
+  box-shadow: inset 0 0 0 1px rgba(255, 215, 130, 0.5);
+}
+.wf-faction-pick button.on img, .wf-faction-toggle button.on img { opacity: 1; }
+.wf-faction-pick button:hover img, .wf-faction-toggle button:hover img { opacity: 1; }
 .wf-toolbar-right { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .wf-round {
@@ -312,12 +331,20 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.05) 45%, rgba(0, 0, 0, 0.55) 100%);
+  /* Dark band behind the name and counts, clear art in the middle, like the addon's tiles */
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.5) 28%, rgba(0, 0, 0, 0) 46%, rgba(0, 0, 0, 0) 72%, rgba(0, 0, 0, 0.5) 100%);
 }
 
 .wf-card:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1px #ffd77a, 0 4px 14px rgba(0, 0, 0, 0.7); }
-.wf-card-preview { filter: saturate(0.6); }
-.wf-card-preview .wf-card-quests { color: #ffd100; }
+.wf-card-preview { filter: brightness(0.8); }
+.wf-card-soon {
+  position: absolute; z-index: 1; left: 0; right: 0; top: 50%;
+  transform: translateY(-40%);
+  text-align: center;
+  font-family: var(--font-title); font-weight: 800; font-size: 24px;
+  color: #ffd133;
+  text-shadow: 1px 1px 0 #000, 0 0 8px rgba(0, 0, 0, 0.9);
+}
 
 .wf-card-name, .wf-card-quests, .wf-card-level {
   position: absolute;
@@ -326,7 +353,8 @@ body {
 }
 
 .wf-card-name { top: 10px; left: 14px; font-family: var(--font-title); font-weight: 800; font-size: 17px; color: #ffe39a; max-width: 62%; line-height: 1.15; }
-.wf-card-quests { top: 12px; right: 14px; font-size: 14px; color: #f6e7c4; }
+.wf-card-quests { top: 9px; right: 12px; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: #f6e7c4; }
+.wf-card-quests img { width: 22px; height: 22px; filter: drop-shadow(0 1px 1px #000); }
 .wf-card-level { bottom: 10px; left: 14px; font-size: 12px; letter-spacing: 0.08em; color: #e9dcc2; }
 
 .wf-empty, .wf-foot, .wf-note, .wf-tbd { color: var(--wf-muted); font-size: 14px; }
@@ -397,13 +425,8 @@ body {
 .wf-sep { color: var(--wf-muted); margin: 0 6px; }
 
 .wf-faction-toggle { display: flex; gap: 4px; }
-.wf-faction-toggle button {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 34px; height: 34px; border-radius: 3px; border: 1px solid var(--wf-border);
-  background: #15100c; cursor: pointer; opacity: 0.65;
-}
-.wf-faction-toggle button.on { opacity: 1; box-shadow: inset 0 0 0 1px #ffd77a; background: #2b1d10; }
-.wf-faction-toggle button:hover { opacity: 1; }
+.wf-faction-toggle button { width: 38px; height: 34px; }
+.wf-faction-toggle button img { opacity: 0.55; }
 
 .wf-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 
@@ -432,9 +455,8 @@ body {
 .wf-q-ico {
   flex: 0 0 auto;
   width: 26px; height: 26px;
-  display: inline-flex; align-items: center; justify-content: center;
-  color: #ffd100; font-weight: 900; font-size: 22px; line-height: 1;
-  text-shadow: 0 1px 2px #000;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 1px #000);
 }
 
 .wf-portrait {
@@ -480,17 +502,6 @@ body {
 .wf-pager { display: flex; justify-content: space-between; gap: 8px; margin-top: 14px; }
 
 /* ---- boss pane ---- */
-.wb-head { display: flex; align-items: flex-start; gap: 12px; }
-.wb-head-text { flex: 1 1 auto; min-width: 0; }
-.wb-head-model .wb-title { text-align: left; }
-.wb-model {
-  flex: 0 0 auto;
-  width: 150px; height: 150px;
-  object-fit: contain;
-  margin: -4px -6px 6px 0;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.7));
-}
-@media (max-width: 520px) { .wb-model { width: 104px; height: 104px; } }
 .wb-title { text-align: center; font-family: var(--font-title); font-weight: 800; font-size: 20px; color: var(--wf-text); margin: 6px 0 8px; }
 .wb-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .wb-tag { font-size: 12px; letter-spacing: 0.05em; color: #ffd77a; border: 1px solid var(--wf-border); padding: 2px 8px; border-radius: 999px; }
@@ -580,8 +591,20 @@ body {
 .wp-rewards { margin-top: 4px; }
 .wp-reward-list { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .wp-reward { display: flex; align-items: center; gap: 10px; }
-.wp-money { margin-top: 10px; display: flex; gap: 14px; flex-wrap: wrap; font-size: 14px; color: #4a3519; }
+.wp-money { margin-top: 10px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 14px; color: #4a3519; }
 .wp-xp { font-weight: 700; }
+/* the game's money box: dark plate, white numbers, coin after each amount */
+.wp-coins {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 3px 9px;
+  border-radius: 3px;
+  border: 1px solid #000;
+  box-shadow: inset 0 0 0 1px rgba(255, 215, 130, 0.25);
+  background: linear-gradient(180deg, #2a2420, #15110e);
+  color: #fff; font-weight: 600;
+}
+.wp-coin { display: inline-flex; align-items: center; gap: 3px; }
+.wp-coin img { width: 13px; height: 13px; }
 .wp-chain { margin-top: 6px; }
 .wp-steps { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .wp-step { display: flex; gap: 10px; padding: 8px 10px; border: 1px solid #b89a66; background: rgba(255, 246, 225, 0.35); border-radius: 3px; }
@@ -605,6 +628,8 @@ body {
   .wf-tab { min-width: 0; flex: 1; }
   .wf-dtabs { width: 100%; }
   .wf-body { padding: 10px; }
+  .wf-toolbar > .wf-toolbar-right { flex-basis: 100%; justify-content: stretch; }
+  .wf-toolbar-right .wf-btn { flex: 1 1 0; padding-left: 8px; padding-right: 8px; }
 }
 
 @media (max-width: 480px) {

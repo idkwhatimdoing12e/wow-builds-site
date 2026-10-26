@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { DungeonSummary } from "@/app/lib/journal";
 import { LINKS } from "@/app/lib/site";
 import Window from "./Window";
+import { setFaction, useFaction } from "./useFaction";
 
 interface Props {
   dungeons: (DungeonSummary & { art: string | null; gradient: string })[];
@@ -13,6 +14,8 @@ interface Props {
 
 export default function JournalHome({ dungeons, addonVersion }: Props) {
   const [q, setQ] = useState("");
+  const faction = useFaction();
+  const crest = faction === "Horde" ? "/journal/horde.png" : "/journal/alliance.png";
   const shown = useMemo(() => {
     const s = q.trim().toLowerCase();
     if (!s) return dungeons;
@@ -42,6 +45,20 @@ export default function JournalHome({ dungeons, addonVersion }: Props) {
             <span>RAIDS</span>
           </span>
         </div>
+        <div className="wf-faction-pick" role="group" aria-label="Count quests for">
+          {(["Alliance", "Horde"] as const).map((f) => (
+            <button
+              key={f}
+              type="button"
+              className={faction === f ? "on" : ""}
+              aria-pressed={faction === f}
+              title={`Show ${f} quest counts`}
+              onClick={() => setFaction(f)}
+            >
+              <img src={f === "Horde" ? "/journal/horde.png" : "/journal/alliance.png"} alt={f} width={30} height={30} />
+            </button>
+          ))}
+        </div>
         <div className="wf-toolbar-right">
           <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="wf-btn wf-btn-dark">Download the addon</a>
           <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener" className="wf-btn wf-btn-dark">Support on Patreon</a>
@@ -57,9 +74,14 @@ export default function JournalHome({ dungeons, addonVersion }: Props) {
             style={d.art ? { backgroundImage: `url(${d.art})` } : { backgroundImage: d.gradient }}
           >
             <span className="wf-card-name">{d.name}</span>
-            <span className="wf-card-quests">
-              {d.previewOnly ? "opens at launch" : `${d.questCount} quests`}
-            </span>
+            {d.previewOnly ? (
+              <span className="wf-card-soon">Coming Soon</span>
+            ) : (
+              <span className="wf-card-quests">
+                <img src={crest} alt={faction} width={22} height={22} />
+                {d.questsByFaction[faction]} {d.questsByFaction[faction] === 1 ? "quest" : "quests"}
+              </span>
+            )}
             <span className="wf-card-level">LV {d.level}</span>
           </Link>
         ))}

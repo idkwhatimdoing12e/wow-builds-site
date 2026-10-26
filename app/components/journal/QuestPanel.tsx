@@ -3,6 +3,26 @@ import type { ItemRef, Quest, RewardTuple } from "@/app/lib/journal";
 import ItemLink, { ItemIcon } from "./ItemLink";
 import { FactionCrest } from "./Window";
 
+const COINS = { g: "gold", s: "silver", c: "copper" } as const;
+const isMoney = (t: string) => /^(\d+\s*[gsc]\s*)+$/.test(t.trim());
+
+/** "2g 65s" as the game's coin row: 2 [gold] 65 [silver]. */
+function Money({ text }: { text: string }) {
+  return (
+    <span className="wp-coins">
+      {[...text.matchAll(/(\d+)\s*([gsc])/g)].map(([, n, u]) => {
+        const coin = COINS[u as keyof typeof COINS];
+        return (
+          <span key={u} className="wp-coin">
+            {n}
+            <img src={`/journal/ui/coin-${coin}.png`} alt={coin} width={13} height={13} />
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
 function titleCase(s: string) {
   return s.charAt(0) + s.slice(1).toLowerCase();
 }
@@ -106,7 +126,10 @@ export default function QuestPanel({ q, full = false, showDungeon = false }: { q
       )}
       <p className="wp-money">
         {q.xp !== undefined && <span className="wp-xp">{q.xp.toLocaleString("en-US")} XP</span>}
-        {q.rewardSummary && <span>{q.rewardSummary}</span>}
+        {q.rewardSummary &&
+          q.rewardSummary.split("•").map((part) => part.trim()).filter(Boolean).map((part) =>
+            isMoney(part) ? <Money key={part} text={part} /> : <span key={part}>{part}</span>,
+          )}
       </p>
 
       {q.note && (
