@@ -1,9 +1,8 @@
 import Link from "next/link";
 
 /**
- * The addon's window: black title bar with the WoW Forever logo on the left,
- * the journal title in the middle and search (home page) on the right; a
- * bordered brown body below.
+ * The addon's window: black title bar with the journal title in the middle and
+ * search (home page) on the right; a bordered brown body below.
  */
 export default function Window({
   children,
@@ -19,9 +18,7 @@ export default function Window({
   return (
     <div className={`wf-window ${className}`} style={style}>
       <div className="wf-titlebar">
-        <Link href="/" className="wf-logo" aria-label="Dungeon Journal home">
-          <img src="/journal/wow-forever-logo.webp" alt="World of Warcraft: Forever" width={76} height={62} />
-        </Link>
+        <span className="wf-titlebar-spacer" aria-hidden="true" />
         <Link href="/" className="wf-title">Dungeon Journal</Link>
         <div className="wf-titlebar-right">{search}</div>
       </div>

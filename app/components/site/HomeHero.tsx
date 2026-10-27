@@ -14,11 +14,11 @@ interface Slide {
 
 const SLIDES: Slide[] = [
   {
-    image: "/journal/art/city-of-dalaran-card.webp",
-    kicker: "Warcraft Forever",
-    title: "Dungeon Journal",
-    text: "Every quest, boss and drop in WoW Forever's dungeons, from the addon downloaded over 1.5 million times.",
-    cta: { label: "Browse Dungeons", href: "#dungeons" },
+    image: "/journal/art/ruins-of-lordaeron-card.webp",
+    kicker: "Free forever",
+    title: "Get the Addon",
+    text: "The same journal in game, updated the day each Forever phase lands. Free on CurseForge and Wago.",
+    cta: { label: "Download Dungeon Journal", href: LINKS.curseforge, external: true },
   },
   {
     image: "/journal/maps/the-deadmines-1.webp",
@@ -28,18 +28,11 @@ const SLIDES: Slide[] = [
     cta: { label: "Open a Map", href: "/dungeon/the-deadmines#map" },
   },
   {
-    image: "/journal/art/excavation-site-wetlands-card.webp",
-    kicker: "Quest chains",
-    title: "Never miss a step",
-    text: "See which quests you need first, where each step starts and what it pays, before you set foot in the dungeon.",
-    cta: { label: "See a Quest Chain", href: "/dungeon/the-deadmines#quest-166" },
-  },
-  {
-    image: "/journal/art/ruins-of-lordaeron-card.webp",
-    kicker: "Free forever",
-    title: "Get the Addon",
-    text: "The same journal in game, updated the day each Forever phase lands. Free on CurseForge and Wago.",
-    cta: { label: "Download Dungeon Journal", href: LINKS.curseforge, external: true },
+    image: "/journal/art/city-of-dalaran-card.webp",
+    kicker: "Warcraft Forever",
+    title: "Dungeon Journal",
+    text: "Every quest, boss and drop in WoW Forever's dungeons, from the addon downloaded over 1.5 million times.",
+    cta: { label: "Browse Dungeons", href: "#dungeons" },
   },
 ];
 
