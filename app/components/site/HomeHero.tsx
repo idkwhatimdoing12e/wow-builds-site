@@ -14,10 +14,10 @@ interface Slide {
 
 const SLIDES: Slide[] = [
   {
-    image: "/journal/art/ruins-of-lordaeron-card.webp",
-    kicker: "Free forever",
-    title: "Get the Addon",
-    text: "The same journal in game, updated the day each Forever phase lands. Free on CurseForge and Wago.",
+    image: "/journal/art/city-of-dalaran-card.webp",
+    kicker: "Warcraft Forever",
+    title: "Dungeon Journal",
+    text: "Every quest, boss and drop in WoW Forever's dungeons, from the addon downloaded over 1.5 million times.",
     cta: { label: "Download Dungeon Journal", href: LINKS.curseforge, external: true },
   },
   {
@@ -28,10 +28,10 @@ const SLIDES: Slide[] = [
     cta: { label: "Open a Map", href: "/dungeon/the-deadmines#map" },
   },
   {
-    image: "/journal/art/city-of-dalaran-card.webp",
-    kicker: "Warcraft Forever",
-    title: "Dungeon Journal",
-    text: "Every quest, boss and drop in WoW Forever's dungeons, from the addon downloaded over 1.5 million times.",
+    image: "/journal/art/ruins-of-lordaeron-card.webp",
+    kicker: "Free on the web",
+    title: "Browse Every Dungeon",
+    text: "The whole journal right here: quests, bosses, loot and maps for every WoW Forever dungeon. No download needed.",
     cta: { label: "Browse Dungeons", href: "#dungeons" },
   },
 ];
