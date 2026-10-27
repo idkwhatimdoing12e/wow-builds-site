@@ -64,40 +64,26 @@ export function PortraitFace({
   );
 }
 
-/** The whole Wowhead model preview, shown in the boss pane. */
-export function BossPreview({ name, displayId }: { name: string; displayId?: number }) {
-  if (!displayId) return null;
-  return (
-    <img
-      className="wb-preview"
-      src={NPC_RENDER_URL(displayId)}
-      data-fallback={`/journal/npc/${displayId}.webp`}
-      alt={name}
-      loading="lazy"
-      ref={checkLoaded}
-      onError={(e) => switchToFallback(e.currentTarget)}
-    />
-  );
-}
-
-/** Round boss portrait with its level badge, for the boss list. */
+/** Round boss portrait with its level badge, as in the addon's boss list and boss pane. */
 export function BossPortrait({
   name,
   displayId,
   crop,
   custom,
   level,
+  large = false,
 }: {
   name: string;
   displayId?: number;
   crop?: [number, number, number];
   custom?: string;
   level?: string;
+  large?: boolean;
 }) {
   return (
-    <span className="wf-portrait" aria-hidden>
+    <span className={`wf-portrait ${large ? "wf-portrait-lg" : ""}`} aria-hidden>
       <PortraitFace name={name} displayId={displayId} crop={crop} custom={custom} />
-      <LevelBadge level={level} size={22} />
+      <LevelBadge level={level} size={large ? 28 : 22} />
     </span>
   );
 }

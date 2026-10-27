@@ -508,18 +508,12 @@ body {
 .wf-pager { display: flex; justify-content: space-between; gap: 8px; margin-top: 14px; }
 
 /* ---- boss pane ---- */
-.wb-head { display: flex; align-items: center; gap: 10px; }
+.wb-head { display: flex; align-items: center; gap: 16px; margin: 4px 0 14px; }
 .wb-head-text { flex: 1 1 auto; min-width: 0; }
-.wb-head-text .wb-meta { justify-content: center; }
-/* Wowhead's model preview of the boss */
-.wb-preview {
-  flex: 0 0 auto;
-  max-width: 132px; max-height: 132px;
-  object-fit: contain;
-  margin: -6px 0 6px;
-  filter: brightness(1.15) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.75));
-}
-@media (max-width: 520px) { .wb-preview { max-width: 96px; max-height: 96px; } }
+.wf-portrait-lg { width: 64px; height: 64px; }
+.wf-portrait-lg .wf-lvl { left: -6px; bottom: -6px; }
+.wb-head .wb-title { text-align: left; margin: 0; }
+.wb-head .wb-meta { margin: 6px 0 0; }
 .wb-title { text-align: center; font-family: var(--font-title); font-weight: 800; font-size: 20px; color: var(--wf-text); margin: 6px 0 8px; }
 .wb-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .wb-tag { font-size: 12px; letter-spacing: 0.05em; color: #ffd77a; border: 1px solid var(--wf-border); padding: 2px 8px; border-radius: 999px; }

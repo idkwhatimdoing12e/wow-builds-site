@@ -1,7 +1,6 @@
 import type { Boss, LootTuple, TrashDrop } from "@/app/lib/journal";
 import ItemLink, { ItemIcon } from "./ItemLink";
-import { LevelBadge } from "./Window";
-import { BossPreview } from "./BossPortrait";
+import { BossPortrait } from "./BossPortrait";
 
 function LootRow({ item, note }: { item: LootTuple; note?: string }) {
   const [id, name, slot, quality] = item;
@@ -23,18 +22,28 @@ function LootRow({ item, note }: { item: LootTuple; note?: string }) {
 export function BossPanel({ boss }: { boss: Boss }) {
   return (
     <div className="wb">
+      {/* Like the addon: round portrait with the level badge, name beside it. */}
       <div className="wb-head">
+        <BossPortrait
+          key={boss.name}
+          name={boss.name}
+          displayId={boss.displayId}
+          crop={boss.portraitCrop}
+          custom={boss.customPortrait}
+          level={boss.level}
+          large
+        />
         <div className="wb-head-text">
           <h2 className="wb-title">{boss.name}</h2>
-          <div className="wb-meta">
-            <LevelBadge level={boss.level} size={30} />
-            {boss.rare && <span className="wb-tag">Rare</span>}
-            {boss.factionOnly && <span className="wb-tag">{boss.factionOnly} only</span>}
-          </div>
-          {boss.description && <p className="wb-desc">{boss.description}</p>}
+          {(boss.rare || boss.factionOnly) && (
+            <div className="wb-meta">
+              {boss.rare && <span className="wb-tag">Rare</span>}
+              {boss.factionOnly && <span className="wb-tag">{boss.factionOnly} only</span>}
+            </div>
+          )}
         </div>
-        <BossPreview key={boss.name} name={boss.name} displayId={boss.displayId} />
       </div>
+      {boss.description && <p className="wb-desc">{boss.description}</p>}
 
       {boss.loot.length === 0 && boss.shared.length === 0 && boss.recipes.length === 0 && (
         <p className="wb-desc">No loot recorded yet.</p>
