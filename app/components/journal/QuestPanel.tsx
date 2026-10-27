@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ItemRef, Quest, RewardTuple } from "@/app/lib/journal";
+import type { ChainStepFull, ItemRef, Quest, RewardTuple } from "@/app/lib/journal";
 import ItemLink, { ItemIcon } from "./ItemLink";
 import { FactionCrest } from "./Window";
 
@@ -52,27 +52,52 @@ function RefLine({ label, item }: { label: string; item?: ItemRef }) {
   const [id, name, quality, source] = item;
   return (
     <p className="wp-line">
-      <span className="wp-label">{label}</span>{" "}
+      {label && <><span className="wp-label">{label}</span>{" "}</>}
       <ItemLink id={id} name={name} quality={quality} icon />
       {source && <span className="wp-note"> — {source}</span>}
     </p>
   );
 }
 
+/** XP and money as the game's reward bar. */
+function RewardBar({ xp, money }: { xp?: number; money?: string }) {
+  if (xp === undefined && !money) return null;
+  return (
+    <p className="wp-money">
+      {xp !== undefined && <span className="wp-xp">{xp.toLocaleString("en-US")} XP</span>}
+      {money && <Money text={money} />}
+    </p>
+  );
+}
+
 /**
- * The parchment quest page from the addon's Quests tab. `full` adds the
- * prerequisite chain and related quests (used on the quest's own page).
+ * The parchment quest page from the addon's Quests tab.
+ * In the dungeon view (`onSelectQuest` given) linked quests and the quest chain
+ * open in place, like the addon. `full` (the quest's own page) lists the chain
+ * and related quests instead.
  */
-export default function QuestPanel({ q, full = false, showDungeon = false }: { q: Quest; full?: boolean; showDungeon?: boolean }) {
+export default function QuestPanel({
+  q,
+  full = false,
+  showDungeon = false,
+  onSelectQuest,
+  canSelect,
+  onShowChain,
+}: {
+  q: Quest;
+  full?: boolean;
+  showDungeon?: boolean;
+  onSelectQuest?: (id: number) => void;
+  canSelect?: (id: number) => boolean;
+  onShowChain?: () => void;
+}) {
+  const startsWith = q.related.find((r) => r.label === "Starts with");
+  const leadsTo = q.related.find((r) => r.label === "Leads to");
+  const selectable = (id: number) => !!onSelectQuest && (canSelect ? canSelect(id) : true);
   return (
     <div className="wp">
       <div className="wp-head">
         <h2 className="wp-title">{q.name}</h2>
-        {full ? null : (
-          <Link href={`/quest/${q.slug}`} className="wf-btn wf-btn-dark wf-btn-sm" title="Open this quest's own page">
-            Open
-          </Link>
-        )}
       </div>
       <p className="wp-avail">
         Available from Level {q.requires}
@@ -111,6 +136,32 @@ export default function QuestPanel({ q, full = false, showDungeon = false }: { q
       ))}
       <RefLine label="Provided:" item={q.providedItem} />
 
+      {!full && startsWith && selectable(startsWith.id) && (
+        <p className="wp-actions">
+          <button type="button" className="wf-btn wf-btn-red wf-btn-sm" onClick={() => onSelectQuest?.(startsWith.id)}>
+            {startsWith.name}
+          </button>
+        </p>
+      )}
+      {!full && q.chain.length > 0 && (
+        <>
+          <p className="wp-chain-notice">Requires a quest chain first.</p>
+          {onShowChain && (
+            <p className="wp-actions">
+              <button
+                type="button"
+                className="wf-btn wf-btn-red wf-btn-sm wp-chain-btn"
+                title="Required Quests: open the required quest chain."
+                onClick={onShowChain}
+              >
+                Show Quest Chain
+                <img src="/journal/questchain.png" alt="" width={17} height={17} />
+              </button>
+            </p>
+          )}
+        </>
+      )}
+
       <div className="wp-sub">Turn in</div>
       <p className="wp-text">{q.turnin}</p>
 
@@ -131,6 +182,14 @@ export default function QuestPanel({ q, full = false, showDungeon = false }: { q
             isMoney(part) ? <Money key={part} text={part} /> : <span key={part}>{part}</span>,
           )}
       </p>
+
+      {!full && leadsTo && selectable(leadsTo.id) && (
+        <p className="wp-actions">
+          <button type="button" className="wf-btn wf-btn-red wf-btn-sm" onClick={() => onSelectQuest?.(leadsTo.id)}>
+            Leads to: {leadsTo.name}
+          </button>
+        </p>
+      )}
 
       {q.note && (
         <>
@@ -182,6 +241,105 @@ export default function QuestPanel({ q, full = false, showDungeon = false }: { q
             ))}
           </ul>
         </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * A step of a quest's prerequisite chain, as the addon shows it when you pick it
+ * under the quest (RefreshPrerequisiteQuestDetail): "Required prerequisite",
+ * the page arrows to walk the chain, objective, where it starts and ends, rewards.
+ */
+export function PrereqPanel({
+  s,
+  index,
+  total,
+  onStep,
+}: {
+  s: ChainStepFull;
+  index: number;
+  total: number;
+  onStep: (index: number) => void;
+}) {
+  const d = s.detail ?? {};
+  const description = d.suppressDescription ? undefined : d.description;
+  const body =
+    d.objective && description && description !== d.objective
+      ? `${d.objective}\n\n${description}`
+      : d.objective || description || "Quest text is not available for this step.";
+  return (
+    <div className="wp">
+      <div className="wp-head">
+        <h2 className="wp-title wp-title-step">{s.name}</h2>
+        <span className="wp-steps-nav">
+          {index > 0 && (
+            <button type="button" className="wp-page wp-page-prev" aria-label="Previous step" onClick={() => onStep(index - 1)} />
+          )}
+          {index < total - 1 && (
+            <button type="button" className="wp-page wp-page-next" aria-label="Next step" onClick={() => onStep(index + 1)} />
+          )}
+        </span>
+      </div>
+      <p className="wp-avail">
+        Required prerequisite{d.requires ? <>&nbsp; | &nbsp;Available from Level {d.requires}</> : null}
+        <span className="wp-note">Step {index + 1} of {total}</span>
+      </p>
+
+      <div className="wp-sub">Objective</div>
+      <p className="wp-text wp-pre">{body}</p>
+
+      {(d.requiredItems ?? []).length > 0 && (
+        <>
+          <div className="wp-sub">Required Items</div>
+          {(d.requiredItems ?? []).map((it) => (
+            <RefLine key={it[0]} label="" item={it} />
+          ))}
+        </>
+      )}
+      {d.providedItem && (
+        <>
+          <div className="wp-sub">Provided Item</div>
+          <RefLine label="" item={d.providedItem} />
+        </>
+      )}
+
+      {(d.pickup || d.startItem || d.startObject) && (
+        <>
+          <div className="wp-sub">Starts at</div>
+          {d.startObject ? (
+            <p className="wp-text">
+              {d.startObject[0]}
+              <span className="wp-note"> — {d.startObject[2]}</span>
+            </p>
+          ) : d.startItem ? (
+            <RefLine label="" item={d.startItem} />
+          ) : (
+            <p className="wp-text">{d.pickup}</p>
+          )}
+        </>
+      )}
+      {d.turnin && (
+        <>
+          <div className="wp-sub">Turn in</div>
+          <p className="wp-text">{d.turnin}</p>
+        </>
+      )}
+
+      {d.warning && <p className="wp-warning">{d.warning}</p>}
+      {d.note && (
+        <>
+          <div className="wp-sub">Notes</div>
+          <p className="wp-text wp-pre">{d.note}</p>
+        </>
+      )}
+
+      {(s.rewardItems.length > 0 || s.xp !== undefined || s.money) && (
+        <>
+          <div className="wp-rewards-head">Rewards</div>
+          <Rewards items={s.rewardItems} header={s.rewardChoice ? "Choose one" : "You receive"} />
+          <RewardBar xp={s.xp} money={s.money} />
+        </>
       )}
     </div>
   );

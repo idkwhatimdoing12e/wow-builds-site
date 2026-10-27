@@ -90,6 +90,8 @@ export interface RawDungeon {
 export interface ChainStep {
   id: number;
   name: string;
+  /** An item to collect rather than a quest (e.g. a punch card). */
+  itemStep?: boolean;
 }
 
 export interface PrereqDetail {
@@ -101,6 +103,14 @@ export interface PrereqDetail {
   map?: MapPoint;
   note?: string;
   faction?: string;
+  description?: string;
+  suppressDescription?: boolean;
+  warning?: string;
+  startItem?: ItemRef;
+  startObject?: [string, string, string];
+  providedItem?: ItemRef;
+  requiredItems?: ItemRef[];
+  startsInDungeon?: boolean;
 }
 
 interface JournalData {
@@ -113,6 +123,8 @@ interface JournalData {
   QUEST_PREREQ_DETAILS: Record<string, PrereqDetail>;
   FOREVER_QUEST_XP_FALLBACK: Record<string, number>;
   FOREVER_QUEST_BASE_XP: Record<string, number>;
+  PREREQ_REWARD_ITEMS_FALLBACK: Record<string, { choice?: boolean; items?: RewardTuple[] }>;
+  PREREQ_REWARD_MONEY_FALLBACK: Record<string, number>;
   SHARED_BY_BOSS: Record<string, Record<string, LootTuple[]>>;
   DUNGEON_MAPS?: Record<string, RawDungeonMap>;
   MAP_LABELS?: Record<string, string>;
@@ -415,6 +427,12 @@ export function getDungeon(slug: string): Dungeon | null {
 export interface ChainStepFull extends ChainStep {
   slug?: string; // set when the step is a quest the journal has a page for
   detail?: PrereqDetail;
+  /** Rewards as the addon shows them for a prerequisite (its fallback tables). */
+  rewardItems: RewardTuple[];
+  rewardChoice: boolean;
+  xp?: number;
+  /** Money reward as "2g 65s 10c". */
+  money?: string;
 }
 
 export interface Quest {
@@ -482,13 +500,32 @@ function slugForQuestId(id: number): string | undefined {
   return e ? questSlug(e.quest.id, e.quest.name) : undefined;
 }
 
+/** Copper to the game's "2g 65s 10c". */
+function formatMoney(copper: number): string | undefined {
+  if (!copper || copper <= 0) return undefined;
+  const g = Math.floor(copper / 10000);
+  const s = Math.floor((copper % 10000) / 100);
+  const c = copper % 100;
+  return [g && `${g}g`, s && `${s}s`, c && `${c}c`].filter(Boolean).join(" ");
+}
+
+function buildChainStep(s: ChainStep): ChainStepFull {
+  const id = String(s.id);
+  const items = data.PREREQ_REWARD_ITEMS_FALLBACK?.[id];
+  return {
+    ...s,
+    slug: s.itemStep ? undefined : slugForQuestId(s.id),
+    detail: data.QUEST_PREREQ_DETAILS[id],
+    rewardItems: asList<RewardTuple>(items?.items),
+    rewardChoice: !!items?.choice,
+    xp: s.itemStep ? undefined : (data.FOREVER_QUEST_XP_FALLBACK[id] ?? data.FOREVER_QUEST_BASE_XP[id]),
+    money: formatMoney(data.PREREQ_REWARD_MONEY_FALLBACK?.[id] ?? 0),
+  };
+}
+
 function buildQuest(q: RawQuest, dungeonName: string): Quest {
   const chainRaw = asList<ChainStep>(data.QUEST_PREREQ_CHAINS[String(q.id)]);
-  const chain: ChainStepFull[] = chainRaw.map((s) => ({
-    ...s,
-    slug: slugForQuestId(s.id),
-    detail: data.QUEST_PREREQ_DETAILS[String(s.id)],
-  }));
+  const chain: ChainStepFull[] = chainRaw.map(buildChainStep);
   const related: Quest["related"] = [];
   const push = (label: string, l?: { id: number; name: string }) => {
     if (l) related.push({ label, id: l.id, name: l.name, slug: slugForQuestId(l.id) });

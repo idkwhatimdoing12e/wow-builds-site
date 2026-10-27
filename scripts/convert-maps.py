@@ -132,9 +132,13 @@ def main():
         ImageDraw.Draw(mask).ellipse((0, 0, ring_img.width - 1, ring_img.height - 1), fill=255)
         ring_img.putalpha(Image.composite(ring_img.getchannel("A"), Image.new("L", ring_img.size, 0), mask))
         ring_img.save(os.path.join(ui, "map-ring.png"), optimize=True)
-    tab_icon = os.path.join(addon_dir, "Media", "MapTabIcon.tga")
-    if os.path.exists(tab_icon):
-        Image.open(tab_icon).convert("RGBA").save(os.path.join(ui, "map-tab.png"), optimize=True)
+    # Map tab icon: the addon uses Interface\\Icons\\Ability_Spy (the Bloody Map item), edges trimmed.
+    spy = tree.find("ICONS/Ability_Spy.png")
+    if spy:
+        im = Image.open(spy).convert("RGBA")
+        w, h = im.size
+        im.crop((round(w * 0.07), round(h * 0.07), round(w * 0.93), round(h * 0.93))).resize((48, 48), Image.LANCZOS).save(
+            os.path.join(ui, "map-tab.png"), optimize=True)
     ladder = os.path.join(addon_dir, "Media", "LevelLadder.tga")
     if os.path.exists(ladder):
         Image.open(ladder).convert("RGBA").save(os.path.join(ui, "map-ladder.png"), optimize=True)
