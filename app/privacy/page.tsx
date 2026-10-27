@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="text-white">
       <div className="mx-auto max-w-3xl px-6 py-16">
         <Link href="/" className="text-white/60 hover:text-white">
           ← Back

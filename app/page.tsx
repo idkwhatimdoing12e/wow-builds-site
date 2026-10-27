@@ -1,6 +1,7 @@
 import { getDungeonSummaries, journalMeta, uiLabel } from "@/app/lib/journal";
 import { cardArt, cardGradient } from "@/app/lib/art";
 import JournalHome from "@/app/components/journal/JournalHome";
+import HomeHero, { DownloadBanner } from "@/app/components/site/HomeHero";
 
 export default function HomePage() {
   const dungeons = getDungeonSummaries().map((d) => ({
@@ -9,7 +10,10 @@ export default function HomePage() {
     gradient: cardGradient(d.name),
   }));
   return (
-    <div className="journal wf-page">
+    <div className="sx-home">
+      <HomeHero />
+      <h2 className="sx-section-title" id="dungeons">Select your dungeon</h2>
+      <div className="journal wf-page">
       <JournalHome
         dungeons={dungeons}
         addonVersion={journalMeta.addonVersion}
@@ -21,6 +25,8 @@ export default function HomePage() {
           comingSoon: uiLabel("COMING_SOON", "Coming Soon"),
         }}
       />
+      </div>
+      <DownloadBanner />
     </div>
   );
 }

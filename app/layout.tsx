@@ -1,10 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Link from "next/link";
 import Script from "next/script";
-import GlobalNav from "./components/GlobalNav";
+import SiteHeader from "./components/site/SiteHeader";
+import SiteFooter from "./components/site/SiteFooter";
+import { getDungeonSummaries } from "./lib/journal";
 import WowheadInit from "./components/WowheadInit";
-import { LINKS, SITE_NAME, SITE_TAGLINE, SITE_URL } from "./lib/site";
+import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "./lib/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -57,40 +58,23 @@ export default function RootLayout({
         />
       </head>
 
-      <body className="bg-black text-white flex flex-col min-h-screen">
+      <body className="sx-body">
         {/* Must be mounted once globally for tooltips */}
         <WowheadInit />
 
-        {/* Fixed global nav (Discord always, Home everywhere except landing) */}
-        <GlobalNav />
+        <SiteHeader
+          dungeons={getDungeonSummaries().map((d) => ({
+            slug: d.slug,
+            name: d.name,
+            level: d.level,
+            forever: d.forever,
+            previewOnly: d.previewOnly,
+          }))}
+        />
 
-        <main className="flex-grow">{children}</main>
+        <main className="sx-main">{children}</main>
 
-        <footer className="border-t border-white/10">
-          <div className="mx-auto max-w-5xl px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/50">
-            <div>
-              © {new Date().getFullYear()} {SITE_NAME} by Exehn · not affiliated with Blizzard Entertainment
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-5">
-              <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="hover:text-white">
-                CurseForge
-              </a>
-              <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener" className="hover:text-white">
-                Patreon
-              </a>
-              <Link href="/supporters" className="hover:text-white">
-                Supporters
-              </Link>
-              <Link href="/about" className="hover:text-white">
-                About
-              </Link>
-              <Link href="/privacy" className="hover:text-white">
-                Privacy
-              </Link>
-            </div>
-          </div>
-        </footer>
+        <SiteFooter />
       </body>
     </html>
   );
