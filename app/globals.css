@@ -483,7 +483,12 @@ body {
   width: 100%; height: 100%; max-width: none;
   object-fit: cover;
   background: radial-gradient(circle at 50% 40%, #5a4429, #1b140c 72%);
+  /* Wowhead's renders are lit darker than the game's portraits */
+  filter: brightness(1.22) contrast(1.06) saturate(1.08);
 }
+/* Wowhead's full render, positioned by its head crop (style set inline) */
+.wf-portrait-render[style] { inset: auto; background: none; }
+.wf-portrait-custom { filter: none; }
 .wf-portrait .wf-lvl { position: absolute; left: -8px; bottom: -8px; z-index: 1; }
 .wf-portrait-trash img { width: 34px; height: 34px; }
 
@@ -512,7 +517,7 @@ body {
   max-width: 132px; max-height: 132px;
   object-fit: contain;
   margin: -6px 0 6px;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.75));
+  filter: brightness(1.15) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.75));
 }
 @media (max-width: 520px) { .wb-preview { max-width: 96px; max-height: 96px; } }
 .wb-title { text-align: center; font-family: var(--font-title); font-weight: 800; font-size: 20px; color: var(--wf-text); margin: 6px 0 8px; }

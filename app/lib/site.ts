@@ -20,4 +20,10 @@ export const LINKS = {
 export const FOREVER_ITEM_URL = (id: number) => `https://www.wowhead.com/forever/item=${id}`;
 export const CLASSIC_ITEM_URL = (id: number) => `https://www.wowhead.com/classic/item=${id}`;
 
+// Wowhead's model previews (300x300, transparent), keyed by creature display ID.
+// Used for the boss portraits; copies in public/journal/{portraits,npc} stand in
+// when Wowhead's images can't load.
+export const NPC_RENDER_URL = (displayId: number) =>
+  `https://wow.zamimg.com/modelviewer/classicplus/webthumbs/npc/${displayId & 255}/${displayId}.webp`;
+
 export const ADSENSE_CLIENT = "ca-pub-7979214898290780";

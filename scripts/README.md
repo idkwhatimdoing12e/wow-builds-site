@@ -39,13 +39,14 @@ them in the manifest as long as the file is there.
   add `[icon, env]` entries and the missing icon files. Unknown items show a question mark.
 - **Item links** go to `wowhead.com/forever/item=<id>` (Classic for env-4 items);
   Wowhead's `power.js` shows the tooltip on hover.
-- **Boss pictures** are Wowhead's model previews, stored on the site so they show
-  everywhere: `public/journal/npc/<displayId>.webp` is the whole model (shown in the
-  boss pane) and `public/journal/portraits/<displayId>.webp` the same model framed on
-  its upper body (the round portraits in the boss list and on the map). The display
-  ID comes from the addon's `STATIC_DISPLAY_IDS`; a boss without a file shows its
-  initials. Source for a new boss:
-  `https://wow.zamimg.com/modelviewer/classicplus/webthumbs/npc/<id & 255>/<id>.webp`.
+- **Boss pictures** are Wowhead's model previews
+  (`https://wow.zamimg.com/modelviewer/classicplus/webthumbs/npc/<id & 255>/<id>.webp`,
+  by the creature display ID from the addon's `STATIC_DISPLAY_IDS`): the whole model in
+  the boss pane, and zoomed onto the head (crop in `data/npc-portraits.json`) for the
+  round portraits in the boss list and on the map. If Wowhead's image can't load, the
+  copies in `public/journal/npc/` and `public/journal/portraits/` are used instead.
+  Bosses the addon draws with a `customIcon` (Magmatus, Lordaeron Captain) use
+  `public/journal/portraits/custom-<boss-slug>.webp`.
 
 ## Map tab
 
