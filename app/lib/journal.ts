@@ -463,6 +463,8 @@ export interface Quest {
   startItem?: ItemRef;
   startObject?: [string, string, string];
   startMap?: MapPoint;
+  /** The start pinned on its zone picture, for the "Show on map" button. */
+  startZone?: ZonePin;
   noteItem?: ItemRef;
   requiredItems: ItemRef[];
   providedItem?: ItemRef;
@@ -471,6 +473,31 @@ export interface Quest {
   dungeonName: string;
   dungeonSlug: string;
   hidden: boolean;
+}
+
+/**
+ * A quest start placed on its zone picture. The pictures are built by
+ * scripts/convert-zone-maps.py, one per uiMapID the quest data points at, so a
+ * new zone in the data needs that script re-run before a pin can show.
+ */
+export interface ZonePin {
+  src: string;
+  /** Normalised 0-1 position on the zone picture, as the addon stores it. */
+  x: number;
+  y: number;
+  label: string;
+  targetName?: string;
+}
+
+export function zonePin(m?: MapPoint): ZonePin | undefined {
+  if (!m || !m.mapID || typeof m.x !== "number" || typeof m.y !== "number") return undefined;
+  return {
+    src: `/journal/zones/${m.mapID}.webp`,
+    x: m.x,
+    y: m.y,
+    label: m.label || m.targetName || "Quest start",
+    targetName: m.targetName,
+  };
 }
 
 function questSlug(id: number, name: string): string {
@@ -564,6 +591,7 @@ function buildQuest(q: RawQuest, dungeonName: string): Quest {
     startItem: q.startItem,
     startObject: q.startObject,
     startMap: q.startMap ?? data.QUEST_START_MAPS[String(q.id)],
+    startZone: zonePin(q.startMap ?? data.QUEST_START_MAPS[String(q.id)]),
     noteItem: q.noteItem,
     requiredItems: asList<ItemRef>(q.requiredItems),
     providedItem: q.providedItem,

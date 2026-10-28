@@ -1,7 +1,8 @@
 import Link from "next/link";
-import type { ChainStepFull, ItemRef, Quest, RewardTuple } from "@/app/lib/journal";
+import { zonePin, type ChainStepFull, type ItemRef, type Quest, type RewardTuple } from "@/app/lib/journal";
 import ItemLink, { ItemIcon } from "./ItemLink";
 import { FactionCrest } from "./Window";
+import ZoneMap from "./ZoneMap";
 
 const COINS = { g: "gold", s: "silver", c: "copper" } as const;
 const isMoney = (t: string) => /^(\d+\s*[gsc]\s*)+$/.test(t.trim());
@@ -123,6 +124,7 @@ export default function QuestPanel({
       <div className="wp-sub">Starts at</div>
       <p className="wp-text">{q.pickup}</p>
       {q.startMap?.detail && <p className="wp-note">{q.startMap.detail}</p>}
+      {q.startZone && <ZoneMap pin={q.startZone} />}
       <RefLine label="Started by item:" item={q.startItem} />
       {q.startObject && (
         <p className="wp-line">
@@ -263,6 +265,7 @@ export function PrereqPanel({
   onStep: (index: number) => void;
 }) {
   const d = s.detail ?? {};
+  const stepPin = zonePin(d.map);
   const description = d.suppressDescription ? undefined : d.description;
   const body =
     d.objective && description && description !== d.objective
@@ -317,6 +320,7 @@ export function PrereqPanel({
           ) : (
             <p className="wp-text">{d.pickup}</p>
           )}
+          {stepPin && <ZoneMap pin={stepPin} />}
         </>
       )}
       {d.turnin && (

@@ -81,7 +81,7 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
             <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener">CurseForge</a>
             <a href={LINKS.wago} target="_blank" rel="noreferrer noopener">Wago</a>
             <Link href="/supporters">Supporters</Link>
-            <a href={LINKS.discord} target="_blank" rel="noreferrer noopener">Report a Bug</a>
+            <a href={LINKS.discord} target="_blank" rel="noreferrer noopener">Join Discord</a>
             <Link href="/about">About</Link>
             <Link href="/privacy">Privacy</Link>
           </nav>

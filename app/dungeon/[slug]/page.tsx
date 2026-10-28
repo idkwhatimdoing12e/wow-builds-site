@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getDungeon, getDungeonSlugs, getDungeonSummaries } from "@/app/lib/journal";
-import { themeVars } from "@/app/lib/art";
+import { bandArt, themeVars } from "@/app/lib/art";
 import { SITE_NAME, SITE_URL } from "@/app/lib/site";
 import Window from "@/app/components/journal/Window";
 import DungeonView from "@/app/components/journal/DungeonView";
@@ -39,9 +39,17 @@ export default async function DungeonPage({ params }: { params: Promise<{ slug: 
   const prev = idx > 0 ? { name: all[idx - 1].name, slug: all[idx - 1].slug } : null;
   const next = idx < all.length - 1 ? { name: all[idx + 1].name, slug: all[idx + 1].slug } : null;
 
+  // The game's Encounter Journal skin (.ej): the layout is unchanged, only the
+  // look. --ej-band is the picture behind the dungeon's header band.
+  const band = bandArt(d.name);
+  const style = {
+    ...themeVars(d.name),
+    ...(band ? { "--ej-band": `url("${band}")` } : {}),
+  } as React.CSSProperties;
+
   return (
-    <div className="journal wf-page">
-      <Window style={themeVars(d.name) as React.CSSProperties}>
+    <div className="journal wf-page ej">
+      <Window style={style}>
         <DungeonView d={d} prev={prev} next={next} />
       </Window>
       <AdSlot />

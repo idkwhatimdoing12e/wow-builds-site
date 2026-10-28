@@ -30,7 +30,7 @@ export default function SiteFooter() {
           <Link href="/about">About</Link>
           <Link href="/privacy">Privacy Policy</Link>
         </nav>
-        <p className="sx-footer-copy">©{new Date().getFullYear()} {SITE_NAME.toUpperCase()} BY EXEHN. ALL RIGHTS RESERVED.</p>
+        <p className="sx-footer-copy">©{new Date().getFullYear()} {SITE_NAME.toUpperCase()}. ALL RIGHTS RESERVED.</p>
         <p className="sx-footer-legal">
           All trademarks referenced herein are the properties of their respective owners.
           <br />

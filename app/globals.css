@@ -98,7 +98,7 @@ body {
   color: rgba(255, 255, 255, 0.92) !important;
 }
 /* =========================================================
-   DUNGEON JOURNAL — the addon's window, on the web
+   DUNGEON JOURNAL â€” the addon's window, on the web
    ========================================================= */
 
 :root {
@@ -319,7 +319,9 @@ body {
   overflow: hidden;
   text-decoration: none;
   color: #fff;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  /* lifts off the grid on hover, like RestedXP's guide cards */
+  transition: transform 0.22s cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 0.22s ease;
+  will-change: transform;
 }
 
 .wf-card::after {
@@ -330,7 +332,27 @@ body {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.5) 28%, rgba(0, 0, 0, 0) 46%, rgba(0, 0, 0, 0) 72%, rgba(0, 0, 0, 0.5) 100%);
 }
 
-.wf-card:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1px #ffd77a, 0 4px 14px rgba(0, 0, 0, 0.7); }
+.wf-card:hover,
+.wf-card:focus-visible {
+  transform: translateY(-7px) scale(1.025);
+  box-shadow:
+    inset 0 0 0 1px #ffd77a,
+    0 16px 30px rgba(0, 0, 0, 0.78),
+    0 0 20px rgba(255, 200, 80, 0.22);
+  /* sit above neighbouring cards so the shadow is not clipped by them */
+  z-index: 2;
+}
+
+/* pressing it settles the card back down */
+.wf-card:active { transform: translateY(-2px) scale(1.005); transition-duration: 0.08s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wf-card { transition: box-shadow 0.2s ease; }
+  .wf-card:hover,
+  .wf-card:focus-visible,
+  .wf-card:active { transform: none; }
+}
+
 .wf-card-preview { filter: brightness(0.8); }
 .wf-card-soon {
   position: absolute; z-index: 1; left: 0; right: 0; top: 50%;
@@ -398,12 +420,14 @@ body {
   background: var(--wf-panel);
   border-radius: 3px;
   padding: 12px;
-  min-height: 420px;
 }
 
 .wf-pane-single { min-height: 0; }
 .wf-pane-parchment { background: var(--wf-panel-alt); }
-.wf-pane-detail { background: var(--wf-panel-alt); }
+
+/* Only the detail side keeps a floor: the list hugs its rows, so a dungeon
+   with few quests does not trail an empty bordered box under the last one. */
+.wf-pane-detail { background: var(--wf-panel-alt); min-height: 420px; }
 .wf-ptext { font-size: 17px; line-height: 1.5; }
 
 .wf-pane-head {
@@ -530,8 +554,8 @@ body {
 .wb-recipes { margin-top: 10px; }
 .wb-recipes > summary { cursor: pointer; color: var(--wf-muted); font-size: 14px; padding: 4px 2px; list-style: none; }
 .wb-recipes > summary::-webkit-details-marker { display: none; }
-.wb-recipes > summary::before { content: "▸ "; }
-.wb-recipes[open] > summary::before { content: "▾ "; }
+.wb-recipes > summary::before { content: "â–¸ "; }
+.wb-recipes[open] > summary::before { content: "â–¾ "; }
 .wb-recipes .wb-loot-list { margin-top: 6px; }
 
 .wp-icon {
@@ -837,6 +861,71 @@ body {
 .wf-chainstep.on { background: rgba(255, 209, 64, 0.18); color: #ffd36b; }
 
 .wp-actions { margin: 8px 0 2px; }
+
+/* "Show on map": the quest giver pinned on the zone picture, like the addon's
+   world-map pin. The frame keeps the map's 3:2 so the pin lands correctly. */
+.wp-zone { margin: 8px 0 4px; }
+.wp-zone-btn img { width: 16px; height: 16px; margin-right: 2px; }
+.wp-zone-map { margin: 10px 0 2px; }
+
+.wp-zone-frame {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 1002 / 668;
+  overflow: hidden;
+  border: 1px solid #000;
+  box-shadow: inset 0 0 0 1px var(--wf-border-light), 0 2px 10px rgba(0, 0, 0, 0.7);
+  background: #0b0908;
+}
+
+.wp-zone-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wp-zone-pin {
+  position: absolute;
+  width: 0;
+  height: 0;
+  /* left/top are set inline from the quest's normalised x/y */
+}
+
+.wp-zone-dot,
+.wp-zone-ring {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wp-zone-dot {
+  width: 11px;
+  height: 11px;
+  background: #ffd100;
+  border: 2px solid #2b1c08;
+  box-shadow: 0 0 8px rgba(255, 209, 0, 0.9);
+}
+
+.wp-zone-ring {
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(255, 209, 0, 0.75);
+  animation: wp-zone-pulse 1.8s ease-out infinite;
+}
+
+@keyframes wp-zone-pulse {
+  0% { width: 12px; height: 12px; opacity: 0.95; }
+  100% { width: 44px; height: 44px; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wp-zone-ring { animation: none; width: 26px; height: 26px; opacity: 0.8; }
+}
+
+.wp-zone-cap { margin-top: 6px; color: #6f5a3c; font-size: 13.5px; }
+
 .wp-chain-notice { margin: 10px 0 0; color: #9e1a0d; font-weight: 700; font-size: 14.5px; }
 .wp-chain-btn img { width: 17px; height: 17px; margin-left: 2px; }
 .wp-title-step { color: #8a4f00; }
@@ -857,7 +946,7 @@ body {
 
 
 /* =========================================================
-   SITE SHELL — RestedXP-style header, hero, banner and footer
+   SITE SHELL â€” RestedXP-style header, hero, banner and footer
    ========================================================= */
 :root {
   --sx-navy: #232740;
@@ -1087,4 +1176,296 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
   .sx-banner-art { min-height: 180px; -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent); mask-image: linear-gradient(180deg, #000 60%, transparent); }
   .sx-banner-body { padding: 8px 22px 28px; }
   .sx-banner-body h2 { font-size: 24px; }
+}
+
+
+/* =========================================================
+   ENCOUNTER JOURNAL SKIN  (.ej)
+   The in-game journal look: dark chrome at the top (breadcrumb + tabs),
+   an art band for the dungeon, then a light parchment body with cream
+   rows. Layout and markup are untouched - this is only a skin.
+   Applied to Hall of Thanes as a test.
+   ========================================================= */
+
+.ej {
+  --ej-ink: #2e2317;
+  --ej-ink-soft: #6b5a42;
+  --ej-gold: #ffd98a;
+  --ej-chrome: #171209;
+  --ej-chrome-hi: #241a0e;
+  --ej-edge: #8a6a33;
+  --ej-parch-a: #eadfc3;
+  --ej-parch-b: #ddcdab;
+  --ej-row: #efe5ca;
+  --ej-row-hover: #f5ecd6;
+  --ej-row-on: #faeec4;
+  --ej-row-edge: #c4ac7f;
+}
+
+.ej.wf-page {
+  background:
+    radial-gradient(900px 500px at 50% -8%, rgba(150, 105, 40, 0.18), transparent 62%),
+    #0e0a06;
+}
+
+/* ---- the window: black frame, thin gold inner line ---- */
+.ej .wf-window {
+  position: relative;
+  overflow: visible;
+  background: var(--ej-chrome);
+  border: 1px solid #000;
+  border-radius: 9px;
+  box-shadow:
+    inset 0 0 0 1px #0a0704,
+    0 0 0 1px #b9933f,
+    0 20px 55px rgba(0, 0, 0, 0.8);
+}
+
+/* the journal medallion hanging off the top-left corner */
+.ej .wf-window::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: #1a1208 url("/journal/ui/forever-icon.png") center / 54px 54px no-repeat;
+  box-shadow: 0 0 0 3px #c9a33f, 0 0 0 5px #15100a, 0 6px 16px rgba(0, 0, 0, 0.75);
+  z-index: 3;
+}
+
+.ej .wf-titlebar {
+  background: linear-gradient(180deg, #221a0f, #130e08);
+  border-bottom: 1px solid var(--ej-edge);
+  border-radius: 8px 8px 0 0;
+  min-height: 46px;
+}
+
+.ej .wf-title { color: #ffcf40; font-size: 22px; }
+
+/* body hosts its own bands, so padding moves to the sections */
+.ej .wf-body {
+  background: none;
+  padding: 0;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+
+/* ---- dark toolbar: breadcrumb left, tabs right ---- */
+.ej .wf-crumb {
+  position: relative;
+  margin: 0;
+  padding: 9px 12px;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #1d1509, #140e07);
+  border-bottom: 1px solid #000;
+}
+
+/* breadcrumb: same plate as the Map / Bosses / Quests tabs */
+.ej .wf-crumb .wf-btn {
+  background: linear-gradient(180deg, #2a2012, #171008);
+  border: 1px solid #000;
+  box-shadow: inset 0 0 0 1px rgba(255, 215, 130, 0.4);
+  color: #f0dcae;
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-size: 13.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ej .wf-crumb .wf-btn:hover { filter: brightness(1.3); }
+
+/* tabs lifted onto the toolbar row */
+.ej .wf-dtabs {
+  position: absolute;
+  top: 0;
+  right: 12px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+.ej .wf-dtabs .wf-btn {
+  background: linear-gradient(180deg, #2a2012, #171008);
+  border: 1px solid #000;
+  box-shadow: inset 0 0 0 1px rgba(255, 215, 130, 0.4);
+  color: #f0dcae;
+  border-radius: 5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 13.5px;
+}
+
+.ej .wf-dtabs .wf-tab-active {
+  background: linear-gradient(180deg, #3f2f17, #26190c);
+  color: #ffe6ab;
+  box-shadow: inset 0 0 0 1px #e8c169, 0 0 12px rgba(255, 200, 80, 0.3);
+}
+
+/* ---- dungeon art band ---- */
+.ej .wf-dheader {
+  position: relative;
+  margin: 0;
+  padding: 16px 18px;
+  min-height: 86px;
+  border: 0;
+  border-bottom: 1px solid #000;
+  /* --ej-band is set per dungeon in app/dungeon/[slug]/page.tsx */
+  background-color: #140e07;
+  background-image:
+    linear-gradient(90deg, rgba(16, 11, 6, 0.96) 0%, rgba(16, 11, 6, 0.82) 38%, rgba(16, 11, 6, 0.3) 100%),
+    var(--ej-band, none);
+  background-position: center, center 32%;
+  background-size: cover, cover;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.ej .wf-dname {
+  color: #ffe9b0;
+  font-size: 30px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+.ej .wf-dlevel {
+  color: #b2a089;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+/* ---- parchment body ---- */
+.ej .wf-panes {
+  position: relative;
+  margin: 0;
+  padding: 14px 16px 10px;
+  gap: 26px;
+  background:
+    linear-gradient(rgba(235, 223, 195, 0.72), rgba(222, 206, 172, 0.72)),
+    var(--parchment) url("/journal/parchment.jpg") center top / 512px auto repeat;
+}
+
+/* the thin rule between the two pages */
+.ej .wf-panes:not(.wf-panes-one)::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  bottom: 14px;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, rgba(120, 95, 50, 0.45) 12%, rgba(120, 95, 50, 0.45) 88%, transparent);
+}
+
+.ej .wf-pane,
+.ej .wf-pane-detail,
+.ej .wf-pane-parchment {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 2px 2px 8px;
+  min-height: 0;
+}
+
+.ej .wf-pane-detail { min-height: 380px; }
+
+.ej .wf-pane-head {
+  color: #5c4a2c;
+  font-size: 15px;
+  padding: 0 2px 10px;
+}
+
+.ej .wf-sep { color: #9a8255; }
+
+/* ---- cream list rows ---- */
+.ej .wf-rows { gap: 9px; }
+
+.ej .wf-row {
+  background: var(--ej-row);
+  border: 1px solid var(--ej-row-edge);
+  border-radius: 8px;
+  color: var(--ej-ink);
+  min-height: 62px;
+  padding: 9px 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 253, 243, 0.8), 0 1px 2px rgba(60, 40, 10, 0.18);
+}
+
+.ej .wf-row:hover { background: var(--ej-row-hover); border-color: #d2ba8c; }
+
+.ej .wf-row-selected,
+.ej .wf-row-selected:hover {
+  background: var(--ej-row-on);
+  border-color: #e0b64a;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 248, 0.9),
+    inset 0 0 0 1px rgba(255, 215, 110, 0.75),
+    0 0 14px rgba(230, 180, 70, 0.45);
+}
+
+.ej .wf-row-name { color: var(--ej-ink); font-size: 17px; }
+.ej .wf-row-sub,
+.ej .wf-row-selected .wf-row-sub { color: var(--ej-ink-soft); }
+.ej .wf-class, .ej .wf-chain { color: #7a4a0c; }
+.ej .wf-row-parent { border-color: #e0b64a; }
+
+.ej .wf-portrait { box-shadow: 0 0 0 2px #c9a33f, 0 1px 4px rgba(0, 0, 0, 0.5); }
+
+/* ---- right page ---- */
+.ej .wp {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.ej .wb { color: var(--ej-ink); }
+.ej .wb-title { color: #2b2014; font-size: 26px; text-shadow: 0 1px 0 rgba(255, 250, 235, 0.65); }
+.ej .wb-desc, .ej .wb-loot-text { color: var(--ej-ink); }
+.ej .wb-meta, .ej .wb-note, .ej .wb-slot { color: var(--ej-ink-soft); }
+.ej .wb-head { border-bottom: 1px solid rgba(120, 95, 50, 0.35); padding-bottom: 10px; }
+
+/* loot rows: light plates, quality-coloured names stay as they are */
+.ej .wb-loot {
+  background: rgba(255, 252, 240, 0.6);
+  border: 1px solid rgba(150, 125, 80, 0.4);
+  border-radius: 6px;
+}
+
+.ej .wb-tag {
+  border: 1px solid #b09363;
+  background: rgba(255, 250, 232, 0.6);
+  color: #5a3f1a;
+}
+
+.ej .wb-recipes,
+.ej .wp-rewards-head,
+.ej .wp-sub,
+.ej .wp-title { color: #6b3f08; text-shadow: 0 1px 0 rgba(255, 250, 235, 0.6); }
+
+.ej .wf-note, .ej .wf-tbd, .ej .wf-ptext { color: var(--ej-ink); }
+
+/* ---- pager on the parchment, dark pill bottom-right ---- */
+.ej .wf-pager {
+  margin: 0;
+  padding: 4px 16px 16px;
+  background:
+    linear-gradient(rgba(235, 223, 195, 0.72), rgba(222, 206, 172, 0.72)),
+    var(--parchment) url("/journal/parchment.jpg") center top / 512px auto repeat;
+}
+
+.ej .wf-pager .wf-btn {
+  background: linear-gradient(180deg, #211a10, #100b06);
+  border: 1px solid #000;
+  box-shadow: inset 0 0 0 1px rgba(255, 215, 130, 0.3);
+  color: #f2e4c4;
+  border-radius: 6px;
+  padding: 9px 16px;
+}
+
+@media (max-width: 860px) {
+  .ej .wf-dtabs { position: static; height: auto; }
 }

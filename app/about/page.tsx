@@ -25,11 +25,8 @@ export default function AboutPage() {
               generated from the addon&apos;s own data, so both always match.
             </p>
             <p className="wp-text">
-              It&apos;s made by one player, Exehn, and updated for each Forever phase.
-            </p>
-            <p className="wp-text">
               <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="wf-btn wf-btn-red">Download the addon</a>{" "}
-              <a href={LINKS.discord} target="_blank" rel="noreferrer noopener" className="wf-btn wf-btn-dark">Report a bug on Discord</a>
+              <a href={LINKS.discord} target="_blank" rel="noreferrer noopener" className="wf-btn wf-btn-dark">Join Discord</a>
             </p>
             <p className="wp-note">
               World of Warcraft and related trademarks are the property of Blizzard Entertainment. This site is a fan project

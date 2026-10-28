@@ -11,11 +11,10 @@ import { useStoredFlag } from "./useStoredFlag";
 
 interface Props {
   dungeons: (DungeonSummary & { art: string | null; gradient: string })[];
-  addonVersion: string;
   emblemText: EmblemText;
 }
 
-export default function JournalHome({ dungeons, addonVersion, emblemText }: Props) {
+export default function JournalHome({ dungeons, emblemText }: Props) {
   const [q, setQ] = useState("");
   const faction = useFaction();
   const crest = faction === "Horde" ? "/journal/horde.png" : "/journal/alliance.png";
@@ -90,11 +89,6 @@ export default function JournalHome({ dungeons, addonVersion, emblemText }: Prop
         ))}
         {shown.length === 0 && <p className="wf-empty">No dungeon matches “{q}”.</p>}
       </div>
-
-      <p className="wf-foot">
-        Web version of the Dungeon Journal addon v{addonVersion} for WoW Forever · <code>/dj</code> in game ·
-        every quest, boss and drop below comes straight from the addon&apos;s data.
-      </p>
     </Window>
   );
 }

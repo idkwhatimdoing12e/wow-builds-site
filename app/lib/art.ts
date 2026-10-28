@@ -25,6 +25,14 @@ export function cardArt(dungeonName: string): string | null {
   return manifest.cards[dungeonName] ?? null;
 }
 
+/**
+ * Art for the dungeon header band. Only a couple of dungeons have the taller
+ * page picture exported, so the card art stands in for the rest.
+ */
+export function bandArt(dungeonName: string): string | null {
+  return manifest.pages[dungeonName] ?? manifest.cards[dungeonName] ?? null;
+}
+
 function css(c?: Rgba, fallback = "transparent"): string {
   if (!c) return fallback;
   const [r, g, b, a] = c;
