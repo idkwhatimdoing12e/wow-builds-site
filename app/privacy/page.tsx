@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { SITE_URL } from "@/app/lib/site";
 
 export default function PrivacyPage() {
+  // Derived so the domain lives only in SITE_URL (NEXT_PUBLIC_SITE_URL).
+  const host = SITE_URL.replace(/^https?:\/\//, "").replace(/\/$/, "");
   return (
     <main className="text-white">
       <div className="mx-auto max-w-3xl px-6 py-16">
@@ -13,7 +16,7 @@ export default function PrivacyPage() {
         </h1>
 
         <p className="mt-6 text-white/70 leading-relaxed">
-          This website (<strong>wowbuilds.pro</strong>) is a fan project created by an
+          This website (<strong>{host}</strong>) is a fan project created by an
           individual World of Warcraft player and content creator. 
         </p>
 
