@@ -1,7 +1,13 @@
 // Single place for the site's identity and outbound links.
 // Change the domain here when the rebrand happens; everything else reads it.
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://wowbuilds.pro";
+// The live domain. Set NEXT_PUBLIC_SITE_URL once the domain is bought; until
+// then Vercel's own production URL is used, so canonicals, the sitemap and
+// robots.txt never point at a domain this site does not own.
+const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (vercelHost ? `https://${vercelHost}` : "http://localhost:3000");
 export const SITE_NAME = "Dungeon Journal";
 export const SITE_TAGLINE = "Every quest, boss and drop in WoW Forever's dungeons";
 
