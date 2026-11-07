@@ -9,6 +9,8 @@ import {
   dungeonProgress,
   progressTotals,
   type Character,
+  type DungeonProgress,
+  type IndexDungeon,
 } from "@/app/lib/character";
 
 const STORAGE_KEY = "dj.character.code";
@@ -19,20 +21,81 @@ function codeFromHash(): string {
   return decodeURIComponent(window.location.hash.replace(/^#/, "")).trim();
 }
 
-function Bar({ done, total }: { done: number; total: number }) {
-  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+/** One dungeon tile: the home page's card, with progress and a quest list inside. */
+function DungeonCard({
+  d,
+  open,
+  onToggle,
+}: {
+  d: DungeonProgress;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const pct = d.questsTotal > 0 ? Math.round((d.questsDone / d.questsTotal) * 100) : 0;
   return (
-    <span className="ch-bar" role="img" aria-label={`${done} of ${total} done`}>
-      <span className="ch-bar-fill" style={{ width: `${pct}%` }} />
-    </span>
+    <div
+      className={`wf-card ch-card ${d.cleared ? "ch-card-done" : ""} ${open ? "ch-card-open" : ""} ${
+        d.previewOnly ? "wf-card-preview" : ""
+      }`}
+      style={d.art ? { backgroundImage: `url(${d.art})` } : undefined}
+    >
+      <button
+        type="button"
+        className="ch-card-face"
+        onClick={onToggle}
+        aria-expanded={open}
+        disabled={d.previewOnly || d.questsTotal === 0}
+      >
+        <span className="wf-card-name">{d.name}</span>
+        {d.previewOnly ? (
+          <span className="wf-card-soon">Coming Soon</span>
+        ) : (
+          <>
+            {d.cleared && (
+              <span className="ch-check" aria-label="Cleared">
+                <svg viewBox="0 0 48 48" aria-hidden="true">
+                  <path d="M8 25 L19 36 L40 12" />
+                </svg>
+              </span>
+            )}
+            <span className="ch-card-foot">
+              <span className="ch-card-bar">
+                <span className="ch-card-bar-fill" style={{ width: `${pct}%` }} />
+              </span>
+              <span className="ch-card-count">
+                {d.questsDone}/{d.questsTotal}
+              </span>
+            </span>
+          </>
+        )}
+        <span className="wf-card-level">LV {d.level}</span>
+      </button>
+
+      {open && (
+        <div className="ch-quests">
+          <ul>
+            {d.questState.map((q) => (
+              <li key={q.id} className={q.done ? "ch-q-done" : ""}>
+                <span className="ch-q-tick" aria-hidden="true">{q.done ? "✓" : "○"}</span>
+                <Link href={`/quest/${q.slug}`} className="ch-q-name">{q.name}</Link>
+              </li>
+            ))}
+          </ul>
+          <Link href={`/dungeon/${d.slug}`} className="ch-q-more">
+            Open {d.name} →
+          </Link>
+        </div>
+      )}
+    </div>
   );
 }
 
-export default function CharacterPanel() {
+export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
   const [character, setCharacter] = useState<Character | null>(null);
   const [draft, setDraft] = useState("");
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+  const [open, setOpen] = useState<string | null>(null);
 
   const load = useCallback((code: string, remember: boolean) => {
     const result = decodeCharacter(code);
@@ -73,7 +136,7 @@ export default function CharacterPanel() {
     if (saved) load(saved, false);
   }, [load]);
 
-  const rows = useMemo(() => (character ? dungeonProgress(character) : []), [character]);
+  const rows = useMemo(() => (character ? dungeonProgress(index, character) : []), [character, index]);
   const totals = useMemo(() => progressTotals(rows), [rows]);
 
   function onImport(e: React.FormEvent) {
@@ -85,6 +148,7 @@ export default function CharacterPanel() {
     setCharacter(null);
     setDraft("");
     setError("");
+    setOpen(null);
     try {
       window.localStorage.removeItem(STORAGE_KEY);
     } catch {
@@ -138,7 +202,7 @@ export default function CharacterPanel() {
   const className = CLASS_NAMES[character.classToken] ?? character.classToken;
 
   return (
-    <div className="wp">
+    <div className="ch">
       <div className="ch-head">
         {character.faction !== "Unknown" && (
           <img
@@ -150,11 +214,19 @@ export default function CharacterPanel() {
           />
         )}
         <div>
-          <h1 className="wp-title ch-name" style={{ color }}>{character.name}</h1>
+          <h1 className="ch-name" style={{ color }}>{character.name}</h1>
           <p className="ch-sub">
             Level {character.level} {className}
             {character.realm ? ` · ${character.realm}` : ""}
           </p>
+        </div>
+        <div className="ch-head-actions">
+          <button type="button" className="wf-btn wf-btn-dark wf-btn-sm" onClick={onCopyLink}>
+            {copied ? "Link copied" : "Copy share link"}
+          </button>{" "}
+          <button type="button" className="wf-btn wf-btn-dark wf-btn-sm" onClick={onClear}>
+            Forget
+          </button>
         </div>
       </div>
 
@@ -173,34 +245,23 @@ export default function CharacterPanel() {
         </div>
       </div>
 
-      <ul className="ch-list">
-        {rows.filter((r) => !r.previewOnly).map((r) => (
-          <li key={r.slug} className={`ch-row ${r.cleared ? "ch-row-cleared" : ""}`}>
-            <Link href={`/dungeon/${r.slug}`} className="ch-row-name">{r.name}</Link>
-            <Bar done={r.questsDone} total={r.questsTotal} />
-            <span className="ch-count">
-              {r.questsDone}/{r.questsTotal}
-              {r.cleared && <span className="ch-cleared" title="Final boss killed"> ✓</span>}
-            </span>
-          </li>
+      <div className="wf-grid ch-grid">
+        {rows.map((d) => (
+          <DungeonCard
+            key={d.slug}
+            d={d}
+            open={open === d.slug}
+            onToggle={() => setOpen((cur) => (cur === d.slug ? null : d.slug))}
+          />
         ))}
-      </ul>
+      </div>
 
       {character.exportedAt && (
-        <p className="wp-note">
+        <p className="ch-foot">
           Exported {character.exportedAt.toLocaleDateString()} — run <code className="ch-cmd">/dj export</code> again
           after you play to refresh it.
         </p>
       )}
-
-      <p className="ch-actions">
-        <button type="button" className="wf-btn wf-btn-dark wf-btn-sm" onClick={onCopyLink}>
-          {copied ? "Link copied" : "Copy share link"}
-        </button>{" "}
-        <button type="button" className="wf-btn wf-btn-dark wf-btn-sm" onClick={onClear}>
-          Forget this character
-        </button>
-      </p>
       {error && <p className="ch-error" role="alert">{error}</p>}
     </div>
   );

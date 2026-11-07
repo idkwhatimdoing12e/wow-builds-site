@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SITE_URL } from "@/app/lib/site";
 import Window from "@/app/components/journal/Window";
 import CharacterPanel from "@/app/components/character/CharacterPanel";
+import { buildCharacterIndex } from "@/app/lib/character-index";
 
 export const metadata: Metadata = {
   title: "Your character",
@@ -22,7 +23,8 @@ export default function CharacterPage() {
           <Link href="/" className="wf-btn wf-btn-red wf-btn-sm">Dungeons</Link>
         </div>
         <div className="wf-pane wf-pane-single wf-pane-parchment">
-          <CharacterPanel />
+          {/* Built here, not in the client component: see character-index.ts. */}
+          <CharacterPanel index={buildCharacterIndex()} />
         </div>
       </Window>
     </div>

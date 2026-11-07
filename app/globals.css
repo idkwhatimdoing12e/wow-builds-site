@@ -1540,44 +1540,94 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
 .ch-stat span { font-size: 13px; color: #6f5a3c; }
 .ch-of { font-size: 15px; color: #8a7355; }
 
-.ch-list { list-style: none; margin: 14px 0 0; padding: 0; }
-.ch-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 110px 64px;
-  align-items: center;
-  gap: 10px;
-  padding: 5px 2px;
-  border-bottom: 1px solid rgba(169, 138, 85, 0.35);
-}
-.ch-row-name {
-  color: #3b2a14;
-  font-weight: 600;
-  text-decoration: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.ch-row-name:hover { text-decoration: underline; text-underline-offset: 2px; }
-.ch-row-cleared .ch-row-name { color: #1f5c13; }
-.ch-count { font-size: 13.5px; color: #6f5a3c; text-align: right; font-variant-numeric: tabular-nums; }
-.ch-cleared { color: #1f7a12; font-weight: 700; }
-
-.ch-bar {
-  display: block;
-  height: 9px;
-  background: rgba(90, 63, 26, 0.18);
-  border: 1px solid #b59a68;
-  border-radius: 999px;
-  overflow: hidden;
-}
-.ch-bar-fill {
-  display: block;
-  height: 100%;
-  background: linear-gradient(90deg, #8a4f00, #c98a1e);
-}
-
-.ch-actions { margin-top: 16px; }
 
 @media (max-width: 560px) {
   .ch-row { grid-template-columns: minmax(0, 1fr) 70px 56px; }
+}
+
+/* The character's dungeons, as the home page's cards. A cleared dungeon gets
+   the big green tick; clicking a card opens its quests in place. */
+.ch { padding: 2px; }
+.ch-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.ch-head-actions { margin-left: auto; }
+.ch-name {
+  font-family: var(--font-title); font-weight: 800; font-size: 26px; line-height: 1.1;
+  text-shadow: 0 1px 0 rgba(255, 240, 200, 0.5);
+}
+.ch-foot { color: #6f5a3c; font-size: 13.5px; margin-top: 14px; }
+
+.ch-grid { margin-top: 16px; }
+
+.ch-card { overflow: hidden; }
+/* The whole face is the button, so the card keeps the home page's look. */
+.ch-card-face {
+  display: block; position: relative; z-index: 1;
+  width: 100%; height: 128px;
+  padding: 0; margin: 0;
+  background: none; border: 0; cursor: pointer; text-align: left;
+  font: inherit; color: inherit;
+}
+.ch-card-face:disabled { cursor: default; }
+
+/* An opened card takes the full row and grows to fit its quests. */
+.ch-card-open { grid-column: 1 / -1; height: auto; }
+.ch-card-open:hover, .ch-card-open:focus-within { transform: none; }
+
+.ch-card-foot {
+  position: absolute; z-index: 2; left: 10px; right: 10px; bottom: 9px;
+  display: flex; align-items: center; gap: 8px;
+}
+.ch-card-bar {
+  flex: 1 1 auto; height: 7px; border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+}
+.ch-card-bar-fill { display: block; height: 100%; background: linear-gradient(90deg, #d8a83c, #ffd77a); }
+.ch-card-count {
+  flex: 0 0 auto; font-size: 12.5px; font-weight: 700; color: #ffe9b8;
+  text-shadow: 0 1px 2px #000; font-variant-numeric: tabular-nums;
+}
+
+/* The tick a cleared dungeon wears. */
+.ch-check {
+  position: absolute; z-index: 2; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.ch-check svg { width: 76px; height: 76px; }
+.ch-check path {
+  fill: none; stroke: #49f06a; stroke-width: 7;
+  stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px rgba(40, 255, 90, 0.75)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.8));
+}
+.ch-card-done { box-shadow: inset 0 0 0 1px #49f06a, 0 2px 10px rgba(0, 0, 0, 0.6); }
+.ch-card-done .wf-card-name { color: #d6ffd9; }
+
+/* The quest list inside an opened card. */
+.ch-quests {
+  position: relative; z-index: 2;
+  padding: 10px 14px 14px;
+  background: rgba(8, 6, 4, 0.9);
+  border-top: 1px solid rgba(255, 215, 122, 0.35);
+}
+.ch-quests ul { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 22px; }
+.ch-quests li {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 3px 0; font-size: 14px;
+  break-inside: avoid;
+}
+.ch-q-tick { flex: 0 0 auto; color: #7a6a52; font-weight: 700; width: 14px; }
+.ch-q-done .ch-q-tick { color: #49f06a; }
+.ch-q-name { color: #cdbb97; text-decoration: none; }
+.ch-q-done .ch-q-name { color: #eaf7e4; }
+.ch-q-name:hover { text-decoration: underline; text-underline-offset: 2px; }
+.ch-q-more {
+  display: inline-block; margin-top: 10px;
+  color: #ffd77a; font-size: 13.5px; text-decoration: none; font-weight: 600;
+}
+.ch-q-more:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+@media (max-width: 640px) {
+  .ch-quests ul { columns: 1; }
+  .ch-head-actions { margin-left: 0; }
 }

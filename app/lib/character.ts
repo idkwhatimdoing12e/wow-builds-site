@@ -12,8 +12,6 @@
 // Nothing is sent anywhere: the code lives in the URL fragment, which browsers
 // never put in a request, and in this browser's localStorage.
 
-import { getDungeonSummaries, getDungeon } from "./journal";
-
 export const CHARACTER_FORMAT = "FDJ1";
 
 export interface Character {
@@ -150,29 +148,43 @@ export function decodeCharacter(raw: string): DecodeResult {
 
 /* ---------- progress against the journal ---------- */
 
-export interface DungeonProgress {
+/**
+ * The slice of the journal the character page needs. The server builds it and
+ * passes it down, so the browser never loads the full journal just to tick
+ * off quest names.
+ */
+export interface IndexQuest {
+  id: number;
+  name: string;
+  slug: string;
+}
+export interface IndexDungeon {
   slug: string;
   name: string;
   level: string;
+  art: string | null;
+  previewOnly: boolean;
+  quests: IndexQuest[];
+}
+
+export interface DungeonProgress extends IndexDungeon {
   questsDone: number;
   questsTotal: number;
   cleared: boolean;
-  previewOnly: boolean;
+  /** Each quest with whether this character has finished it, in journal order. */
+  questState: (IndexQuest & { done: boolean })[];
 }
 
-/** One row per dungeon, plus the totals, for the character page. */
-export function dungeonProgress(c: Character): DungeonProgress[] {
-  return getDungeonSummaries().map((s) => {
-    const d = getDungeon(s.slug);
-    const quests = d?.quests ?? [];
+/** One row per dungeon, for the character page. */
+export function dungeonProgress(index: IndexDungeon[], c: Character): DungeonProgress[] {
+  return index.map((d) => {
+    const questState = d.quests.map((q) => ({ ...q, done: c.completed.has(q.id) }));
     return {
-      slug: s.slug,
-      name: s.name,
-      level: s.level,
-      questsDone: quests.filter((q) => c.completed.has(q.id)).length,
-      questsTotal: quests.length,
-      cleared: c.cleared.has(s.slug),
-      previewOnly: s.previewOnly,
+      ...d,
+      questsDone: questState.filter((q) => q.done).length,
+      questsTotal: questState.length,
+      cleared: c.cleared.has(d.slug),
+      questState,
     };
   });
 }
