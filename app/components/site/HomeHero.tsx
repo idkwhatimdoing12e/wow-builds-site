@@ -62,11 +62,11 @@ export default function HomeHero() {
             <h1 className="sx-slide-title">{s.title}</h1>
             <p className="sx-slide-text">{s.text}</p>
             {s.cta.external ? (
-              <a href={s.cta.href} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-blue sx-btn-lg" tabIndex={n === i ? 0 : -1}>
+              <a href={s.cta.href} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-gold sx-btn-lg" tabIndex={n === i ? 0 : -1}>
                 {s.cta.label}
               </a>
             ) : (
-              <Link href={s.cta.href} className="sx-btn sx-btn-blue sx-btn-lg" tabIndex={n === i ? 0 : -1}>
+              <Link href={s.cta.href} className="sx-btn sx-btn-gold sx-btn-lg" tabIndex={n === i ? 0 : -1}>
                 {s.cta.label}
               </Link>
             )}
@@ -101,7 +101,7 @@ export function DownloadBanner() {
           The Dungeon Journal addon shows all of this in game: quests for your faction, the boss you&apos;re fighting,
           what it drops and where you are on the map. It&apos;s free and updated for every WoW Forever phase.
         </p>
-        <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-blue sx-btn-lg">
+        <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-gold sx-btn-lg">
           Download Dungeon Journal
         </a>
       </div>

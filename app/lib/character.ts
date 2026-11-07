@@ -3,7 +3,10 @@
 // The code is base64url over plain text, so it survives a paste into a chat
 // box or a URL fragment:
 //
-//   FDJ1|name|realm|class|level|faction|quests|dungeons|time|checksum
+//   FDJ2|name|realm|race|class|level|faction|quests|dungeons|time|checksum
+//
+// FDJ1 is the same without the race, and is still accepted: a character
+// exported before the addon learned to send it keeps working.
 //
 // "quests" is the completed quest IDs sorted ascending, each stored as the gap
 // from the one before it in base 36. An ID this site does not know is kept but
@@ -12,11 +15,15 @@
 // Nothing is sent anywhere: the code lives in the URL fragment, which browsers
 // never put in a request, and in this browser's localStorage.
 
-export const CHARACTER_FORMAT = "FDJ1";
+/** Formats this site can read, newest first. */
+const FORMATS = ["FDJ2", "FDJ1"] as const;
+export const CHARACTER_FORMAT = FORMATS[0];
 
 export interface Character {
   name: string;
   realm: string;
+  /** Empty for a character exported before the addon sent its race. */
+  raceToken: string;
   classToken: string;
   level: number;
   faction: "Alliance" | "Horde" | "Unknown";
@@ -97,7 +104,8 @@ export function decodeCharacter(raw: string): DecodeResult {
   }
 
   const fields = body.split("|");
-  if (fields[0] !== CHARACTER_FORMAT) {
+  const format = fields[0] as (typeof FORMATS)[number];
+  if (!FORMATS.includes(format)) {
     return {
       ok: false,
       error: fields[0]?.startsWith("FDJ")
@@ -105,14 +113,20 @@ export function decodeCharacter(raw: string): DecodeResult {
         : "That does not look like a character code.",
     };
   }
-  if (fields.length !== 10) {
+  // FDJ2 inserted the race after the realm; everything else kept its place.
+  const hasRace = format === "FDJ2";
+  const want = hasRace ? 11 : 10;
+  if (fields.length !== want) {
     return { ok: false, error: "That code is cut short. Select all of it in the addon before copying." };
   }
 
-  const [, name, realm, classToken, levelText, factionLetter, questText, dungeonText, timeText, checkText] = fields;
+  const raceToken = hasRace ? fields[3] : "";
+  const [classToken, levelText, factionLetter, questText, dungeonText, timeText, checkText] =
+    fields.slice(hasRace ? 4 : 3);
+  const [, name, realm] = fields;
 
   const expected = base36(checkText);
-  const actual = adler32(new TextEncoder().encode(fields.slice(0, 9).join("|")));
+  const actual = adler32(new TextEncoder().encode(fields.slice(0, want - 1).join("|")));
   if (expected === null || expected !== actual) {
     return { ok: false, error: "That code did not survive the copy. Paste it again without editing it." };
   }
@@ -136,6 +150,7 @@ export function decodeCharacter(raw: string): DecodeResult {
     character: {
       name: name || "Unknown",
       realm,
+      raceToken: raceToken || "",
       classToken: (classToken || "").toUpperCase(),
       level: Number(levelText) || 0,
       faction: factionLetter === "A" ? "Alliance" : factionLetter === "H" ? "Horde" : "Unknown",
@@ -223,6 +238,30 @@ export const CLASS_COLORS: Record<string, string> = {
   DRUID: "#ff7c0a",
   DEATHKNIGHT: "#c41e3a",
 };
+
+/** The game's race tokens, which are not all the displayed name. */
+export const RACE_NAMES: Record<string, string> = {
+  HUMAN: "Human",
+  DWARF: "Dwarf",
+  NIGHTELF: "Night Elf",
+  GNOME: "Gnome",
+  DRAENEI: "Draenei",
+  WORGEN: "Worgen",
+  ORC: "Orc",
+  SCOURGE: "Undead",
+  UNDEAD: "Undead",
+  TAUREN: "Tauren",
+  TROLL: "Troll",
+  BLOODELF: "Blood Elf",
+  GOBLIN: "Goblin",
+  PANDAREN: "Pandaren",
+};
+
+/** "Orc", "Night Elf", or whatever the addon sent if this site does not know it. */
+export function raceName(token: string): string {
+  if (!token) return "";
+  return RACE_NAMES[token.toUpperCase()] ?? token;
+}
 
 export const CLASS_NAMES: Record<string, string> = {
   WARRIOR: "Warrior",

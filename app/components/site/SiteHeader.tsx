@@ -122,7 +122,7 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
             <Link href="/about" className={`sx-nav-link ${isActive("/about") ? "active" : ""}`}>About</Link>
             <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener" className="sx-nav-link">Patreon</a>
           </nav>
-          <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-blue sx-cta">
+          <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-gold sx-cta">
             <DownloadIcon /> Download Dungeon Journal
           </a>
           <button
@@ -151,7 +151,7 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
             <Link href="/about" onClick={closeAll}>About</Link>
             <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener">Patreon</a>
             <a href={LINKS.discord} target="_blank" rel="noreferrer noopener">Discord</a>
-            <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-blue">
+            <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-gold">
               <DownloadIcon /> Download Dungeon Journal
             </a>
           </div>

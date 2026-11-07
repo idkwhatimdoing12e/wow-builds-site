@@ -238,7 +238,7 @@ body {
 .wf-tab-active { background: linear-gradient(180deg, #4a4a4a, #262626); color: #fff; cursor: default; }
 .wf-tab-active:hover { filter: none; }
 .wf-tab-ico { width: 24px; height: 24px; object-fit: contain; margin-left: -6px; filter: drop-shadow(0 1px 1px #000); }
-.wf-dot { width: 10px; height: 10px; border-radius: 50%; background: #4aa3ff; box-shadow: 0 0 6px #4aa3ff; }
+.wf-dot { width: 10px; height: 10px; border-radius: 50%; background: #e8a33c; box-shadow: 0 0 6px #e8a33c; }
 
 /* ---- home toolbar + cards ---- */
 .wf-toolbar {
@@ -283,7 +283,7 @@ body {
   height: 40px;
   border-radius: 50%;
   border: 2px solid #c9a24e;
-  background: radial-gradient(circle at 35% 30%, #4b8fe0, #0d2d6b 70%);
+  background: radial-gradient(circle at 35% 30%, #c98a2e, #4a2a08 70%);
   color: #fff;
   font-family: var(--font-title);
   font-weight: 700;
@@ -956,8 +956,9 @@ body {
   --sx-navy: #232740;
   --sx-deep: #111222;
   --sx-panel: #1b1e35;
-  --sx-blue: #007aff;
-  --sx-blue-hover: #1a8bff;
+  /* The site chrome follows the journal, not a generic web blue. */
+  --sx-gold: #d8781a;
+  --sx-gold-hover: #f09026;
   --sx-text: #f9f9f9;
   --sx-muted: #b8bad0;
   --sx-head-h: 122px;
@@ -981,8 +982,8 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
   text-decoration: none; white-space: nowrap; cursor: pointer;
   transition: background-color 0.15s, transform 0.15s;
 }
-.sx-btn-blue { background: var(--sx-blue); color: #fff; }
-.sx-btn-blue:hover { background: var(--sx-blue-hover); }
+.sx-btn-gold { background: var(--sx-gold); color: #fff; }
+.sx-btn-gold:hover { background: var(--sx-gold-hover); }
 .sx-btn-lg { height: 58px; padding: 0 38px; font-size: 19px; }
 
 /* logo */
@@ -1030,7 +1031,7 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
   font-family: var(--font-body); font-size: 18px; font-weight: 500; color: var(--sx-text);
   text-decoration: none;
 }
-.sx-nav-link:hover, .sx-nav-link.active { color: #7fb4ff; }
+.sx-nav-link:hover, .sx-nav-link.active { color: #ffc85a; }
 .sx-cta { margin-left: 8px; }
 .sx-burger { display: none; margin-left: auto; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; padding: 10px 7px; flex-direction: column; justify-content: space-between; }
 .sx-burger span { display: block; height: 3px; border-radius: 2px; background: #fff; }
@@ -1120,7 +1121,7 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
 .sx-slide-text { max-width: 600px; font-size: 18px; line-height: 1.45; color: #f3f3f6; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9); margin: 0 0 26px; }
 .sx-dots { position: absolute; z-index: 2; left: 0; right: 0; bottom: 18px; display: flex; justify-content: center; gap: 10px; }
 .sx-dots button { width: 12px; height: 12px; padding: 0; border-radius: 50%; border: 0; background: rgba(255, 255, 255, 0.7); cursor: pointer; }
-.sx-dots button.on { background: var(--sx-blue); }
+.sx-dots button.on { background: var(--sx-gold); }
 
 .sx-section-title {
   margin: 56px 0 4px; text-align: center;
@@ -1487,6 +1488,8 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
   padding: 1px 5px;
   color: #5a3f1a;
 }
+/* ...but the card view is dark, so it inverts there. */
+.ch .ch-cmd { background: rgba(0, 0, 0, 0.45); border-color: var(--wf-border); color: var(--wf-title); }
 
 .ch-input {
   display: block;
@@ -1515,7 +1518,7 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
 .ch-head { display: flex; align-items: center; gap: 14px; }
 .ch-crest { flex: 0 0 auto; }
 .ch-name { font-size: 26px; text-shadow: 0 1px 0 rgba(255, 240, 200, 0.5); }
-.ch-sub { color: #5a3f1a; font-size: 14.5px; margin-top: 2px; }
+.ch-sub { color: var(--wf-text); font-size: 14.5px; margin-top: 2px; }
 
 .ch-totals {
   display: flex;
@@ -1525,25 +1528,25 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
 }
 .ch-stat {
   flex: 1 1 140px;
-  padding: 10px 12px;
-  background: rgba(255, 245, 220, 0.45);
-  border: 1px solid #c3a978;
+  padding: 10px 14px;
+  background: linear-gradient(180deg, #2b2118 0%, #1b140e 100%);
+  border: 1px solid var(--wf-border);
+  box-shadow: inset 0 0 0 1px rgba(168, 132, 63, 0.22);
   border-radius: 4px;
 }
 .ch-stat strong {
   display: block;
   font-family: var(--font-title);
-  font-size: 22px;
-  color: #6b3f08;
+  font-size: 24px;
+  color: var(--wf-title);
   line-height: 1.1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
-.ch-stat span { font-size: 13px; color: #6f5a3c; }
-.ch-of { font-size: 15px; color: #8a7355; }
-
-
-@media (max-width: 560px) {
-  .ch-row { grid-template-columns: minmax(0, 1fr) 70px 56px; }
+.ch-stat span {
+  font-size: 12.5px; color: var(--wf-muted);
+  letter-spacing: 0.04em; text-transform: uppercase;
 }
+.ch-of { font-size: 15px; color: var(--wf-muted); }
 
 /* The character's dungeons, as the home page's cards. A cleared dungeon gets
    the big green tick; clicking a card opens its quests in place. */
@@ -1552,9 +1555,9 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
 .ch-head-actions { margin-left: auto; }
 .ch-name {
   font-family: var(--font-title); font-weight: 800; font-size: 26px; line-height: 1.1;
-  text-shadow: 0 1px 0 rgba(255, 240, 200, 0.5);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85);
 }
-.ch-foot { color: #6f5a3c; font-size: 13.5px; margin-top: 14px; }
+.ch-foot { color: var(--wf-muted); font-size: 13.5px; margin-top: 14px; }
 
 .ch-grid { margin-top: 16px; }
 

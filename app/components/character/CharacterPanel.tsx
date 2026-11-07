@@ -8,6 +8,7 @@ import {
   decodeCharacter,
   dungeonProgress,
   progressTotals,
+  raceName,
   type Character,
   type DungeonProgress,
   type IndexDungeon,
@@ -200,6 +201,8 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
 
   const color = CLASS_COLORS[character.classToken] ?? "#ffffff";
   const className = CLASS_NAMES[character.classToken] ?? character.classToken;
+  // "Level 22 Orc Paladin"; older codes carry no race, so it is simply left out.
+  const race = raceName(character.raceToken);
 
   return (
     <div className="ch">
@@ -216,7 +219,7 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
         <div>
           <h1 className="ch-name" style={{ color }}>{character.name}</h1>
           <p className="ch-sub">
-            Level {character.level} {className}
+            Level {character.level} {race ? `${race} ` : ""}{className}
             {character.realm ? ` · ${character.realm}` : ""}
           </p>
         </div>
