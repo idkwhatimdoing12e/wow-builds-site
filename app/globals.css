@@ -572,6 +572,10 @@ body {
 
 .wi-link { font-weight: 500; text-underline-offset: 2px; }
 .wi-link:hover { text-decoration: underline; }
+/* Not on Wowhead yet, so not a link: its stats are the hover title instead. */
+.wi-noid { cursor: help; text-decoration: underline dotted; text-decoration-color: rgba(255, 255, 255, 0.35); }
+.wp .wi-noid { text-decoration-color: rgba(43, 29, 14, 0.4); }
+.wi-noid:hover { text-decoration: underline dotted; }
 /* On the parchment, the bright in-window quality colours wash out; use ink versions. */
 .wp .wi-link { color: #2b1d0e !important; font-weight: 700; }
 .wp .wi-link[data-q="0"] { color: #5d5649 !important; }

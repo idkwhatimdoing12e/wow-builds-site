@@ -6,8 +6,8 @@ import portraitsFile from "@/data/npc-portraits.json";
 
 /* ---------- raw shapes (mirror the Lua tables) ---------- */
 
-// [itemId, name, slot, quality, source?, extra?]
-export type LootTuple = [number, string, string, number, string?, string?];
+// [itemId, name, slot, quality, source?, extra?, tipLines?]
+export type LootTuple = [number, string, string, number, string?, string?, string[]?];
 // [itemId, name, quality, note?]
 export type RewardTuple = [number, string, number, string?];
 // [itemId, name, quality, source]
@@ -203,6 +203,67 @@ function asList<T>(v: unknown): T[] {
   return Array.isArray(v) ? (v as T[]) : [];
 }
 
+/**
+ * A Lua table that carries both a tuple and named keys -- a loot item with its
+ * tooltip, a required item with its map -- reaches the JSON as an object keyed
+ * "1".."n" rather than an array, so read the tuple out of either shape.
+ */
+function tupleParts(v: unknown): unknown[] | null {
+  if (Array.isArray(v)) return v.slice();
+  if (!v || typeof v !== "object") return null;
+  const o = v as Record<string, unknown>;
+  if (o["1"] === undefined) return null;
+  const parts: unknown[] = [];
+  for (let i = 1; o[String(i)] !== undefined; i++) parts.push(o[String(i)]);
+  return parts;
+}
+
+/** The game's text escapes (colour codes, inline coin icons) as plain text. */
+function plainText(s: string): string {
+  return s
+    .replace(/\|c[0-9a-fA-F]{8}/g, "")
+    .replace(/\|r/g, "")
+    .replace(/\|T[^|]*UI-GoldIcon[^|]*\|t/g, "g")
+    .replace(/\|T[^|]*UI-SilverIcon[^|]*\|t/g, "s")
+    .replace(/\|T[^|]*UI-CopperIcon[^|]*\|t/g, "c")
+    .replace(/\|T[^|]*\|t/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/** The addon's tooltip body. A nested table is one line split left and right. */
+function tipLines(v: unknown): string[] | undefined {
+  if (!Array.isArray(v)) return undefined;
+  const lines = v
+    .map((l) => (Array.isArray(l) ? l.map(String).join("  ") : typeof l === "string" ? l : ""))
+    .map(plainText)
+    .filter(Boolean);
+  return lines.length > 0 ? lines : undefined;
+}
+
+function asLoot(v: unknown): LootTuple[] {
+  return asList<unknown>(v).flatMap((entry) => {
+    const parts = tupleParts(entry);
+    if (!parts) return [];
+    const [id, name, slot, quality, source, extra] = parts as LootTuple;
+    const tip = tipLines((entry as { tip?: unknown })?.tip);
+    return [[Number(id) || 0, String(name ?? ""), String(slot ?? ""), Number(quality ?? 1), source, extra, tip] as LootTuple];
+  });
+}
+
+function asItemRef(v: unknown): ItemRef | undefined {
+  const parts = tupleParts(v);
+  if (!parts) return undefined;
+  const [id, name, quality, source] = parts as ItemRef;
+  return [Number(id) || 0, String(name ?? ""), Number(quality ?? 1), source];
+}
+
+function asItemRefs(v: unknown): ItemRef[] {
+  return asList<unknown>(v)
+    .map(asItemRef)
+    .filter((it): it is ItemRef => it !== undefined);
+}
+
 export const QUALITY_COLORS: Record<number, string> = {
   0: "#9d9d9d",
   1: "#ffffff",
@@ -390,14 +451,14 @@ export function getDungeon(slug: string): Dungeon | null {
 
   for (const b of asList<RawBoss>(d.bosses)) {
     if (!b || !b.name) continue;
-    const loot = asList<LootTuple>(b.loot);
+    const loot = asLoot(b.loot);
     if (b.trash) {
       for (const item of loot) trash.push({ item, source: item[4] });
       continue;
     }
     const main = loot.filter((it) => !isRecipe(it[2]));
     const recipes = loot.filter((it) => isRecipe(it[2]));
-    const sharedRaw = asList<LootTuple>(sharedByBoss[b.name]);
+    const sharedRaw = asLoot(sharedByBoss[b.name]);
     const seen = new Set(loot.map((it) => it[0]));
     const shared = sharedRaw.filter((it) => !seen.has(it[0]));
     const displayId = b.npcID ? data.STATIC_DISPLAY_IDS[String(b.npcID)] : undefined;
@@ -536,13 +597,24 @@ function formatMoney(copper: number): string | undefined {
   return [g && `${g}g`, s && `${s}s`, c && `${c}c`].filter(Boolean).join(" ");
 }
 
+/** The item tuples in a chain step's detail need the same reading as a quest's. */
+function buildPrereqDetail(d?: PrereqDetail): PrereqDetail | undefined {
+  if (!d) return undefined;
+  return {
+    ...d,
+    startItem: asItemRef(d.startItem),
+    providedItem: asItemRef(d.providedItem),
+    requiredItems: asItemRefs(d.requiredItems),
+  };
+}
+
 function buildChainStep(s: ChainStep): ChainStepFull {
   const id = String(s.id);
   const items = data.PREREQ_REWARD_ITEMS_FALLBACK?.[id];
   return {
     ...s,
     slug: s.itemStep ? undefined : slugForQuestId(s.id),
-    detail: data.QUEST_PREREQ_DETAILS[id],
+    detail: buildPrereqDetail(data.QUEST_PREREQ_DETAILS[id]),
     rewardItems: asList<RewardTuple>(items?.items),
     rewardChoice: !!items?.choice,
     xp: s.itemStep ? undefined : (data.FOREVER_QUEST_XP_FALLBACK[id] ?? data.FOREVER_QUEST_BASE_XP[id]),
@@ -588,13 +660,13 @@ function buildQuest(q: RawQuest, dungeonName: string): Quest {
     noteRewardItems: asList<RewardTuple>(q.noteRewardItems),
     note: q.note,
     warning: q.warning,
-    startItem: q.startItem,
+    startItem: asItemRef(q.startItem),
     startObject: q.startObject,
     startMap: q.startMap ?? data.QUEST_START_MAPS[String(q.id)],
     startZone: zonePin(q.startMap ?? data.QUEST_START_MAPS[String(q.id)]),
-    noteItem: q.noteItem,
-    requiredItems: asList<ItemRef>(q.requiredItems),
-    providedItem: q.providedItem,
+    noteItem: asItemRef(q.noteItem),
+    requiredItems: asItemRefs(q.requiredItems),
+    providedItem: asItemRef(q.providedItem),
     chain,
     related,
     dungeonName,

@@ -3,12 +3,12 @@ import ItemLink, { ItemIcon } from "./ItemLink";
 import { BossPortrait } from "./BossPortrait";
 
 function LootRow({ item, note }: { item: LootTuple; note?: string }) {
-  const [id, name, slot, quality] = item;
+  const [id, name, slot, quality, , , tip] = item;
   return (
     <li className="wb-loot">
       <ItemIcon id={id} quality={quality} />
       <span className="wb-loot-text">
-        <ItemLink id={id} name={name} quality={quality} />
+        <ItemLink id={id} name={name} quality={quality} tip={tip} />
         <span className="wb-slot">
           {slot}
           {note && <span className="wb-note"> · {note}</span>}
@@ -50,10 +50,10 @@ export function BossPanel({ boss }: { boss: Boss }) {
       )}
       <ul className="wb-loot-list">
         {boss.loot.map((it) => (
-          <LootRow key={it[0]} item={it} />
+          <LootRow key={`${it[0]}-${it[1]}`} item={it} />
         ))}
         {boss.shared.map((it) => (
-          <LootRow key={`s${it[0]}`} item={it} note="shared drop" />
+          <LootRow key={`s${it[0]}-${it[1]}`} item={it} note="shared drop" />
         ))}
       </ul>
       {boss.recipes.length > 0 && (
@@ -61,7 +61,7 @@ export function BossPanel({ boss }: { boss: Boss }) {
           <summary>Recipes &amp; Patterns ({boss.recipes.length})</summary>
           <ul className="wb-loot-list">
             {boss.recipes.map((it) => (
-              <LootRow key={it[0]} item={it} />
+              <LootRow key={`${it[0]}-${it[1]}`} item={it} />
             ))}
           </ul>
         </details>
@@ -77,7 +77,7 @@ export function TrashPanel({ trash }: { trash: TrashDrop[] }) {
       <p className="wb-desc">Items that drop from the dungeon&apos;s regular enemies, with the mobs that carry them.</p>
       <ul className="wb-loot-list">
         {trash.map(({ item, source }) => (
-          <LootRow key={item[0]} item={item} note={source} />
+          <LootRow key={`${item[0]}-${item[1]}`} item={item} note={source} />
         ))}
       </ul>
     </div>

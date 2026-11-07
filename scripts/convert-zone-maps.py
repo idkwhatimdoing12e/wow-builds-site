@@ -54,7 +54,7 @@ ZONES = {
     1426: "DunMorogh",
     1427: "SearingGorge",
     1428: "BurningSteppes",
-    1429: "ElwynnForest",
+    1429: "Elwynn",
     1430: "DeadwindPass",
     1431: "Duskwood",
     1432: "LochModan",
@@ -91,12 +91,24 @@ TILE_RE = re.compile(r"^(.*?)(\d{1,2})\.png$", re.I)
 
 
 def wanted_map_ids():
-    """Every uiMapID a quest start points at."""
+    """Every uiMapID the site draws a zone map for.
+
+    The dungeon entrances and the route guide also carry mapIDs, but those are
+    drawn on the dungeon's own floor map, so they need no zone picture here.
+    """
     data = json.load(open(os.path.join(ROOT, "data", "journal.json"), encoding="utf-8"))
     ids = set()
-    for m in (data.get("QUEST_START_MAPS") or {}).values():
+
+    def add(m):
         if isinstance(m, dict) and m.get("mapID"):
             ids.add(int(m["mapID"]))
+
+    for m in (data.get("QUEST_START_MAPS") or {}).values():
+        add(m)
+    # Chain steps: QuestPanel's PrereqPanel pins these the same way.
+    for det in (data.get("QUEST_PREREQ_DETAILS") or {}).values():
+        if isinstance(det, dict):
+            add(det.get("map"))
     for dungeon in (data.get("DB") or {}).values():
         if not isinstance(dungeon, dict):
             continue
@@ -104,9 +116,7 @@ def wanted_map_ids():
             if not isinstance(q, dict):
                 continue
             for key in ("startMap", "noteItemMap"):
-                m = q.get(key)
-                if isinstance(m, dict) and m.get("mapID"):
-                    ids.add(int(m["mapID"]))
+                add(q.get(key))
     return sorted(ids)
 
 
@@ -197,7 +207,7 @@ def main():
     local = sys.argv[1] if len(sys.argv) > 1 else None
     src = TileSource(local)
     ids = wanted_map_ids()
-    print(f"{len(ids)} zones referenced by quest starts")
+    print(f"{len(ids)} zones referenced by the site")
     built, missing, partial = 0, [], []
     for map_id in ids:
         folder = ZONES.get(map_id)
