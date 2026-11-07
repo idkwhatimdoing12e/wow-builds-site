@@ -117,6 +117,7 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
                 <Link href="/#dungeons" className="sx-drop-all" onClick={closeAll}>Show all dungeons</Link>
               </div>
             </div>
+            <Link href="/character" className={`sx-nav-link ${isActive("/character") ? "active" : ""}`}>My Character</Link>
             <Link href="/supporters" className={`sx-nav-link ${isActive("/supporters") ? "active" : ""}`}>Supporters</Link>
             <Link href="/about" className={`sx-nav-link ${isActive("/about") ? "active" : ""}`}>About</Link>
             <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener" className="sx-nav-link">Patreon</a>

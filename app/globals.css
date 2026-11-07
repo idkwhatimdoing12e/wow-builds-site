@@ -1473,3 +1473,111 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
 @media (max-width: 860px) {
   .ej .wf-dtabs { position: static; height: auto; }
 }
+
+/* ---------------------------------------------------------------- CHARACTER
+   The imported character page. Lives on the parchment pane, so it borrows the
+   same ink colours as the quest text rather than the dark window chrome. */
+
+.ch-cmd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  background: rgba(255, 245, 220, 0.5);
+  border: 1px solid #c3a978;
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: #5a3f1a;
+}
+
+.ch-input {
+  display: block;
+  width: 100%;
+  margin: 12px 0 10px;
+  padding: 10px 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #2b1d0e;
+  background: rgba(255, 248, 230, 0.75);
+  border: 1px solid #a98a55;
+  border-radius: 4px;
+  resize: vertical;
+  word-break: break-all;
+}
+.ch-input:focus { outline: 2px solid #8a4f00; outline-offset: 1px; }
+
+.ch-error {
+  margin: 0 0 10px;
+  color: #8a1c0f;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ch-head { display: flex; align-items: center; gap: 14px; }
+.ch-crest { flex: 0 0 auto; }
+.ch-name { font-size: 26px; text-shadow: 0 1px 0 rgba(255, 240, 200, 0.5); }
+.ch-sub { color: #5a3f1a; font-size: 14.5px; margin-top: 2px; }
+
+.ch-totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0 6px;
+}
+.ch-stat {
+  flex: 1 1 140px;
+  padding: 10px 12px;
+  background: rgba(255, 245, 220, 0.45);
+  border: 1px solid #c3a978;
+  border-radius: 4px;
+}
+.ch-stat strong {
+  display: block;
+  font-family: var(--font-title);
+  font-size: 22px;
+  color: #6b3f08;
+  line-height: 1.1;
+}
+.ch-stat span { font-size: 13px; color: #6f5a3c; }
+.ch-of { font-size: 15px; color: #8a7355; }
+
+.ch-list { list-style: none; margin: 14px 0 0; padding: 0; }
+.ch-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 110px 64px;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 2px;
+  border-bottom: 1px solid rgba(169, 138, 85, 0.35);
+}
+.ch-row-name {
+  color: #3b2a14;
+  font-weight: 600;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ch-row-name:hover { text-decoration: underline; text-underline-offset: 2px; }
+.ch-row-cleared .ch-row-name { color: #1f5c13; }
+.ch-count { font-size: 13.5px; color: #6f5a3c; text-align: right; font-variant-numeric: tabular-nums; }
+.ch-cleared { color: #1f7a12; font-weight: 700; }
+
+.ch-bar {
+  display: block;
+  height: 9px;
+  background: rgba(90, 63, 26, 0.18);
+  border: 1px solid #b59a68;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.ch-bar-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #8a4f00, #c98a1e);
+}
+
+.ch-actions { margin-top: 16px; }
+
+@media (max-width: 560px) {
+  .ch-row { grid-template-columns: minmax(0, 1fr) 70px 56px; }
+}
