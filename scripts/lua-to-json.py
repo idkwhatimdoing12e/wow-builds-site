@@ -39,6 +39,12 @@ FDJ.ADDON_NAME = "ForeverDungeonJournal"
 FDJ.Constants = { ALBA_FAIRMOON_LOCATION = "Alba Fairmoon, Sentinel Hill inn, Westfall" }
 FDJ.L = function(key) return key end
 -- WoW API stubs the data files may touch at load time.
+-- Data files create frames for in-game behaviour (event handlers that learn
+-- quest IDs as you play). The export only wants the tables, so a frame is a
+-- table whose every method is a no-op.
+_G.CreateFrame = function()
+    return setmetatable({}, { __index = function() return function() end end })
+end
 _G.GetLocale = function() return "enUS" end
 _G.IsPushableQuest = function() return false end
 _G.C_QuestLog = { IsPushableQuest = function() return false end }
