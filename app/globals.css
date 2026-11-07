@@ -1018,7 +1018,7 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
   max-width: 1440px; height: 72px; margin: 0 auto; padding: 0 12px 0 14px;
   display: flex; align-items: center; gap: 16px;
   border-radius: 10px;
-  background: rgba(17, 18, 34, 0.55);
+  background: rgba(19, 14, 9, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
@@ -1058,7 +1058,7 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
 }
 .sx-drop-item span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sx-drop-item small { color: #a8947a; font-size: 12px; white-space: nowrap; }
-.sx-drop-item:hover { background: rgba(0, 122, 255, 0.16); color: #fff; }
+.sx-drop-item:hover { background: rgba(216, 120, 26, 0.16); color: #fff; }
 .sx-drop-all { grid-column: 1 / -1; justify-self: center; margin-top: 8px; color: #ffc85a; font-size: 14px; font-weight: 600; text-decoration: none; }
 .sx-drop-all:hover { text-decoration: underline; }
 
@@ -1098,8 +1098,8 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 12px); }
 .sx-slide::after {
   content: ""; position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse at center, rgba(14, 16, 38, 0.15) 0%, rgba(14, 16, 38, 0.55) 70%),
-    linear-gradient(180deg, rgba(14, 16, 38, 0.1) 0%, rgba(14, 16, 38, 0.5) 100%);
+    radial-gradient(ellipse at center, rgba(16, 12, 8, 0.15) 0%, rgba(16, 12, 8, 0.55) 70%),
+    linear-gradient(180deg, rgba(16, 12, 8, 0.1) 0%, rgba(16, 12, 8, 0.5) 100%);
 }
 .sx-slide-content {
   position: relative; z-index: 1; height: 100%;
