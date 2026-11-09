@@ -203,6 +203,26 @@ def build_zone(map_id, folder, src):
     return True, found, base
 
 
+def write_manifest():
+    """List the zone maps that exist, for the site to check before offering one.
+
+    WoW Forever has zones of its own - Riverglades, for one - that Blizzard's
+    texture repo has never heard of, so some mapIDs the addon points at can
+    never be built here. The site reads this list and shows no map for those,
+    rather than a broken image.
+    """
+    ids = sorted(
+        int(f.split(".")[0])
+        for f in os.listdir(OUT)
+        if f.endswith(".webp") and f.split(".")[0].isdigit()
+    )
+    dest = os.path.join(ROOT, "data", "zones.json")
+    with open(dest, "w", encoding="utf-8") as fh:
+        json.dump(ids, fh)
+    print(f"wrote {os.path.relpath(dest, ROOT)} ({len(ids)} zones)")
+    return ids
+
+
 def main():
     local = sys.argv[1] if len(sys.argv) > 1 else None
     src = TileSource(local)
@@ -223,6 +243,7 @@ def main():
         built += 1
         print(f"  {map_id:>5} {folder:<22} base={base:<22} {found}/12 tiles")
     print(f"\nbuilt {built} zone maps -> {os.path.relpath(OUT, ROOT)}")
+    write_manifest()
     if partial:
         print("partial (fewer than 12 tiles):")
         for map_id, folder, found in partial:

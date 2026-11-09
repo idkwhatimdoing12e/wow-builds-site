@@ -3,6 +3,7 @@
 
 import raw from "@/data/journal.json";
 import portraitsFile from "@/data/npc-portraits.json";
+import zonesFile from "@/data/zones.json";
 
 /* ---------- raw shapes (mirror the Lua tables) ---------- */
 
@@ -550,8 +551,16 @@ export interface ZonePin {
   targetName?: string;
 }
 
+/**
+ * The zone maps that were actually built. WoW Forever has zones of its own -
+ * Riverglades, for one - that Blizzard's texture repo has never heard of, so
+ * the addon can point at a mapID this site has no picture for.
+ */
+const ZONES_BUILT = new Set(zonesFile as number[]);
+
 export function zonePin(m?: MapPoint): ZonePin | undefined {
   if (!m || !m.mapID || typeof m.x !== "number" || typeof m.y !== "number") return undefined;
+  if (!ZONES_BUILT.has(m.mapID)) return undefined; // no picture: show no map rather than a broken one
   return {
     src: `/journal/zones/${m.mapID}.webp`,
     x: m.x,
