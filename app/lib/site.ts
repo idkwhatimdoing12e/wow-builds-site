@@ -10,7 +10,7 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
   (process.env.VERCEL ? PRODUCTION_URL : "http://localhost:3000");
 export const SITE_NAME = "Dungeon Journal";
-export const SITE_TAGLINE = "Every quest, boss and drop in WoW Forever's dungeons";
+export const SITE_TAGLINE = "Every quest, boss and drop in every dungeon on WoW Forever";
 
 export const LINKS = {
   curseforge: "https://www.curseforge.com/wow/addons/dungeonjournal",
