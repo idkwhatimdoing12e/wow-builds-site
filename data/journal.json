@@ -21,27 +21,11 @@
        "Warpwood Binding",
        "Waist, Mail",
        3
-      ]
-     ]
-    },
-    {
-     "description": "Hunter with her bear Ferra, on the pylon terraces.",
-     "name": "Illyanna Ravenoak",
-     "npcID": 11488,
-     "aliases": [
-      "Illyanna Ravenoak"
-     ],
-     "loot": [
-      [
-       18383,
-       "Force Imbued Gauntlets",
-       "Hands, Plate",
-       3
       ],
       [
-       18386,
-       "Padre's Trousers",
-       "Legs, Cloth",
+       18353,
+       "Stoneflower Staff",
+       "Two-Hand, Staff",
        3
       ]
      ]
@@ -87,6 +71,28 @@
        18371,
        "Mindtap Talisman",
        "Trinket",
+       3
+      ]
+     ]
+    },
+    {
+     "description": "Hunter with her bear Ferra, on the pylon terraces.",
+     "name": "Illyanna Ravenoak",
+     "npcID": 11488,
+     "aliases": [
+      "Illyanna Ravenoak"
+     ],
+     "loot": [
+      [
+       18383,
+       "Force Imbued Gauntlets",
+       "Hands, Plate",
+       3
+      ],
+      [
+       18386,
+       "Padre's Trousers",
+       "Legs, Cloth",
        3
       ]
      ]
@@ -193,7 +199,8 @@
        "Shoulder, Cloth",
        3
       ]
-     ]
+     ],
+     "lootNote": "LOOT_NOTE_HELNURATH"
     },
     {
      "description": "Final boss, in the Athenaeum. Drops the Gauntlet of Gordok Might for Unfinished Gordok Business.",
@@ -1882,6 +1889,12 @@
        "Savage Trodders",
        "Feet, Mail",
        3
+      ],
+      [
+       273087,
+       "Blueprint: Journeyman Campfire",
+       "Blueprint",
+       2
       ]
      ],
      "aliases": [
@@ -2467,6 +2480,13 @@
        "Legs, Cloth",
        3,
        "Fallen Mage / Dark Caster"
+      ],
+      [
+       286995,
+       "Guardian's Emblem",
+       "Neck",
+       3,
+       "Fragmented Sentry"
       ]
      ],
      "name": "Trash Drops",
@@ -2810,6 +2830,38 @@
      ]
     },
     {
+     "name": "Plaguemaw the Rotting",
+     "npcID": 7356,
+     "aliases": [
+      "Plaguemaw the Rotting",
+      "Plaguemaw"
+     ],
+     "loot": [
+      [
+       10760,
+       "Swine Fists",
+       "Hands, Leather",
+       3
+      ],
+      [
+       10766,
+       "Plaguerot Sprig",
+       "Ranged, Wand",
+       3
+      ],
+      [
+       274380,
+       "Decaying Flesh Bands",
+       "Wrist, Cloth",
+       3
+      ]
+     ],
+     "spawnQuest": {
+      "quest": 3525,
+      "page": "Razorfen Downs"
+     }
+    },
+    {
      "description": "In the room with the bone pile and the floating skulls.",
      "name": "Mordresh Fire Eye",
      "npcID": 7357,
@@ -2856,28 +2908,54 @@
        "Fleshhide Shoulders",
        "Shoulder, Leather",
        3
+      ],
+      [
+       274385,
+       "Abomination Chain",
+       "Neck",
+       3
+      ],
+      [
+       251402,
+       "Plans: Justicar's Boots",
+       "Recipe, Blacksmithing",
+       3
       ]
      ]
     },
     {
-     "description": "Rare spawn, near the top of the Downs. No special loot.",
+     "description": "Rare spawn, near the top of the Downs.",
      "name": "Ragglesnout",
      "npcID": 7354,
      "aliases": [
       "Ragglesnout"
      ],
-     "loot": [],
-     "rare": true
-    },
-    {
-     "description": "Rare spawn, in the cave below the bridge. No special loot.",
-     "name": "Plaguemaw the Rotting",
-     "npcID": 7356,
-     "aliases": [
-      "Plaguemaw the Rotting",
-      "Plaguemaw"
+     "loot": [
+      [
+       10758,
+       "X'caliboar",
+       "Two-Hand, Sword",
+       3
+      ],
+      [
+       10767,
+       "Savage Boar's Guard",
+       "Off Hand, Shield",
+       3
+      ],
+      [
+       10768,
+       "Boar Champion's Belt",
+       "Waist, Mail",
+       3
+      ],
+      [
+       251399,
+       "Plans: Sentinel's Boots",
+       "Recipe, Blacksmithing",
+       3
+      ]
      ],
-     "loot": [],
      "rare": true
     },
     {
@@ -2917,6 +2995,12 @@
        10761,
        "Coldrage Dagger",
        "One-Hand, Dagger",
+       3
+      ],
+      [
+       274381,
+       "Coldbringer Spine",
+       "Two-Hand, Staff",
        3
       ]
      ]
@@ -3055,7 +3139,6 @@
      },
      "id": -96901,
      "name": "The Coldbringer's Eye",
-     "note": "Quest giver not confirmed yet: it is handed in to Archmage Lan'dalock.",
      "liveXPFallback": 8600,
      "startMap": {
       "targetName": "Archmage Lan'dalock",
@@ -3080,6 +3163,41 @@
      "requires": 37,
      "objective": "Recover The Coldbringer's Eye from Razorfen Downs.",
      "pickup": "Archmage Lan'dalock, Dalaran, Alterac Mountains"
+    },
+    {
+     "name": "The Coldbringer's Eye",
+     "requiredItem": [
+      276916,
+      "The Coldbringer's Eye",
+      1,
+      1,
+      "From Amnennar the Coldbringer, the last boss of Razorfen Downs"
+     ],
+     "rewardSummary": "55s  •  Earthen Ring +300  •  Thunder Bluff +150",
+     "turninMap": {
+      "y": 0.228,
+      "mapID": 1412,
+      "detail": "Sutara Plainstalker of the Earthen Ring, north-west Mulgore",
+      "x": 0.344,
+      "targetName": "Sutara Plainstalker",
+      "label": "Sutara Plainstalker — Mulgore"
+     },
+     "level": 41,
+     "faction": "Horde",
+     "startMap": {
+      "y": 0.228,
+      "mapID": 1412,
+      "detail": "Sutara Plainstalker of the Earthen Ring, north-west Mulgore",
+      "x": 0.344,
+      "targetName": "Sutara Plainstalker",
+      "label": "Sutara Plainstalker — Mulgore"
+     },
+     "requires": 34,
+     "liveXPFallback": 8600,
+     "id": 97196,
+     "objective": "Recover The Coldbringer's Eye from Razorfen Downs.",
+     "pickup": "Sutara Plainstalker, Skywatcher Plateau, Mulgore",
+     "turnin": "Sutara Plainstalker, Skywatcher Plateau, Mulgore"
     }
    ],
    "fullItemsTBD": true,
@@ -3269,6 +3387,13 @@
        "Scarlet Monastery trash (very rare)"
       ],
       [
+       5756,
+       "Sliverblade",
+       "One-Hand, Dagger",
+       3,
+       "Scarlet Monastery trash (very rare)"
+      ],
+      [
        7761,
        "Steelclaw Reaver",
        "Main Hand, Axe",
@@ -3443,6 +3568,13 @@
        7730,
        "Cobalt Crusher",
        "Two-Hand, Mace",
+       3,
+       "Scarlet Monastery trash (very rare)"
+      ],
+      [
+       5756,
+       "Sliverblade",
+       "One-Hand, Dagger",
        3,
        "Scarlet Monastery trash (very rare)"
       ],
@@ -4361,6 +4493,20 @@
        11118,
        "Archaedic Stone",
        "Finger",
+       3,
+       "",
+       "RANDOM_ENCHANT"
+      ],
+      [
+       9413,
+       "The Rockpounder",
+       "Two-Hand, Mace",
+       3
+      ],
+      [
+       9418,
+       "Stoneslayer",
+       "Two-Hand, Sword",
        3
       ]
      ]
@@ -5598,46 +5744,6 @@
      "rare": true
     },
     {
-     "description": "Runs from Elders' Square to the gate of the Baron's stronghold; kill him before the timer if you go for Ysida.",
-     "name": "Magistrate Barthilas",
-     "npcID": 10435,
-     "aliases": [
-      "Magistrate Barthilas"
-     ],
-     "loot": [
-      [
-       18722,
-       "Death Grips",
-       "Hands, Plate",
-       3
-      ],
-      [
-       13376,
-       "Royal Tribunal Cloak",
-       "Back",
-       3
-      ],
-      [
-       18725,
-       "Peacemaker",
-       "Two-Hand, Polearm",
-       3
-      ],
-      [
-       18727,
-       "Crimson Felt Hat",
-       "Head, Cloth",
-       3
-      ],
-      [
-       18726,
-       "Magistrate's Cuffs",
-       "Wrist, Leather",
-       3
-      ]
-     ]
-    },
-    {
      "description": "Crypt lord in one of the three ziggurats.",
      "name": "Nerub'enkan",
      "npcID": 10437,
@@ -5714,6 +5820,12 @@
        "Screeching Bow",
        "Ranged, Bow",
        3
+      ],
+      [
+       13514,
+       "Wail of the Banshee",
+       "Miscellaneous",
+       3
       ]
      ]
     },
@@ -5753,6 +5865,46 @@
        18735,
        "Maleki's Footwraps",
        "Feet, Cloth",
+       3
+      ]
+     ]
+    },
+    {
+     "description": "Runs from Elders' Square to the gate of the Baron's stronghold; kill him before the timer if you go for Ysida.",
+     "name": "Magistrate Barthilas",
+     "npcID": 10435,
+     "aliases": [
+      "Magistrate Barthilas"
+     ],
+     "loot": [
+      [
+       18722,
+       "Death Grips",
+       "Hands, Plate",
+       3
+      ],
+      [
+       13376,
+       "Royal Tribunal Cloak",
+       "Back",
+       3
+      ],
+      [
+       18725,
+       "Peacemaker",
+       "Two-Hand, Polearm",
+       3
+      ],
+      [
+       18727,
+       "Crimson Felt Hat",
+       "Head, Cloth",
+       3
+      ],
+      [
+       18726,
+       "Magistrate's Cuffs",
+       "Wrist, Leather",
        3
       ]
      ]
@@ -6700,7 +6852,11 @@
      "turnin": "Argent Guard Thaelrid, inside Blackfathom Deeps",
      "objective": "Find Argent Guard Thaelrid inside Blackfathom Deeps.",
      "requires": 18,
-     "pickup": "Dawnwatcher Shaedlass, Craftsmen's Terrace, Darnassus"
+     "pickup": "Dawnwatcher Shaedlass, Craftsmen's Terrace, Darnassus",
+     "lostIf": [
+      1200
+     ],
+     "warning": "Warning: if not completed before accepting Blackfathom Villainy, this quest becomes unavailable."
     },
     {
      "id": 1199,
@@ -6762,13 +6918,10 @@
       ]
      ],
      "faction": "Alliance",
-     "startQuestLink": {
-      "name": "In Search of Thaelrid",
-      "id": 1198
-     },
      "objective": "Defeat Twilight Lord Kelris and recover the Head of Kelris.",
      "requires": 18,
-     "pickup": "Argent Guard Thaelrid, inside Blackfathom Deeps"
+     "pickup": "Argent Guard Thaelrid, inside Blackfathom Deeps",
+     "warning": "Warning: Accept after completing In Search of Thaelrid, or you will lose that quest."
     },
     {
      "id": 6564,
@@ -7607,23 +7760,18 @@
      "faction": "Alliance"
     },
     {
-     "id": 92753,
+     "id": 92819,
      "name": "Destruction in Deadmines",
-     "liveXPFallback": 1350,
+     "liveXPFallback": 680,
      "rewardSummary": "Stormwind +50",
-     "startItem": [
-      254553,
-      "Extra-Destructive Explosives",
-      1,
-      "Supplied by Sprite Jumpsprocket during Explosive Consultation; plant it at the Deadmines forge"
-     ],
-     "turnin": "Alba Fairmoon, Sentinel Hill inn, Westfall",
+     "turnin": "Alba Fairmoon, in the hills behind Moonbrook (at the Deadmines exit), Westfall",
      "rewardItems": [],
      "faction": "Alliance",
      "requires": 9,
-     "objective": "Place the explosives beside the forge in the Deadmines.",
+     "objective": "Use the detonator.",
      "level": 18,
-     "pickup": "Use the Extra-Destructive Explosives quest-start item."
+     "pickup": "Alba Fairmoon, in the hills behind Moonbrook (at the Deadmines exit), Westfall",
+     "note": "The Deadmines part is step 10 of the chain: plant the Extra-Destructive Explosives beside the forge inside the Deadmines, then meet Alba Fairmoon at the Deadmines exit."
     },
     {
      "id": 167,
@@ -7815,21 +7963,19 @@
      "aliases": [
       "Zul'Alai"
      ],
-     "probableLoot": [
+     "loot": [
+      [
+       274599,
+       "Oathbound Bracers",
+       "Wrist, Leather",
+       3
+      ],
       [
        274598,
        "Bloodslash Axe",
        "One-Hand, Axe",
        3
       ],
-      [
-       274599,
-       "Oathbound Bracers",
-       "Wrist, Leather",
-       3
-      ]
-     ],
-     "loot": [
       [
        274600,
        "Berserker Shackles",
@@ -7846,19 +7992,23 @@
       "Var'Taka",
       "Zin'aka"
      ],
-     "probableLoot": [
-      [
-       274601,
-       "Harpoon of Command",
-       "Two-Hand, Polearm",
-       3
-      ]
-     ],
      "loot": [
       [
        274602,
        "Brinebelly Leggings",
        "Legs, Leather",
+       3
+      ],
+      [
+       274601,
+       "Harpoon of Command",
+       "Two-Hand, Polearm",
+       3
+      ],
+      [
+       274613,
+       "Priestess Cloak",
+       "Back",
        3
       ]
      ]
@@ -7876,20 +8026,18 @@
        "Briny Sash",
        "Waist, Cloth",
        3
-      ]
-     ],
-     "name": "Captain Dreadrise",
-     "npcID": 260042,
-     "aliases": [
-      "Captain Dreadrise"
-     ],
-     "probableLoot": [
+      ],
       [
        274603,
        "Dreadfrost Saber",
        "Main Hand, Sword",
        3
       ]
+     ],
+     "name": "Captain Dreadrise",
+     "npcID": 260042,
+     "aliases": [
+      "Captain Dreadrise"
      ]
     },
     {
@@ -7900,6 +8048,12 @@
        274606,
        "Bloodspine Staff",
        "Two-Hand, Staff",
+       3
+      ],
+      [
+       274614,
+       "Knucklebone Ring",
+       "Finger",
        3
       ]
      ],
@@ -7925,28 +8079,11 @@
        "Waterlogged Burial Shroud",
        "Back",
        3
-      ]
-     ],
-     "aliases": [
-      "Primeval Elemental"
-     ],
-     "probableLoot": [
+      ],
       [
        274611,
        "Robe of the Drowned",
        "Chest, Cloth",
-       3
-      ],
-      [
-       274613,
-       "Priestess Cloak",
-       "Back",
-       3
-      ],
-      [
-       274614,
-       "Knucklebone Ring",
-       "Finger",
        3
       ],
       [
@@ -7955,6 +8092,9 @@
        "Trinket",
        3
       ]
+     ],
+     "aliases": [
+      "Primeval Elemental"
      ],
      "portraitNpcID": 270887
     },
@@ -7965,6 +8105,12 @@
        "Gill's Gills",
        "Trinket",
        3
+      ],
+      [
+       286649,
+       "Tidebound Dagger",
+       "Main Hand, Dagger",
+       3
       ]
      ],
      "name": "Gill",
@@ -7972,13 +8118,40 @@
      "aliases": [
       "Gill"
      ],
+     "rare": true
+    },
+    {
+     "name": "Umbra",
+     "npcID": 264172,
+     "aliases": [
+      "Umbra"
+     ],
      "probableLoot": [
       [
-       286649,
-       "Tidebound Dagger",
-       "Main Hand, Dagger",
+       286658,
+       "Umbral Scaled Belt",
+       "Waist, Mail",
        3
-      ],
+      ]
+     ],
+     "loot": [
+      [
+       286662,
+       "Deep-Dweller's Grips",
+       "Hands, Cloth",
+       3
+      ]
+     ],
+     "rare": true
+    },
+    {
+     "name": "\"Pyromancer\" Braxton",
+     "aliases": [
+      "\"Pyromancer\" Braxton",
+      "Pyromancer Braxton",
+      "\"Пиромант\" Бракстон"
+     ],
+     "loot": [
       [
        286650,
        "Pyromancer's Baton",
@@ -7990,43 +8163,16 @@
        "Flamestarter's Signet",
        "Finger",
        3
-      ],
-      [
-       286658,
-       "Umbral Scaled Belt",
-       "Waist, Mail",
-       3
-      ],
-      [
-       286662,
-       "Deep-Dweller's Grips",
-       "Hands, Cloth",
-       3
       ]
      ],
+     "npcID": 260468,
      "rare": true
     },
     {
-     "description": "Final boss: the Gurubashi witch doctor Min'loth, whose seat of power was I'lalai.",
      "name": "Min'loth the Serpent",
-     "npcID": 260274,
      "aliases": [
       "Min'loth the Serpent",
       "Min'loth"
-     ],
-     "probableLoot": [
-      [
-       274608,
-       "Maw of Min'loth",
-       "Off Hand, Shield",
-       3
-      ],
-      [
-       274609,
-       "Serpentbane Crown",
-       "Head, Mail",
-       3
-      ]
      ],
      "loot": [
       [
@@ -8034,6 +8180,35 @@
        "Ritual-Binder's Gloves",
        "Hands, Leather",
        3
+      ],
+      [
+       274608,
+       "Maw of Min'loth",
+       "Off Hand, Shield",
+       3
+      ]
+     ],
+     "probableLoot": [
+      [
+       274609,
+       "Serpentbane Crown",
+       "Head, Mail",
+       3
+      ]
+     ],
+     "npcID": 260274,
+     "description": "Final boss: the Gurubashi witch doctor Min'loth, whose seat of power was I'lalai."
+    },
+    {
+     "name": "Trash Drops",
+     "trash": true,
+     "loot": [
+      [
+       287002,
+       "Risen Sentry's Links",
+       "Legs, Mail",
+       3,
+       "Risen Sentry"
       ]
      ]
     }
@@ -8086,15 +8261,59 @@
        1,
        "Rubbing of the fourth tablet, inside the Drowned City"
       ]
-     ]
+     ],
+     "hideFromMainList": true
+    },
+    {
+     "id": 96078,
+     "name": "A Tale Spun Around the Fire",
+     "liveXPFallback": 2350,
+     "turnin": "Master Gadrin, Sen'jin Village, Durotar",
+     "level": 40,
+     "rewardChoice": true,
+     "rewardItems": [
+      [
+       279885,
+       "Ceremonial Mallet",
+       3
+      ],
+      [
+       279886,
+       "Sacrificial Sword",
+       3
+      ],
+      [
+       279887,
+       "I'lalai Flayer",
+       3
+      ]
+     ],
+     "faction": "Horde",
+     "rewardSummary": "35s",
+     "requires": 30,
+     "objective": "Take the tablet etchings to Master Gadrin in Sen'jin Village in Durotar.",
+     "pickup": "Kin'weelay, Grom'gol Base Camp, Stranglethorn Vale",
+     "rewards": "Choose: Ceremonial Mallet, Sacrificial Sword or I'lalai Flayer\nAlso: Translated Tale of I'lalai, Tale of I'lalai in Zandali\n2,350 XP • 35s",
+     "turninMap": {
+      "y": 0.744,
+      "mapID": 1411,
+      "detail": "Master Gadrin in Sen'jin Village, Durotar",
+      "x": 0.558,
+      "targetName": "Master Gadrin",
+      "label": "Master Gadrin — Sen'jin Village"
+     }
     },
     {
      "id": 95776,
      "name": "The Only Good Brinescale...",
      "liveXPFallback": 9500,
-     "turnin": "Grom'gol Base Camp, Stranglethorn Vale (not known yet)",
+     "turnin": "Commander Aggro'gosh, Grom'gol Base Camp, Stranglethorn Vale",
      "level": 38,
-     "rewardChoice": true,
+     "faction": "Horde",
+     "rewardSummary": "",
+     "requires": 30,
+     "objective": "Kill Var'Taka in the Drowned City.",
+     "pickup": "Commander Aggro'gosh, Grom'gol Base Camp, Stranglethorn Vale",
      "rewardItems": [
       [
        279888,
@@ -8107,18 +8326,26 @@
        2
       ]
      ],
-     "faction": "Horde",
-     "rewardSummary": "",
-     "requires": 30,
-     "objective": "Kill Var'Taka in the Drowned City.",
-     "pickup": "Grom'gol Base Camp, Stranglethorn Vale (quest giver not known yet)"
+     "rewardChoice": true,
+     "turninMap": {
+      "y": 0.288,
+      "mapID": 1434,
+      "x": 0.322,
+      "targetName": "Commander Aggro'gosh",
+      "label": "Commander Aggro'gosh — Grom'gol Base Camp"
+     },
+     "note": "Commander Aggro'gosh offers it once Enemies in the Water and Locating the Lost City (Kin'weelay) are both handed in."
     },
     {
      "id": 96774,
      "name": "Ancient Gurubashi Idol",
-     "liveXPFallback": 8800,
      "turnin": "Mazu'kon, Mulgore",
      "level": 40,
+     "faction": "Horde",
+     "rewardSummary": "Earthen Ring +300  •  Darkspear Trolls +150",
+     "requires": 30,
+     "objective": "Recover an Ancient Gurubashi Idol from the Drowned City.",
+     "pickup": "Mazu'kon, Mulgore",
      "requiredItem": [
       276894,
       "Ancient Gurubashi Idol",
@@ -8126,28 +8353,25 @@
       1,
       "From the most powerful priest in the Drowned City"
      ],
-     "faction": "Horde",
-     "rewardSummary": "Earthen Ring +300  •  Darkspear Trolls +150",
-     "requires": 30,
-     "objective": "Recover an Ancient Gurubashi Idol from the Drowned City.",
-     "pickup": "Mazu'kon, Mulgore"
+     "liveXPFallback": 8800
     },
     {
      "id": 95787,
      "name": "Take Two With Water",
      "turnin": "Loremaster Dibbs, Southshore, Hillsbrad Foothills",
      "level": 40,
-     "note": "Quest giver not confirmed yet. Lead-in: An Acquaintance in Southshore, taking the Savage Coast Report Bundle to Loremaster Dibbs.",
      "faction": "Alliance",
      "rewardSummary": "",
      "requires": 30,
      "objective": "Make rubbings of the four Tablets of I'lalai in the Drowned City.",
-     "pickup": "Loremaster Dibbs, Southshore, Hillsbrad Foothills"
+     "pickup": "Loremaster Dibbs, Southshore, Hillsbrad Foothills",
+     "hideFromMainList": true,
+     "note": "Quest giver not confirmed yet. Lead-in: An Acquaintance in Southshore, taking the Savage Coast Report Bundle to Loremaster Dibbs."
     },
     {
      "id": 95788,
      "name": "Magics of the Drowned City",
-     "turnin": "Not known yet",
+     "turnin": "Loremaster Dibbs, Southshore, Hillsbrad Foothills",
      "level": 40,
      "requiredItem": [
       270343,
@@ -8160,14 +8384,80 @@
      "rewardSummary": "",
      "requires": 30,
      "objective": "Collect 5 I'lalai Fetishes from the trolls in the Drowned City.",
-     "pickup": "Not known yet"
+     "pickup": "Loremaster Dibbs, Southshore, Hillsbrad Foothills",
+     "hideFromMainList": true
     },
     {
-     "id": 97130,
-     "name": "Ancient Gurubashi Secrets",
-     "liveXPFallback": 10450,
-     "turnin": "Not known yet",
+     "id": 95799,
+     "name": "Findings for the Explorer's League",
+     "liveXPFallback": 2350,
+     "rewards": "Choose: Ancient Voodoo Pouch or Intrepid Explorer's Chainmail\nAlso: Translated Tale of I'lalai\n2,350 XP • 35s • Stormwind +75 • Ironforge +50",
+     "turnin": "Historian Karnik, Hall of Explorers, Ironforge",
      "level": 40,
+     "rewardChoice": true,
+     "rewardItems": [
+      [
+       279880,
+       "Ancient Voodoo Pouch",
+       2
+      ],
+      [
+       279881,
+       "Intrepid Explorer's Chainmail",
+       2
+      ]
+     ],
+     "faction": "Alliance",
+     "rewardSummary": "35s  •  Stormwind +75  •  Ironforge +50",
+     "requires": 30,
+     "objective": "Take Dibbs' I'lalai Translations to Historian Karnik in Ironforge.",
+     "pickup": "Loremaster Dibbs, Southshore, Hillsbrad Foothills",
+     "turninMap": {
+      "y": 0.118,
+      "mapID": 1455,
+      "detail": "Historian Karnik in the Hall of Explorers, Ironforge",
+      "x": 0.775,
+      "targetName": "Historian Karnik",
+      "label": "Historian Karnik — Hall of Explorers"
+     }
+    },
+    {
+     "id": 95798,
+     "name": "The Web of Magic",
+     "liveXPFallback": 2350,
+     "rewards": "Choose: Rune-Etched Epaulets or Apprentice Sorcerer's Slacks\n2,350 XP • 35s • Stormwind +75",
+     "turnin": "Abra Cadabra, Dalaran",
+     "level": 40,
+     "rewardChoice": true,
+     "rewardItems": [
+      [
+       279879,
+       "Rune-Etched Epaulets",
+       2
+      ],
+      [
+       279878,
+       "Apprentice Sorcerer's Slacks",
+       2
+      ]
+     ],
+     "faction": "Alliance",
+     "rewardSummary": "35s  •  Stormwind +75",
+     "requires": 30,
+     "objective": "Take the I'lalai Fetish to Abra Cadabra in Dalaran.",
+     "pickup": "Loremaster Dibbs, Southshore, Hillsbrad Foothills",
+     "note": "The Kirin Tor only let noteworthy visitors into Dalaran.",
+     "turninMap": {
+      "y": 0.696,
+      "mapID": 1416,
+      "detail": "Abra Cadabra in Dalaran, Alterac Mountains",
+      "x": 0.132,
+      "targetName": "Abra Cadabra",
+      "label": "Abra Cadabra — Dalaran"
+     }
+    },
+    {
+     "name": "Ancient Gurubashi Secrets",
      "requiredItem": [
       276894,
       "Ancient Gurubashi Idol",
@@ -8175,20 +8465,18 @@
       1,
       "From the most powerful priest in the Drowned City"
      ],
-     "faction": "Alliance",
      "rewardSummary": "50s  •  Kirin Tor +300  •  Stormwind +150",
+     "level": 40,
+     "faction": "Alliance",
      "requires": 34,
+     "liveXPFallback": 10450,
+     "id": 97130,
      "objective": "Recover an Ancient Gurubashi Idol from the Drowned City.",
-     "pickup": "Not known yet (a Kirin Tor mage who works with Archmage Lan'dalock in Dalaran)"
+     "pickup": "Archmage Timear, outside where the Violet Hold stood, Dalaran, Alterac Mountains",
+     "turnin": "Archmage Timear, Dalaran (not confirmed)"
     },
     {
-     "id": 95789,
      "name": "Shady Saltseers",
-     "liveXPFallback": 10450,
-     "rewards": "Choose: Rusted Troll War Belt or Saltseer's Helm\n10,450 XP • 1g • Booty Bay +100 • Ratchet +50 • Gadgetzan +50 • Everlook +50",
-     "turnin": "Krazek, Booty Bay, Stranglethorn Vale",
-     "level": 40,
-     "rewardChoice": true,
      "requiredItem": [
       270333,
       "Voodoo-Infused Artifact",
@@ -8196,6 +8484,8 @@
       10,
       "Dropped by the Saltseer pirates in the Drowned City"
      ],
+     "rewardSummary": "1g  •  Booty Bay +100  •  Ratchet +50  •  Gadgetzan +50  •  Everlook +50",
+     "rewardChoice": true,
      "rewardItems": [
       [
        279882,
@@ -8208,19 +8498,19 @@
        2
       ]
      ],
+     "level": 40,
      "faction": "Both",
-     "rewardSummary": "1g  •  Booty Bay +100  •  Ratchet +50  •  Gadgetzan +50  •  Everlook +50",
+     "rewards": "Choose: Rusted Troll War Belt or Saltseer's Helm\n10,450 XP • 1g • Booty Bay +100 • Ratchet +50 • Gadgetzan +50 • Everlook +50",
      "requires": 34,
+     "liveXPFallback": 10450,
+     "id": 95789,
      "objective": "Collect 10 Voodoo-Infused Artifacts from the Saltseer pirates in the Drowned City.",
-     "pickup": "Krazek, Booty Bay, Stranglethorn Vale"
+     "pickup": "Krazek, Booty Bay, Stranglethorn Vale",
+     "turnin": "Krazek, Booty Bay, Stranglethorn Vale"
     },
     {
-     "id": 95791,
      "name": "The Saltseer Captain",
-     "liveXPFallback": 10450,
-     "rewards": "Choose: Mutinous Cuffs or South Seas Shroud\n10,450 XP • Booty Bay +100 • Ratchet +50 • Gadgetzan +50 • Everlook +50",
-     "turnin": "Krazek, Booty Bay, Stranglethorn Vale (not confirmed)",
-     "level": 40,
+     "rewardSummary": "Booty Bay +100  •  Ratchet +50  •  Gadgetzan +50  •  Everlook +50",
      "rewardChoice": true,
      "rewardItems": [
       [
@@ -8234,11 +8524,15 @@
        2
       ]
      ],
+     "level": 40,
      "faction": "Both",
-     "rewardSummary": "Booty Bay +100  •  Ratchet +50  •  Gadgetzan +50  •  Everlook +50",
+     "rewards": "Choose: Mutinous Cuffs or South Seas Shroud\n10,450 XP • Booty Bay +100 • Ratchet +50 • Gadgetzan +50 • Everlook +50",
      "requires": 34,
+     "liveXPFallback": 10450,
+     "id": 95791,
      "objective": "Slay Captain Dreadrise and 3 Saltseer Coroners in the Drowned City.",
-     "pickup": "Krazek, Booty Bay, Stranglethorn Vale (not confirmed)"
+     "pickup": "Krazek, Booty Bay, Stranglethorn Vale",
+     "turnin": "Krazek, Booty Bay, Stranglethorn Vale"
     }
    ],
    "icon": "Interface\\Icons\\Spell_Frost_SummonWaterElemental",
@@ -8352,6 +8646,13 @@
        7730,
        "Cobalt Crusher",
        "Two-Hand, Mace",
+       3,
+       "Scarlet Monastery trash (very rare)"
+      ],
+      [
+       5756,
+       "Sliverblade",
+       "One-Hand, Dagger",
        3,
        "Scarlet Monastery trash (very rare)"
       ],
@@ -8516,38 +8817,116 @@
      "warning": "This is a long chain that has a step in the Library"
     },
     {
-     "id": 1113,
+     "id": 1048,
+     "name": "Into The Scarlet Monastery",
+     "liveXPFallback": 5150,
+     "rewardSummary": "",
+     "level": 42,
+     "faction": "Horde",
+     "turnin": "Varimathras, Undercity",
+     "objective": "Kill High Inquisitor Whitemane, Scarlet Commander Mograine, Herod, the Scarlet Champion and Houndmaster Loksey and then report back to Varimathras in the Undercity.",
+     "requires": 33,
+     "pickup": "Varimathras, Undercity",
+     "note": "Herod is in the Armory; Loksey in the Library; Mograine and Whitemane in the Cathedral.",
+     "startMap": {
+      "y": 0.926,
+      "mapID": 1458,
+      "x": 0.562,
+      "targetName": "Varimathras",
+      "label": "Varimathras — Royal Quarter, Undercity"
+     },
+     "rewardItems": [
+      [
+       6802,
+       "Sword of Omen",
+       3
+      ],
+      [
+       6803,
+       "Prophetic Cane",
+       3
+      ],
+      [
+       10711,
+       "Dragon's Blood Necklace",
+       3
+      ]
+     ],
+     "rewardChoice": true
+    },
+    {
+     "id": 6141,
+     "name": "Brother Anton",
+     "turnin": "Brother Anton, Nijel's Point, Desolace",
+     "liveXPFallback": 300,
+     "rewardSummary": "",
+     "level": 39,
+     "note": "Introductory step leading to In the Name of the Light.",
+     "faction": "Alliance",
+     "requires": 34,
+     "objective": "Speak with Brother Anton in Desolace.",
+     "pickup": "Brother Crowley, Cathedral of Light, Stormwind",
+     "warning": "OPTIONAL, not required",
+     "hideFromMainList": true
+    },
+    {
+     "name": "In the Name of the Light",
+     "rewardSummary": "",
+     "liveXPFallback": 4700,
+     "turnin": "Raleigh the Devout, Southshore",
+     "note": "Herod is in the Armory; Loksey in the Library; Mograine and Whitemane in the Cathedral.\n\nOptional introductory quest:",
+     "level": 40,
+     "faction": "Alliance",
+     "noteQuestLink": {
+      "id": 6141,
+      "name": "Brother Anton"
+     },
+     "requires": 34,
+     "rewardItems": [
+      [
+       6829,
+       "Sword of Serenity",
+       3
+      ],
+      [
+       6830,
+       "Bonebiter",
+       3
+      ],
+      [
+       6831,
+       "Black Menace",
+       3
+      ],
+      [
+       11262,
+       "Orb of Lorica",
+       3
+      ]
+     ],
+     "id": 1053,
+     "objective": "Kill High Inquisitor Whitemane, Scarlet Commander Mograine, Herod, the Scarlet Champion and Houndmaster Loksey and then report back to Raleigh the Devout in Southshore.",
+     "pickup": "Raleigh the Devout, Southshore",
+     "rewardChoice": true
+    },
+    {
      "name": "Hearts of Zeal",
-     "liveXPFallback": 3300,
      "rewardSummary": "",
      "level": 33,
      "faction": "Horde",
-     "turnin": "Master Apothecary Faranell, Undercity",
-     "objective": "Bring 20 Hearts of Zeal from the Scarlet Monastery to Master Apothecary Faranell.",
      "requires": 30,
-     "pickup": "Master Apothecary Faranell, Undercity"
+     "liveXPFallback": 3300,
+     "id": 1113,
+     "objective": "Bring 20 Hearts of Zeal from the Scarlet Monastery to Master Apothecary Faranell.",
+     "pickup": "Master Apothecary Faranell, Undercity",
+     "turnin": "Master Apothecary Faranell, Undercity"
     },
     {
-     "startObject": [
-      "Dead Drop",
-      "Interface\\Icons\\INV_Box_02",
-      "A chest in a hut beside Pyrewood Village, Silverpine Forest"
-     ],
-     "id": 78699,
      "name": "The Eye of Bhossca",
-     "turnin": "Dead Drop, Pyrewood Village, Silverpine Forest",
      "liveXPFallback": 6900,
-     "startMap": {
-      "targetName": "Dead Drop",
-      "label": "Dead Drop — Pyrewood Village",
-      "mapID": 1421,
-      "y": 0.711,
-      "x": 0.471
-     },
      "rewardSummary": "75s",
-     "level": 35,
+     "turnin": "Dead Drop, Pyrewood Village, Silverpine Forest",
      "note": "Rogue class quest after The Horn of Xelthos; C's next letter (around level 30) sends you back to the Dead Drop. Wear the Scarlet Initiate's Uniform in every wing: stealth or attacking removes it.",
-     "classOnly": "ROGUE",
      "rewardItems": [
       [
        277246,
@@ -8555,11 +8934,26 @@
        3
       ]
      ],
-     "faction": "Both",
-     "requires": 25,
      "objective": "Collect C's payment from the Dead Drop near Pyrewood Village.",
+     "level": 35,
+     "faction": "Both",
+     "startMap": {
+      "y": 0.711,
+      "mapID": 1421,
+      "x": 0.471,
+      "targetName": "Dead Drop",
+      "label": "Dead Drop — Pyrewood Village"
+     },
+     "requires": 25,
+     "classOnly": "ROGUE",
+     "id": 78699,
+     "warning": "Solo job: you must do it alone, outside any group.",
      "pickup": "Dead Drop, Pyrewood Village, Silverpine Forest",
-     "warning": "Solo job: you must do it alone, outside any group."
+     "startObject": [
+      "Dead Drop",
+      "Interface\\Icons\\INV_Box_02",
+      "A chest in a hut beside Pyrewood Village, Silverpine Forest"
+     ]
     }
    ],
    "icon": "Interface\\Icons\\INV_Misc_Book_09",
@@ -9583,6 +9977,12 @@
        "Plains Ring",
        "Finger",
        3
+      ],
+      [
+       1488,
+       "Avenger's Armor",
+       "Chest, Mail",
+       3
       ]
      ],
      "name": "Trash Drops",
@@ -9817,6 +10217,18 @@
        "The Hand of Antu'sul",
        "Main Hand, Mace",
        3
+      ],
+      [
+       9641,
+       "Lifeblood Amulet",
+       "Neck",
+       3
+      ],
+      [
+       9379,
+       "Sang'thraze the Deflector",
+       "One-Hand, Sword",
+       3
       ]
      ]
     },
@@ -9832,6 +10244,12 @@
        18082,
        "Zum'rah's Vexing Cane",
        "Two-Hand, Staff",
+       3
+      ],
+      [
+       18083,
+       "Jumanza Grips",
+       "Hands, Cloth",
        3
       ]
      ]
@@ -9890,7 +10308,12 @@
        "Chest, Mail",
        3
       ]
-     ]
+     ],
+     "summonItem": 9240,
+     "summonChain": {
+      "quest": -97100,
+      "page": "Mallet of Zul'Farrak"
+     }
     },
     {
      "description": "Rare spawn, patrols the sand dunes outside the temple.",
@@ -9926,20 +10349,18 @@
      "aliases": [
       "Dustwraith"
      ],
-     "loot": [],
+     "loot": [
+      [
+       12471,
+       "Desertwalker Cane",
+       "Held In Off-hand",
+       3
+      ]
+     ],
      "rare": true
     },
     {
-     "description": "Fights alongside Chief Ukorz Sandscalp.",
-     "name": "Ruuzlu",
-     "npcID": 7797,
-     "aliases": [
-      "Ruuzlu"
-     ],
-     "loot": []
-    },
-    {
-     "description": "Final boss, on the top of the temple with Ruuzlu.",
+     "description": "Final boss, on the top of the temple. One fight together with Ruuzlu.",
      "name": "Chief Ukorz Sandscalp",
      "npcID": 7267,
      "aliases": [
@@ -9957,6 +10378,30 @@
        "The Chief's Enforcer",
        "Two-Hand, Staff",
        3
+      ],
+      [
+       9478,
+       "Ripsaw",
+       "Main Hand, Axe",
+       3
+      ],
+      [
+       9479,
+       "Embrace of the Lycan",
+       "Head, Leather",
+       3
+      ],
+      [
+       11086,
+       "Jang'thraze the Protector",
+       "Main Hand, Sword",
+       3
+      ]
+     ],
+     "killWith": [
+      [
+       "Ruuzlu",
+       7797
       ]
      ]
     }
@@ -10165,7 +10610,7 @@
      "pickup": "Master Gadrin, Sen'jin Village, Durotar"
     },
     {
-     "id": -96902,
+     "id": 96770,
      "name": "The Witch Doctor's Head",
      "turninMap": {
       "targetName": "Archmage Lan'dalock",
@@ -10194,10 +10639,47 @@
       "From Witch Doctor Zum'rah, Zul'Farrak"
      ],
      "faction": "Alliance",
-     "rewardSummary": "1g 30s",
-     "requires": 40,
+     "rewardSummary": "1g 30s  •  Kirin Tor +300",
+     "requires": 39,
      "objective": "Slay Witch Doctor Zum'rah and bring Zum'rah's Head to Archmage Lan'dalock in Dalaran.",
      "pickup": "Archmage Lan'dalock, Dalaran, Alterac Mountains"
+    },
+    {
+     "name": "Zum'rah's Head",
+     "requiredItem": [
+      277112,
+      "Zum'rah's Head",
+      1,
+      1,
+      "From Witch Doctor Zum'rah, Zul'Farrak"
+     ],
+     "rewardSummary": "65s  •  Earthen Ring +300  •  Darkspear Trolls +150",
+     "turninMap": {
+      "y": 0.206,
+      "mapID": 1412,
+      "detail": "Mazu'kon of the Earthen Ring, north-west Mulgore",
+      "x": 0.325,
+      "targetName": "Mazu'kon",
+      "label": "Mazu'kon — Mulgore"
+     },
+     "learnTitle": "Zum'rah's Head",
+     "liveXPFallback": 10100,
+     "level": 46,
+     "learnItem": 277112,
+     "startMap": {
+      "y": 0.206,
+      "mapID": 1412,
+      "detail": "Mazu'kon of the Earthen Ring, north-west Mulgore",
+      "x": 0.325,
+      "targetName": "Mazu'kon",
+      "label": "Mazu'kon — Mulgore"
+     },
+     "requires": 42,
+     "turnin": "Mazu'kon, Skywatcher Plateau, Mulgore",
+     "id": 96775,
+     "objective": "Slay Witch Doctor Zum'rah and bring Zum'rah's Head to Mazu'kon in Mulgore.",
+     "pickup": "Mazu'kon, Skywatcher Plateau, Mulgore",
+     "faction": "Horde"
     }
    ],
    "fullItemsTBD": true,
@@ -10439,12 +10921,15 @@
      },
      "rewardSummary": "",
      "level": 31,
-     "note": "Find Daewyn inside the dungeon. Fallen in the Fen sends you back to Dorin Songblade in Lakeshire.",
      "faction": "Alliance",
      "turnin": "Daewyn Songblade, inside Excavation Site: Wetlands",
      "objective": "Look for Dorin Songblade's brother, Daewyn, in Whelgar's Excavation Site.",
      "requires": 24,
-     "pickup": "Dorin Songblade, Redridge Mountains"
+     "pickup": "Dorin Songblade, Redridge Mountains",
+     "leadsToQuestLink": {
+      "id": 95795,
+      "name": "Fallen in the Fen"
+     }
     },
     {
      "id": 95646,
@@ -10484,25 +10969,36 @@
      "pickup": "Rethiel the Greenwarden, Wetlands"
     },
     {
+     "id": 95647,
+     "name": "Lost in the Thicket Things",
+     "liveXPFallback": 4900,
+     "turnin": "Ardin Grassman, inside Excavation Site: Wetlands",
+     "rewardSummary": "",
+     "level": 31,
+     "rewardItems": [],
+     "requires": 24,
+     "objective": "Find Ardin Grassman in the Excavation Sites. Learn what happened to Ardin Grassman.",
+     "pickup": "Caitlin Grassman, Menethil Harbor, Wetlands",
+     "faction": "Alliance",
+     "leadsToQuestLink": {
+      "id": 95809,
+      "name": "Heartwoven"
+     },
+     "startMap": {
+      "y": 0.588,
+      "mapID": 1437,
+      "detail": "Start Lost in the Thicket Things here",
+      "x": 0.119,
+      "label": "Caitlin Grassman — Menethil Harbor"
+     }
+    },
+    {
      "id": 95809,
      "name": "Heartwoven",
      "liveXPFallback": 6150,
      "turnin": "Caitlin Grassman, Menethil Harbor",
-     "rewardSummary": "",
      "level": 31,
      "rewardChoice": true,
-     "additionalRewardItems": [
-      [
-       2459,
-       "Swiftness Potion",
-       1
-      ],
-      [
-       280766,
-       "Satchel of Potions",
-       3
-      ]
-     ],
      "rewardItems": [
       [
        1710,
@@ -10517,11 +11013,27 @@
        4
       ]
      ],
-     "note": "Follow-up of Lost in the Thicket Things.",
+     "faction": "Alliance",
+     "rewardSummary": "",
      "requires": 24,
      "objective": "Take the Reed-woven Heart back to Caitlin Grassman in Menethil Harbor.",
      "pickup": "Ardin Grassman, inside Excavation Site: Wetlands",
-     "faction": "Alliance"
+     "startQuestLink": {
+      "id": 95647,
+      "name": "Lost in the Thicket Things"
+     },
+     "additionalRewardItems": [
+      [
+       2459,
+       "Swiftness Potion",
+       1
+      ],
+      [
+       280766,
+       "Satchel of Potions",
+       3
+      ]
+     ]
     },
     {
      "id": 98824,
@@ -10557,13 +11069,6 @@
      "id": 98823,
      "name": "Earthen Echo",
      "liveXPFallback": 3150,
-     "startMap": {
-      "targetName": "Bashana Runetotem",
-      "label": "Bashana Runetotem — Elder Rise, Thunder Bluff",
-      "mapID": 1456,
-      "y": 0.334,
-      "x": 0.708
-     },
      "turnin": "Muln Earthfury, Skywatcher Plateau, Mulgore",
      "level": 31,
      "rewardChoice": true,
@@ -10588,15 +11093,29 @@
      "rewardSummary": "60s",
      "requires": 24,
      "objective": "Deliver the Titan Relic to Muln Earthfury on Skywatcher Plateau in northwest Mulgore.",
-     "pickup": "Bashana Runetotem, Elder Rise, Thunder Bluff"
+     "pickup": "Bashana Runetotem, Elder Rise, Thunder Bluff",
+     "turninMap": {
+      "y": 0.224,
+      "mapID": 1412,
+      "x": 0.334,
+      "targetName": "Muln Earthfury",
+      "label": "Muln Earthfury — Skywatcher Plateau, Mulgore"
+     },
+     "startMap": {
+      "y": 0.334,
+      "mapID": 1456,
+      "x": 0.708,
+      "targetName": "Bashana Runetotem",
+      "label": "Bashana Runetotem — Elder Rise, Thunder Bluff"
+     }
     },
     {
-     "id": 95795,
      "name": "Fallen in the Fen",
-     "liveXPFallback": 3150,
-     "turnin": "Dorin Songblade, Lakeshire, Redridge Mountains",
-     "level": 31,
-     "rewardChoice": true,
+     "rewardSummary": "",
+     "startQuestLink": {
+      "id": 95772,
+      "name": "Songblade Search"
+     },
      "rewardItems": [
       [
        271769,
@@ -10609,11 +11128,15 @@
        3
       ]
      ],
+     "level": 31,
      "faction": "Alliance",
-     "rewardSummary": "",
+     "rewardChoice": true,
      "requires": 24,
+     "liveXPFallback": 3150,
+     "id": 95795,
      "objective": "Report Daewyn's fate to Dorin Songblade in Lakeshire.",
-     "pickup": "Daewyn Songblade, inside Excavation Site: Wetlands"
+     "pickup": "Daewyn Songblade, inside Excavation Site: Wetlands",
+     "turnin": "Dorin Songblade, Lakeshire, Redridge Mountains"
     }
    ],
    "icon": "Interface\\Icons\\INV_Pick_02",
@@ -10695,6 +11218,12 @@
       [
        252825,
        "Pattern: Wisdom's Leather Leggings",
+       "Recipe, Leatherworking",
+       3
+      ],
+      [
+       252815,
+       "Pattern: Trapper's Leather Helm",
        "Recipe, Leatherworking",
        3
       ]
@@ -11045,24 +11574,24 @@
        "Shoulder, Mail",
        3
       ],
-      {
-       "1": 0,
-       "2": "Chain of Binding",
-       "3": "Waist, Mail",
-       "4": 3,
-       "tip": [
-        "Binds when picked up",
-        [
-         "Waist",
-         "Mail"
-        ],
-        "152 Armor",
-        "+15 Stamina",
-        "|cff1eff00Equip: Increases damage and healing done by magical spells and effects by up to 12.|r",
-        "Requires Level 39",
-        "Sell Price: 52|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 16|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
-       ]
-      }
+      [
+       274997,
+       "Chain of Binding",
+       "Waist, Mail",
+       3
+      ],
+      [
+       274995,
+       "Slavecrusher Scepter",
+       "One-Hand, Mace",
+       3
+      ],
+      [
+       273101,
+       "Blueprint: Expert Campfire",
+       "Blueprint",
+       2
+      ]
      ],
      "aliases": [
       "Slavecrusher Grox"
@@ -11093,39 +11622,47 @@
      "npcID": 258972
     },
     {
-     "loot": [],
-     "name": "War Handler Ashka",
-     "npcID": 259281,
-     "aliases": [
-      "War Handler Ashka",
-      "Handler Ashka"
-     ],
-     "probableLoot": [
+     "loot": [
+      [
+       275001,
+       "Bloodied Gutslicer",
+       "Two-Hand, Sword",
+       3
+      ],
       [
        275002,
        "War Handler's Gaze",
        "Head",
        3
       ]
+     ],
+     "name": "War Handler Ashka",
+     "npcID": 259281,
+     "aliases": [
+      "War Handler Ashka",
+      "Handler Ashka"
      ]
     },
     {
      "loot": [
-      {
-       "1": 0,
-       "2": "Chain of the Corruptor",
-       "3": "Neck",
-       "4": 3,
-       "tip": [
-        "Binds when picked up",
-        "Neck",
-        "+4 Agility",
-        "+12 Stamina",
-        "|cff1eff00Equip: Increases damage and healing done by magical spells and effects by up to 5.|r",
-        "Requires Level 41",
-        "Sell Price: 83|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 28|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
-       ]
-      }
+      [
+       275004,
+       "Chain of the Corruptor",
+       "Neck",
+       3
+      ],
+      [
+       275005,
+       "Krol'dok Warplate Chest",
+       "Chest, Plate",
+       3
+      ],
+      [
+       275006,
+       "Krol'dok Warplate Helmet",
+       "Head, Plate",
+       3
+      ]
      ],
      "aliases": [
       "Nar'gurk"
@@ -11146,57 +11683,63 @@
        "Big-Belly Belt",
        "Waist, Cloth",
        3
+      ],
+      [
+       286428,
+       "Band of Bossman",
+       "Finger",
+       3
       ]
      ],
      "aliases": [
-      "Bossman Toof"
+      "Bossman Toof",
+      "Boss Kof"
      ],
      "name": "Bossman Toof",
      "npcID": 264773
     },
     {
      "loot": [
-      {
-       "1": 0,
-       "2": "Emblem of Slamming",
-       "3": "Trinket",
-       "4": 3,
-       "tip": [
-        "Binds when picked up",
-        "Unique-Equipped",
-        "Trinket",
-        "|cff1eff00Equip: +14 Attack Power.|r",
-        "|cff1eff00Use: Stuns target and yourself for 3 sec. Ogres are Stunned for 5 sec and refund 50% of the cooldown. (15 Min Cooldown)|r",
-        "Requires Level 42",
-        "Sell Price: 94|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 1|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
-       ]
-      }
+      [
+       275009,
+       "Emblem of Slamming",
+       "Trinket",
+       3
+      ],
+      [
+       275007,
+       "Mugg's Jabber",
+       "One-Hand, Fist Weapon",
+       3
+      ],
+      [
+       275010,
+       "Strongly Scented Hood",
+       "Head, Cloth",
+       3
+      ]
      ],
      "aliases": [
       "Overlord Mugg",
       "Overseer Mugg"
      ],
      "name": "Overlord Mugg",
-     "npcID": 258968
+     "npcID": 258968,
+     "probableLoot": [
+      [
+       275008,
+       "Mugg's Crosser",
+       "One-Hand, Fist Weapon",
+       3
+      ]
+     ]
     },
     {
      "probableLoot": [
       [
-       275006,
-       "Krol'dok Warplate Helmet",
-       "Head, Plate",
-       3
-      ],
-      [
        287014,
        "Krol'dok Warplate Pauldrons",
        "Shoulder, Plate",
-       3
-      ],
-      [
-       275005,
-       "Krol'dok Warplate Chest",
-       "Chest, Plate",
        3
       ],
       [
@@ -11372,7 +11915,14 @@
      "rewardSummary": "Brotherhood of the Horse +150",
      "requires": 38,
      "objective": "Collect 8 Twilight Bangles from the Twilight's Hammer in Krol'dok Stronghold.",
-     "pickup": "Farholde Keep, Riverglades (giver not known yet)"
+     "pickup": "Farholde Keep, Riverglades (giver not known yet)",
+     "hideFromMainList": true,
+     "turninMap": {
+      "y": 0.8,
+      "mapID": 2548,
+      "label": "Farholde Keep — Riverglades (who takes it is not known yet)",
+      "x": 0.666
+     }
     },
     {
      "id": 94984,
@@ -11411,20 +11961,124 @@
      "id": 96771,
      "name": "Vengeance of the Highborne",
      "liveXPFallback": 13000,
-     "turnin": "Not known yet",
+     "turnin": "Ranath Nightstride, in the inn in Dalaran, Alterac Mountains",
      "level": 45,
      "note": "Zalfan Moonshadow, a highborne among the Twilight's Hammer inside the stronghold; where he stands is not known yet.",
      "faction": "Alliance",
      "rewardSummary": "65s  •  Kirin Tor +250  •  Brotherhood of the Horse +150",
      "requires": 37,
      "objective": "Travel to Krol'dok Stronghold and slay Zalfan Moonshadow.",
-     "pickup": "Not known yet (a highborne; Kirin Tor reputation, so probably in Dalaran)"
+     "pickup": "Ranath Nightstride, in the inn in Dalaran, Alterac Mountains",
+     "turninMap": {
+      "y": 0.66,
+      "mapID": 1416,
+      "detail": "Ranath Nightstride, in the inn in Dalaran, Alterac Mountains",
+      "x": 0.178,
+      "targetName": "Ranath Nightstride",
+      "label": "Ranath Nightstride — Dalaran"
+     }
+    },
+    {
+     "name": "Key Ingredients",
+     "rewardSummary": "55s",
+     "note": "Keep any Krol'dok Moulding you loot: it starts the quest before this one.",
+     "requiredItems": [
+      [
+       4304,
+       "Thick Leather",
+       1,
+       "Leatherworking material: skinning, trade or the auction house (4 needed)"
+      ],
+      [
+       3575,
+       "Iron Bar",
+       1,
+       "Smelted from Iron Ore: mining, trade or the auction house (12 needed)"
+      ]
+     ],
+     "level": 41,
+     "faction": "Alliance",
+     "rewardItems": [
+      [
+       267089,
+       "Krol'dok Compound Key",
+       1
+      ]
+     ],
+     "requires": 38,
+     "liveXPFallback": 3300,
+     "id": 94981,
+     "objective": "Bring 4 Thick Leather and 12 Iron Bars to Alphonse Dumas.",
+     "pickup": "Alphonse Dumas, Farholde Keep, Riverglades",
+     "turnin": "Alphonse Dumas, Farholde Keep, Riverglades"
+    },
+    {
+     "name": "Key Ingredients",
+     "rewardSummary": "55s",
+     "note": "Keep any Krol'dok Moulding you loot: it starts the quest before this one.",
+     "requiredItems": [
+      [
+       4304,
+       "Thick Leather",
+       1,
+       "Leatherworking material: skinning, trade or the auction house (4 needed)"
+      ],
+      [
+       3575,
+       "Iron Bar",
+       1,
+       "Smelted from Iron Ore: mining, trade or the auction house (12 needed)"
+      ]
+     ],
+     "level": 41,
+     "faction": "Horde",
+     "rewardItems": [
+      [
+       267089,
+       "Krol'dok Compound Key",
+       1
+      ]
+     ],
+     "requires": 38,
+     "liveXPFallback": 3300,
+     "id": 94974,
+     "objective": "Bring 4 Thick Leather and 12 Iron Bar to Kreza Darkthorn.",
+     "pickup": "Kreza Darkthorn, Rog'mar, Riverglades",
+     "turnin": "Kreza Darkthorn, Rog'mar, Riverglades"
+    },
+    {
+     "name": "Curios of Curiosity",
+     "rewardSummary": "55s  •  Brotherhood of the Horse +100",
+     "note": "Probably follows Lingering Essence (not confirmed yet).",
+     "level": 42,
+     "faction": "Alliance",
+     "rewardItems": [
+      [
+       279850,
+       "Curio-Adorned Necklace",
+       3
+      ]
+     ],
+     "requires": 38,
+     "liveXPFallback": 3450,
+     "id": 94998,
+     "objective": "Bring the Satchel of Mementos to Melanie Sable.",
+     "pickup": "Ashe Amberhall, Farholde Keep, Riverglades (probably)",
+     "turnin": "Melanie Sable (where she stands is not known yet)"
     }
    ],
    "fullItemsTBD": true,
    "icon": "Interface\\Icons\\INV_Misc_Key_13",
    "location": "Riverglades",
-   "level": "40-45"
+   "level": "40-45",
+   "entrance": {
+    "y": 0.373,
+    "mapID": 2548,
+    "detail": "Northern Riverglades, on the hill above Sunnyglade: not the big fortress gates but the small cave just west of them",
+    "x": 0.375,
+    "label": "Krol'dok Stronghold Entrance",
+    "markerType": "dungeon"
+   }
   },
   "Lower Blackrock Spire": {
    "bosses": [
@@ -12040,14 +12694,35 @@
      "pickup": "Bijou, Lower Blackrock Spire"
     },
     {
+     "id": 4981,
+     "name": "Operative Bijou",
+     "turnin": "Bijou, inside Lower Blackrock Spire",
+     "rewardSummary": "",
+     "level": 59,
+     "rewardItems": [],
+     "faction": "Horde",
+     "requires": 55,
+     "objective": "Travel to Blackrock Spire and find out what happened to Bijou.",
+     "pickup": "Lexlort, Kargath, Badlands",
+     "leadsToQuestLink": {
+      "id": 4982,
+      "name": "Bijou's Belongings"
+     },
+     "startMap": {
+      "y": 0.474,
+      "mapID": 1418,
+      "x": 0.058,
+      "targetName": "Lexlort",
+      "label": "Lexlort — Badlands"
+     }
+    },
+    {
      "id": 4982,
      "name": "Bijou's Belongings",
      "liveXPFallback": 6400,
-     "turnin": "Bijou, Lower Blackrock Spire",
      "rewardSummary": "1g 80s",
      "level": 59,
      "rewardChoice": true,
-     "note": "Then take Bijou's Reconnaissance Report to Lexlort in Kargath for the reward.",
      "rewardItems": [
       [
        15858,
@@ -12061,10 +12736,16 @@
       ]
      ],
      "faction": "Horde",
-     "requires": 55,
+     "turnin": "Bijou, Lower Blackrock Spire",
      "objective": "Find Bijou's Belongings and return them to her. You recall her mentioning that she stashed them on the bottom floor of the city.",
+     "requires": 55,
+     "pickup": "Bijou, Lower Blackrock Spire",
+     "startQuestLink": {
+      "id": 4981,
+      "name": "Operative Bijou"
+     },
      "startsInDungeon": true,
-     "pickup": "Bijou, Lower Blackrock Spire"
+     "note": "Then take Bijou's Reconnaissance Report to Lexlort in Kargath for the reward."
     },
     {
      "id": 5081,
@@ -12073,6 +12754,7 @@
      "rewardSummary": "",
      "level": 60,
      "rewardChoice": true,
+     "turnin": "Marshal Maxwell, Morgan's Vigil, Burning Steppes",
      "rewardItems": [
       [
        13958,
@@ -12101,7 +12783,6 @@
       ]
      ],
      "faction": "Alliance",
-     "turnin": "Marshal Maxwell, Morgan's Vigil, Burning Steppes",
      "objective": "Travel to Blackrock Spire and destroy War Master Voone, Highlord Omokk, and Overlord Wyrmthalak. Return to Marshal Maxwell when the job is done.",
      "requires": 55,
      "pickup": "Marshal Maxwell, Morgan's Vigil, Burning Steppes"
@@ -12184,7 +12865,6 @@
      "liveXPFallback": 6400,
      "rewardSummary": "",
      "level": 59,
-     "rewardChoice": true,
      "turnin": "Galamav the Marksman, Kargath, Badlands",
      "rewardItems": [
       [
@@ -12207,7 +12887,8 @@
      "note": "Kill Halycon, the worg den mother. Be ready for Gizrul the Slavener, who comes for you right after.",
      "objective": "Slay Halycon, pack mistress of the Bloodaxe worg.",
      "requires": 55,
-     "pickup": "Galamav the Marksman, Kargath, Badlands"
+     "pickup": "Galamav the Marksman, Kargath, Badlands",
+     "rewardChoice": true
     },
     {
      "id": 4729,
@@ -12256,6 +12937,7 @@
      "rewardSummary": "",
      "level": 60,
      "turnin": "Ragged John, Flame Crest, Burning Steppes",
+     "note": "Get poisoned by Mother Smolderweb and reach Ragged John while still poisoned. Don't let anyone cleanse it.",
      "rewardItems": [
       [
        15873,
@@ -12264,9 +12946,8 @@
       ]
      ],
      "faction": "Both",
-     "note": "Get poisoned by Mother Smolderweb and reach Ragged John while still poisoned. Don't let anyone cleanse it.",
-     "objective": "In the heart of Blackrock Spire you will find Mother Smolderweb. Engage her and get her to poison you. Return to Ragged John while poisoned so that he can 'milk' you.",
      "requires": 55,
+     "objective": "In the heart of Blackrock Spire you will find Mother Smolderweb. Engage her and get her to poison you. Return to Ragged John while poisoned so that he can 'milk' you.",
      "pickup": "Ragged John, Flame Crest, Burning Steppes"
     },
     {
@@ -12274,54 +12955,54 @@
      "name": "Urok Doomhowl",
      "liveXPFallback": 9950,
      "rewardSummary": "",
-     "level": 60,
      "turnin": "Warosh, Lower Blackrock Spire",
      "note": "Bring Highlord Omokk's Head and a Roughshod Pike to Urok's Tribute Pile beyond the spiders to start the waves.",
+     "requires": 55,
+     "faction": "Both",
+     "level": 60,
+     "objective": "Read Warosh's Scroll. Bring Warosh's Mojo to Warosh.",
+     "startsInDungeon": true,
+     "pickup": "Warosh, Lower Blackrock Spire",
      "rewardItems": [
       [
        15867,
        "Prismcharm",
        2
       ]
-     ],
-     "faction": "Both",
-     "requires": 55,
-     "objective": "Read Warosh's Scroll. Bring Warosh's Mojo to Warosh.",
-     "startsInDungeon": true,
-     "pickup": "Warosh, Lower Blackrock Spire"
+     ]
     },
     {
      "id": 5089,
      "name": "General Drakkisath's Command",
      "liveXPFallback": 0,
      "rewardSummary": "",
+     "level": 60,
+     "turnin": "Marshal Maxwell, Morgan's Vigil, Burning Steppes",
+     "faction": "Alliance",
+     "note": "Leads to General Drakkisath's Demise in Upper Blackrock Spire.",
+     "objective": "Take General Drakkisath's Command to Marshal Maxwell in Burning Steppes.",
+     "requires": 55,
+     "pickup": "General Drakkisath's Command (drops from Overlord Wyrmthalak)",
+     "startsInDungeon": true,
      "startItem": [
       12780,
       "General Drakkisath's Command",
       1,
       "Dropped by Overlord Wyrmthalak in Lower Blackrock Spire"
-     ],
-     "turnin": "Marshal Maxwell, Morgan's Vigil, Burning Steppes",
-     "note": "Leads to General Drakkisath's Demise in Upper Blackrock Spire.",
-     "requires": 55,
-     "faction": "Alliance",
-     "level": 60,
-     "objective": "Take General Drakkisath's Command to Marshal Maxwell in Burning Steppes.",
-     "startsInDungeon": true,
-     "pickup": "General Drakkisath's Command (drops from Overlord Wyrmthalak)"
+     ]
     },
     {
-     "id": 4788,
      "name": "The Final Tablets",
-     "liveXPFallback": 7750,
      "rewardSummary": "",
      "level": 58,
-     "turnin": "Prospector Ironboot, Steamwheedle Port, Tanaris",
      "faction": "Both",
-     "note": "The fifth and sixth Mosh'aru tablets are in the Smolderthorn troll area. Continues with Confront Yeh'kinya and The Hand of Rastakhan.",
-     "objective": "Bring the Fifth and Sixth Mosh'aru Tablets to Prospector Ironboot in Tanaris.",
+     "liveXPFallback": 7750,
      "requires": 40,
-     "pickup": "Prospector Ironboot, Steamwheedle Port, Tanaris"
+     "turnin": "Prospector Ironboot, Steamwheedle Port, Tanaris",
+     "id": 4788,
+     "objective": "Bring the Fifth and Sixth Mosh'aru Tablets to Prospector Ironboot in Tanaris.",
+     "pickup": "Prospector Ironboot, Steamwheedle Port, Tanaris",
+     "note": "The fifth and sixth Mosh'aru tablets are in the Smolderthorn troll area. Continues with Confront Yeh'kinya and The Hand of Rastakhan."
     }
    ],
    "fullItemsTBD": true,
@@ -12464,6 +13145,18 @@
        10804,
        "Fist of the Damned",
        "One-Hand, Mace",
+       3
+      ],
+      [
+       10803,
+       "Blade of the Wretched",
+       "Main Hand, Sword",
+       3
+      ],
+      [
+       10805,
+       "Eater of the Dead",
+       "Main Hand, Axe",
        3
       ]
      ]
@@ -15947,7 +16640,6 @@
      "id": 2841,
      "name": "Rig Wars",
      "liveXPFallback": 2750,
-     "hideFromMainList": true,
      "rewardSummary": "",
      "level": 35,
      "rewardChoice": true,
@@ -19125,13 +19817,586 @@
    "level": "13-20"
   },
   "Blackmaw Hold": {
-   "bosses": [],
+   "bosses": [
+    {
+     "name": "Impaan the Imprisoner",
+     "loot": [
+      {
+       "1": 0,
+       "2": "Flameslash Crescent",
+       "3": "Two-Hand, Axe",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Two-Hand",
+         "Axe"
+        ],
+        [
+         "145 - 219 Damage",
+         "Speed 3.60"
+        ],
+        "(50.6 damage per second)",
+        "+19 Strength",
+        "+8 Intellect",
+        "|cff1eff00Equip: Improves your chance to hit by 1.5%.|r",
+        "|cff1eff00Equip: Improves your chance to get a critical strike by 1.0%.|r",
+        "Requires Level 54",
+        "Sell Price: 5|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 74|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 57|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      {
+       "1": 0,
+       "2": "Impish Chain Hood",
+       "3": "Head, Mail",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Head",
+         "Mail"
+        ],
+        "284 Armor",
+        "+19 Stamina",
+        "+16 Spirit",
+        "|cff1eff00Equip: +34 Attack Power.|r",
+        "Requires Level 54",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 9|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 35|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ],
+     "npcID": 247206,
+     "aliases": [
+      "Impaan the Imprisoner",
+      "Impaan"
+     ]
+    },
+    {
+     "name": "Bonesnout the Unbroken",
+     "loot": [
+      {
+       "1": 0,
+       "2": "Lucky Shovelnose Tuft",
+       "3": "Trinket",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        "Unique-Equipped",
+        "Trinket",
+        "+11 Strength",
+        "+11 Spirit",
+        "|cff1eff00Use: Increases your chance to Dodge by 5% for 15 sec. (5 Min Cooldown)|r",
+        "Requires Level 55",
+        "Sell Price: 1|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 95|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 98|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ],
+     "npcID": 247198,
+     "aliases": [
+      "Bonesnout the Unbroken",
+      "Bonesnout"
+     ]
+    },
+    {
+     "name": "Moontouched Wanderer",
+     "aliases": [
+      "Moontouched Wanderer"
+     ],
+     "loot": [
+      {
+       "1": 280080,
+       "2": "Claymore of Two Moons",
+       "3": "Two-Hand, Sword",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Two-Hand",
+         "Sword"
+        ],
+        [
+         "121 - 182 Damage",
+         "Speed 3.10"
+        ],
+        "(48.9 damage per second)",
+        "+17 Stamina",
+        "|cff1eff00Equip: Your attacks have a chance to Wax, dealing 189 Arcane damage or Wane, granting 40 Strength for 10 sec.|r",
+        "Requires Level 52",
+        "Sell Price: 5|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 24|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 1|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      {
+       "1": 280079,
+       "2": "Lunarlight Robe",
+       "3": "Chest, Leather",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Chest",
+         "Leather"
+        ],
+        "163 Armor",
+        "+17 Stamina",
+        "+14 Spirit",
+        "|cff1eff00Equip: Your spells pierce 6 Magical Resistance.|r",
+        "Requires Level 52",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 8|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 81|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ],
+     "rare": true,
+     "npcID": 269104,
+     "description": "Rare spawn."
+    },
+    {
+     "name": "Gortek the Apprentice",
+     "aliases": [
+      "Gortek the Apprentice",
+      "Gortek"
+     ],
+     "loot": [
+      [
+       280077,
+       "Fist of Revelation",
+       "One-Hand, Fist Weapon",
+       3
+      ]
+     ],
+     "rare": true,
+     "npcID": 269111,
+     "description": "Rare spawn."
+    },
+    {
+     "name": "Withermaw",
+     "loot": [
+      {
+       "1": 280064,
+       "2": "Withering Grips",
+       "3": "Hands",
+       "4": 3,
+       "tip": [
+        "Hands",
+        "106 Armor",
+        "+14 Stamina",
+        "+12 Intellect",
+        "|cff1eff00Equip: Increases damage and healing done by magical spells and effects by up to 16.|r"
+       ]
+      }
+     ],
+     "npcID": 247195,
+     "aliases": [
+      "Withermaw"
+     ]
+    },
+    {
+     "name": "Elder Shaman Bloodmane",
+     "loot": [
+      {
+       "1": 0,
+       "2": "Veilpiercer Girdle",
+       "3": "Waist, Leather",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Waist",
+         "Leather"
+        ],
+        "97 Armor",
+        "+8 Agility",
+        "+13 Stamina",
+        "+8 Spirit",
+        "|cff1eff00Equip: Increased Defense +9.|r",
+        "Requires Level 56",
+        "Sell Price: 1|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 37|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 96|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      {
+       "1": 0,
+       "2": "Shamanic Wristguards",
+       "3": "Wrist, Mail",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Wrist",
+         "Mail"
+        ],
+        "157 Armor",
+        "+13 Stamina",
+        "+10 Intellect",
+        "|cff1eff00Equip: Restores 3 mana per 5 sec.|r",
+        "Requires Level 56",
+        "Sell Price: 1|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 63|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 67|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      [
+       280068,
+       "Bloody Claws of Attack",
+       "One-Hand, Fist Weapon",
+       3
+      ]
+     ],
+     "npcID": 247209,
+     "aliases": [
+      "Elder Shaman Bloodmane",
+      "Bloodmane"
+     ]
+    },
+    {
+     "name": "Blackmaw Behemoth",
+     "loot": [
+      {
+       "1": 0,
+       "2": "Behemoth Bones",
+       "3": "Trinket",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        "Unique-Equipped",
+        "Trinket",
+        "|cff1eff00Equip: +34 Attack Power.|r",
+        "|cff1eff00Use: Crack open the bone, healing yourself for 480 to 530 and your nearest ally for 480 to 530. (5 Min Cooldown)|r",
+        "Requires Level 56",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 9|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 62|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      {
+       "1": 0,
+       "2": "Trousers of the Ebon Giant",
+       "3": "Legs, Cloth",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Legs",
+         "Cloth"
+        ],
+        "76 Armor",
+        "+20 Stamina",
+        "+16 Spirit",
+        "|cff1eff00Equip: Increases damage and healing done by magical spells and effects by up to 21.|r",
+        "Requires Level 56",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 10|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 37|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ],
+     "npcID": 247207,
+     "aliases": [
+      "Blackmaw Behemoth"
+     ]
+    },
+    {
+     "name": "Unbound Spirit",
+     "loot": [
+      {
+       "1": 0,
+       "2": "Burnished Pridescales",
+       "3": "Chest, Plate",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Chest",
+         "Plate"
+        ],
+        "637 Armor",
+        "+16 Strength",
+        "+16 Stamina",
+        "+19 Spirit",
+        "|cff1eff00Equip: Improves your chance to hit by 1%.|r",
+        "Requires Level 56",
+        "Sell Price: 3|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 50|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 68|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      [
+       280071,
+       "Flamebreak Talisman",
+       "Trinket",
+       3
+      ]
+     ],
+     "npcID": 247231,
+     "aliases": [
+      "Unbound Spirit"
+     ]
+    },
+    {
+     "name": "Varrox Bleakhoof",
+     "loot": [
+      {
+       "1": 0,
+       "2": "Bleak Eye Shoulderplates",
+       "3": "Shoulder, Plate",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Shoulder",
+         "Plate"
+        ],
+        "485 Armor",
+        "+14 Agility",
+        "+14 Stamina",
+        "+12 Intellect",
+        "Requires Level 57",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 77|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 73|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      {
+       "1": 280074,
+       "2": "Scalding Flamehoof",
+       "3": "Trinket",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        "Unique-Equipped",
+        "Trinket",
+        "+4 Strength",
+        "+4 Agility",
+        "+4 Stamina",
+        "+4 Intellect",
+        "+4 Spirit",
+        "|cff1eff00Use: Increases Fire damage taken by 14% and movement speed by 14% for 20 sec. (5 Min Cooldown)|r",
+        "Requires Level 57",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 11|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 20|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ],
+     "npcID": 247234,
+     "aliases": [
+      "Varrox Bleakhoof",
+      "Varrox"
+     ]
+    },
+    {
+     "name": "Trash Drops",
+     "trash": true,
+     "loot": [
+      {
+       "1": 0,
+       "2": "Satyr's Touch",
+       "3": "Ranged, Wand",
+       "4": 3,
+       "5": "Legashi Ritualist",
+       "tip": [
+        "Binds when equipped",
+        [
+         "Ranged",
+         "Wand"
+        ],
+        [
+         "111 Damage",
+         "Speed 1.90"
+        ],
+        "(58.4 damage per second)",
+        "+9 Stamina",
+        "|cff1eff00Equip: Improves your chance to hit by 0.5%.|r",
+        "Requires Level 54",
+        "Sell Price: 3|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 46|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 34|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ]
+    }
+   ],
    "description": "Beyond a long-sealed gate in Azshara lies the furbolg city of the Blackmaw clan, fighting a corruption that spreads through its groves and mountain tunnels. A large max-level dungeon with several routes and bosses; its depths may lead even farther below Azeroth.",
-   "quests": [],
+   "quests": [
+    {
+     "name": "Get to the Roots of It",
+     "rewardSummary": "Thunder Bluff +150",
+     "requiredItems": [
+      [
+       250773,
+       "Nordrassil Root Cap",
+       1,
+       "Looted inside Blackmaw Hold; everyone in the party can loot them (10 needed)"
+      ]
+     ],
+     "level": 55,
+     "faction": "Horde",
+     "turninMap": {
+      "y": 0.31,
+      "mapID": 1456,
+      "x": 0.756,
+      "targetName": "Nara Wildmane",
+      "label": "Nara Wildmane — Elder Rise, Thunder Bluff"
+     },
+     "requires": 45,
+     "liveXPFallback": 11300,
+     "id": 92343,
+     "objective": "Collect 10 Nordrassil Root Caps in Blackmaw Hold.",
+     "pickup": "Nara Wildmane, Elder Rise, Thunder Bluff (75.6, 31.0)",
+     "turnin": "Nara Wildmane, Elder Rise, Thunder Bluff (75.6, 31.0)"
+    },
+    {
+     "name": "Get to the Roots of It",
+     "rewardSummary": "Darnassus +150",
+     "requiredItems": [
+      [
+       250773,
+       "Nordrassil Root Cap",
+       1,
+       "Looted inside Blackmaw Hold; everyone in the party can loot them (10 needed)"
+      ]
+     ],
+     "level": 55,
+     "faction": "Alliance",
+     "turninMap": {
+      "y": 0.084,
+      "mapID": 1457,
+      "x": 0.354,
+      "targetName": "Mathrengyl Bearwalker",
+      "label": "Mathrengyl Bearwalker — Cenarion Enclave, Darnassus"
+     },
+     "requires": 45,
+     "liveXPFallback": 11300,
+     "id": 92344,
+     "objective": "Collect 10 Nordrassil Root Caps in Blackmaw Hold.",
+     "pickup": "Mathrengyl Bearwalker, Cenarion Enclave, Darnassus (35.4, 8.4)",
+     "turnin": "Mathrengyl Bearwalker, Cenarion Enclave, Darnassus (35.4, 8.4)"
+    },
+    {
+     "name": "Blackmaw Magic",
+     "requiredItem": [
+      276893,
+      "Blackmaw Ritual Totem",
+      1,
+      1,
+      "From Elder Shaman Bloodmane in Blackmaw Hold"
+     ],
+     "rewardSummary": "90s  •  Kirin Tor +300  •  Darnassus +150",
+     "level": 59,
+     "faction": "Alliance",
+     "note": "Quest giver not known yet.",
+     "requires": 52,
+     "liveXPFallback": 12800,
+     "id": 97173,
+     "objective": "Obtain a Blackmaw Ritual Totem from Elder Shaman Bloodmane in Blackmaw Hold.",
+     "pickup": "Not known yet (probably a mage in Dalaran)",
+     "turnin": "Not known yet"
+    },
+    {
+     "name": "Blackmaw Magic",
+     "requiredItem": [
+      276893,
+      "Blackmaw Ritual Totem",
+      1,
+      1,
+      "From Elder Shaman Bloodmane in Blackmaw Hold"
+     ],
+     "rewardSummary": "90s  •  Earthen Ring +300  •  Thunder Bluff +150",
+     "level": 59,
+     "faction": "Horde",
+     "note": "Quest giver not known yet.",
+     "requires": 52,
+     "liveXPFallback": 16100,
+     "id": 97198,
+     "objective": "Obtain a Blackmaw Ritual Totem from Elder Shaman Bloodmane in Blackmaw Hold.",
+     "pickup": "Not known yet (perhaps Alaana Stormwalker, Mulgore)",
+     "turnin": "Not known yet"
+    },
+    {
+     "name": "Claws That Rend, Tusks that Gore",
+     "rewardSummary": "Timbermaw Hold +150",
+     "rewardItems": [
+      [
+       260213,
+       "Great Bear Claw",
+       2
+      ],
+      [
+       260214,
+       "Staff of Wild Beasts",
+       2
+      ],
+      [
+       260215,
+       "Wild Malleus",
+       2
+      ]
+     ],
+     "note": "Withermaw and Bonesnout are on different paths: take both.",
+     "requiredItems": [
+      [
+       249697,
+       "Claws of the Great Bear",
+       1,
+       "From Withermaw in Blackmaw Hold"
+      ],
+      [
+       249696,
+       "Tusks of the Unbroken",
+       1,
+       "From Bonesnout the Unbroken in Blackmaw Hold"
+      ]
+     ],
+     "rewardChoice": true,
+     "level": 58,
+     "faction": "Both",
+     "turninMap": {
+      "y": 0.426,
+      "mapID": 1447,
+      "x": 0.424,
+      "targetName": "Ogtinc",
+      "label": "Ogtinc — Azshara"
+     },
+     "requires": 45,
+     "liveXPFallback": 12400,
+     "id": 92069,
+     "objective": "Bring the Claws of the Great Bear and the Tusks of the Unbroken to Ogtinc in Azshara.",
+     "pickup": "Ogtinc, Azshara (42.4, 42.6) (probably)",
+     "turnin": "Ogtinc, Azshara (42.4, 42.6)"
+    },
+    {
+     "name": "Blackmaw Pouches",
+     "requiredItem": [
+      273050,
+      "Blackmaw Pouch",
+      1,
+      5,
+      "From the Blackmaw furbolgs inside Blackmaw Hold"
+     ],
+     "rewardSummary": "90s",
+     "turninMap": {
+      "y": 0.388,
+      "mapID": 1447,
+      "x": 0.418,
+      "targetName": "Ekkal",
+      "label": "Ekkal — Ruins of Eldarath, Azshara"
+     },
+     "learnTitle": "Blackmaw Pouches",
+     "note": "Seen by a Horde player; whether the Alliance gets it too is not known yet. Its level is not known yet: the dungeon's range is used.",
+     "level": 58,
+     "learnItem": 273050,
+     "startMap": {
+      "y": 0.388,
+      "mapID": 1447,
+      "x": 0.418,
+      "targetName": "Ekkal",
+      "label": "Ekkal — Ruins of Eldarath, Azshara"
+     },
+     "requires": 55,
+     "turnin": "Ekkal, Ruins of Eldarath, Azshara (41.8, 38.8)",
+     "id": -97201,
+     "objective": "Enter Blackmaw Hold and recover 5 Blackmaw Pouches for Ekkal at the Ruins of Eldarath in Azshara.",
+     "pickup": "Ekkal, Ruins of Eldarath, Azshara (41.8, 38.8)",
+     "faction": "Horde"
+    }
+   ],
    "location": "Azshara",
    "icon": "Interface\\Icons\\INV_Misc_MonsterClaw_04",
    "level": "55-60",
-   "previewOnly": true
+   "fullQuestsTBD": true,
+   "entrance": {
+    "y": 0.332,
+    "mapID": 1447,
+    "detail": "Northern Azshara, at the old furbolg gate: follow the long tunnel into the mountain; the portal is at its far end, under Darkwhisper Gorge by the Winterspring border",
+    "x": 0.386,
+    "label": "Blackmaw Hold Entrance",
+    "markerType": "dungeon"
+   },
+   "fullItemsTBD": true
   },
   "Ragefire Chasm": {
    "bosses": [
@@ -19341,12 +20606,36 @@
      "pickup": "Rahauro, Elder Rise, Thunder Bluff"
     },
     {
+     "id": 5722,
+     "name": "Searching for the Lost Satchel",
+     "liveXPFallback": 880,
+     "rewardSummary": "",
+     "level": 16,
+     "rewardItems": [],
+     "faction": "Horde",
+     "turnin": "Maur Grimtotem's corpse, inside Ragefire Chasm",
+     "objective": "Find Maur Grimtotem's corpse inside Ragefire Chasm and search it for anything of interest.",
+     "requires": 9,
+     "pickup": "Rahauro, Elder Rise, Thunder Bluff",
+     "leadsToQuestLink": {
+      "id": 5724,
+      "name": "Returning the Lost Satchel"
+     },
+     "startMap": {
+      "y": 0.322,
+      "mapID": 1456,
+      "label": "Rahauro",
+      "x": 0.704
+     },
+     "note": "From the first major three-way junction, take the right-hand tunnel, follow it uphill toward the dead end, then enter the small side room on the left. Interact with Maur's corpse there."
+    },
+    {
      "id": 5724,
      "name": "Returning the Lost Satchel",
      "liveXPFallback": 1450,
      "rewardSummary": "Thunder Bluff +150",
-     "level": 16,
-     "rewardChoice": true,
+     "turnin": "Rahauro, Elder Rise, Thunder Bluff",
+     "requires": 9,
      "rewardItems": [
       [
        15452,
@@ -19364,17 +20653,28 @@
        3
       ]
      ],
-     "faction": "Horde",
-     "turnin": "Rahauro, Elder Rise, Thunder Bluff",
+     "level": 16,
      "objective": "Take the Grimtotem Satchel to Rahauro in Thunder Bluff.",
-     "requires": 9,
-     "pickup": "Grimtotem Satchel, taken from Maur Grimtotem's corpse inside Ragefire Chasm"
+     "pickup": "Grimtotem Satchel, taken from Maur Grimtotem's corpse inside Ragefire Chasm",
+     "faction": "Horde",
+     "startQuestLink": {
+      "id": 5722,
+      "name": "Searching for the Lost Satchel"
+     },
+     "rewardChoice": true
     },
     {
      "id": 5728,
      "name": "Hidden Enemies",
      "liveXPFallback": 1150,
      "rewardSummary": "8s  •  Orgrimmar +100",
+     "level": 16,
+     "rewardItems": [],
+     "faction": "Horde",
+     "turnin": "Thrall, Valley of Wisdom, Orgrimmar",
+     "objective": "Kill Bazzalan and Jergosh the Invoker inside Ragefire Chasm.",
+     "requires": 9,
+     "pickup": "Thrall, Valley of Wisdom, Orgrimmar",
      "noteRewardItems": [
       [
        15443,
@@ -19397,14 +20697,7 @@
        3
       ]
      ],
-     "turnin": "Thrall, Valley of Wisdom, Orgrimmar",
-     "requires": 9,
-     "rewardItems": [],
-     "note": "Requires the earlier Hidden Enemies chain steps in Orgrimmar. The next Hidden Enemies step later offers:",
-     "level": 16,
-     "objective": "Kill Bazzalan and Jergosh the Invoker inside Ragefire Chasm.",
-     "pickup": "Thrall, Valley of Wisdom, Orgrimmar",
-     "faction": "Horde"
+     "note": "Requires the earlier Hidden Enemies chain steps in Orgrimmar. The next Hidden Enemies step later offers:"
     },
     {
      "id": 5761,
@@ -19420,12 +20713,12 @@
      "pickup": "Neeru Fireblade, Cleft of Shadow, Orgrimmar"
     },
     {
-     "id": 5725,
      "name": "The Power to Destroy...",
-     "liveXPFallback": 1450,
      "rewardSummary": "Undercity +150",
+     "turnin": "Varimathras, Royal Quarter, Undercity",
      "level": 16,
-     "rewardChoice": true,
+     "liveXPFallback": 1450,
+     "requires": 9,
      "rewardItems": [
       [
        15449,
@@ -19443,33 +20736,833 @@
        3
       ]
      ],
-     "faction": "Horde",
-     "turnin": "Varimathras, Royal Quarter, Undercity",
+     "pickup": "Varimathras, Royal Quarter, Undercity",
+     "id": 5725,
      "objective": "Collect Spells of Shadow and Incantations from the Nether inside Ragefire Chasm.",
-     "requires": 9,
-     "pickup": "Varimathras, Royal Quarter, Undercity"
+     "rewardChoice": true,
+     "faction": "Horde"
     }
    ],
    "icon": "Interface\\Icons\\Spell_Fire_LavaSpawn",
    "level": "13-18"
   },
   "Alcaz Prison": {
-   "bosses": [],
-   "description": "Long rumored to hold high-ranking prisoners, including King Varian Wrynn, the prison on Alcaz Island has been out of reach until now. Inside, the Defias Brotherhood and the naga are at war. Known bosses so far: Blazeroar.",
-   "quests": [],
+   "bosses": [
+    {
+     "name": "Overseer Wrex",
+     "loot": [
+      {
+       "1": 0,
+       "2": "Grips of Control",
+       "3": "Hands, Plate",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Hands",
+         "Plate"
+        ],
+        "342 Armor",
+        "+12 Stamina",
+        "+12 Intellect",
+        "|cff1eff00Equip: Restores 5 mana per 5 sec.|r",
+        "Requires Level 47",
+        "Sell Price: 1|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 11|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 47|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      [
+       276734,
+       "Wrex's Pinky Ring",
+       "Finger",
+       3
+      ]
+     ],
+     "aliases": [
+      "Overseer Wrex",
+      "Wrex"
+     ]
+    },
+    {
+     "name": "The Questioner",
+     "loot": [
+      [
+       276742,
+       "Girdle of Extracted Answers",
+       "Waist, Plate",
+       3
+      ],
+      [
+       276743,
+       "Fingerbreaker Stamp",
+       "Trinket",
+       3
+      ],
+      [
+       276741,
+       "Defias Enforcer's Shoulderpads",
+       "Shoulder, Leather",
+       3
+      ]
+     ],
+     "npcID": 256236,
+     "aliases": [
+      "The Questioner",
+      "Questioner"
+     ]
+    },
+    {
+     "name": "Tidemistress Ca'zass",
+     "aliases": [
+      "Tidemistress Ca'zass",
+      "Ca'zass"
+     ],
+     "probableLoot": [
+      [
+       276737,
+       "Cloak of the Tidemistress",
+       "Back",
+       3
+      ]
+     ],
+     "npcID": 255997,
+     "loot": [
+      {
+       "1": 0,
+       "2": "Tidesong Wand",
+       "3": "Ranged, Wand",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Ranged",
+         "Wand"
+        ],
+        [
+         "71 - 133 Frost Damage",
+         "Speed 2.00"
+        ],
+        "(51.0 damage per second)",
+        "+3 Stamina",
+        "+4 Intellect",
+        "|cff1eff00Equip: Improves your chance to get a critical strike by 0.5%.|r",
+        "Requires Level 47",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 39|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 26|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      [
+       276736,
+       "Seascale Bracers",
+       "Wrist, Mail",
+       3
+      ]
+     ]
+    },
+    {
+     "name": "Katerina the Cleaner",
+     "loot": [
+      {
+       "1": 0,
+       "2": "Cutthroat Chestguard",
+       "3": "Chest, Mail",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Chest",
+         "Mail"
+        ],
+        "322 Armor",
+        "+20 Stamina",
+        "|cff1eff00Equip: Improves your chance to hit by 1%.|r",
+        "|cff1eff00Equip: +32 Attack Power.|r",
+        "Requires Level 49",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 18|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 22|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ],
+     "npcID": 257016,
+     "aliases": [
+      "Katerina the Cleaner",
+      "Katerina"
+     ]
+    },
+    {
+     "name": "Blazeroar",
+     "loot": [],
+     "npcID": 255702,
+     "aliases": [
+      "Blazeroar"
+     ]
+    },
+    {
+     "name": "Trash Drops",
+     "trash": true,
+     "probableLoot": [
+      [
+       276740,
+       "Sentimental Locket",
+       "Neck",
+       3
+      ],
+      [
+       287019,
+       "Defias Enforcer's Mask",
+       "Head, Leather",
+       3
+      ],
+      [
+       287020,
+       "Defias Enforcer's Chest",
+       "Chest, Leather",
+       3
+      ],
+      [
+       276746,
+       "Defias Enforcer's Legguards",
+       "Legs, Leather",
+       3
+      ]
+     ],
+     "loot": [
+      [
+       287021,
+       "Defias Enforcer's Prowlers",
+       "Feet, Leather",
+       3
+      ]
+     ]
+    }
+   ],
+   "description": "Long rumored to hold high-ranking prisoners, including King Varian Wrynn, the prison on Alcaz Island has been out of reach until now. Inside, the Defias Brotherhood and the naga are at war.",
+   "quests": [
+    {
+     "name": "The Dragon's Journal",
+     "requiredItem": [
+      276890,
+      "Zarla's Journal",
+      1,
+      1,
+      "From Blazeroar in Alcaz Prison"
+     ],
+     "rewardSummary": "80s  •  Kirin Tor +300  •  Stormwind +150",
+     "level": 53,
+     "faction": "Alliance",
+     "note": "Reported to start in Dalaran; who gives it is not known yet.",
+     "requires": 46,
+     "liveXPFallback": 14410,
+     "id": 96772,
+     "objective": "Recover Zarla's Journal from the depths of Alcaz Prison.",
+     "pickup": "Dalaran, Alterac Mountains (giver not known yet)",
+     "turnin": "Not known yet"
+    },
+    {
+     "name": "Thrall Needs to Know",
+     "rewardSummary": "",
+     "rewardChoice": true,
+     "liveXPFallback": 2472,
+     "learnTitle": "Thrall Needs to Know",
+     "rewardItems": [
+      [
+       279831,
+       "Fatebound Buckler",
+       3
+      ],
+      [
+       279833,
+       "Courier's Clasp",
+       3
+      ],
+      [
+       279474,
+       "Dustwallow Dirk",
+       3
+      ]
+     ],
+     "level": 53,
+     "faction": "Horde",
+     "turninMap": {
+      "y": 0.378,
+      "mapID": 1454,
+      "x": 0.32,
+      "targetName": "Thrall",
+      "label": "Thrall — Orgrimmar"
+     },
+     "requires": 48,
+     "rewards": "Choose: Fatebound Buckler, Courier's Clasp or Dustwallow Dirk\n2,472 XP",
+     "id": -96903,
+     "objective": "Bring word of Varian Wrynn's fate to Thrall in Orgrimmar.",
+     "pickup": "Commander Folkar, inside Alcaz Prison",
+     "turnin": "Thrall, Valley of Wisdom, Orgrimmar (32.0, 37.8)"
+    },
+    {
+     "name": "Blood Red Bandanas",
+     "requiredItem": [
+      274028,
+      "Blood Red Bandana",
+      1,
+      8,
+      "From the Defias guards in Alcaz Prison"
+     ],
+     "rewardSummary": "",
+     "liveXPFallback": 9700,
+     "rewardItems": [
+      [
+       279448,
+       "Bloodsplattered Bandana",
+       2
+      ],
+      [
+       279473,
+       "Makeshift Belt",
+       2
+      ]
+     ],
+     "learnTitle": "Blood Red Bandanas",
+     "rewardChoice": true,
+     "level": 50,
+     "learnItem": 274028,
+     "turninMap": {
+      "y": 0.386,
+      "mapID": 1454,
+      "x": 0.344,
+      "targetName": "Eitrigg",
+      "label": "Eitrigg — Grommash Hold, Orgrimmar"
+     },
+     "requires": 48,
+     "turnin": "Eitrigg, Grommash Hold, Orgrimmar",
+     "id": -96906,
+     "objective": "Enter Alcaz Prison and collect 8 Blood Red Bandanas from the human guards there.",
+     "pickup": "Not known yet (probably Sergeant Ulka or Commander Folkar, of the Kor'kron at Alcaz Prison)",
+     "faction": "Horde"
+    },
+    {
+     "name": "A Little Payback",
+     "requiredItem": [
+      273883,
+      "Ca'zass's Head",
+      1,
+      1,
+      "From Tidemistress Ca'zass"
+     ],
+     "rewardSummary": "",
+     "learnTitle": "A Little Payback",
+     "level": 53,
+     "learnItem": 273883,
+     "note": "Quest giver not known yet. Seen by a Horde player; whether the Alliance gets it too is not known yet.",
+     "requires": 48,
+     "turnin": "Not known yet",
+     "id": -96907,
+     "objective": "Slay 15 Strashaz Soldiers and 8 Strashaz Enchantresses in Alcaz Prison, and bring Ca'zass's Head.",
+     "pickup": "Not known yet",
+     "faction": "Horde"
+    }
+   ],
    "location": "Dustwallow Marsh",
    "icon": "Interface\\Icons\\INV_Misc_Key_14",
    "level": "48-53",
-   "previewOnly": true
+   "fullQuestsTBD": true,
+   "entrance": {
+    "y": 0.141,
+    "mapID": 1445,
+    "detail": "On Alcaz Island, off north-east Dustwallow Marsh: from the dock take the path up the hill to the prison building at the north end; the portal is in its cellar",
+    "x": 0.753,
+    "label": "Alcaz Prison Entrance",
+    "markerType": "dungeon"
+   },
+   "fullItemsTBD": true
   },
   "Shaper's Terrace": {
-   "bosses": [],
-   "description": "An ancient titan facility in the northern hills of Un'Goro Crater, overlooking dinosaurs, tar pits and powerful crystals. Collect power crystals across Un'Goro and use them at the consoles inside the terrace. Known bosses so far: Nanaya, Cinder, Bolt and Snowtalon.",
-   "quests": [],
+   "bosses": [
+    {
+     "name": "Titanosaur",
+     "lootNote": "LOOT_NOTE_TWO_ITEMS",
+     "aliases": [
+      "Titanosaur"
+     ],
+     "npcID": 253201,
+     "loot": [
+      [
+       280009,
+       "Titanosaur Scale Pendant",
+       "Neck",
+       3
+      ],
+      [
+       280011,
+       "Deeproar Cord",
+       "Waist, Cloth",
+       3
+      ],
+      {
+       "1": 280010,
+       "2": "Gargantuan Wristguards",
+       "3": "Wrist, Plate",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Wrist",
+         "Plate"
+        ],
+        "287 Armor",
+        "+11 Stamina",
+        "+5 Spirit",
+        "|cff1eff00Equip: Improves your chance to hit by 0.8%.|r",
+        "|cff1eff00Equip: +20 Attack Power.|r",
+        "Requires Level 58",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 7|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 17|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Venomridge",
+     "loot": [
+      [
+       280015,
+       "Venomvessel Ring",
+       "Finger",
+       3
+      ],
+      {
+       "1": 280017,
+       "2": "Octoclaw Chain Boots",
+       "3": "Feet, Mail",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Feet",
+         "Mail"
+        ],
+        "255 Armor",
+        "+11 Agility",
+        "+16 Stamina",
+        "+14 Intellect",
+        "Requires Level 58",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 72|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 71|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      {
+       "1": 280016,
+       "2": "Spiderchitin Wrap",
+       "3": "Chest, Leather",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Chest",
+         "Leather"
+        ],
+        "176 Armor",
+        "+18 Strength",
+        "+24 Stamina",
+        "|cff1eff00Equip: Increases Feral Combat +1.|r",
+        "Requires Level 58",
+        "Sell Price: 3|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 63|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ],
+     "npcID": 261813,
+     "aliases": [
+      "Venomridge"
+     ]
+    },
+    {
+     "name": "Thunderhoof",
+     "loot": [
+      {
+       "1": 280020,
+       "2": "Deep Jungle Rifle",
+       "3": "Ranged, Gun",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Ranged",
+         "Gun"
+        ],
+        [
+         "70 - 130 Damage",
+         "Speed 3.10"
+        ],
+        "(32.3 damage per second)",
+        "+5 Stamina",
+        "|cff1eff00Equip: Improves your chance to hit by 0.5%.|r",
+        "|cff1eff00Equip: +14 Attack Power.|r",
+        "Requires Level 58",
+        "Sell Price: 4|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 25|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 52|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      {
+       "1": 280019,
+       "2": "Dinofrill Casque",
+       "3": "Head, Mail",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "Head",
+         "Mail"
+        ],
+        "301 Armor",
+        "+17 Agility",
+        "+24 Stamina",
+        "|cff1eff00Equip: Improves your chance to get a critical strike by 1.0%.|r",
+        "Requires Level 58",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 55|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 48|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ],
+     "npcID": 261812,
+     "aliases": [
+      "Thunderhoof"
+     ]
+    },
+    {
+     "name": "Direhorn Matriarch",
+     "loot": [
+      {
+       "1": 280022,
+       "2": "Scaleguard Scimitar",
+       "3": "One-Hand, Sword",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "One-Hand",
+         "Sword"
+        ],
+        [
+         "63 - 119 Damage",
+         "Speed 2.20"
+        ],
+        "(41.4 damage per second)",
+        "+8 Stamina",
+        "|cff1eff00Equip: +14 Attack Power.|r",
+        "|cff1eff00Equip: Increases the Block Value of your shield by 12.|r",
+        "Requires Level 58",
+        "Sell Price: 5|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 71|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 56|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      },
+      {
+       "1": 280021,
+       "2": "Tooth of the Matriarch",
+       "3": "One-Hand, Dagger",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        [
+         "One-Hand",
+         "Dagger"
+        ],
+        [
+         "49 - 92 Damage",
+         "Speed 1.70"
+        ],
+        "(41.5 damage per second)",
+        "+10 Agility",
+        "+7 Nature Resistance",
+        "|cff1eff00Equip: Improves your chance to get a critical strike by 0.5%.|r",
+        "Requires Level 58",
+        "Sell Price: 5|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 69|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 43|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ],
+     "npcID": 262127,
+     "aliases": [
+      "Direhorn Matriarch"
+     ]
+    },
+    {
+     "name": "Bolt",
+     "loot": [
+      {
+       "1": 280032,
+       "2": "Bolt's Charged Eyeball",
+       "3": "Trinket",
+       "4": 3,
+       "tip": [
+        "Binds when picked up",
+        "Unique-Equipped",
+        "Trinket",
+        "|cff1eff00Equip: Dealing damage has a chance to deal 60 Nature damage to you or your current target. Deals 3 times as much damage to Dinosaurs.|r",
+        "Requires Level 58",
+        "Sell Price: 2|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 37|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 7|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ],
+     "npcID": 262081,
+     "aliases": [
+      "Bolt"
+     ]
+    },
+    {
+     "name": "Vitrix",
+     "aliases": [
+      "Vitrix"
+     ],
+     "probableLoot": [
+      [
+       280026,
+       "Albinofur Grips",
+       "Hands, Mail",
+       3
+      ],
+      [
+       280027,
+       "Crownroar Chestplate",
+       "Chest, Plate",
+       3
+      ]
+     ],
+     "npcID": 272561,
+     "loot": []
+    },
+    {
+     "name": "Izha'Rel and Tor'Rel",
+     "aliases": [
+      "Izha'Rel and Tor'Rel",
+      "Izha'Rel",
+      "Tor'Rel"
+     ],
+     "loot": [
+      [
+       280014,
+       "Raptorscale Bulwark",
+       "Off Hand, Shield",
+       3
+      ],
+      [
+       280013,
+       "Frostfang Mail Vest",
+       "Chest, Mail",
+       3
+      ],
+      [
+       280012,
+       "Talon of Tor'Rel",
+       "One-Hand, Sword",
+       3
+      ]
+     ],
+     "npcID": 253218,
+     "description": "Two raptors, fought together. Not elite."
+    },
+    {
+     "name": "Nanaya",
+     "loot": [
+      [
+       280023,
+       "Nanaya's Control Spire",
+       "Two-Hand, Staff",
+       3
+      ],
+      [
+       280025,
+       "Leggings of Curation",
+       "Legs, Cloth",
+       3
+      ],
+      [
+       273128,
+       "Maker's Spark",
+       "Crafting Reagent",
+       2
+      ],
+      [
+       280024,
+       "Legplates of Reinforced Crystal",
+       "Legs, Plate",
+       3
+      ]
+     ],
+     "npcID": 261809,
+     "aliases": [
+      "Nanaya"
+     ]
+    },
+    {
+     "name": "Trash Drops",
+     "trash": true,
+     "loot": [
+      {
+       "1": 287037,
+       "2": "Shaper's Robe",
+       "3": "Chest, Cloth",
+       "4": 3,
+       "tip": [
+        "Binds when equipped",
+        [
+         "Chest",
+         "Cloth"
+        ],
+        "85 Armor",
+        "+15 Intellect",
+        "+15 Spirit",
+        "|cff1eff00Equip: Increases damage and healing done by magical spells and effects by up to 18.|r",
+        "|cff1eff00Equip: Increases damage done to Beasts by magical spells and effects by up to 26.|r",
+        "Requires Level 55",
+        "Sell Price: 1|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 94|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t 69|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t"
+       ]
+      }
+     ]
+    }
+   ],
+   "description": "An ancient titan facility in the northern hills of Un'Goro Crater, overlooking dinosaurs, tar pits and powerful crystals. Collect power crystals across Un'Goro and use them at the consoles inside the terrace.",
+   "quests": [
+    {
+     "name": "Crystalline Elements",
+     "rewardSummary": "Orgrimmar +50  •  Earthen Ring +100",
+     "turninMap": {
+      "y": 0.222,
+      "mapID": 1412,
+      "x": 0.348,
+      "targetName": "Mayena Earthseeker",
+      "label": "Mayena Earthseeker — Mulgore"
+     },
+     "rewardItems": [
+      [
+       279904,
+       "Crystalline Pauldrons",
+       3
+      ],
+      [
+       279906,
+       "Potent Treads",
+       3
+      ]
+     ],
+     "requiredItems": [
+      [
+       271912,
+       "Moist Crystal",
+       1,
+       "Inside Shaper's Terrace"
+      ],
+      [
+       271898,
+       "Charged Crystal",
+       1,
+       "Inside Shaper's Terrace"
+      ],
+      [
+       271902,
+       "Noxious Crystal",
+       1,
+       "Inside Shaper's Terrace"
+      ],
+      [
+       271894,
+       "Fiery Crystal",
+       1,
+       "Inside Shaper's Terrace"
+      ]
+     ],
+     "rewardChoice": true,
+     "level": 60,
+     "faction": "Horde",
+     "startMap": {
+      "y": 0.222,
+      "mapID": 1412,
+      "x": 0.348,
+      "targetName": "Mayena Earthseeker",
+      "label": "Mayena Earthseeker — Mulgore"
+     },
+     "requires": 55,
+     "liveXPFallback": 17655,
+     "id": 95928,
+     "objective": "Bring Mayena Earthseeker a Moist Crystal, a Charged Crystal, a Noxious Crystal and a Fiery Crystal from Shaper's Terrace.",
+     "pickup": "Mayena Earthseeker, Mulgore (34.8, 22.2)",
+     "turnin": "Mayena Earthseeker, Mulgore (34.8, 22.2)"
+    },
+    {
+     "name": "Essence of Seeping Slimes",
+     "requiredItem": [
+      276235,
+      "Seeping Slime Essence",
+      1,
+      8,
+      "From the slimes in the pools inside Shaper's Terrace"
+     ],
+     "rewardSummary": "90s",
+     "note": "Quest giver not known yet. Seen by a Horde player; whether the Alliance gets it too is not known yet.",
+     "learnTitle": "Essence of Seeping Slimes",
+     "rewardChoice": true,
+     "level": 60,
+     "learnItem": 276235,
+     "rewardItems": [
+      [
+       279932,
+       "Slime-Resistant Shroud",
+       3
+      ],
+      [
+       279902,
+       "Reinforced Muck Protectors",
+       3
+      ]
+     ],
+     "requires": 55,
+     "turnin": "Not known yet",
+     "id": -97202,
+     "objective": "Gather 8 Seeping Slime Essence in the Shaper's Terrace.",
+     "pickup": "Not known yet",
+     "faction": "Horde"
+    },
+    {
+     "name": "The Dark Crystal",
+     "requiredItem": [
+      271771,
+      "Drained Crystal Fragment",
+      1,
+      1,
+      "Near the Achromatic Crystal inside Shaper's Terrace"
+     ],
+     "rewardSummary": "",
+     "note": "Quest giver not known yet. Seen by a Horde player; whether the Alliance gets it too is not known yet.",
+     "learnTitle": "The Dark Crystal",
+     "rewardChoice": true,
+     "level": 60,
+     "learnItem": 271771,
+     "rewardItems": [
+      [
+       279908,
+       "Crystal-Infused Cleaver",
+       3
+      ],
+      [
+       279910,
+       "Beastslayer's Trident",
+       3
+      ],
+      [
+       279912,
+       "Faintly Glowing Orb",
+       3
+      ]
+     ],
+     "requires": 55,
+     "turnin": "Not known yet",
+     "id": -97203,
+     "objective": "Gather a colorless Drained Crystal Fragment near the Achromatic Crystal in the Shaper's Terrace.",
+     "pickup": "Not known yet",
+     "faction": "Horde"
+    }
+   ],
    "location": "Un'Goro Crater",
    "icon": "Interface\\Icons\\INV_Misc_Gem_Crystal_02",
    "level": "58-60",
-   "previewOnly": true
+   "fullQuestsTBD": true,
+   "entrance": {
+    "y": 0.061,
+    "mapID": 1449,
+    "detail": "Northern rim of Un'Goro Crater, on the hill right above Marshal's Refuge: climb the stairs to the titan temple",
+    "x": 0.481,
+    "label": "Shaper's Terrace Entrance",
+    "markerType": "dungeon"
+   },
+   "fullItemsTBD": true
   },
   "Scarlet Monastery: Cathedral": {
    "bosses": [
@@ -19600,6 +21693,13 @@
        7730,
        "Cobalt Crusher",
        "Two-Hand, Mace",
+       3,
+       "Scarlet Monastery trash (very rare)"
+      ],
+      [
+       5756,
+       "Sliverblade",
+       "One-Hand, Dagger",
        3,
        "Scarlet Monastery trash (very rare)"
       ],
@@ -19754,6 +21854,28 @@
   "Dire Maul: East": {
    "bosses": [
     {
+     "description": "The imp you chase through the Warpwood Quarter; he fights at the end and drops the Crescent Key.",
+     "name": "Pusillin",
+     "npcID": 14354,
+     "aliases": [
+      "Pusillin"
+     ],
+     "loot": [
+      [
+       18316,
+       "Obsidian Bauble",
+       "Off Hand",
+       3
+      ],
+      [
+       18267,
+       "Recipe: Runn Tum Tuber Surprise",
+       "Recipe, Cooking",
+       2
+      ]
+     ]
+    },
+    {
      "description": "Satyr at the sacrificial altar in the Warpwood Quarter.",
      "name": "Zevrim Thornhoof",
      "npcID": 11490,
@@ -19777,7 +21899,9 @@
        18319,
        "Fervent Helm",
        "Head, Mail",
-       3
+       3,
+       "",
+       "RANDOM_ENCHANT"
       ]
      ]
     },
@@ -19832,9 +21956,7 @@
      ]
     },
     {
-     "description": "Final boss, deep in the Warpwood Quarter.",
      "name": "Alzzin the Wildshaper",
-     "npcID": 11492,
      "aliases": [
       "Alzzin the Wildshaper"
      ],
@@ -19899,7 +22021,9 @@
        "Back",
        3
       ]
-     ]
+     ],
+     "npcID": 11492,
+     "description": "Final boss, deep in the Warpwood Quarter."
     }
    ],
    "description": "The eastern quarter of the ruined Highborne city of Eldre'Thalas, overgrown by the Warpwood and ruled by the satyr Alzzin the Wildshaper. Pusillin carries the Crescent Key that opens the other wings.",
@@ -20823,6 +22947,18 @@
        "Phytoskin Spaulders",
        "Shoulder, Leather",
        3
+      ],
+      [
+       17750,
+       "Chloromesh Girdle",
+       "Waist, Cloth",
+       3
+      ],
+      [
+       17751,
+       "Brusslehide Leggings",
+       "Legs, Leather",
+       3
       ]
      ]
     },
@@ -21050,6 +23186,12 @@
        "Elemental Rockridge Leggings",
        "Legs, Plate",
        3
+      ],
+      [
+       17780,
+       "Blade of Eternal Darkness",
+       "Main Hand, Dagger",
+       4
       ]
      ]
     }
@@ -21240,13 +23382,16 @@
      "liveXPFallback": 3400,
      "rewardSummary": "",
      "level": 49,
-     "hideFromMainList": true,
      "turnin": "Celebras the Redeemed, Maraudon",
      "faction": "Both",
      "note": "The Celebrian Rod drops from Noxxion and the Celebrian Diamond from Lord Vyletongue.",
      "objective": "Recover the two parts of the Scepter of Celebras: the Celebrian Rod and the Celebrian Diamond. Find a way to speak with Celebras.",
      "requires": 41,
-     "pickup": "Cavindra, Maraudon Orange Entrance, Desolace"
+     "pickup": "Cavindra, Maraudon Orange Entrance, Desolace",
+     "leadsToQuestLink": {
+      "id": 7046,
+      "name": "The Scepter of Celebras"
+     }
     },
     {
      "id": 7046,
@@ -21267,7 +23412,11 @@
      "requires": 41,
      "objective": "Assist Celebras the Redeemed while he creates the Scepter of Celebras. Speak with him when the ritual is complete.",
      "startsInDungeon": true,
-     "pickup": "Celebras the Redeemed, Maraudon"
+     "pickup": "Celebras the Redeemed, Maraudon",
+     "startQuestLink": {
+      "id": 7044,
+      "name": "Legends of Maraudon"
+     }
     },
     {
      "id": 7064,
@@ -21350,6 +23499,92 @@
    "icon": "Interface\\Icons\\INV_Misc_Gem_Amethyst_02",
    "location": "Desolace",
    "level": "45-52"
+  },
+  "Mallet of Zul'Farrak": {
+   "parentDungeon": "Zul'Farrak",
+   "location": "The Hinterlands",
+   "quests": [
+    {
+     "name": "Mallet of Zul'Farrak",
+     "rewardSummary": "",
+     "rewardItems": [
+      [
+       9240,
+       "Mallet of Zul'Farrak",
+       1
+      ]
+     ],
+     "level": 50,
+     "faction": "Both",
+     "startMap": {
+      "y": 0.775,
+      "mapID": 1425,
+      "detail": "The altar at the very top of Jintha'Alor",
+      "x": 0.585,
+      "label": "Altar of Jintha'Alor — The Hinterlands",
+      "markerType": "location"
+     },
+     "requires": 1,
+     "note": "Jintha'Alor is full of level 45-50 trolls: bring a group, or sneak up. You can use the Sacred Mallet in combat. One mallet in the group is enough, and it summons Gahz'rilla in every later run too.",
+     "id": -97100,
+     "objective": "Use the Sacred Mallet at the altar on the very top of Jintha'Alor: it turns into the Mallet of Zul'Farrak.",
+     "pickup": "Altar at the very top of Jintha'Alor, The Hinterlands (58.5, 77.5)",
+     "turnin": "The gong at Gahz'rilla's pool, inside Zul'Farrak: use the Mallet of Zul'Farrak there to summon Gahz'rilla."
+    }
+   ],
+   "bosses": [],
+   "description": "",
+   "parentBoss": "Gahz'rilla",
+   "questChainPage": true,
+   "level": "45+"
+  },
+  "Cozy Sleeping Bag": {
+   "description": "",
+   "location": "",
+   "quests": [
+    {
+     "name": "This Must Be The Place",
+     "rewardItems": [
+      [
+       211527,
+       "Cozy Sleeping Bag",
+       3
+      ],
+      [
+       216619,
+       "Student Fodder",
+       2
+      ]
+     ],
+     "liveXPFallback": 1950,
+     "level": 32,
+     "faction": "Alliance",
+     "startMap": {
+      "y": 0.522,
+      "mapID": 1424,
+      "detail": "Hanging outside the room in Thoradin's Wall",
+      "x": 0.857,
+      "label": "Messenger Bag — Thoradin's Wall",
+      "markerType": "location"
+     },
+     "requires": 14,
+     "turninMap": {
+      "y": 0.522,
+      "mapID": 1424,
+      "detail": "Right under the Messenger Bag",
+      "x": 0.857,
+      "label": "Hastily Rolled-Up Satchel — Thoradin's Wall",
+      "markerType": "location"
+     },
+     "id": 79976,
+     "objective": "Search the Hastily Rolled-Up Satchel under the Messenger Bag at Thoradin's Wall.",
+     "pickup": "Messenger Bag hanging at Thoradin's Wall, Hillsbrad Foothills (85.7, 52.2)",
+     "turnin": "Hastily Rolled-Up Satchel, right under the Messenger Bag"
+    }
+   ],
+   "bosses": [],
+   "questChainPage": true,
+   "level": "14+"
   }
  },
  "ORDER": [
@@ -21396,7 +23631,10 @@
    "Primeval Elemental": "38",
    "Deathless Marrow": "39",
    "Min'loth the Serpent": "40",
-   "Zul'Alai": "37"
+   "Zul'Alai": "37",
+   "Umbra": "38",
+   "\"Pyromancer\" Braxton": "38",
+   "Gill": "38"
   },
   "Scarlet Monastery: Library": {
    "Houndmaster Loksey": "34",
@@ -21494,7 +23732,8 @@
    "Twilight Commander Zarmok": "43",
    "Bossman Toof": "42",
    "Slavecrusher Grox": "42",
-   "Nar'gurk": "44"
+   "Nar'gurk": "44",
+   "War Handler Ashka": "43"
   },
   "The Stockade": {
    "Bruegal Ironknuckle": "26",
@@ -21623,7 +23862,8 @@
    "Lethtendris": "57",
    "Alzzin the Wildshaper": "58",
    "Zevrim Thornhoof": "57",
-   "Hydrospawn": "57"
+   "Hydrospawn": "57",
+   "Pusillin": "57"
   },
   "Scarlet Monastery: Cathedral": {
    "High Inquisitor Fairbanks": "40",
@@ -21654,6 +23894,34 @@
    "Edwin VanCleef": "21",
    "Mr. Smite": "20",
    "Captain Greenskin": "20"
+  },
+  "Blackmaw Hold": {
+   "Blackmaw Behemoth": "59",
+   "Bonesnout the Unbroken": "58",
+   "Impaan the Imprisoner": "57",
+   "Withermaw": "58",
+   "Gortek the Apprentice": "55",
+   "Moontouched Wanderer": "55",
+   "Unbound Spirit": "59",
+   "Elder Shaman Bloodmane": "59",
+   "Varrox Bleakhoof": "60"
+  },
+  "Shaper's Terrace": {
+   "Izha'Rel and Tor'Rel": "61",
+   "Direhorn Matriarch": "61",
+   "Venomridge": "61",
+   "Titanosaur": "61",
+   "Nanaya": "62",
+   "Thunderhoof": "61",
+   "Vitrix": "62",
+   "Bolt": "62"
+  },
+  "Alcaz Prison": {
+   "Katerina the Cleaner": "52",
+   "Overseer Wrex": "50",
+   "The Questioner": "51",
+   "Blazeroar": "53",
+   "Tidemistress Ca'zass": "50"
   }
  },
  "STATIC_DISPLAY_IDS": {
@@ -21885,7 +24153,46 @@
   "4842": 6102,
   "8923": 8270,
   "3872": 3224,
-  "11517": 11611
+  "11517": 11611,
+  "14354": 7552,
+  "270885": 142245,
+  "270887": 129945,
+  "264773": 14424,
+  "260274": 142322,
+  "261809": 143832,
+  "261811": 143039,
+  "261812": 144514,
+  "261813": 144511,
+  "253201": 142989,
+  "253218": 143040,
+  "269104": 12235,
+  "269111": 145808,
+  "247195": 140708,
+  "247198": 130427,
+  "247206": 130432,
+  "247207": 130436,
+  "247209": 130440,
+  "258968": 141218,
+  "247231": 131644,
+  "247234": 130447,
+  "272561": 147098,
+  "256236": 140092,
+  "255702": 6374,
+  "262081": 143063,
+  "258964": 141215,
+  "259281": 141443,
+  "258972": 141219,
+  "258966": 141217,
+  "260468": 142457,
+  "260042": 142144,
+  "258924": 144487,
+  "258905": 144475,
+  "257016": 2317,
+  "262127": 144515,
+  "264172": 144022,
+  "255997": 4973,
+  "264177": 144023,
+  "260808": 9010
  },
  "QUEST_START_MAPS": {
   "2040": {
@@ -22717,8 +25024,31 @@
   "388": {
    "label": "Nikova Raskol — Old Town",
    "mapID": 1453,
-   "y": 0.466,
-   "x": 0.736
+   "y": 0.6,
+   "x": 0.744,
+   "patrol": [
+    [
+     0.734,
+     0.554
+    ],
+    [
+     0.763,
+     0.602
+    ],
+    [
+     0.761,
+     0.637
+    ],
+    [
+     0.737,
+     0.622
+    ],
+    [
+     0.722,
+     0.608
+    ]
+   ],
+   "targetName": "Nikova Raskol"
   },
   "4724": {
    "targetName": "Galamav the Marksman",
@@ -23551,18 +25881,186 @@
    "y": 0.668,
    "x": 0.804
   },
-  "-96902": {
-   "targetName": "Archmage Lan'dalock",
-   "label": "Archmage Lan'dalock — Dalaran",
-   "mapID": 1416,
-   "y": 0.731,
-   "x": 0.1589
-  },
   "5722": {
    "label": "Rahauro",
    "mapID": 1456,
    "y": 0.322,
    "x": 0.704
+  },
+  "96078": {
+   "y": 0.277,
+   "mapID": 1434,
+   "detail": "Kin'weelay at Grom'gol Base Camp, Stranglethorn Vale",
+   "x": 0.323,
+   "targetName": "Kin'weelay",
+   "label": "Kin'weelay — Grom'gol Base Camp"
+  },
+  "95647": {
+   "y": 0.588,
+   "mapID": 1437,
+   "detail": "Start Lost in the Thicket Things here",
+   "x": 0.119,
+   "label": "Caitlin Grassman — Menethil Harbor"
+  },
+  "96770": {
+   "y": 0.731,
+   "mapID": 1416,
+   "x": 0.1589,
+   "targetName": "Archmage Lan'dalock",
+   "label": "Archmage Lan'dalock — Dalaran"
+  },
+  "96771": {
+   "y": 0.66,
+   "mapID": 1416,
+   "detail": "Ranath Nightstride, in the inn in Dalaran, Alterac Mountains",
+   "x": 0.178,
+   "targetName": "Ranath Nightstride",
+   "label": "Ranath Nightstride — Dalaran"
+  },
+  "96775": {
+   "y": 0.206,
+   "mapID": 1412,
+   "detail": "Mazu'kon of the Earthen Ring, north-west Mulgore",
+   "x": 0.325,
+   "targetName": "Mazu'kon",
+   "label": "Mazu'kon — Mulgore"
+  },
+  "203": {
+   "y": 0.034,
+   "mapID": 1434,
+   "detail": "Sergeant Yohwa at the Rebel Camp, northern Stranglethorn Vale",
+   "x": 0.38,
+   "targetName": "Sergeant Yohwa",
+   "label": "Sergeant Yohwa — Rebel Camp"
+  },
+  "204": {
+   "y": 0.034,
+   "mapID": 1434,
+   "detail": "Sergeant Yohwa at the Rebel Camp, northern Stranglethorn Vale",
+   "x": 0.38,
+   "targetName": "Sergeant Yohwa",
+   "label": "Sergeant Yohwa — Rebel Camp"
+  },
+  "205": {
+   "y": 0.036,
+   "mapID": 1434,
+   "detail": "Brother Nimetz at the Rebel Camp, northern Stranglethorn Vale",
+   "x": 0.378,
+   "targetName": "Brother Nimetz",
+   "label": "Brother Nimetz — Rebel Camp"
+  },
+  "207": {
+   "y": 0.036,
+   "mapID": 1434,
+   "detail": "Brother Nimetz at the Rebel Camp, northern Stranglethorn Vale",
+   "x": 0.378,
+   "targetName": "Brother Nimetz",
+   "label": "Brother Nimetz — Rebel Camp"
+  },
+  "95773": {
+   "y": 0.288,
+   "mapID": 1434,
+   "detail": "Commander Aggro'gosh at Grom'gol Base Camp, Stranglethorn Vale",
+   "x": 0.322,
+   "targetName": "Commander Aggro'gosh",
+   "label": "Commander Aggro'gosh — Grom'gol Base Camp"
+  },
+  "95776": {
+   "y": 0.288,
+   "mapID": 1434,
+   "detail": "Commander Aggro'gosh at Grom'gol Base Camp, Stranglethorn Vale",
+   "x": 0.322,
+   "targetName": "Commander Aggro'gosh",
+   "label": "Commander Aggro'gosh — Grom'gol Base Camp"
+  },
+  "95786": {
+   "y": 0.036,
+   "mapID": 1434,
+   "detail": "Brother Nimetz at the Rebel Camp, northern Stranglethorn Vale",
+   "x": 0.378,
+   "targetName": "Brother Nimetz",
+   "label": "Brother Nimetz — Rebel Camp"
+  },
+  "95788": {
+   "y": 0.571,
+   "mapID": 1424,
+   "detail": "Loremaster Dibbs in Southshore, Hillsbrad Foothills",
+   "x": 0.506,
+   "targetName": "Loremaster Dibbs",
+   "label": "Loremaster Dibbs — Southshore"
+  },
+  "95798": {
+   "y": 0.571,
+   "mapID": 1424,
+   "detail": "Loremaster Dibbs in Southshore, Hillsbrad Foothills",
+   "x": 0.506,
+   "targetName": "Loremaster Dibbs",
+   "label": "Loremaster Dibbs — Southshore"
+  },
+  "95799": {
+   "y": 0.571,
+   "mapID": 1424,
+   "detail": "Loremaster Dibbs in Southshore, Hillsbrad Foothills",
+   "x": 0.506,
+   "targetName": "Loremaster Dibbs",
+   "label": "Loremaster Dibbs — Southshore"
+  },
+  "92343": {
+   "y": 0.31,
+   "mapID": 1456,
+   "x": 0.756,
+   "targetName": "Nara Wildmane",
+   "label": "Nara Wildmane — Elder Rise, Thunder Bluff"
+  },
+  "92344": {
+   "y": 0.084,
+   "mapID": 1457,
+   "x": 0.354,
+   "targetName": "Mathrengyl Bearwalker",
+   "label": "Mathrengyl Bearwalker — Cenarion Enclave, Darnassus"
+  },
+  "4981": {
+   "y": 0.474,
+   "mapID": 1418,
+   "x": 0.058,
+   "targetName": "Lexlort",
+   "label": "Lexlort — Badlands"
+  },
+  "-97201": {
+   "y": 0.388,
+   "mapID": 1447,
+   "x": 0.418,
+   "targetName": "Ekkal",
+   "label": "Ekkal — Ruins of Eldarath, Azshara"
+  },
+  "95928": {
+   "y": 0.222,
+   "mapID": 1412,
+   "x": 0.348,
+   "targetName": "Mayena Earthseeker",
+   "label": "Mayena Earthseeker — Mulgore"
+  },
+  "92069": {
+   "y": 0.426,
+   "mapID": 1447,
+   "x": 0.424,
+   "targetName": "Ogtinc",
+   "label": "Ogtinc — Azshara"
+  },
+  "97130": {
+   "y": 0.74,
+   "mapID": 1416,
+   "detail": "Archmage Timear, outside where the Violet Hold stood in Dalaran, Alterac Mountains",
+   "x": 0.154,
+   "targetName": "Archmage Timear",
+   "label": "Archmage Timear — Dalaran"
+  },
+  "94998": {
+   "y": 0.81,
+   "mapID": 2548,
+   "x": 0.666,
+   "targetName": "Ashe Amberhall",
+   "label": "Ashe Amberhall — Farholde Keep, Riverglades"
   }
  },
  "QUEST_PREREQ_CHAINS": {
@@ -24017,52 +26515,6 @@
     "id": 2200
    }
   ],
-  "92753": [
-   {
-    "name": "Testing the Wells",
-    "id": 92742
-   },
-   {
-    "name": "Murloc Gills",
-    "id": 92744
-   },
-   {
-    "name": "The State of the Mines",
-    "id": 92745
-   },
-   {
-    "name": "Moonbrook Espionage",
-    "id": 92747
-   },
-   {
-    "name": "Explosive Consultation",
-    "id": 92748
-   },
-   {
-    "name": "A Dynamite Plan",
-    "id": 92749
-   },
-   {
-    "name": "Detonation at a Distance",
-    "id": 92750
-   },
-   {
-    "name": "Detonation at a Distance",
-    "id": 92751
-   },
-   {
-    "name": "Explosive Consultation",
-    "id": 92752
-   },
-   {
-    "name": "Destruction in Deadmines",
-    "id": 92753
-   },
-   {
-    "name": "Destruction in Deadmines",
-    "id": 92819
-   }
-  ],
   "6521": [
    {
     "name": "An Unholy Alliance",
@@ -24104,7 +26556,9 @@
   "2843": [
    {
     "name": "Rig Wars",
-    "id": 2841
+    "id": 2841,
+    "acceptOnly": true,
+    "standalone": true
    },
    {
     "name": "Chief Engineer Scooty",
@@ -24179,8 +26633,20 @@
   ],
   "95776": [
    {
-    "name": "Enemies in the Water",
-    "id": 95773
+    "name": "The Vile Reef",
+    "id": 629
+   },
+   {
+    "id": 95748,
+    "name": "The Gurubashi Legends of Old"
+   },
+   {
+    "id": 95773,
+    "name": "Enemies in the Water"
+   },
+   {
+    "id": 95770,
+    "name": "Locating the Lost City"
    }
   ],
   "95775": [
@@ -24245,22 +26711,10 @@
     "id": 5531
    }
   ],
-  "7046": [
-   {
-    "name": "Legends of Maraudon",
-    "id": 7044
-   }
-  ],
   "7668": [
    {
     "name": "Material Assistance",
     "id": 7667
-   }
-  ],
-  "5724": [
-   {
-    "name": "Searching for the Lost Satchel",
-    "id": 5722
    }
   ],
   "5463": [
@@ -24944,18 +27398,6 @@
     "id": 5065
    }
   ],
-  "4982": [
-   {
-    "name": "Operative Bijou",
-    "id": 4981
-   }
-  ],
-  "95809": [
-   {
-    "name": "Lost in the Thicket Things",
-    "id": 95647
-   }
-  ],
   "8236": [
    {
     "name": "Sealed Azure Bag",
@@ -25032,8 +27474,16 @@
   ],
   "94984": [
    {
-    "name": "A Small Favor",
-    "id": 94907
+    "name": "Scraps of Knowledge",
+    "id": 94879
+   },
+   {
+    "id": 94881,
+    "name": "Curious Trinkets"
+   },
+   {
+    "id": 94907,
+    "name": "A Small Favor"
    }
   ],
   "722": [
@@ -25154,6 +27604,198 @@
    {
     "name": "Young Crocolisk Skins",
     "id": 484
+   }
+  ],
+  "92343": [
+   {
+    "id": 92346,
+    "name": "Beneath Nordrassil"
+   }
+  ],
+  "92344": [
+   {
+    "id": 92345,
+    "name": "Beneath Nordrassil"
+   }
+  ],
+  "94998": [
+   {
+    "id": 94890,
+    "name": "Bring Me His Head"
+   },
+   {
+    "id": 94983,
+    "name": "Twilight Mementos"
+   },
+   {
+    "id": 94997,
+    "name": "Lingering Essence"
+   }
+  ],
+  "-96903": [
+   {
+    "id": -96904,
+    "name": "No Orc Left Behind"
+   },
+   {
+    "id": -96905,
+    "name": "The Honor of the Kor'kron"
+   },
+   {
+    "id": -96908,
+    "name": "Bad News for Folkar"
+   }
+  ],
+  "79976": [
+   {
+    "id": 79008,
+    "name": "... and that note you found"
+   },
+   {
+    "id": 79192,
+    "name": "Stepping Stones"
+   },
+   {
+    "id": 79980,
+    "name": "Scramble"
+   },
+   {
+    "id": 79974,
+    "name": "Wet Job"
+   },
+   {
+    "id": 79975,
+    "name": "Eagle's Fist"
+   }
+  ],
+  "96078": [
+   {
+    "id": 629,
+    "name": "The Vile Reef"
+   },
+   {
+    "id": 95748,
+    "name": "The Gurubashi Legends of Old"
+   },
+   {
+    "id": 95770,
+    "name": "Locating the Lost City"
+   },
+   {
+    "id": 95775,
+    "name": "The Drowned City"
+   }
+  ],
+  "95798": [
+   {
+    "id": 203,
+    "name": "The Second Rebellion"
+   },
+   {
+    "id": 204,
+    "name": "Bad Medicine"
+   },
+   {
+    "id": 207,
+    "name": "Kurzen's Mystery"
+   },
+   {
+    "id": 205,
+    "name": "Troll Witchery"
+   },
+   {
+    "id": 95786,
+    "name": "An Acquaintance in Southshore"
+   },
+   {
+    "id": 95788,
+    "name": "Magics of the Drowned City"
+   }
+  ],
+  "95799": [
+   {
+    "id": 203,
+    "name": "The Second Rebellion"
+   },
+   {
+    "id": 204,
+    "name": "Bad Medicine"
+   },
+   {
+    "id": 207,
+    "name": "Kurzen's Mystery"
+   },
+   {
+    "id": 205,
+    "name": "Troll Witchery"
+   },
+   {
+    "id": 95786,
+    "name": "An Acquaintance in Southshore"
+   },
+   {
+    "id": 95787,
+    "name": "Take Two With Water"
+   }
+  ],
+  "-97100": [
+   {
+    "id": -97101,
+    "name": "Sacred Mallet"
+   }
+  ],
+  "94974": [
+   {
+    "id": 94973,
+    "name": "Krol'dok Moulding"
+   }
+  ],
+  "92819": [
+   {
+    "id": 92742,
+    "name": "Testing the Wells"
+   },
+   {
+    "id": 92744,
+    "name": "Murloc Gills"
+   },
+   {
+    "id": 92745,
+    "name": "The State of the Mines"
+   },
+   {
+    "id": 92747,
+    "name": "Moonbrook Espionage"
+   },
+   {
+    "id": 92748,
+    "name": "Explosive Consultation"
+   },
+   {
+    "id": 92749,
+    "name": "A Dynamite Plan"
+   },
+   {
+    "id": 92750,
+    "name": "Detonation at a Distance"
+   },
+   {
+    "id": 92751,
+    "name": "Detonation at a Distance"
+   },
+   {
+    "id": 92752,
+    "name": "Explosive Consultation"
+   },
+   {
+    "id": 92753,
+    "name": "Destruction in Deadmines"
+   }
+  ],
+  "94981": [
+   {
+    "id": 94980,
+    "name": "Krol'dok Moulding"
    }
   ]
  },
@@ -26141,7 +28783,7 @@
     "y": 0.24,
     "x": 0.55
    },
-   "description": "Required before the Alliance version of Blackfathom Villainy.",
+   "description": "Optional lead-in to the Alliance version of Blackfathom Villainy: hand it in before accepting Blackfathom Villainy, or it can no longer be completed.",
    "objective": "Seek out Argent Guard Thaelrid inside Blackfathom Deeps.",
    "requires": 18,
    "turnin": "Argent Guard Thaelrid, inside Blackfathom Deeps",
@@ -26293,7 +28935,7 @@
    "level": 40
   },
   "95773": {
-   "pickup": "Grom'gol Base Camp, Stranglethorn Vale (quest giver not known yet)",
+   "pickup": "Commander Aggro'gosh, Grom'gol Base Camp, Stranglethorn Vale",
    "requiredItems": [
     {
      "1": 270305,
@@ -26311,8 +28953,25 @@
    ],
    "objective": "Gather 10 Brinescale Tridents from Brinescale Skirmishers.",
    "requires": 30,
-   "turnin": "Grom'gol Base Camp, Stranglethorn Vale (not known yet)",
-   "level": 37
+   "turnin": "Commander Aggro'gosh, Grom'gol Base Camp, Stranglethorn Vale",
+   "level": 37,
+   "note": "Commander Aggro'gosh offers it once The Gurubashi Legends of Old is handed in.",
+   "turninMap": {
+    "y": 0.288,
+    "mapID": 1434,
+    "detail": "Commander Aggro'gosh at Grom'gol Base Camp, Stranglethorn Vale",
+    "x": 0.322,
+    "targetName": "Commander Aggro'gosh",
+    "label": "Commander Aggro'gosh — Grom'gol Base Camp"
+   },
+   "map": {
+    "y": 0.288,
+    "mapID": 1434,
+    "detail": "Commander Aggro'gosh at Grom'gol Base Camp, Stranglethorn Vale",
+    "x": 0.322,
+    "targetName": "Commander Aggro'gosh",
+    "label": "Commander Aggro'gosh — Grom'gol Base Camp"
+   }
   },
   "5845": {
    "pickup": "Tirion Fordring, Eastern Plaguelands",
@@ -26535,7 +29194,8 @@
     "Titan Relic",
     1,
     "Dropped by: Relic Guardian"
-   ]
+   ],
+   "objectiveInDungeon": false
   },
   "4342": {
    "pickup": "Kharan Mighthammer",
@@ -26607,7 +29267,7 @@
    "description": "You need a remote detonator for the planned explosion.",
    "objective": "Talk to Stormwind Intelligence about acquiring a remote detonator.",
    "requires": 9,
-   "turnin": "Stormwind Intelligence, Stormwind",
+   "turnin": "Jasper Fel, SI:7, Old Town, Stormwind",
    "level": 16
   },
   "92751": {
@@ -26643,7 +29303,7 @@
   },
   "92753": {
    "pickup": "Extra-Destructive Explosives quest-start item",
-   "description": "Plant the explosives at the forge, then return to Alba Fairmoon.",
+   "description": "Plant the explosives beside the forge, then meet Alba Fairmoon at the Deadmines exit.",
    "objective": "Find the forge in the Deadmines and plant the Extra-Destructive Explosives beside it.",
    "startItem": [
     254553,
@@ -26652,7 +29312,7 @@
     "Supplied by Sprite Jumpsprocket during Explosive Consultation; plant it at the Deadmines forge"
    ],
    "requires": 9,
-   "turnin": "Alba Fairmoon, Sentinel Hill inn, Westfall",
+   "turnin": "Alba Fairmoon, in the hills behind Moonbrook (at the Deadmines exit), Westfall",
    "level": 18
   },
   "6402": {
@@ -26867,22 +29527,6 @@
    "requires": 9,
    "turnin": "Earthseer Farsen, Dun Morogh",
    "level": 15
-  },
-  "92819": {
-   "suppressDescription": true,
-   "pickup": "Alba Fairmoon, Sentinel Hill inn, Westfall",
-   "map": {
-    "label": "Alba Fairmoon — Sentinel Hill inn",
-    "detail": "Alba Fairmoon is inside the Sentinel Hill inn",
-    "mapID": 1436,
-    "y": 0.533,
-    "x": 0.53
-   },
-   "description": "Final step of the Toxic Soil chain.",
-   "objective": "Use the detonator.",
-   "requires": 9,
-   "turnin": "Alba Fairmoon, Sentinel Hill inn, Westfall",
-   "level": 18
   },
   "3906": {
    "pickup": "Thunderheart, Badlands",
@@ -29418,6 +32062,694 @@
    "requires": 55,
    "turnin": "Eva Sarkhoff, Caer Darrow, Western Plaguelands",
    "level": 60
+  },
+  "-96908": {
+   "requires": 48,
+   "turnin": "Commander Folkar, inside Alcaz Prison",
+   "objective": "Tell Commander Folkar what you found.",
+   "pickup": "Perfumed Note, after Blazeroar, inside Alcaz Prison",
+   "level": 53
+  },
+  "-96905": {
+   "requires": 48,
+   "turnin": "Perfumed Note, after Blazeroar, inside Alcaz Prison",
+   "objective": "Look for King Varian Wrynn in Alcaz Prison.",
+   "pickup": "Commander Folkar, inside Alcaz Prison",
+   "level": 53
+  },
+  "203": {
+   "note": "Done together with the other of Sergeant Yohwa's two quests (The Second Rebellion and Bad Medicine); Brother Nimetz offers Kurzen's Mystery once both are handed in.",
+   "turninMap": {
+    "y": 0.034,
+    "mapID": 1434,
+    "detail": "Sergeant Yohwa at the Rebel Camp, northern Stranglethorn Vale",
+    "x": 0.38,
+    "targetName": "Sergeant Yohwa",
+    "label": "Sergeant Yohwa — Rebel Camp"
+   },
+   "requires": 30,
+   "map": {
+    "y": 0.034,
+    "mapID": 1434,
+    "detail": "Sergeant Yohwa at the Rebel Camp, northern Stranglethorn Vale",
+    "x": 0.38,
+    "targetName": "Sergeant Yohwa",
+    "label": "Sergeant Yohwa — Rebel Camp"
+   },
+   "turnin": "Sergeant Yohwa, Rebel Camp, Stranglethorn Vale",
+   "objective": "Kill 15 Kurzen Jungle Fighters.",
+   "pickup": "Sergeant Yohwa, Rebel Camp, Stranglethorn Vale",
+   "level": 33
+  },
+  "204": {
+   "requiredItems": [
+    [
+     2633,
+     "Jungle Remedy",
+     1,
+     "Dropped by the Kurzen trolls in and around Kurzen's Compound (7 needed)"
+    ],
+    [
+     2634,
+     "Venom Fern Extract",
+     1,
+     "Dropped by the Kurzen trolls in and around Kurzen's Compound"
+    ]
+   ],
+   "level": 34,
+   "note": "Done together with the other of Sergeant Yohwa's two quests (The Second Rebellion and Bad Medicine); Brother Nimetz offers Kurzen's Mystery once both are handed in.",
+   "turninMap": {
+    "y": 0.034,
+    "mapID": 1434,
+    "detail": "Sergeant Yohwa at the Rebel Camp, northern Stranglethorn Vale",
+    "x": 0.38,
+    "targetName": "Sergeant Yohwa",
+    "label": "Sergeant Yohwa — Rebel Camp"
+   },
+   "requires": 30,
+   "turnin": "Sergeant Yohwa, Rebel Camp, Stranglethorn Vale",
+   "objective": "Bring 7 Jungle Remedies and 1 Venom Fern Extract to Sergeant Yohwa.",
+   "pickup": "Sergeant Yohwa, Rebel Camp, Stranglethorn Vale",
+   "map": {
+    "y": 0.034,
+    "mapID": 1434,
+    "detail": "Sergeant Yohwa at the Rebel Camp, northern Stranglethorn Vale",
+    "x": 0.38,
+    "targetName": "Sergeant Yohwa",
+    "label": "Sergeant Yohwa — Rebel Camp"
+   }
+  },
+  "205": {
+   "requiredItems": [
+    [
+     2466,
+     "Skullsplitter Fetish",
+     1,
+     "Dropped by Skullsplitter Witchdoctors and Mystics in the troll ruins south of the Rebel Camp (4 needed)"
+    ]
+   ],
+   "turninMap": {
+    "y": 0.036,
+    "mapID": 1434,
+    "detail": "Brother Nimetz at the Rebel Camp, northern Stranglethorn Vale",
+    "x": 0.378,
+    "targetName": "Brother Nimetz",
+    "label": "Brother Nimetz — Rebel Camp"
+   },
+   "requires": 30,
+   "map": {
+    "y": 0.036,
+    "mapID": 1434,
+    "detail": "Brother Nimetz at the Rebel Camp, northern Stranglethorn Vale",
+    "x": 0.378,
+    "targetName": "Brother Nimetz",
+    "label": "Brother Nimetz — Rebel Camp"
+   },
+   "turnin": "Brother Nimetz, Rebel Camp, Stranglethorn Vale",
+   "objective": "Bring 4 Skullsplitter Fetishes to Brother Nimetz.",
+   "pickup": "Brother Nimetz, Rebel Camp, Stranglethorn Vale",
+   "level": 40
+  },
+  "207": {
+   "requiredItems": [
+    {
+     "1": 2005,
+     "2": "The First Troll Legend",
+     "3": 1,
+     "4": "From the tablet Moon Over the Vale (around 29, 19)",
+     "map": {
+      "y": 0.192,
+      "mapID": 1434,
+      "detail": "The tablet Moon Over the Vale (around 29, 19)",
+      "x": 0.294,
+      "label": "Moon Over the Vale — Stranglethorn Vale",
+      "markerType": "location"
+     }
+    },
+    {
+     "1": 2006,
+     "2": "The Second Troll Legend",
+     "3": 1,
+     "4": "From the tablet Gri'lek the Wanderer, at the bottom of the Vile Reef (around 25, 23)",
+     "map": {
+      "y": 0.228,
+      "mapID": 1434,
+      "detail": "The tablet at the bottom of the Vile Reef (around 25, 23)",
+      "x": 0.248,
+      "label": "Gri'lek the Wanderer — Stranglethorn Vale",
+      "markerType": "location"
+     }
+    },
+    {
+     "1": 2007,
+     "2": "The Third Troll Legend",
+     "3": 1,
+     "4": "From the tablet Fall of Gurubashi, in the troll ruins on the coast north of the Vile Reef (around 23, 12)",
+     "map": {
+      "y": 0.12,
+      "mapID": 1434,
+      "detail": "The tablet in the troll ruins on the coast (around 23, 12)",
+      "x": 0.23,
+      "label": "Fall of Gurubashi — Stranglethorn Vale",
+      "markerType": "location"
+     }
+    },
+    {
+     "1": 2008,
+     "2": "The Fourth Troll Legend",
+     "3": 1,
+     "4": "From the tablet The Emperor's Tomb (around 25, 9)",
+     "map": {
+      "y": 0.09,
+      "mapID": 1434,
+      "detail": "The tablet The Emperor's Tomb (around 25, 9)",
+      "x": 0.247,
+      "label": "The Emperor's Tomb — Stranglethorn Vale",
+      "markerType": "location"
+     }
+    }
+   ],
+   "turninMap": {
+    "y": 0.036,
+    "mapID": 1434,
+    "detail": "Brother Nimetz at the Rebel Camp, northern Stranglethorn Vale",
+    "x": 0.378,
+    "targetName": "Brother Nimetz",
+    "label": "Brother Nimetz — Rebel Camp"
+   },
+   "requires": 30,
+   "map": {
+    "y": 0.036,
+    "mapID": 1434,
+    "detail": "Brother Nimetz at the Rebel Camp, northern Stranglethorn Vale",
+    "x": 0.378,
+    "targetName": "Brother Nimetz",
+    "label": "Brother Nimetz — Rebel Camp"
+   },
+   "turnin": "Brother Nimetz, Rebel Camp, Stranglethorn Vale",
+   "objective": "Find the four troll tablets on the coast and in the Vile Reef, and bring back the First, Second, Third and Fourth Troll Legends.",
+   "pickup": "Brother Nimetz, Rebel Camp, Stranglethorn Vale",
+   "level": 38
+  },
+  "95775": {
+   "requiredItems": [
+    [
+     270308,
+     "The First Tablet of I'lalai",
+     1,
+     "A rubbing of the tablet inside the Drowned City"
+    ],
+    [
+     270309,
+     "The Second Tablet of I'lalai",
+     1,
+     "A rubbing of the tablet inside the Drowned City"
+    ],
+    [
+     270310,
+     "The Third Tablet of I'lalai",
+     1,
+     "A rubbing of the tablet inside the Drowned City"
+    ],
+    [
+     270311,
+     "The Fourth Tablet of I'lalai",
+     1,
+     "A rubbing of the tablet inside the Drowned City"
+    ]
+   ],
+   "turninMap": {
+    "y": 0.277,
+    "mapID": 1434,
+    "detail": "Kin'weelay at Grom'gol Base Camp, Stranglethorn Vale",
+    "x": 0.323,
+    "targetName": "Kin'weelay",
+    "label": "Kin'weelay — Grom'gol Base Camp"
+   },
+   "requires": 30,
+   "map": {
+    "y": 0.277,
+    "mapID": 1434,
+    "detail": "Kin'weelay at Grom'gol Base Camp, Stranglethorn Vale",
+    "x": 0.323,
+    "targetName": "Kin'weelay",
+    "label": "Kin'weelay — Grom'gol Base Camp"
+   },
+   "turnin": "Kin'weelay, Grom'gol Base Camp, Stranglethorn Vale",
+   "objective": "Use the hide and charcoal to make rubbings of the four Tablets of I'lalai in the Drowned City.",
+   "pickup": "Kin'weelay, Grom'gol Base Camp, Stranglethorn Vale",
+   "level": 40
+  },
+  "95786": {
+   "providedItem": [
+    270340,
+    "Savage Coast Report Bundle",
+    1,
+    "Given by Brother Nimetz when you accept the quest"
+   ],
+   "turninMap": {
+    "y": 0.571,
+    "mapID": 1424,
+    "detail": "Loremaster Dibbs in Southshore, Hillsbrad Foothills",
+    "x": 0.506,
+    "targetName": "Loremaster Dibbs",
+    "label": "Loremaster Dibbs — Southshore"
+   },
+   "requires": 30,
+   "map": {
+    "y": 0.036,
+    "mapID": 1434,
+    "detail": "Brother Nimetz at the Rebel Camp, northern Stranglethorn Vale",
+    "x": 0.378,
+    "targetName": "Brother Nimetz",
+    "label": "Brother Nimetz — Rebel Camp"
+   },
+   "turnin": "Loremaster Dibbs, Southshore, Hillsbrad Foothills",
+   "objective": "Take the Savage Coast Report Bundle (the fetishes, the troll legends and the scouting report) to Loremaster Dibbs in Southshore.",
+   "pickup": "Brother Nimetz, Rebel Camp, Stranglethorn Vale",
+   "level": 40
+  },
+  "95787": {
+   "requiredItems": [
+    [
+     270308,
+     "The First Tablet of I'lalai",
+     1,
+     "A rubbing of the tablet inside the Drowned City"
+    ],
+    [
+     270309,
+     "The Second Tablet of I'lalai",
+     1,
+     "A rubbing of the tablet inside the Drowned City"
+    ],
+    [
+     270310,
+     "The Third Tablet of I'lalai",
+     1,
+     "A rubbing of the tablet inside the Drowned City"
+    ],
+    [
+     270311,
+     "The Fourth Tablet of I'lalai",
+     1,
+     "A rubbing of the tablet inside the Drowned City"
+    ]
+   ],
+   "requires": 30,
+   "map": {
+    "y": 0.571,
+    "mapID": 1424,
+    "detail": "Loremaster Dibbs in Southshore, Hillsbrad Foothills",
+    "x": 0.506,
+    "targetName": "Loremaster Dibbs",
+    "label": "Loremaster Dibbs — Southshore"
+   },
+   "turnin": "Loremaster Dibbs, Southshore, Hillsbrad Foothills",
+   "objective": "Make rubbings of the four Tablets of I'lalai in the Drowned City.",
+   "pickup": "Loremaster Dibbs, Southshore, Hillsbrad Foothills",
+   "level": 40
+  },
+  "95788": {
+   "requiredItems": [
+    [
+     270343,
+     "I'lalai Fetish",
+     1,
+     "Dropped by the trolls in the Drowned City (5 needed)"
+    ]
+   ],
+   "requires": 30,
+   "map": {
+    "y": 0.571,
+    "mapID": 1424,
+    "detail": "Loremaster Dibbs in Southshore, Hillsbrad Foothills",
+    "x": 0.506,
+    "targetName": "Loremaster Dibbs",
+    "label": "Loremaster Dibbs — Southshore"
+   },
+   "turnin": "Loremaster Dibbs, Southshore, Hillsbrad Foothills",
+   "objective": "Collect 5 I'lalai Fetishes from the trolls in the Drowned City.",
+   "pickup": "Loremaster Dibbs, Southshore, Hillsbrad Foothills",
+   "level": 40
+  },
+  "79980": {
+   "note": "Head straight north from the camp, climb the hill and jump down from its edge to the Mound of Dirt. Watch your step.",
+   "turninMap": {
+    "y": 0.499,
+    "mapID": 1442,
+    "detail": "Below the cliff north of the abandoned camp",
+    "x": 0.396,
+    "label": "Mound of Dirt — Stonetalon Mountains",
+    "markerType": "location"
+   },
+   "requires": 14,
+   "map": {
+    "y": 0.526,
+    "mapID": 1442,
+    "detail": "On a box at the abandoned camp",
+    "x": 0.408,
+    "label": "Pocket Litter — Stonetalon Mountains",
+    "markerType": "location"
+   },
+   "turnin": "Mound of Dirt below the cliff north of the camp, Stonetalon Mountains (39.6, 49.9)",
+   "objective": "Take a hundred paces due north of the camp and find the Mound of Dirt below the cliff.",
+   "pickup": "Pocket Litter on a box at the abandoned camp, Stonetalon Mountains (40.8, 52.6)",
+   "level": 24
+  },
+  "79007": {
+   "turninMap": {
+    "y": 0.506,
+    "mapID": 1436,
+    "detail": "The cart wreckage at the Alexston Farmstead",
+    "x": 0.373,
+    "label": "Burned-Out Remains — Westfall",
+    "markerType": "location"
+   },
+   "requires": 14,
+   "map": {
+    "y": 0.739,
+    "mapID": 1413,
+    "detail": "The burnt tower on the road south of Camp Taurajo",
+    "x": 0.463,
+    "label": "Burned-Out Remains — The Barrens",
+    "markerType": "location"
+   },
+   "turnin": "Burned-Out Remains in the cart wreckage at the Alexston Farmstead, Westfall (37.3, 50.6)",
+   "objective": "Follow the charred note from The Barrens to its twin place: the Burned-Out Remains at the Alexston Farmstead in Westfall.",
+   "pickup": "Burned-Out Remains at the burnt tower on the road south of Camp Taurajo, The Barrens (46.3, 73.9)",
+   "level": 22
+  },
+  "79008": {
+   "turninMap": {
+    "y": 0.739,
+    "mapID": 1413,
+    "detail": "The burnt tower on the road south of Camp Taurajo",
+    "x": 0.463,
+    "label": "Burned-Out Remains — The Barrens",
+    "markerType": "location"
+   },
+   "requires": 14,
+   "map": {
+    "y": 0.506,
+    "mapID": 1436,
+    "detail": "The cart wreckage at the Alexston Farmstead",
+    "x": 0.373,
+    "label": "Burned-Out Remains — Westfall",
+    "markerType": "location"
+   },
+   "turnin": "Burned-Out Remains at the burnt tower on the road south of Camp Taurajo, The Barrens (46.3, 73.9)",
+   "objective": "Follow the charred note from Westfall to its twin place: the Burned-Out Remains at the burnt tower south of Camp Taurajo in The Barrens.",
+   "pickup": "Burned-Out Remains in the cart wreckage at the Alexston Farmstead, Westfall (37.3, 50.6)",
+   "level": 22
+  },
+  "92345": {
+   "turninMap": {
+    "y": 0.084,
+    "mapID": 1457,
+    "x": 0.354,
+    "targetName": "Mathrengyl Bearwalker",
+    "label": "Mathrengyl Bearwalker — Cenarion Enclave, Darnassus"
+   },
+   "requires": 45,
+   "turnin": "Mathrengyl Bearwalker, Cenarion Enclave, Darnassus",
+   "objective": "Speak with Mathrengyl Bearwalker in the Cenarion Enclave in Darnassus.",
+   "pickup": "Southern Azshara (giver not known yet)",
+   "level": 55
+  },
+  "92346": {
+   "turninMap": {
+    "y": 0.31,
+    "mapID": 1456,
+    "x": 0.756,
+    "targetName": "Nara Wildmane",
+    "label": "Nara Wildmane — Elder Rise, Thunder Bluff"
+   },
+   "requires": 45,
+   "map": {
+    "y": 0.514,
+    "mapID": 1447,
+    "x": 0.225,
+    "targetName": "Jediga",
+    "label": "Jediga — Valormok, Azshara"
+   },
+   "turnin": "Nara Wildmane, Elder Rise, Thunder Bluff",
+   "objective": "Speak with Nara Wildmane on Elder Rise in Thunder Bluff.",
+   "pickup": "Jediga, Valormok, Azshara (22.5, 51.4)",
+   "level": 55
+  },
+  "94997": {
+   "turninMap": {
+    "y": 0.81,
+    "mapID": 2548,
+    "x": 0.666,
+    "targetName": "Ashe Amberhall",
+    "label": "Ashe Amberhall — Farholde Keep, Riverglades"
+   },
+   "requires": 38,
+   "providedItem": [
+    268035,
+    "Satchel of Cursed Mementos",
+    1,
+    "Given when you accept the quest"
+   ],
+   "turnin": "Ashe Amberhall, Farholde Keep, Riverglades",
+   "objective": "Bring the Satchel of Cursed Mementos to Ashe Amberhall in Farholde Keep.",
+   "pickup": "Farholde Keep, Riverglades (who gives it is not known yet)",
+   "level": 42
+  },
+  "94890": {
+   "requiredItems": [
+    [
+     265837,
+     "Kilgar's Head",
+     1,
+     "From Overlord Kilgar in the Twilight's Shroud, Riverglades"
+    ]
+   ],
+   "requires": 38,
+   "note": "Handing it in to Sergeant Riftan unlocks Twilight Mementos.",
+   "turnin": "Sergeant Riftan, Farholde Keep, Riverglades",
+   "objective": "Defeat Overlord Kilgar within the Twilight's Shroud and bring his head to Sergeant Riftan.",
+   "pickup": "Farholde Keep, Riverglades (giver not known yet)",
+   "level": 46
+  },
+  "94973": {
+   "turnin": "Kreza Darkthorn, Rog'mar, Riverglades (probably)",
+   "requires": 38,
+   "startItem": [
+    267137,
+    "Krol'dok Moulding",
+    1,
+    "Looted in Krol'dok Stronghold; keep any you find"
+   ],
+   "startsInDungeon": true,
+   "objective": "Find someone in Rog'mar who may know about the mould.",
+   "pickup": "Krol'dok Moulding, looted in Krol'dok Stronghold",
+   "level": 41
+  },
+  "94879": {
+   "requiredItems": [
+    [
+     266424,
+     "Twilight Page",
+     1,
+     "From the Twilight's Hammer in Sunnyglade (5 needed)"
+    ]
+   ],
+   "level": 40,
+   "note": "Done alongside Curious Trinkets.",
+   "turninMap": {
+    "y": 0.81,
+    "mapID": 2548,
+    "x": 0.666,
+    "targetName": "Ashe Amberhall",
+    "label": "Ashe Amberhall — Farholde Keep, Riverglades"
+   },
+   "requires": 36,
+   "turnin": "Ashe Amberhall, Farholde Keep, Riverglades",
+   "objective": "Collect 5 Twilight Pages from within Sunnyglade for Ashe Amberhall in Farholde Keep.",
+   "pickup": "Ashe Amberhall, Farholde Keep, Riverglades",
+   "map": {
+    "y": 0.81,
+    "mapID": 2548,
+    "x": 0.666,
+    "targetName": "Ashe Amberhall",
+    "label": "Ashe Amberhall — Farholde Keep, Riverglades"
+   }
+  },
+  "-96904": {
+   "requires": 48,
+   "map": {
+    "y": 0.19,
+    "mapID": 1445,
+    "detail": "Sergeant Ulka, outside Alcaz Prison on Alcaz Island",
+    "x": 0.704,
+    "targetName": "Sergeant Ulka",
+    "label": "Sergeant Ulka — Dustwallow Marsh"
+   },
+   "turnin": "Commander Folkar, inside Alcaz Prison",
+   "objective": "Find Commander Folkar inside Alcaz Prison.",
+   "pickup": "Sergeant Ulka, outside Alcaz Prison, Dustwallow Marsh (70.4, 19.0)",
+   "level": 53
+  },
+  "94881": {
+   "requiredItems": [
+    [
+     266425,
+     "Twilight Charm",
+     1,
+     "Dropped by Twilight Shadowmancers and Twilight Neophytes in Sunnyglade (25 needed)"
+    ]
+   ],
+   "level": 38,
+   "note": "Done alongside Scraps of Knowledge.",
+   "turninMap": {
+    "y": 0.81,
+    "mapID": 2548,
+    "x": 0.666,
+    "targetName": "Ashe Amberhall",
+    "label": "Ashe Amberhall — Farholde Keep, Riverglades"
+   },
+   "requires": 36,
+   "turnin": "Ashe Amberhall, Farholde Keep, Riverglades",
+   "objective": "Retrieve 25 Twilight Charms from Twilight Shadowmancers and Twilight Neophytes in Sunnyglade for Ashe Amberhall in Farholde Keep.",
+   "pickup": "Ashe Amberhall, Farholde Keep, Riverglades",
+   "map": {
+    "y": 0.81,
+    "mapID": 2548,
+    "x": 0.666,
+    "targetName": "Ashe Amberhall",
+    "label": "Ashe Amberhall — Farholde Keep, Riverglades"
+   }
+  },
+  "79975": {
+   "note": "Climb into Thoradin's Wall from the cart on the Hillsbrad side (87.3, 49.6), go through the room in the wall and look outside to the right: the bag hangs there.",
+   "turninMap": {
+    "y": 0.522,
+    "mapID": 1424,
+    "detail": "Hanging outside the room in Thoradin's Wall",
+    "x": 0.857,
+    "label": "Messenger Bag — Thoradin's Wall",
+    "markerType": "location"
+   },
+   "requires": 14,
+   "map": {
+    "y": 0.129,
+    "mapID": 1432,
+    "detail": "On the carved heads of the dam, facing the Wetlands",
+    "x": 0.494,
+    "label": "Carved Figurine — Stonewrought Dam",
+    "markerType": "location"
+   },
+   "turnin": "Messenger Bag hanging at Thoradin's Wall, Hillsbrad Foothills (85.7, 52.2)",
+   "objective": "Find the Messenger Bag at Thoradin's Wall, between Hillsbrad Foothills and the Arathi Highlands.",
+   "pickup": "Carved Figurine on the carved heads of the Stonewrought Dam, Loch Modan (49.4, 12.9)",
+   "level": 32
+  },
+  "79974": {
+   "note": "Jump onto the carved heads of the dam, on the side facing the Wetlands, to reach the figurine. Getting there is tricky for the Horde.",
+   "turninMap": {
+    "y": 0.129,
+    "mapID": 1432,
+    "detail": "On the carved heads of the dam, facing the Wetlands",
+    "x": 0.494,
+    "label": "Carved Figurine — Stonewrought Dam",
+    "markerType": "location"
+   },
+   "requires": 14,
+   "map": {
+    "y": 0.499,
+    "mapID": 1442,
+    "detail": "Below the cliff north of the abandoned camp",
+    "x": 0.396,
+    "label": "Mound of Dirt — Stonetalon Mountains",
+    "markerType": "location"
+   },
+   "turnin": "Carved Figurine on the carved heads of the Stonewrought Dam, Loch Modan (49.4, 12.9)",
+   "objective": "Find the eagle's nest on the face of the Stonewrought Dam in Loch Modan: the Carved Figurine.",
+   "pickup": "Mound of Dirt below the cliff north of the camp, Stonetalon Mountains (39.6, 49.9)",
+   "level": 32
+  },
+  "94980": {
+   "turnin": "Alphonse Dumas, Farholde Keep, Riverglades (probably)",
+   "requires": 38,
+   "startItem": [
+    267138,
+    "Krol'dok Moulding",
+    1,
+    "Looted in Krol'dok Stronghold; keep any you find"
+   ],
+   "startsInDungeon": true,
+   "objective": "Find someone in Farholde Keep who may know about the mould.",
+   "pickup": "Krol'dok Moulding, looted in Krol'dok Stronghold",
+   "level": 41
+  },
+  "94983": {
+   "note": "Unlocked by handing in Bring Me His Head to Sergeant Riftan.",
+   "turninMap": {
+    "y": 0.8,
+    "mapID": 2548,
+    "label": "Farholde Keep — Riverglades (who takes it is not known yet)",
+    "x": 0.666
+   },
+   "requires": 38,
+   "requiredItems": [
+    [
+     267234,
+     "Twilight Bangle",
+     1,
+     "Dropped by the Twilight's Hammer cultists in Krol'dok Stronghold (8 needed)"
+    ]
+   ],
+   "turnin": "Farholde Keep, Riverglades (not known yet)",
+   "objective": "Collect 8 Twilight Bangles from the Twilight's Hammer in Krol'dok Stronghold.",
+   "pickup": "Farholde Keep, Riverglades (giver not known yet)",
+   "level": 42
+  },
+  "79192": {
+   "note": "Take the path north-east of Sun Rock Retreat (50.9, 52.3) up to the abandoned camp; the Pocket Litter lies on a box. Optional: light the Firepit in the middle of the camp with the Simple Wood and Flint and Tinder from this quest (Rekindle).",
+   "turninMap": {
+    "y": 0.526,
+    "mapID": 1442,
+    "detail": "On a box at the abandoned camp",
+    "x": 0.408,
+    "label": "Pocket Litter — Stonetalon Mountains",
+    "markerType": "location"
+   },
+   "requires": 14,
+   "map": {
+    "y": 0.738,
+    "mapID": 1413,
+    "detail": "Beside the Burned-Out Remains, south of Camp Taurajo",
+    "x": 0.464,
+    "label": "Nailed Plank — The Barrens",
+    "markerType": "location"
+   },
+   "turnin": "Pocket Litter on a box at the abandoned camp, Stonetalon Mountains (40.8, 52.6)",
+   "objective": "Find the cozy spot in the mountains between The Barrens and Desolace: the Pocket Litter at an abandoned camp in Stonetalon Mountains.",
+   "pickup": "Nailed Plank on the side of the burnt tower south of Camp Taurajo, The Barrens (46.4, 73.8)",
+   "level": 24
+  },
+  "-97101": {
+   "note": "Qiaga the Keeper and Morta'gya the Keeper are level 50 elites, with casters around them. Everyone in the group can loot a Sacred Mallet.",
+   "requires": 1,
+   "providedItem": [
+    9241,
+    "Sacred Mallet",
+    1
+   ],
+   "map": {
+    "y": 0.68,
+    "mapID": 1425,
+    "detail": "At the top of the Altar of Zul",
+    "x": 0.486,
+    "targetName": "Qiaga the Keeper",
+    "label": "Qiaga the Keeper — Altar of Zul, The Hinterlands"
+   },
+   "objective": "Kill Qiaga the Keeper at the top of the Altar of Zul and loot the Sacred Mallet.",
+   "pickup": "Qiaga the Keeper, top of the Altar of Zul, The Hinterlands (48.6, 68.0)",
+   "level": 50
   }
  },
  "FOREVER_QUEST_XP_FALLBACK": {
@@ -29540,7 +32872,43 @@
   "1013": 2100,
   "96391": 1050,
   "95250": 1650,
-  "98423": 1150
+  "98423": 1150,
+  "92069": 12400,
+  "97173": 12800,
+  "94879": 3150,
+  "94890": 5050,
+  "92343": 11300,
+  "97198": 16100,
+  "94980": 3300,
+  "94981": 3300,
+  "96772": 14410,
+  "94997": 3450,
+  "94998": 3450,
+  "79975": 2550,
+  "79976": 1950,
+  "95787": 8450,
+  "95788": 8450,
+  "79980": 200,
+  "95928": 17655,
+  "96078": 2350,
+  "92344": 11300,
+  "92346": 560,
+  "92345": 560,
+  "203": 1950,
+  "204": 2700,
+  "205": 3150,
+  "207": 3550,
+  "79007": 1750,
+  "79008": 1750,
+  "94974": 3300,
+  "94973": 3300,
+  "94881": 2850,
+  "-96908": 2472,
+  "-96904": 12463,
+  "79974": 2550,
+  "79192": 1950,
+  "-96905": 12463,
+  "95786": 3150
  },
  "FOREVER_QUEST_BASE_XP": {
   "92421": 2200,
@@ -29740,6 +33108,140 @@
     ]
    ],
    "choice": false
+  },
+  "79980": {
+   "items": [
+    [
+     3463,
+     "Silver Star",
+     2
+    ],
+    [
+     217314,
+     "Moonsight Rifle",
+     2
+    ],
+    [
+     217315,
+     "Precision Bow",
+     2
+    ]
+   ],
+   "also": [
+    [
+     3464,
+     "Feathered Arrow",
+     2
+    ],
+    [
+     3465,
+     "Exploding Shot",
+     2
+    ],
+    [
+     216619,
+     "Student Fodder",
+     2
+    ]
+   ],
+   "choice": true
+  },
+  "79007": {
+   "items": [
+    [
+     2459,
+     "Swiftness Potion",
+     1
+    ],
+    [
+     3388,
+     "Lesser Troll's Blood Elixir",
+     1
+    ]
+   ],
+   "choice": false
+  },
+  "79008": {
+   "items": [
+    [
+     2459,
+     "Swiftness Potion",
+     1
+    ],
+    [
+     3388,
+     "Lesser Troll's Blood Elixir",
+     1
+    ]
+   ],
+   "choice": false
+  },
+  "94890": {
+   "items": [
+    [
+     275046,
+     "Twilight Overlord Drape",
+     2
+    ],
+    [
+     275049,
+     "Farholde Bastion",
+     2
+    ]
+   ],
+   "choice": true
+  },
+  "79974": {
+   "items": [
+    [
+     5432,
+     "Hickory Pipe",
+     0
+    ],
+    [
+     20709,
+     "Rumsey Rum Light",
+     1
+    ]
+   ],
+   "choice": false
+  },
+  "79192": {
+   "items": [
+    [
+     2901,
+     "Mining Pick",
+     1
+    ],
+    [
+     3334,
+     "Farmer's Shovel",
+     2
+    ]
+   ],
+   "also": [
+    [
+     1652,
+     "Sturdy Lunchbox",
+     1
+    ],
+    [
+     4470,
+     "Simple Wood",
+     1
+    ],
+    [
+     4471,
+     "Flint and Tinder",
+     1
+    ],
+    [
+     221498,
+     "Old Toolbox",
+     1
+    ]
+   ],
+   "choice": true
   }
  },
  "PREREQ_REWARD_MONEY_FALLBACK": {
@@ -29759,7 +33261,10 @@
   "92749": 200,
   "92742": 250,
   "880": 800,
-  "303": 2500
+  "303": 2500,
+  "94997": 5500,
+  "94973": 5500,
+  "94980": 5500
  },
  "QUEST_SHAREABILITY_AUDIT": {
   "6133": true,
@@ -30156,7 +33661,22 @@
   "7046": false,
   "7064": true,
   "7029": false,
-  "1275": true
+  "1275": true,
+  "96078": true,
+  "96771": true,
+  "97196": true,
+  "79974": false,
+  "203": true,
+  "205": true,
+  "95776": true,
+  "207": true,
+  "204": true,
+  "79975": false,
+  "79976": false,
+  "79980": false,
+  "79007": false,
+  "79008": false,
+  "79192": false
  },
  "SHARED_BY_BOSS": {
   "Scarlet Monastery: Graveyard": {
@@ -31907,17 +35427,11 @@
    },
    "floors": [
     {
-     "patches": [
-      {
-       "y0": 0.3783,
-       "y1": 0.4186,
-       "tex": "Interface\\AddOns\\ForeverDungeonJournal\\Media\\MapPatches\\WailingCaverns1_s2",
-       "x1": 0.1998,
-       "x0": 0.1786
-      }
-     ],
      "uiMapID": 279,
-     "tiles": "Interface\\WorldMap\\WailingCaverns\\WailingCaverns1_"
+     "tiles": "Interface\\WorldMap\\WailingCaverns\\WailingCaverns1_",
+     "texRight": 0.978515625,
+     "texture": "Interface\\AddOns\\ForeverDungeonJournal\\Media\\Maps\\WailingCavernsFull",
+     "texBottom": 0.65234375
     }
    ],
    "bosses": [
@@ -31937,14 +35451,14 @@
      "x": 0.155
     },
     {
-     "y": 0.657,
+     "y": 0.289,
      "name": "Lord Pythas",
-     "x": 0.62
+     "x": 0.856
     },
     {
-     "y": 0.734,
+     "y": 0.792,
      "name": "Skum",
-     "x": 0.622
+     "x": 0.927
     },
     {
      "y": 0.6,
@@ -32865,6 +36379,14 @@
      "tiles": "Interface\\WorldMap\\Maraudon\\Maraudon2_",
      "uiMapID": 281
     }
+   ],
+   "turnins": [
+    {
+     "y": 0.143,
+     "npc": "Celebras the Redeemed",
+     "x": 0.245,
+     "floor": 2
+    }
    ]
   },
   "Sunken Temple": {
@@ -33009,6 +36531,13 @@
      "y": 0.687,
      "name": "Relic Guardian",
      "x": 0.324
+    },
+    {
+     "name": "Highland Horror",
+     "x": 0.082,
+     "quest": 95646,
+     "npcID": 260808,
+     "y": 0.405
     }
    ]
   },
@@ -33405,11 +36934,6 @@
      "x": 0.31
     },
     {
-     "y": 0.342,
-     "name": "Ruuzlu",
-     "x": 0.432
-    },
-    {
      "y": 0.329,
      "name": "Chief Ukorz Sandscalp",
      "x": 0.422
@@ -33739,6 +37263,21 @@
      "x": 0.615
     }
    ]
+  },
+  "Alcaz Prison": {
+   "floors": [
+    {
+     "texBottom": 0.6669921875,
+     "texture": "Interface\\AddOns\\ForeverDungeonJournal\\Media\\AlcazPrisonMap"
+    }
+   ],
+   "entrance": {
+    "y": 0.16,
+    "angle": 180,
+    "x": 0.353,
+    "floor": 1
+   },
+   "bosses": []
   }
  },
  "FOREVER_DUNGEONS": {
@@ -33777,10 +37316,12 @@
   "MAP_RIGHT_REMOVE": "Right Click to remove marker",
   "MAP_MARKED": "marked %s on the map.",
   "MAP_OPEN_FAILED": "could not open the recorded map location.",
-  "MAP_COMBAT": "the map can't open during combat. Press %s to see the marked spot."
+  "MAP_COMBAT": "the map can't open during combat. Press %s to see the marked spot.",
+  "MAP_PATROL": "Walks around: the line shows the path",
+  "MAP_QUEST_TARGET": "Quest target"
  },
  "meta": {
-  "addonVersion": "1.7.2",
+  "addonVersion": "1.7.5",
   "dungeonCount": 35
  }
 }

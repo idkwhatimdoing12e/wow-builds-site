@@ -19,7 +19,8 @@ const STORAGE_KEY = "dj.character.code";
 /** The code lives in the URL fragment, which the browser never sends to a server. */
 function codeFromHash(): string {
   if (typeof window === "undefined") return "";
-  return decodeURIComponent(window.location.hash.replace(/^#/, "")).trim();
+  try { return decodeURIComponent(window.location.hash.replace(/^#/, "")).trim(); }
+  catch { return ""; }
 }
 
 /** One dungeon tile: the home page's card, with progress and a quest list inside. */
@@ -91,7 +92,7 @@ function DungeonCard({
   );
 }
 
-export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
+export default function CharacterPanel({ index, initialCode }: { index: IndexDungeon[]; initialCode?: string }) {
   const [character, setCharacter] = useState<Character | null>(null);
   const [draft, setDraft] = useState("");
   const [error, setError] = useState("");
@@ -123,6 +124,7 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
   // The character only ever arrives after hydration: the server cannot see
   // this browser's storage or the URL fragment.
   useEffect(() => {
+    if (initialCode) { load(initialCode, true); return; }
     const shared = codeFromHash();
     if (shared) {
       load(shared, true);
@@ -135,7 +137,7 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
       saved = "";
     }
     if (saved) load(saved, false);
-  }, [load]);
+  }, [load, initialCode]);
 
   const rows = useMemo(() => (character ? dungeonProgress(index, character) : []), [character, index]);
   const totals = useMemo(() => progressTotals(rows), [rows]);

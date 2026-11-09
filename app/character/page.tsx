@@ -2,16 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SITE_URL } from "@/app/lib/site";
 import Window from "@/app/components/journal/Window";
-import CharacterPanel from "@/app/components/character/CharacterPanel";
+import ImportCharacter from "@/app/components/character/ImportCharacter";
 import { buildCharacterIndex } from "@/app/lib/character-index";
 
 export const metadata: Metadata = {
   title: "Your character",
   description:
-    "Bring your WoW Forever character into the journal: export from the addon with /dj export and see which dungeon quests you have finished.",
+    "Export with /dj export and publish your WoW Forever dungeon progress and Character Logs at a permanent character link.",
   alternates: { canonical: `${SITE_URL}/character` },
-  // The page is only ever useful with a code in the fragment, and the fragment
-  // is a character, not a document: nothing here is worth a search result.
+  // The import form is not a character profile; profiles live under /c/.
   robots: { index: false, follow: true },
 };
 
@@ -24,7 +23,7 @@ export default function CharacterPage() {
         </div>
         <div className="wf-pane wf-pane-single wf-pane-parchment">
           {/* Built here, not in the client component: see character-index.ts. */}
-          <CharacterPanel index={buildCharacterIndex()} />
+          <ImportCharacter index={buildCharacterIndex()} />
         </div>
       </Window>
     </div>
