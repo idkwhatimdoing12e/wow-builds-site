@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title,
     description,
     alternates: { canonical: `${SITE_URL}/dungeon/${d.slug}` },
-    openGraph: { title: `${title} — ${SITE_NAME}`, description, url: `${SITE_URL}/dungeon/${d.slug}` },
+    openGraph: { title: `${title} - ${SITE_NAME}`, description, url: `${SITE_URL}/dungeon/${d.slug}` },
   };
 }
 

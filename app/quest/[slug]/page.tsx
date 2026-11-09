@@ -20,13 +20,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!page) return {};
   const { quest } = page;
   const where = page.dungeons.map((d) => d.name).join(" / ");
-  const title = `${quest.name} — ${where} quest (level ${quest.level})`;
+  const title = `${quest.name} - ${where} quest (level ${quest.level})`;
   const description = `${quest.objective} Pick up: ${quest.pickup}. Turn in: ${quest.turnin}.`.slice(0, 160);
   return {
     title,
     description,
     alternates: { canonical: `${SITE_URL}/quest/${quest.slug}` },
-    openGraph: { title: `${title} — ${SITE_NAME}`, description, url: `${SITE_URL}/quest/${quest.slug}` },
+    openGraph: { title: `${title} - ${SITE_NAME}`, description, url: `${SITE_URL}/quest/${quest.slug}` },
   };
 }
 

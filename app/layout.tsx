@@ -10,8 +10,8 @@ import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "./lib/site";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — WoW Forever dungeon quests, bosses & loot`,
-    template: `%s — ${SITE_NAME}`,
+    default: `${SITE_NAME} - WoW Forever dungeon quests, bosses & loot`,
+    template: `%s - ${SITE_NAME}`,
   },
   description: `${SITE_TAGLINE}. The web version of the Dungeon Journal addon for WoW Forever.`,
   openGraph: { siteName: SITE_NAME, type: "website" },
