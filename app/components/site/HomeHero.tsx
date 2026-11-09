@@ -31,7 +31,7 @@ const SLIDES: Slide[] = [
     image: "/journal/art/ruins-of-lordaeron-card.webp",
     kicker: "Free on the web",
     title: "Browse Every Dungeon",
-    text: "The whole journal right here: quests, bosses, loot and maps for every dungeon on the realm.",
+    text: "The whole journal right here: quests, bosses, loot and maps for every dungeon in the game.",
     cta: { label: "Browse Dungeons", href: "#dungeons" },
   },
 ];
