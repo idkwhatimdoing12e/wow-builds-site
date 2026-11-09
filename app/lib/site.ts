@@ -1,13 +1,14 @@
 // Single place for the site's identity and outbound links.
 // Change the domain here when the rebrand happens; everything else reads it.
 
-// The live domain. Set NEXT_PUBLIC_SITE_URL once the domain is bought; until
-// then Vercel's own production URL is used, so canonicals, the sitemap and
-// robots.txt never point at a domain this site does not own.
-const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
+// The live domain, bought 2026-11-09. Kept here rather than in a dashboard
+// environment variable so it is versioned with the code and cannot drift.
+// NEXT_PUBLIC_SITE_URL still overrides it, which is what a preview deployment
+// wants when it should speak about itself rather than about production.
+const PRODUCTION_URL = "https://foreverjournal.pro";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
-  (vercelHost ? `https://${vercelHost}` : "http://localhost:3000");
+  (process.env.VERCEL ? PRODUCTION_URL : "http://localhost:3000");
 export const SITE_NAME = "Dungeon Journal";
 export const SITE_TAGLINE = "Every quest, boss and drop in WoW Forever's dungeons";
 

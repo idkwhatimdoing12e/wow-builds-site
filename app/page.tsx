@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import { getDungeonSummaries, uiLabel } from "@/app/lib/journal";
 import { cardArt, cardGradient } from "@/app/lib/art";
+import { SITE_URL } from "@/app/lib/site";
 import JournalHome from "@/app/components/journal/JournalHome";
 import HomeHero, { DownloadBanner } from "@/app/components/site/HomeHero";
+
+// Every other page declares its canonical; the home page did not, which left
+// the site's most linked page without one.
+export const metadata: Metadata = {
+  alternates: { canonical: SITE_URL },
+  openGraph: { url: SITE_URL },
+};
 
 export default function HomePage() {
   const dungeons = getDungeonSummaries().map((d) => ({
