@@ -17,7 +17,7 @@ const SLIDES: Slide[] = [
     image: "/journal/art/city-of-dalaran-card.webp",
     kicker: "Warcraft Forever",
     title: "Dungeon Journal",
-    text: "Every quest, boss and drop in every dungeon on WoW Forever — the Classic ones and the new ones alike.",
+    text: "Every quest, boss and drop in every dungeon on WoW Forever.",
     cta: { label: "Download Dungeon Journal", href: LINKS.curseforge, external: true },
   },
   {
@@ -31,7 +31,7 @@ const SLIDES: Slide[] = [
     image: "/journal/art/ruins-of-lordaeron-card.webp",
     kicker: "Free on the web",
     title: "Browse Every Dungeon",
-    text: "The whole journal right here: quests, bosses, loot and maps for every dungeon on the realm. No download needed.",
+    text: "The whole journal right here: quests, bosses, loot and maps for every dungeon on the realm.",
     cta: { label: "Browse Dungeons", href: "#dungeons" },
   },
 ];
