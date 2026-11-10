@@ -8,6 +8,16 @@
 // FDJ1 is the same without the race, and is still accepted: a character
 // exported before the addon learned to send it keeps working.
 //
+// Addon 2.0 replaced both with FDJ3, which is a different animal - a JSON
+// snapshot, raw-DEFLATEd, in three dot-separated parts:
+//
+//   FDJ3.<base64url of the deflated JSON>.<base36 Adler-32 of that JSON>
+//
+// It carries far more than the old codes did (run logs, per-quest state), of
+// which this site reads the parts it can show. Decoding it needs the browser
+// to inflate, which is asynchronous, so decodeCharacter returns a promise and
+// the two older formats resolve immediately.
+//
 // "quests" is the completed quest IDs sorted ascending, each stored as the gap
 // from the one before it in base 36. An ID this site does not know is kept but
 // never shown, so a character exported from a newer addon still reads here.
@@ -15,9 +25,9 @@
 // Nothing is sent anywhere: the code lives in the URL fragment, which browsers
 // never put in a request, and in this browser's localStorage.
 
-/** Formats this site can read, newest first. */
+/** The pipe-delimited formats, newest first. FDJ3 is handled separately. */
 const FORMATS = ["FDJ2", "FDJ1"] as const;
-export const CHARACTER_FORMAT = FORMATS[0];
+export const CHARACTER_FORMAT = "FDJ3";
 
 export interface Character {
   name: string;
@@ -87,10 +97,85 @@ function adler32(bytes: Uint8Array): number {
   return b * 65536 + a;
 }
 
-export function decodeCharacter(raw: string): DecodeResult {
-  const code = (raw ?? "").trim();
-  if (!code) return { ok: false, error: "Paste the code from the addon first." };
+/** The slice of the addon's FDJ3 snapshot this site reads. */
+interface Snapshot {
+  v?: number;
+  name?: string;
+  realm?: string;
+  raceToken?: string;
+  classToken?: string;
+  level?: number;
+  faction?: string;
+  exportedAt?: number;
+  completed?: number[];
+  dungeons?: { slug?: string; cleared?: boolean }[];
+}
 
+/** Raw DEFLATE, as LibDeflate's CompressDeflate produces it. */
+async function inflateRaw(bytes: Uint8Array): Promise<Uint8Array | null> {
+  if (typeof DecompressionStream !== "function") return null;
+  try {
+    const stream = new Blob([bytes as BlobPart]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+    return new Uint8Array(await new Response(stream).arrayBuffer());
+  } catch {
+    return null;
+  }
+}
+
+async function decodeSnapshot(code: string): Promise<DecodeResult> {
+  const parts = code.split(".");
+  if (parts.length !== 3) {
+    return { ok: false, error: "That code is cut short. Select all of it in the addon before copying." };
+  }
+  const bytes = fromBase64Url(parts[1]);
+  if (!bytes) return { ok: false, error: "That code is damaged. Copy the whole line from the addon." };
+
+  const json = await inflateRaw(bytes);
+  if (!json) {
+    return {
+      ok: false,
+      error:
+        typeof DecompressionStream !== "function"
+          ? "This browser is too old to read the new character code. Update it, or use an older version of the addon."
+          : "That code is damaged. Copy the whole line from the addon and try again.",
+    };
+  }
+
+  const expected = base36(parts[2]);
+  if (expected === null || expected !== adler32(json)) {
+    return { ok: false, error: "That code did not survive the copy. Paste it again without editing it." };
+  }
+
+  let snap: Snapshot;
+  try {
+    snap = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(json)) as Snapshot;
+  } catch {
+    return { ok: false, error: "That code is damaged." };
+  }
+
+  const faction = snap.faction === "Alliance" || snap.faction === "Horde" ? snap.faction : "Unknown";
+  return {
+    ok: true,
+    character: {
+      name: snap.name || "Unknown",
+      realm: snap.realm ?? "",
+      raceToken: (snap.raceToken ?? "").toUpperCase(),
+      classToken: (snap.classToken ?? "").toUpperCase(),
+      level: Number(snap.level) || 0,
+      faction,
+      completed: new Set((snap.completed ?? []).map(Number).filter(Number.isFinite)),
+      // The snapshot names the dungeons it considers cleared; the site keys on slug.
+      cleared: new Set(
+        (snap.dungeons ?? []).filter((d) => d?.cleared && d.slug).map((d) => d.slug as string),
+      ),
+      exportedAt:
+        typeof snap.exportedAt === "number" && snap.exportedAt > 0 ? new Date(snap.exportedAt * 1000) : undefined,
+    },
+  };
+}
+
+/** FDJ1 and FDJ2: one base64url blob of pipe-separated fields. */
+function decodeLegacy(code: string): DecodeResult {
   const bytes = fromBase64Url(code);
   if (!bytes) {
     return { ok: false, error: "That does not look like a character code. Copy the whole line from the addon." };
@@ -159,6 +244,18 @@ export function decodeCharacter(raw: string): DecodeResult {
       exportedAt: Number.isFinite(seconds) && seconds > 0 ? new Date(seconds * 1000) : undefined,
     },
   };
+}
+
+/**
+ * Read a character code of any format the addon has produced. FDJ3 needs the
+ * browser to inflate it, which is asynchronous; the older two do not, but
+ * resolve through the same promise so callers need only one path.
+ */
+export async function decodeCharacter(raw: string): Promise<DecodeResult> {
+  const code = (raw ?? "").trim();
+  if (!code) return { ok: false, error: "Paste the code from the addon first." };
+  if (code.startsWith("FDJ3.")) return decodeSnapshot(code);
+  return decodeLegacy(code);
 }
 
 /* ---------- progress against the journal ---------- */

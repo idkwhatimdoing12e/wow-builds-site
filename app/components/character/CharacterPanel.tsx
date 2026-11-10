@@ -98,8 +98,9 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
   const [copied, setCopied] = useState(false);
   const [open, setOpen] = useState<string | null>(null);
 
-  const load = useCallback((code: string, remember: boolean) => {
-    const result = decodeCharacter(code);
+  // Async because an FDJ3 code has to be inflated by the browser.
+  const load = useCallback(async (code: string, remember: boolean) => {
+    const result = await decodeCharacter(code);
     if (!result.ok) {
       setError(result.error);
       return false;
@@ -125,7 +126,7 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
   useEffect(() => {
     const shared = codeFromHash();
     if (shared) {
-      load(shared, true);
+      void load(shared, true);
       return;
     }
     let saved = "";
@@ -134,15 +135,15 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
     } catch {
       saved = "";
     }
-    if (saved) load(saved, false);
+    if (saved) void load(saved, false);
   }, [load]);
 
   const rows = useMemo(() => (character ? dungeonProgress(index, character) : []), [character, index]);
   const totals = useMemo(() => progressTotals(rows), [rows]);
 
-  function onImport(e: React.FormEvent) {
+  async function onImport(e: React.FormEvent) {
     e.preventDefault();
-    if (load(draft, true)) setDraft("");
+    if (await load(draft, true)) setDraft("");
   }
 
   function onClear() {
@@ -176,7 +177,7 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
           Bring your progress in from the addon. In game, type <code className="ch-cmd">/dj export</code>, press
           Ctrl+A then Ctrl+C in the box that opens, and paste it below.
         </p>
-        <form onSubmit={onImport}>
+        <form onSubmit={(e) => void onImport(e)}>
           <textarea
             className="ch-input"
             value={draft}
