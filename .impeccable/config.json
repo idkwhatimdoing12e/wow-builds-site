@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "manrope",
+        "createdAt": "2026-11-19T21:25:15.839Z",
+        "reason": "agent decision: Manrope is the in-game journal window's heading face (wf-*/ej-* sub-system), pre-existing and kept out of the shell by the scope the user chose; DESIGN.md records that window as a bounded sub-system"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "sfmono-regular",
+        "createdAt": "2026-11-19T21:25:15.970Z",
+        "reason": "agent decision: pre-existing monospace on the character page (.ch-cmd and the code field) sets a literal addon command and a pasted character code, a domain-appropriate use of mono"
+      }
+    ]
+  }
+}

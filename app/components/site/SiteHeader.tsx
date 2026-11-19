@@ -14,15 +14,16 @@ export interface NavDungeon {
   previewOnly: boolean;
 }
 
+/** "17-26" reads as a range in print: an en dash, no spaces. */
+export const levelRange = (level: string) => level.replace(/\s*-\s*/, "–");
+
 function Logo({ small = false }: { small?: boolean }) {
   return (
     <Link href="/" className={`sx-logo ${small ? "sx-logo-sm" : ""}`} aria-label="Dungeon Journal home">
       <img src="/journal/ui/forever-icon.png" alt="" width={64} height={64} className="sx-logo-badge" />
       <span className="sx-logo-text">
-        <span className="sx-logo-name">
-          DUNGEON<b>JOURNAL</b>
-        </span>
-        {!small && <span className="sx-logo-tag">FOR WOW FOREVER</span>}
+        <span className="sx-logo-name">Dungeon Journal</span>
+        {!small && <span className="sx-logo-tag">for WoW Forever</span>}
       </span>
     </Link>
   );
@@ -31,17 +32,17 @@ function Logo({ small = false }: { small?: boolean }) {
 function Socials() {
   return (
     <span className="sx-socials">
-      <a href={LINKS.discord} target="_blank" rel="noreferrer noopener" aria-label="Discord"><DiscordIcon /></a>
-      <a href={LINKS.youtube} target="_blank" rel="noreferrer noopener" aria-label="YouTube"><YouTubeIcon /></a>
-      <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener" aria-label="Patreon"><PatreonIcon /></a>
+      <a href={LINKS.discord} target="_blank" rel="noreferrer noopener" aria-label="Discord"><DiscordIcon size={15} /></a>
+      <a href={LINKS.youtube} target="_blank" rel="noreferrer noopener" aria-label="YouTube"><YouTubeIcon size={16} /></a>
+      <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener" aria-label="Patreon"><PatreonIcon size={13} /></a>
     </span>
   );
 }
 
 /**
- * Site header in RestedXP's layout: a thin utility bar (logo, socials, small
- * links) above a frosted, rounded main bar with the menu and a blue download
- * button. No account menu.
+ * Site header, set like a printed guide: a running head (title on the left,
+ * small links on the right) over the main bar with the logo, the menu and the
+ * download button, closed by a double rule.
  */
 export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
   const pathname = usePathname();
@@ -65,7 +66,8 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
     list.map((d) => (
       <Link key={d.slug} href={`/dungeon/${d.slug}`} className="sx-drop-item" onClick={closeAll}>
         <span>{d.name}</span>
-        <small>{d.previewOnly ? "Soon" : `LV ${d.level}`}</small>
+        <i aria-hidden="true" />
+        <small>{d.previewOnly ? "Soon" : levelRange(d.level)}</small>
       </Link>
     ));
 
@@ -74,7 +76,7 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
       <div className="sx-topbar">
         <div className="sx-topbar-in">
           <span className="sx-topbar-left">
-            <Logo small />
+            <span className="sx-running">The dungeon guide for WoW Forever</span>
             <Socials />
           </span>
           <nav className="sx-topbar-links" aria-label="Quick links">
@@ -103,7 +105,7 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
                 aria-expanded={dropOpen}
                 onClick={() => setDropOpen((v) => !v)}
               >
-                Dungeons <ChevronDown />
+                Dungeons <ChevronDown size={14} />
               </button>
               <div className="sx-drop-panel" role="menu">
                 <div className="sx-drop-col">
@@ -114,7 +116,7 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
                   <div className="sx-drop-head">Classic dungeons</div>
                   <div className="sx-drop-grid">{dungeonList(classic)}</div>
                 </div>
-                <Link href="/#dungeons" className="sx-drop-all" onClick={closeAll}>Show all dungeons</Link>
+                <Link href="/#dungeons" className="sx-drop-all" onClick={closeAll}>Show all dungeons with their art</Link>
               </div>
             </div>
             <Link href="/character" className={`sx-nav-link ${isActive("/character") ? "active" : ""}`}>My Character</Link>
@@ -123,7 +125,7 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
             <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener" className="sx-nav-link">Patreon</a>
           </nav>
           <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-gold sx-cta">
-            <DownloadIcon /> Download Dungeon Journal
+            <DownloadIcon /> Download the addon
           </a>
           <button
             type="button"
@@ -147,12 +149,13 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
               Dungeons <ChevronDown size={16} />
             </button>
             {listOpen && <div className="sx-mobile-list">{dungeonList(dungeons)}</div>}
+            <Link href="/character" onClick={closeAll}>My Character</Link>
             <Link href="/supporters" onClick={closeAll}>Supporters</Link>
             <Link href="/about" onClick={closeAll}>About</Link>
             <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener">Patreon</a>
             <a href={LINKS.discord} target="_blank" rel="noreferrer noopener">Discord</a>
             <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-gold">
-              <DownloadIcon /> Download Dungeon Journal
+              <DownloadIcon /> Download the addon
             </a>
           </div>
         )}

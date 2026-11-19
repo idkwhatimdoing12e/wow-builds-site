@@ -25,12 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Blizzard's forum fonts: Noto Sans for text; Manrope stands in for Object Sans
-            (Blizzard's licensed heading font) */}
+        {/* Noto Sans for text everywhere. Marcellus sets the site's headings (a flared,
+            Friz-like capital in the printed-guide manner); Manrope stays for the
+            in-game journal window, standing in for Blizzard's Object Sans. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Marcellus&family=Marcellus+SC&family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
           rel="stylesheet"
         />
 
