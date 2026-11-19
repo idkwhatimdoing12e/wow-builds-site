@@ -26,13 +26,10 @@ export default function HomePage() {
     art: cardArt(d.name),
     gradient: cardGradient(d.name),
   }));
-  // The contents list strictly by level; the grid keeps the addon's own order.
-  const contents = [...dungeons]
-    .sort((a, b) => a.minLevel - b.minLevel)
-    .map(({ slug, name, level, location, forever, previewOnly, art }) => ({ slug, name, level, location, forever, previewOnly, art }));
   return (
     <div className="sx-home">
-      <HomeHero dungeons={contents} mapCount={countMappedDungeons()} />
+      <HomeHero mapCount={countMappedDungeons()} />
+      <div className="sx-wrap">
       <JournalHome
         dungeons={dungeons}
         emblemText={{
@@ -43,6 +40,7 @@ export default function HomePage() {
           comingSoon: uiLabel("COMING_SOON", "Coming Soon"),
         }}
       />
+      </div>
       <DownloadBanner />
     </div>
   );

@@ -11,18 +11,20 @@ Scope: home page (`app/page.tsx`) plus the shared shell (header, footer) and the
 
 Audience and job: WoW Forever players, either looking for one dungeon's quests and loot or coming to download the addon. Both actions carry equal weight. Proof is the real data itself: every dungeon, level ranges, quest counts per faction, the painted art. No invented download counts or testimonials.
 
-Constraints: keep the existing structure (utility bar, header with Dungeons dropdown, three-slide hero, dungeon grid with Forever filter, Raids medallion, faction toggle and search, download banner, footer). Keep the WF badge logo and the painted card art. Keep the Blizzard non-affiliation line.
+Constraints: keep the existing structure (header with Dungeons dropdown, three-slide hero, dungeon grid with Forever filter, Raids medallion, faction toggle and search, download banner, footer). Keep the WF badge logo and the painted card art. Keep the Blizzard non-affiliation line.
+
+History: the first build (printed-guide spread with a contents page, cards with facts under the art, red discs) shipped and was rejected by the user on the live site: "the images are squished compared to the actual add-on... in game it looks cleaner... way too overcomplicated. I want to keep it simple with my dungeons, and not this table of content." The footer from that build stays. Mid-build the user named the cleanliness bar: "https://www.dreamhaven.com/ the cleanliness that I'm looking for... if you could get this vibe". That is why the header became one bar (the utility bar was folded into the footer and the mobile menu) and the hero runs full bleed with centred copy.
 
 ## Direction contract
 
-THESIS: The site reads like a well-made printed strategy guide: an opening contents spread and a page per dungeon. It refuses the centred headline over an art carousel above a grid of identical cards.
+THESIS: The home page is the addon's own Dungeon Journal home, rendered cleanly on the web: wide painted strips with their facts on the art, inside one quiet window. It refuses the guide-book apparatus (contents page, fact bands under cards, callout discs) and any card that crops the painting taller than the game does.
 
-OWN-WORLD: Glossy black guide pages (warm near-black ground, slightly lifted page panels), gold Marcellus chapter heads, Noto Sans body in warm off-white, hairline rules, contents lines with dotted leaders to the level range, red numbered callout discs, paintings at full colour with no dark haze, so text always sits on its own page. The gold button reads as a gold plate.
+OWN-WORLD: Warm near-black ground and header from the shell; gold Marcellus (the Friz-like face) for titles and card names; Noto Sans for small text. Cards are 3:1 painted strips in a 1px black border with a thin gold-brown inner line, name top-left, crest and quest count top-right, LV range bottom-left, a soft top and bottom shade only where text sits. The window is a dark panel with a centred gold title bar, search at the left, the addon's emblems and dark gold-text buttons in the toolbar.
 
-STORY: A player sees in one look that this is the addon's journal and that it covers every WoW Forever dungeon. They open their dungeon from the contents in one click, or download the addon.
+STORY: A player recognises the addon at a glance, finds their dungeon in the grid (or by search), and the download is one click away in the header (at every width), the hero, the toolbar and the closing band.
 
-FIRST VIEWPORT: A slim running head, then the header, then an open two-page spread on one gutter. The left page is a chapter opener: the painting fills its top two thirds, with the slide title, one line, the primary action (gold Download, or the slide's own action) and page-number slide controls under it. The right page is the Contents: every dungeon listed with dotted leaders to its level range, grouped New in WoW Forever and Classic. Signature interaction: hovering or focusing a contents line swaps the left page's painting to that dungeon (a short crossfade).
+FIRST VIEWPORT: One dark header bar (logo left, tracked-caps nav centred, round social icons and the gold Download right). Below it the hero, after Dreamhaven: a painting edge to edge (capped at 1440px wide and faded into the ground beyond that, since the art is 1200px), darkening into the page at its foot, with the title large and centred, one line, and the slide's gold action; thin bar indicators bottom-centre. The top edge of the journal window shows below it.
 
-FORM: grounded direction "The Official Strategy Guide", first of three in the user-requested safer lineup (re-roll 1), chosen by the user; seed:57440d49acd0ad80
+FORM: user-pinned direction; seed: none (pinned) "the images subs are squished, compared to the actual add-on... in game, it looks cleaner... I want to keep it simple with my dungeons, and not this table of content"
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

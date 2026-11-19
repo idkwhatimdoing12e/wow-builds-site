@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LINKS } from "@/app/lib/site";
 import { ChevronDown, DiscordIcon, DownloadIcon, PatreonIcon, YouTubeIcon } from "./icons";
 
@@ -17,14 +17,11 @@ export interface NavDungeon {
 /** "17-26" reads as a range in print: an en dash, no spaces. */
 export const levelRange = (level: string) => level.replace(/\s*-\s*/, "–");
 
-function Logo({ small = false }: { small?: boolean }) {
+function Logo() {
   return (
-    <Link href="/" className={`sx-logo ${small ? "sx-logo-sm" : ""}`} aria-label="Dungeon Journal home">
+    <Link href="/" className="sx-logo" aria-label="Dungeon Journal home">
       <img src="/journal/ui/forever-icon.png" alt="" width={64} height={64} className="sx-logo-badge" />
-      <span className="sx-logo-text">
-        <span className="sx-logo-name">Dungeon Journal</span>
-        {!small && <span className="sx-logo-tag">for WoW Forever</span>}
-      </span>
+      <span className="sx-logo-name">Dungeon Journal</span>
     </Link>
   );
 }
@@ -32,17 +29,17 @@ function Logo({ small = false }: { small?: boolean }) {
 function Socials() {
   return (
     <span className="sx-socials">
-      <a href={LINKS.discord} target="_blank" rel="noreferrer noopener" aria-label="Discord"><DiscordIcon size={15} /></a>
-      <a href={LINKS.youtube} target="_blank" rel="noreferrer noopener" aria-label="YouTube"><YouTubeIcon size={16} /></a>
-      <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener" aria-label="Patreon"><PatreonIcon size={13} /></a>
+      <a href={LINKS.discord} target="_blank" rel="noreferrer noopener" aria-label="Discord"><DiscordIcon size={16} /></a>
+      <a href={LINKS.youtube} target="_blank" rel="noreferrer noopener" aria-label="YouTube"><YouTubeIcon size={17} /></a>
+      <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener" aria-label="Patreon"><PatreonIcon size={14} /></a>
     </span>
   );
 }
 
 /**
- * Site header, set like a printed guide: a running head (title on the left,
- * small links on the right) over the main bar with the logo, the menu and the
- * download button, closed by a double rule.
+ * One quiet bar: the logo on the left, the menu in the middle, the socials and
+ * the download button on the right. The small links (Wago, Privacy and so on)
+ * live in the footer and the mobile menu.
  */
 export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
   const pathname = usePathname();
@@ -58,6 +55,18 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
   }, []);
   const closeAll = () => { setMenuOpen(false); setDropOpen(false); };
 
+  // The Dungeons panel also closes on a click anywhere outside it.
+  const drop = useRef<HTMLDivElement>(null);
+  const dropButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!dropOpen) return;
+    const onDown = (e: PointerEvent) => {
+      if (drop.current && !drop.current.contains(e.target as Node)) setDropOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [dropOpen]);
+
   const forever = dungeons.filter((d) => d.forever);
   const classic = dungeons.filter((d) => !d.forever);
   const isActive = (href: string) => (href === "/" ? pathname === "/" || pathname.startsWith("/dungeon") : pathname.startsWith(href));
@@ -66,48 +75,40 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
     list.map((d) => (
       <Link key={d.slug} href={`/dungeon/${d.slug}`} className="sx-drop-item" onClick={closeAll}>
         <span>{d.name}</span>
-        <i aria-hidden="true" />
         <small>{d.previewOnly ? "Soon" : levelRange(d.level)}</small>
       </Link>
     ));
 
   return (
     <div className={`sx-header-wrap ${menuOpen ? "sx-open" : ""}`}>
-      <div className="sx-topbar">
-        <div className="sx-topbar-in">
-          <span className="sx-topbar-left">
-            <span className="sx-running">The dungeon guide for WoW Forever</span>
-            <Socials />
-          </span>
-          <nav className="sx-topbar-links" aria-label="Quick links">
-            <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener">CurseForge</a>
-            <a href={LINKS.wago} target="_blank" rel="noreferrer noopener">Wago</a>
-            <Link href="/supporters">Supporters</Link>
-            <a href={LINKS.discord} target="_blank" rel="noreferrer noopener">Join Discord</a>
-            <Link href="/about">About</Link>
-            <Link href="/privacy">Privacy</Link>
-          </nav>
-        </div>
-      </div>
-
       <header className="sx-header">
         <div className="sx-bar">
           <Logo />
           <nav className="sx-nav" aria-label="Main">
             <div
+              ref={drop}
               className={`sx-drop ${dropOpen ? "on" : ""}`}
               onMouseEnter={() => setDropOpen(true)}
               onMouseLeave={() => setDropOpen(false)}
+              onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setDropOpen(false); }}
+              onKeyDown={(e) => {
+                if (e.key === "Escape" && dropOpen) {
+                  setDropOpen(false);
+                  dropButton.current?.focus();
+                }
+              }}
             >
               <button
+                ref={dropButton}
                 type="button"
                 className={`sx-nav-link ${isActive("/") ? "active" : ""}`}
                 aria-expanded={dropOpen}
+                aria-controls="sx-drop-panel"
                 onClick={() => setDropOpen((v) => !v)}
               >
                 Dungeons <ChevronDown size={14} />
               </button>
-              <div className="sx-drop-panel" role="menu">
+              <div className="sx-drop-panel" id="sx-drop-panel">
                 <div className="sx-drop-col">
                   <div className="sx-drop-head">New in WoW Forever</div>
                   {dungeonList(forever)}
@@ -122,11 +123,13 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
             <Link href="/character" className={`sx-nav-link ${isActive("/character") ? "active" : ""}`}>My Character</Link>
             <Link href="/supporters" className={`sx-nav-link ${isActive("/supporters") ? "active" : ""}`}>Supporters</Link>
             <Link href="/about" className={`sx-nav-link ${isActive("/about") ? "active" : ""}`}>About</Link>
-            <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener" className="sx-nav-link">Patreon</a>
           </nav>
-          <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-gold sx-cta">
-            <DownloadIcon /> Download the addon
-          </a>
+          <span className="sx-bar-end">
+            <Socials />
+            <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-gold sx-cta">
+              <DownloadIcon /> Download
+            </a>
+          </span>
           <button
             type="button"
             className="sx-burger"
@@ -154,6 +157,8 @@ export default function SiteHeader({ dungeons }: { dungeons: NavDungeon[] }) {
             <Link href="/about" onClick={closeAll}>About</Link>
             <a href={LINKS.patreon} target="_blank" rel="noreferrer noopener">Patreon</a>
             <a href={LINKS.discord} target="_blank" rel="noreferrer noopener">Discord</a>
+            <a href={LINKS.wago} target="_blank" rel="noreferrer noopener">Wago</a>
+            <Link href="/privacy" onClick={closeAll}>Privacy</Link>
             <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-gold">
               <DownloadIcon /> Download the addon
             </a>
