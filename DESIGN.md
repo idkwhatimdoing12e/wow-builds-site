@@ -1,260 +1,271 @@
 ---
 name: Dungeon Journal
-description: Every quest, boss and drop in every dungeon on WoW Forever, set like a printed strategy guide.
+description: Every quest, boss and drop in every dungeon on WoW Forever; the addon's own journal, rendered cleanly on the web.
 colors:
-  guide-ink: "#121110"
-  guide-page: "#191714"
-  guide-page-raised: "#211e1a"
-  hairline: "#3b342a"
-  hairline-soft: "#29251f"
-  leaf-gold: "#d6b062"
-  leaf-gold-bright: "#ecca80"
-  gold-plate-ink: "#17130d"
-  page-text: "#ece5d6"
-  margin-note: "#aaa08d"
-  leader-dot: "#6f675a"
-  forever-blue: "#7fb3c0"
-  callout-red: "#9b2b22"
-  callout-red-edge: "#c4493c"
-  callout-white: "#fff6ea"
+  ground: "#110f0d"
+  bar: "#0b0a08"
+  panel: "#1a1714"
+  panel-raised: "#221e1a"
+  line: "#2c2722"
+  line-strong: "#3d362e"
+  gold: "#d9b45f"
+  gold-bright: "#eecb7e"
+  gold-ink: "#1a140b"
+  name-gold: "#f3d68e"
+  title-cream: "#f7e9c6"
+  text: "#eee7d9"
+  muted: "#aba191"
 typography:
   display:
     fontFamily: "Marcellus, Trajan Pro, Georgia, serif"
-    fontSize: "clamp(34px, 3.6vw, 52px)"
-    fontWeight: 400
-    lineHeight: 1.05
-    letterSpacing: "0em"
-  headline:
-    fontFamily: "Marcellus, Trajan Pro, Georgia, serif"
-    fontSize: "clamp(34px, 3.4vw, 46px)"
+    fontSize: "clamp(46px, 6.4vw, 92px)"
     fontWeight: 400
     lineHeight: 1
+    letterSpacing: "0.01em"
+  headline:
+    fontFamily: "Marcellus, Trajan Pro, Georgia, serif"
+    fontSize: "clamp(32px, 3.2vw, 44px)"
+    fontWeight: 400
+    lineHeight: 1.08
   title:
     fontFamily: "Marcellus, Trajan Pro, Georgia, serif"
-    fontSize: "22px"
+    fontSize: "24px"
     fontWeight: 400
-    lineHeight: 1.15
-  section-caps:
-    fontFamily: "Marcellus SC, Marcellus, Georgia, serif"
-    fontSize: "15px"
+    lineHeight: 1
+  card-name:
+    fontFamily: "Marcellus, Trajan Pro, Georgia, serif"
+    fontSize: "19px"
     fontWeight: 400
-    letterSpacing: "0.03em"
+    lineHeight: 1.12
+  body-lg:
+    fontFamily: "Noto Sans, Helvetica, Arial, sans-serif"
+    fontSize: "18px"
+    fontWeight: 400
+    lineHeight: 1.5
   body:
     fontFamily: "Noto Sans, Helvetica, Arial, sans-serif"
-    fontSize: "17px"
-    fontWeight: 400
-    lineHeight: 1.55
-  body-sm:
-    fontFamily: "Noto Sans, Helvetica, Arial, sans-serif"
-    fontSize: "15px"
+    fontSize: "16.5px"
     fontWeight: 400
     lineHeight: 1.6
-  contents-line:
+  body-sm:
     fontFamily: "Noto Sans, Helvetica, Arial, sans-serif"
     fontSize: "14.5px"
     fontWeight: 400
-    lineHeight: 1.4
-    fontFeature: "tnum"
-  label:
+    lineHeight: 1.6
+  label-caps:
     fontFamily: "Noto Sans, Helvetica, Arial, sans-serif"
-    fontSize: "15px"
+    fontSize: "12.5px"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "0.14em"
+  button:
+    fontFamily: "Noto Sans, Helvetica, Arial, sans-serif"
+    fontSize: "14.5px"
     fontWeight: 600
     lineHeight: 1
 rounded:
-  none: "0px"
-  plate: "2px"
-  disc: "11px"
+  card: "2px"
+  control: "6px"
+  panel: "12px"
+  round: "50%"
 spacing:
-  leader-gap: "6px"
-  inline: "14px"
-  gutter: "28px"
-  page-y: "32px"
-  page-x: "44px"
-  chapter: "88px"
+  card-gap: "14px"
+  window-pad: "20px"
+  gutter: "24px"
+  header: "64px"
+  band: "110px"
 components:
   button-gold:
-    backgroundColor: "{colors.leaf-gold}"
-    textColor: "{colors.gold-plate-ink}"
-    typography: "{typography.label}"
-    rounded: "{rounded.plate}"
+    backgroundColor: "{colors.gold}"
+    textColor: "{colors.gold-ink}"
+    typography: "{typography.button}"
+    rounded: "{rounded.control}"
     padding: "0 18px"
-    height: "42px"
+    height: "40px"
   button-gold-hover:
-    backgroundColor: "{colors.leaf-gold-bright}"
-    textColor: "{colors.gold-plate-ink}"
+    backgroundColor: "{colors.gold-bright}"
+    textColor: "{colors.gold-ink}"
   button-gold-lg:
-    backgroundColor: "{colors.leaf-gold}"
-    textColor: "{colors.gold-plate-ink}"
-    rounded: "{rounded.plate}"
-    padding: "0 26px"
+    backgroundColor: "{colors.gold}"
+    textColor: "{colors.gold-ink}"
+    rounded: "{rounded.control}"
+    padding: "0 28px"
     height: "50px"
-  button-line:
-    backgroundColor: "transparent"
-    textColor: "{colors.page-text}"
-    typography: "{typography.label}"
-    rounded: "{rounded.plate}"
-    padding: "0 18px"
-    height: "42px"
-  button-line-hover:
-    textColor: "{colors.leaf-gold-bright}"
-  callout-disc:
-    backgroundColor: "{colors.callout-red}"
-    textColor: "{colors.callout-white}"
-    rounded: "{rounded.disc}"
-    padding: "0 6px"
-    height: "22px"
-  nav-link:
-    textColor: "{colors.page-text}"
-    padding: "0 14px"
-    height: "70px"
-  nav-link-active:
-    textColor: "{colors.leaf-gold}"
-  faction-toggle-on:
-    backgroundColor: "{colors.guide-page-raised}"
-    textColor: "{colors.leaf-gold}"
-    rounded: "{rounded.none}"
+  button-window:
+    backgroundColor: "{colors.panel-raised}"
+    textColor: "{colors.name-gold}"
+    rounded: "{rounded.control}"
+    padding: "0 16px"
     height: "38px"
+  button-window-hover:
+    textColor: "{colors.gold-bright}"
+  nav-link:
+    textColor: "#c9c0b0"
+    typography: "{typography.label-caps}"
+    padding: "0 16px"
+    height: "64px"
+  nav-link-active:
+    textColor: "{colors.gold-bright}"
+  search-field:
+    backgroundColor: "{colors.ground}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.control}"
+    padding: "0 12px"
+    height: "38px"
+  faction-toggle:
+    backgroundColor: "{colors.panel-raised}"
+    rounded: "{rounded.control}"
+    width: "42px"
+    height: "40px"
+  social-icon:
+    backgroundColor: "#1c1915"
+    textColor: "#d8cfbf"
+    rounded: "{rounded.round}"
+    size: "34px"
+  journal-window:
+    backgroundColor: "{colors.panel}"
+    rounded: "{rounded.panel}"
+  dungeon-card:
+    textColor: "{colors.name-gold}"
+    typography: "{typography.card-name}"
+    rounded: "{rounded.card}"
 ---
 
 # Design System: Dungeon Journal
 
 ## Overview
 
-**Creative North Star: "The Official Strategy Guide"**
+**Creative North Star: "The Quiet Window"**
 
-The site shell is set like a well-made printed strategy guide for the game: glossy near-black pages, gold chapter heads in a flared Roman capital, warm off-white body text, hairline rules, and contents lines with dotted leaders running out to a level range. The home page opens as a two-page spread on a single gutter (a chapter opener on the left, the Contents on the right), and every dungeon gets its page. Depth comes from paper, not light: a page panel sits a single step above the ground, framed by a hairline.
+The site is the addon's own Dungeon Journal home, rendered cleanly on the web. One dark bar sits over a near-black ground; below it a painting runs edge to edge and darkens into the page, carrying a large centred Marcellus title, one line and one gold action. Then the journal itself: a single dark rounded window with a centred gold title bar, a search field, the addon's emblems and faction choice, and the dungeons as wide 3:1 painted strips with their facts written on the art, the way the game draws them. A closing painted band and a quiet footer finish the page. The cleanliness bar is a modern game studio site: few surfaces, generous air, nothing ornamental between the player and the paintings.
 
-Paintings are the only colour-rich surface and run at full colour with no haze or scrim; text never sits on a painting, it sits on its own page beneath or beside it. Gold is the ink of headings, the active state and the one primary action. Density is that of a reference book: compact lists, tabular numbers, generous chapter breaks.
+Paintings carry all the colour. Gold is the colour of names, the active state and the one filled action. Everything else is warm near-black, soft lines and off-white text. Density is that of the addon's window: a compact grid of strips, small labels, no apparatus around them.
 
-The shell wraps a bounded sub-system, the in-game Encounter Journal window (parchment pane, dark chrome, red buttons, Manrope headings). That window mirrors the addon and keeps its own tokens; nothing in this system restyles it, and none of its tokens belong to the shell palette (see Components, "The Journal Window").
+The shell wraps a bounded sub-system, the in-game Encounter Journal window used on dungeon, quest, character, about, supporters and privacy pages (parchment pane, dark chrome, red buttons, Manrope headings). That window mirrors the addon and keeps its own tokens; nothing in this system restyles it, and none of its tokens belong to the shell palette (see Components, "The Encounter Journal Window").
 
 **Key Characteristics:**
-- Warm near-black ground with pages lifted one tonal step and framed by hairlines.
-- Gold Marcellus chapter heads at weight 400; Noto Sans for everything read.
-- Dotted-leader contents lines with tabular level ranges.
-- Paintings at full colour inside a double-framed plate, never under text.
-- Square corners (0 to 2px); the only round shape is the red numbered callout disc.
-- Double rules close the header and open the footer, like a page's running head and back page.
+- One dark header bar: logo left, tracked-caps nav centred, round social icons and the gold Download right.
+- Paintings edge to edge, capped at their export width and faded into the ground beyond it.
+- Gold Marcellus (weight 400) for titles and dungeon names; Noto Sans for everything else.
+- One rounded dark window holding the dungeon grid, lifted by a soft shadow.
+- Dungeon cards are 3:1 painted strips with name, quest count and level on the art.
+- Soft corners on surfaces and controls (6px and 12px); cards stay near-square (2px).
 
 ## Colors
 
-A warm, low-chroma black-and-gold palette with one red and one blue used as printed callouts.
+A warm, low-chroma near-black and gold palette; the paintings supply all other colour.
 
 ### Primary
-- **Leaf Gold** (`leaf-gold`): chapter heads, logo wordmark, the active nav link and its underline, the gold plate button, focus rings, text links. **Leaf Gold Bright** (`leaf-gold-bright`) is its hover state only.
-- **Gold Plate Ink** (`gold-plate-ink`): text and icons on the gold plate.
-
-### Secondary
-- **Callout Red** (`callout-red`, edge `callout-red-edge`, numerals `callout-white`): the numbered disc that carries a count (quests per faction on each dungeon card). Never a button, never a background.
-
-### Tertiary
-- **Forever Blue** (`forever-blue`): the "New in Forever" small-caps note, matching the blue of the WF badge. Text only.
+- **Download Gold** (`gold`): the filled primary button, focus rings, the search field's focus border, the selected faction's border, the active slide bar, text links. **Bright Gold** (`gold-bright`) is its hover and the active nav colour.
+- **Gold Ink** (`gold-ink`): text and icons on a gold fill; the selection text colour.
+- **Name Gold** (`name-gold`): the addon's name colour. Logo wordmark, the window title, dungeon names on cards, the dark window buttons.
+- **Title Cream** (`title-cream`): large display titles set over paintings (hero, closing band).
 
 ### Neutral
-- **Guide Ink** (`guide-ink`): the page ground, header and footer bands.
-- **Guide Page** (`guide-page`): a lifted page (the opening spread, dropdown index, closing sidebar box).
-- **Guide Page Raised** (`guide-page-raised`): the selected segment of a toggle.
-- **Hairline** (`hairline`) and **Hairline Soft** (`hairline-soft`): rules, page frames, double rules; the soft one for secondary dividers and card baselines.
-- **Page Text** (`page-text`): body and list text.
-- **Margin Note** (`margin-note`): ledes, level ranges, group labels, footer blurb, idle icons.
-- **Leader Dot** (`leader-dot`): dotted leaders and the idle search underline only; too faint for text.
+- **Ground** (`ground`): the page.
+- **Bar** (`bar`): the header, mobile menu and footer.
+- **Panel** (`panel`) and **Panel Raised** (`panel-raised`): the journal window and dropdown; raised for buttons, faction toggles and hovered menu items inside them.
+- **Line** (`line`) and **Line Strong** (`line-strong`): 1px borders and dividers; strong for window buttons.
+- **Text** (`text`): body and link text. **Muted** (`muted`): small labels, blurbs, level ranges, group heads.
 
 ### Named Rules
-**The Gold Is Ink Rule.** Gold is used as type and line (heads, active marks, focus, links) and as exactly one filled shape: the gold plate button. No gold panels, gold gradients or gold glows.
+**The Paintings Carry Colour Rule.** The shell has no hue of its own beyond gold. Colour on the page comes from the dungeon paintings and the addon's crests and emblems.
 
-**The Printed Callout Rule.** Red and blue appear only as the guide's printed callouts (the numbered disc, the "New in Forever" note). They never carry actions or fill surfaces.
+**The One Gold Fill Rule.** Gold fills only the primary action button (and the thin active slide bar). Everywhere else gold is type or a 1px line. No gold panels, gradients or glows on surfaces.
 
 ## Typography
 
 **Display Font:** Marcellus (with Trajan Pro, Georgia)
-**Caps Font:** Marcellus SC (with Marcellus, Georgia)
 **Body Font:** Noto Sans (with Helvetica, Arial)
 
-**Character:** A flared, inscriptional Roman capital for chapter heads against a plain, highly legible humanist sans for everything a player reads mid-run. Headings are always weight 400; Marcellus has no bold.
+**Character:** Marcellus stands in for the game's flared Friz face: titles and dungeon names read like the addon. Noto Sans is plain and legible for everything a player reads mid-run. Marcellus has one weight; headings are always 400.
 
 ### Hierarchy
-- **Display** (400, clamp(34px, 3.6vw, 52px), 1.05): the chapter opener title on the spread. Balanced wrap.
-- **Headline** (400, clamp(34px, 3.4vw, 46px), 1): chapter titles ("The dungeons"); the Contents title at 34px and the sidebar box at clamp(28px, 2.6vw, 38px) sit in the same register.
-- **Title** (400, 22px, 1.15; 19px at 860px, 18px at 560px): dungeon names on cards; dropdown and footer column heads at 17 to 18px in gold.
-- **Section Caps** (Marcellus SC, 13 to 15px, 0.02 to 0.03em): contents group labels, the running head, the "New in Forever" note. Small caps from the font, never `text-transform: uppercase`.
-- **Body** (400, 17px, 1.55, max 46 to 54ch): opener and sidebar text. **Body Small** (15px, 1.6) for ledes and the footer blurb.
-- **Contents Line** (14.5px, 1.4, tabular numerals): every list with a dotted leader.
-- **Label** (600, 15px, 1): buttons; nav links at 500, 15.5px.
+- **Display** (400, clamp(46px, 6.4vw, 92px), 1, 0.01em): the hero slide title, centred over the painting in Title Cream, balanced wrap.
+- **Headline** (400, clamp(32px, 3.2vw, 44px), 1.08): the closing band title.
+- **Title** (400, 24px): the window's centred title; the logo wordmark at 21px (22px in the footer, 17 to 19px on phones).
+- **Card Name** (400, 19px, 1.12; 18px under 600px): dungeon names on the art, Name Gold.
+- **Body Large** (18px, 1.5, max 50ch): the hero line. **Body** (16.5px, 1.6): band copy. **Body Small** (14.5px, 1.6, max 50ch): footer blurb, menu and footer links.
+- **Label Caps** (700, 12.5px, 0.14em, uppercase): main nav and mobile menu items; menu group heads and footer column heads at 11.5px, 0.14 to 0.16em, in Muted. Card level reads "LV 17-26" at 11.5px, 0.08em.
+- **Button** (600, 14.5px; 16px on the large button).
 
 ### Named Rules
-**The Numbers Line Up Rule.** Level ranges, counts and folio numbers use tabular figures so the right edge of every contents column aligns.
+**The Addon's Voice Rule.** Anything the addon names in gold Friz (the journal title, dungeon names) is Marcellus in Name Gold. Labels and running text are Noto Sans.
 
 ## Layout
 
-A centred 1320px measure with a 28px gutter (16px under 860px). The header is fixed: a 30px running head over a 70px main bar (104px total, 65px on phones where the running head drops), and `scroll-padding-top` follows it. The home page opens with a two-page spread split 5fr / 6fr on one gutter; the gutter is a 1px hairline with a faint shade either side. Chapters are separated by large breaks (88px, 56px on phones; the sidebar box takes 96px above and 88px below). The dungeon index is a three-column grid (28px row, 24px column), two columns under 1180px, and on phones under 560px becomes rows: a 112px plate beside the facts.
+A centred 1320px measure with a 24px gutter (12px under 860px). The header is fixed at 64px (58px under 860px) and `scroll-padding-top` follows it. The bar is a three-column grid (1fr auto 1fr) so the nav sits truly centred. The hero is clamp(480px, 70vh, 720px) tall (520px on phones) with the copy anchored 72px from its foot and slide bars 30px from the bottom. The journal window follows immediately (8px below the hero) inside the measure; its grid is three columns with 14px gaps and 20px padding, two columns under 1180px, one under 600px. The closing band sits 110px below the window (72px on phones), min 420px tall, copy on the left at max 520px. The footer is a 2fr / 1fr / 1fr grid (about, two link columns), two columns on phones with the about block spanning.
 
-Responsive behaviour: under 1180px the nav collapses to a burger; under 1000px the spread stacks (opener above contents) and the gutter disappears; under 860px the Contents fold into a closed disclosure row and the sidebar box stacks.
+Responsive behaviour: under 1180px the nav and socials collapse into a burger and the Download button stays in the bar at every width; under 860px the window bar stacks (title, then a full-width search) and the toolbar's button goes full width; on wider screens than 1460px the hero painting stops at 1440px and fades into the ground at its sides.
+
+### Named Rules
+**The Never Stretched Rule.** A painting never renders wider than its export allows: the hero art caps at 1440px and the band art at 1150px, fading into the ground beyond that with a mask, never scaled up to fill.
 
 ## Elevation & Depth
 
-Flat and tonal. Depth is a page lifted one step (`guide-ink` to `guide-page`) with a hairline frame. Painted plates get a print frame: a 1px black border plus a hairline outline offset 3 to 5px. Shadows are rare and functional.
+Mostly flat and tonal (ground, then panel, then raised), with soft shadows reserved for the things that sit above the page. Text over paintings is made legible by shade gradients only where the text sits, plus a text shadow.
 
 ### Shadow Vocabulary
-- **Dropped index** (`box-shadow: 0 24px 48px rgba(0,0,0,0.55)`): the Dungeons dropdown only, so it reads above the page.
-- **Plate press** (`box-shadow: inset 0 -2px 0 rgba(0,0,0,0.18)`, active `inset 0 1px 2px rgba(0,0,0,0.3)`): the gold plate button's struck edge.
+- **Window lift** (`box-shadow: 0 30px 60px rgba(0,0,0,0.35)`): the journal window, so it reads as the addon's window over the page.
+- **Dropped menu** (`box-shadow: 0 24px 60px rgba(0,0,0,0.55)`): the Dungeons dropdown.
+- **Card hover** (`box-shadow: inset 0 0 0 1px #eecb7e, 0 8px 22px rgba(0,0,0,0.45)`): a hovered or focused dungeon card.
+- **Card inner line** (`box-shadow: inset 0 0 0 1px rgba(217,180,95,0.38)`): the thin gold-brown line inside every card's black border at rest.
 
 ### Named Rules
-**The Paper Not Light Rule.** Pages separate by tone and hairline. No glows, no ambient shadows on cards or panels.
+**The Shade Where Text Sits Rule.** A painting gets darkening only where text lies on it: the card's top and bottom shade (60% and 55% black at the edges, clear through the middle), the hero's foot fading into the ground, the band's copy side. Never a full haze over the art.
 
 ## Shapes
 
-Rectangles. Buttons take a 2px corner; pages, plates, toggles and cards are square. The only round form is the numbered callout disc (22px tall, 11px radius). Rules are 1px solid hairlines, 1px dotted leaders, and the 3px double rule that closes the header and opens the footer. Painted plates wear a double frame (black border, hairline outline offset).
+Soft rectangles. Panels (window, dropdown) take 12px; controls (buttons, search, faction toggles, window buttons, menu items) take 6px; dungeon cards stay near-square at 2px with a 1px black border, like the addon's frames. Social icons are circles. Slide indicators are 32 by 3px bars with a 2px radius. Lines are 1px.
 
 ## Components
 
 ### Buttons
-- **Shape:** near-square plate (2px).
-- **Gold plate:** `leaf-gold` fill, slightly lighter edge, `gold-plate-ink` label at 600, 42px tall (50px large). One per view region: the download or the slide's action.
-- **Hover / Focus:** fill brightens to `leaf-gold-bright` in 0.15s; focus is a 2px gold outline offset 3px; active presses the inset edge.
-- **Ruled outline:** transparent with a hairline border and page-text label; border and label turn gold on hover.
-- **Text link:** gold, underlined with a 40% gold line offset 4px; underline goes solid on hover. The second voice beside a gold plate ("or get it on Wago").
+- **Gold (primary):** Download Gold fill, Gold Ink label at 600, 40px tall, 6px radius, optional download icon. Large variant 50px with 28px padding for the hero and the band. One per region: the header Download, the slide's action, the band's CurseForge link.
+- **Hover / Focus:** fill brightens to Bright Gold in 0.15s; focus everywhere in the shell is a 2px gold outline offset 3px.
+- **Window button:** the addon's dark button: Panel Raised fill, Line Strong border, Marcellus 15px label in Name Gold, 38px tall. Border turns gold and label brightens on hover. Used inside the journal window's toolbar.
+- **Text link:** gold, underlined with a 40% gold line offset 4px; underline goes solid on hover. The second voice beside a gold button ("or get it on Wago").
 
 ### Chips (faction toggle)
-- **Style:** a segmented strip in a hairline frame, segments divided by hairlines, 38px tall, faction crest plus label.
-- **State:** idle segments are muted with a greyed crest; the selected one takes `guide-page-raised`, gold text and a full-colour crest.
+- **Style:** two 42 by 40px square buttons, each holding a 26px faction crest on Panel Raised with a Line border, 6px radius.
+- **State:** idle crests sit at 45% opacity (80% on hover); the selected one gets a gold border, a warmer fill (#2a2419) and a full-opacity crest.
 
 ### Cards / Containers
-- **Dungeon card:** a painted plate (16:7, 4:3 on phones) in the print double frame, then the name in Title, muted facts, and a foot with the red disc count and an optional Forever note, closed by a soft hairline. Hover brightens the painting slightly and turns the outline and name gold. "Coming soon" cards grey the painting.
-- **Page panel (spread, sidebar box):** `guide-page` with a hairline frame; the sidebar box adds a soft outer outline offset 5px.
+- **Journal window:** Panel fill, Line border, 12px radius, window lift shadow. A title bar (search left, Marcellus title centred, an empty right column for balance) over a Line divider, then a toolbar (the addon's emblems, faction toggle, window button pushed right), then the grid.
+- **Dungeon card:** a 3:1 painted strip, painting covering, 1px black border, 2px radius, thin gold-brown inner line. Name top-left in Card Name; crest and quest count top-right at 13px; "LV" range bottom-left. Hover brightens the inner line to Bright Gold and adds a drop shadow while the shade eases to 75%. "Coming soon" cards are greyed (grayscale 0.7, brightness 0.75).
 
 ### Inputs / Fields
-- **Search:** no box. A bottom hairline (`leader-dot`) under a 44px field with a search icon; caret is gold.
-- **Focus:** the underline and icon turn gold.
+- **Search:** 38px field on Ground with a Line border and 6px radius, a 15px search icon; placeholder and icon in a warm grey (#8e8575). Caret is gold.
+- **Focus:** border and icon turn gold.
 
 ### Navigation
-- **Bar:** Noto Sans 500 at 15.5px in page text. Hover and active turn gold and draw a 1px gold underline from the left (0.25s, cubic-bezier(0.2, 0.8, 0.2, 1)); no underline motion under reduced motion.
-- **Dungeons dropdown:** a dropped index page on `guide-page`, gold Marcellus group heads, dotted-leader lines to the level range.
-- **Mobile:** burger opens a full-width list on `guide-ink`, items in Marcellus 20px with soft hairline dividers; the dungeon list expands in place.
-- **Running head:** small caps title left with social icons, quick links right, over a soft hairline.
+- **Bar:** Bar background with a 5% white bottom line; nav items in Label Caps, idle in a soft off-white, hover and active in Bright Gold (0.15s). No underline.
+- **Dungeons dropdown:** a 12px-radius Panel below the bar, up to 1040px wide: a "New in WoW Forever" column and a three-column classic list, each item a name with its level range (tabular, Muted) in a 6px-radius row that lifts to Panel Raised on hover; a centred gold "Show all dungeons" link. Opens on hover, click or keyboard; closes on Escape and outside click.
+- **Mobile:** a burger opens a list on Bar with Label Caps items divided by Line; the dungeon list expands in place; a full-width gold Download closes the menu.
+- **Socials:** 34px circles (36px in the footer) on a dark warm fill; hover lifts the fill and turns the icon Bright Gold.
 
-### Contents Line (signature)
-Name, a flexible 1px dotted leader in `leader-dot`, then the tabular level range in Margin Note. Hover or focus turns the name gold-bright and the leader and range gold. On the home spread, hovering or focusing a line turns the left page's painting to that dungeon with a 0.32s fade-and-unblur.
+### Hero Carousel (signature)
+Three slides crossfade (0.9s ease); each is a painting edge to edge with a foot-weighted shade, the Display title, one Body Large line and a large gold button, centred. Thin bar indicators bottom-centre; the active one is gold. Slides advance every 8s only while nobody hovers or focuses the banner, stop for good once someone picks a slide, and never advance under reduced motion.
 
-### Numbered Callout Disc (signature)
-A red disc carrying a count in bold Noto Sans 12.5px, tabular. Used for counts only.
+### Closing Band (signature)
+A painting on the right side of the page (max 1150px), masked in from the copy side and shaded toward it, with a Headline, Body copy, a large gold button and a text link on the left. On phones the shade turns vertical and the copy sits over a darkened painting.
 
-### The Journal Window (bounded sub-system)
-Dungeon, quest, character, about, supporters and privacy pages render the in-game Encounter Journal window: its own `--wf-*` / `--ej-*` tokens, Manrope headings, parchment pane, cream rows, red buttons, rounded window chrome and glows. It mirrors the addon and is out of this system's scope. The shell surrounds it (header, footer, ground) and never restyles it; its colours, radii and glows must not leak into shell surfaces, and shell tokens must not be applied inside it.
+### The Encounter Journal Window (bounded sub-system)
+Dungeon, quest, character, about, supporters and privacy pages render the in-game Encounter Journal window: its own `--wf-*` / `--ej-*` / `--parchment` tokens, Manrope headings, parchment pane, cream rows, red buttons, rounded window chrome and glows. It mirrors the addon and is out of this system's scope. The shell surrounds it (header, footer, ground) and never restyles it; its colours, radii and glows must not leak into shell surfaces, and shell tokens must not be applied inside it. The home window's toolbar embeds one of its components unchanged, the addon's emblems.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** set every chapter head in Marcellus 400 in Leaf Gold; use Marcellus SC for group labels and running heads.
-- **Do** list dungeons as contents lines: name, dotted leader, tabular level range.
-- **Do** show paintings at full colour inside the print double frame, with text on the page below or beside them.
-- **Do** lift panels by one tone step and a hairline, never by shadow.
-- **Do** keep one gold plate per region; pair it with a text link or ruled outline for the second action.
-- **Do** close the header and open the footer with the 3px double hairline.
+- **Do** show dungeons as the addon does: 3:1 painted strips with name, quest count and level on the art, in the journal window's grid.
+- **Do** set the journal title, logo and dungeon names in Marcellus 400 in Name Gold; everything else in Noto Sans.
+- **Do** keep one gold-filled button per region; pair it with a text link or a dark window button for a second action.
+- **Do** keep the Download reachable in the header at every width.
+- **Do** run paintings edge to edge but cap them at their export width and fade them into the ground beyond it.
+- **Do** shade a painting only where text sits on it.
 
 ### Don't:
-- **Don't** lay text over a painting or put a dark haze or gradient scrim on shell paintings.
-- **Don't** round shell corners past 2px; the callout disc is the only round shape.
-- **Don't** use red or blue for actions or surfaces; they are printed callouts only.
-- **Don't** add glows, gold gradients or ambient card shadows to the shell.
-- **Don't** fake small caps with `text-transform: uppercase` and tracking; use Marcellus SC.
-- **Don't** bring the journal window's parchment, red buttons, Manrope or `--wf-*` / `--ej-*` tokens into the shell, or shell tokens into the window.
+- **Don't** bring back the guide-book apparatus the user rejected: contents pages with dotted leaders, fact bands under cards, red callout discs.
+- **Don't** crop a dungeon painting taller than the game does or stretch one past its export width.
+- **Don't** fill surfaces with gold or add gold gradients and glows to panels and buttons.
+- **Don't** put a full-cover haze over a painting.
+- **Don't** bring the Encounter Journal window's parchment, red buttons, Manrope or `--wf-*` / `--ej-*` tokens into the shell, or shell tokens into that window.

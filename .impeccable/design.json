@@ -1,158 +1,171 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-19T00:00:00Z",
+  "generatedAt": "2026-11-19T23:00:00Z",
   "title": "Design System: Dungeon Journal",
   "extensions": {
     "colorMeta": {
-      "guide-ink": { "role": "neutral", "displayName": "Guide Ink", "canonical": "#121110", "cssVar": "--g-ink", "tonalRamp": ["#0b0a09", "#121110", "#191714", "#211e1a", "#2c2823", "#3b362f", "#554f46", "#7a7368"] },
-      "guide-page": { "role": "neutral", "displayName": "Guide Page", "canonical": "#191714", "cssVar": "--g-page", "tonalRamp": ["#0e0d0b", "#141210", "#191714", "#211e1a", "#2b2722", "#38332c", "#4f483f", "#6d655a"] },
-      "guide-page-raised": { "role": "neutral", "displayName": "Guide Page Raised", "canonical": "#211e1a", "cssVar": "--g-page-2", "tonalRamp": ["#121110", "#191714", "#211e1a", "#2a2621", "#35302a", "#443e36", "#5b544a", "#7a7266"] },
-      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#3b342a", "cssVar": "--g-rule", "tonalRamp": ["#1a1712", "#29251f", "#3b342a", "#4d4537", "#625847", "#7b705c", "#9a8f7a", "#c0b7a5"] },
-      "hairline-soft": { "role": "neutral", "displayName": "Hairline Soft", "canonical": "#29251f", "cssVar": "--g-rule-soft", "tonalRamp": ["#141210", "#1e1b17", "#29251f", "#36312a", "#463f36", "#5a5246", "#776e60", "#9d9586"] },
-      "leaf-gold": { "role": "primary", "displayName": "Leaf Gold", "canonical": "#d6b062", "cssVar": "--g-gold", "tonalRamp": ["#2e2412", "#4d3c1d", "#73592b", "#9c7a3d", "#c09a50", "#d6b062", "#ecca80", "#f7e6be"] },
-      "leaf-gold-bright": { "role": "primary", "displayName": "Leaf Gold Bright", "canonical": "#ecca80", "cssVar": "--g-gold-hi", "tonalRamp": ["#33281a", "#56442a", "#7f663e", "#a88a55", "#d0ad6c", "#ecca80", "#f4dca6", "#faeed3"] },
-      "gold-plate-ink": { "role": "primary", "displayName": "Gold Plate Ink", "canonical": "#17130d", "cssVar": "--g-gold-ink", "tonalRamp": ["#0b0906", "#17130d", "#252017", "#363023", "#4b4333", "#655a46", "#857a64", "#ada38f"] },
-      "page-text": { "role": "neutral", "displayName": "Page Text", "canonical": "#ece5d6", "cssVar": "--g-text", "tonalRamp": ["#2a2722", "#4a453d", "#6d665b", "#918a7d", "#b5ad9f", "#d4ccbd", "#ece5d6", "#f8f4ec"] },
-      "margin-note": { "role": "neutral", "displayName": "Margin Note", "canonical": "#aaa08d", "cssVar": "--g-muted", "tonalRamp": ["#26231e", "#403b33", "#5d564b", "#7c7465", "#aaa08d", "#c3baa8", "#dad3c4", "#eeeae1"] },
-      "leader-dot": { "role": "neutral", "displayName": "Leader Dot", "canonical": "#6f675a", "cssVar": "--g-faint", "tonalRamp": ["#1d1b17", "#302c26", "#4b453c", "#6f675a", "#8c8372", "#a9a090", "#c7c0b2", "#e4dfd5"] },
-      "forever-blue": { "role": "tertiary", "displayName": "Forever Blue", "canonical": "#7fb3c0", "cssVar": "--g-new", "tonalRamp": ["#14242a", "#213a42", "#33555f", "#4a737f", "#62939f", "#7fb3c0", "#a6cdd6", "#d2e7ec"] },
-      "callout-red": { "role": "secondary", "displayName": "Callout Red", "canonical": "#9b2b22", "tonalRamp": ["#2a0c09", "#4b1510", "#6e1f18", "#9b2b22", "#c4493c", "#d97468", "#e9a39a", "#f6d3ce"] },
-      "callout-red-edge": { "role": "secondary", "displayName": "Callout Red Edge", "canonical": "#c4493c", "tonalRamp": ["#2e0f0b", "#521b15", "#782820", "#9b2b22", "#c4493c", "#d97468", "#e9a39a", "#f6d3ce"] },
-      "callout-white": { "role": "secondary", "displayName": "Callout White", "canonical": "#fff6ea", "tonalRamp": ["#2d2a25", "#4f4a42", "#756e63", "#9d9587", "#c4bcae", "#e3dbcd", "#f5ede0", "#fff6ea"] }
+      "ground": { "role": "neutral", "displayName": "Ground", "canonical": "#110f0d", "cssVar": "--g-ink", "tonalRamp": ["#0b0a08", "#110f0d", "#1a1714", "#221e1a", "#2c2722", "#3d362e", "#5a5247", "#7d7466"] },
+      "bar": { "role": "neutral", "displayName": "Bar", "canonical": "#0b0a08", "cssVar": "--g-bar", "tonalRamp": ["#050504", "#0b0a08", "#110f0d", "#1a1714", "#26221d", "#36312a", "#504940", "#736a5d"] },
+      "panel": { "role": "neutral", "displayName": "Panel", "canonical": "#1a1714", "cssVar": "--g-panel", "tonalRamp": ["#0e0c0a", "#141210", "#1a1714", "#221e1a", "#2c2722", "#3d362e", "#575047", "#7a7266"] },
+      "panel-raised": { "role": "neutral", "displayName": "Panel Raised", "canonical": "#221e1a", "cssVar": "--g-panel-2", "tonalRamp": ["#110f0d", "#1a1714", "#221e1a", "#2a251f", "#35302a", "#453f37", "#5e574c", "#7f7769"] },
+      "line": { "role": "neutral", "displayName": "Line", "canonical": "#2c2722", "cssVar": "--g-line", "tonalRamp": ["#14120f", "#1f1b18", "#2c2722", "#3d362e", "#524a40", "#6c6355", "#8f8676", "#b7af9f"] },
+      "line-strong": { "role": "neutral", "displayName": "Line Strong", "canonical": "#3d362e", "cssVar": "--g-line-2", "tonalRamp": ["#1a1714", "#2c2722", "#3d362e", "#4f473d", "#655b4f", "#807566", "#a19785", "#c6bfb0"] },
+      "gold": { "role": "primary", "displayName": "Download Gold", "canonical": "#d9b45f", "cssVar": "--g-gold", "tonalRamp": ["#2e2412", "#4d3c1d", "#735a2b", "#9c7b3c", "#c29d50", "#d9b45f", "#eecb7e", "#f8e8c0"] },
+      "gold-bright": { "role": "primary", "displayName": "Bright Gold", "canonical": "#eecb7e", "cssVar": "--g-gold-hi", "tonalRamp": ["#33281a", "#56442a", "#7f663e", "#a88a55", "#d0ae6c", "#eecb7e", "#f5dda8", "#fbefd4"] },
+      "gold-ink": { "role": "primary", "displayName": "Gold Ink", "canonical": "#1a140b", "cssVar": "--g-gold-ink", "tonalRamp": ["#0d0a05", "#1a140b", "#2a2214", "#3c3222", "#524634", "#6d604b", "#8e8168", "#b4a990"] },
+      "name-gold": { "role": "primary", "displayName": "Name Gold", "canonical": "#f3d68e", "cssVar": "--g-name", "tonalRamp": ["#352a14", "#5a4723", "#856a37", "#b08f4e", "#d5b266", "#f3d68e", "#f8e4b4", "#fcf2da"] },
+      "title-cream": { "role": "primary", "displayName": "Title Cream", "canonical": "#f7e9c6", "tonalRamp": ["#36301f", "#5b5136", "#857754", "#ad9f78", "#d2c49d", "#ead9b0", "#f7e9c6", "#fcf6e7"] },
+      "text": { "role": "neutral", "displayName": "Text", "canonical": "#eee7d9", "cssVar": "--g-text", "tonalRamp": ["#2a2722", "#4a453d", "#6d665b", "#918a7d", "#b5ad9f", "#d4ccbd", "#eee7d9", "#f9f5ee"] },
+      "muted": { "role": "neutral", "displayName": "Muted", "canonical": "#aba191", "cssVar": "--g-muted", "tonalRamp": ["#26231e", "#403b33", "#5d564b", "#7c7465", "#aba191", "#c3bbab", "#dad4c6", "#eeebe2"] }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Chapter opener title on the home spread." },
-      "headline": { "displayName": "Headline", "purpose": "Chapter titles such as The dungeons, Contents, the closing sidebar box." },
-      "title": { "displayName": "Title", "purpose": "Dungeon names on cards; dropdown and footer column heads in gold at 17 to 18px." },
-      "section-caps": { "displayName": "Section Caps", "purpose": "Contents group labels, running head, New in Forever note. True small caps from Marcellus SC." },
-      "body": { "displayName": "Body", "purpose": "Opener and sidebar text, 46 to 54ch." },
-      "body-sm": { "displayName": "Body Small", "purpose": "Ledes and footer blurb." },
-      "contents-line": { "displayName": "Contents Line", "purpose": "Every dotted-leader list; tabular figures." },
-      "label": { "displayName": "Label", "purpose": "Button labels; nav links at 500, 15.5px." }
+      "display": { "displayName": "Display", "purpose": "Hero slide title over the painting, Title Cream, centred." },
+      "headline": { "displayName": "Headline", "purpose": "Closing band title." },
+      "title": { "displayName": "Title", "purpose": "The journal window's centred title; the logo wordmark at 21 to 22px." },
+      "card-name": { "displayName": "Card Name", "purpose": "Dungeon names on the painted strips, Name Gold." },
+      "body-lg": { "displayName": "Body Large", "purpose": "The hero's one line, max 50ch." },
+      "body": { "displayName": "Body", "purpose": "Closing band copy." },
+      "body-sm": { "displayName": "Body Small", "purpose": "Footer blurb, menu and footer links." },
+      "label-caps": { "displayName": "Label Caps", "purpose": "Main nav and mobile menu items; menu group and footer column heads at 11.5px in Muted." },
+      "button": { "displayName": "Button", "purpose": "Gold button labels; 16px on the large button." }
     },
     "shadows": [
-      { "name": "dropped-index", "value": "0 24px 48px rgba(0, 0, 0, 0.55)", "purpose": "The Dungeons dropdown only." },
-      { "name": "plate-edge", "value": "inset 0 -2px 0 rgba(0, 0, 0, 0.18)", "purpose": "Gold plate button at rest." },
-      { "name": "plate-press", "value": "inset 0 1px 2px rgba(0, 0, 0, 0.3)", "purpose": "Gold plate button when pressed." }
+      { "name": "window-lift", "value": "0 30px 60px rgba(0, 0, 0, 0.35)", "purpose": "The journal window over the page." },
+      { "name": "dropped-menu", "value": "0 24px 60px rgba(0, 0, 0, 0.55)", "purpose": "The Dungeons dropdown." },
+      { "name": "card-line", "value": "inset 0 0 0 1px rgba(217, 180, 95, 0.38)", "purpose": "Thin gold-brown line inside every dungeon card's black border." },
+      { "name": "card-hover", "value": "inset 0 0 0 1px #eecb7e, 0 8px 22px rgba(0, 0, 0, 0.45)", "purpose": "Hovered or focused dungeon card." },
+      { "name": "text-on-art", "value": "text-shadow: 0 1px 2px #000, 0 0 8px rgba(0, 0, 0, 0.7)", "purpose": "Card facts on the painting." }
     ],
     "motion": [
-      { "name": "ease-turn", "value": "cubic-bezier(0.2, 0.8, 0.2, 1)", "purpose": "Nav underline draw (0.25s) and plate painting fade (0.32s)." },
-      { "name": "state-fast", "value": "0.15s", "purpose": "Colour and border changes on buttons, card names, toggles." },
-      { "name": "plate-turn", "value": "0.32s opacity + blur(6px) to 0", "purpose": "A painting fading in over the previous one on the spread. Disabled under reduced motion." }
+      { "name": "state-fast", "value": "0.15s", "purpose": "Colour, border and background changes on buttons, nav, toggles, socials." },
+      { "name": "card-hover", "value": "0.18s", "purpose": "Card inner line, shadow and shade." },
+      { "name": "slide-fade", "value": "0.9s ease", "purpose": "Hero slide crossfade. Off under reduced motion." },
+      { "name": "slide-dwell", "value": "8s", "purpose": "Auto-advance, only while the banner is not hovered or focused, never after a manual pick, never under reduced motion." }
     ],
     "breakpoints": [
+      { "name": "hero-cap", "value": "1460px", "purpose": "Above it the hero painting stops at 1440px and fades at its sides." },
       { "name": "nav-collapse", "value": "1180px" },
-      { "name": "spread-stack", "value": "1000px" },
       { "name": "phone", "value": "860px" },
-      { "name": "index-rows", "value": "560px" }
+      { "name": "one-column", "value": "600px" }
     ],
     "scope": {
-      "shell": "Classes sx-* and gd-*, tokens --g-*, in app/globals.css under SITE SHELL.",
-      "excluded": "The in-game Encounter Journal window (wf-*, ej-*, wp-*, wb-*, ch-* classes; --wf-*, --ej-*, --parchment* tokens; Manrope via --font-title). Mirrors the addon; bounded sub-system the shell wraps."
+      "shell": "Classes sx-* and jw-*, tokens --g-* and --sx-head-h, in app/globals.css under SITE SHELL - clean and quiet.",
+      "excluded": "The in-game Encounter Journal window (wf-*, ej-*, wp-*, wb-*, ch-* classes; --wf-*, --ej-*, --parchment* tokens; Manrope via --font-title). Mirrors the addon; bounded sub-system the shell wraps. The home toolbar embeds its emblems component unchanged."
     }
   },
   "components": [
     {
-      "name": "Gold Plate Button",
+      "name": "Gold Button",
       "kind": "button",
       "refersTo": "button-gold",
-      "description": "The one primary action per region: download or open.",
-      "html": "<button class=\"ds-btn-gold\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3v12\"/><path d=\"m7 10 5 5 5-5\"/><path d=\"M5 21h14\"/></svg>Download the addon</button>",
-      "css": ".ds-btn-gold { display: inline-flex; align-items: center; gap: 9px; height: 42px; padding: 0 18px; border-radius: 2px; border: 1px solid #e9cd8c; background: #d6b062; color: #17130d; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-weight: 600; font-size: 15px; line-height: 1; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.18); transition: background-color 0.15s; } .ds-btn-gold:hover { background: #ecca80; } .ds-btn-gold:focus-visible { outline: 2px solid #d6b062; outline-offset: 3px; } .ds-btn-gold:active { box-shadow: inset 0 1px 2px rgba(0,0,0,0.3); }"
+      "description": "The one primary action per region: Download, the slide's action, the band's CurseForge link.",
+      "html": "<a class=\"ds-btn-gold\" href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3v12\"/><path d=\"m7 10 5 5 5-5\"/><path d=\"M5 21h14\"/></svg>Download</a>",
+      "css": ".ds-btn-gold { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 18px; border-radius: 6px; border: 0; background: #d9b45f; color: #1a140b; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-weight: 600; font-size: 14.5px; line-height: 1; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color 0.15s, color 0.15s; } .ds-btn-gold:hover { background: #eecb7e; } .ds-btn-gold:focus-visible { outline: 2px solid #d9b45f; outline-offset: 3px; }"
     },
     {
-      "name": "Ruled Outline Button",
+      "name": "Gold Button Large",
       "kind": "button",
-      "refersTo": "button-line",
-      "description": "Second voice beside a gold plate.",
-      "html": "<button class=\"ds-btn-line\">Browse dungeons</button>",
-      "css": ".ds-btn-line { display: inline-flex; align-items: center; height: 42px; padding: 0 18px; border-radius: 2px; border: 1px solid #3b342a; background: transparent; color: #ece5d6; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-weight: 600; font-size: 15px; line-height: 1; cursor: pointer; transition: border-color 0.15s, color 0.15s; } .ds-btn-line:hover { border-color: #d6b062; color: #ecca80; } .ds-btn-line:focus-visible { outline: 2px solid #d6b062; outline-offset: 3px; }"
+      "refersTo": "button-gold-lg",
+      "description": "Hero and closing band action.",
+      "html": "<a class=\"ds-btn-gold-lg\" href=\"#\">Download the addon</a>",
+      "css": ".ds-btn-gold-lg { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 50px; padding: 0 28px; border-radius: 6px; background: #d9b45f; color: #1a140b; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-weight: 600; font-size: 16px; line-height: 1; text-decoration: none; transition: background-color 0.15s; } .ds-btn-gold-lg:hover { background: #eecb7e; } .ds-btn-gold-lg:focus-visible { outline: 2px solid #d9b45f; outline-offset: 3px; }"
+    },
+    {
+      "name": "Window Button",
+      "kind": "button",
+      "refersTo": "button-window",
+      "description": "The addon's dark gold-text button, inside the journal window's toolbar.",
+      "html": "<a class=\"ds-btn-window\" href=\"#\">Download the addon</a>",
+      "css": ".ds-btn-window { display: inline-flex; align-items: center; height: 38px; padding: 0 16px; background: #221e1a; border: 1px solid #3d362e; border-radius: 6px; font-family: Marcellus, 'Trajan Pro', Georgia, serif; font-size: 15px; color: #f3d68e; text-decoration: none; white-space: nowrap; transition: border-color 0.15s, color 0.15s; } .ds-btn-window:hover { border-color: #d9b45f; color: #eecb7e; } .ds-btn-window:focus-visible { outline: 2px solid #d9b45f; outline-offset: 3px; }"
     },
     {
       "name": "Text Link",
       "kind": "button",
-      "description": "Gold underlined link for secondary actions.",
+      "description": "Gold underlined link, the second voice beside a gold button.",
       "html": "<a class=\"ds-textlink\" href=\"#\">or get it on Wago</a>",
-      "css": ".ds-textlink { font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 15px; color: #d6b062; text-decoration: underline; text-decoration-color: rgba(214,176,98,0.4); text-underline-offset: 4px; } .ds-textlink:hover { color: #ecca80; text-decoration-color: currentColor; } .ds-textlink:focus-visible { outline: 2px solid #d6b062; outline-offset: 3px; }"
+      "css": ".ds-textlink { font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 15px; color: #d9b45f; text-decoration: underline; text-decoration-color: rgba(217,180,95,0.4); text-underline-offset: 4px; } .ds-textlink:hover { color: #eecb7e; text-decoration-color: currentColor; } .ds-textlink:focus-visible { outline: 2px solid #d9b45f; outline-offset: 3px; }"
     },
     {
-      "name": "Underline Search",
+      "name": "Search Field",
       "kind": "input",
-      "description": "Boxless search field on a bottom hairline.",
-      "html": "<label class=\"ds-search\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/></svg><input type=\"search\" placeholder=\"Find a dungeon or zone\"></label>",
-      "css": ".ds-search { display: flex; align-items: center; gap: 10px; width: 340px; height: 44px; padding: 0 2px; border-bottom: 1px solid #6f675a; color: #aaa08d; background: #121110; } .ds-search:focus-within { border-bottom-color: #d6b062; color: #d6b062; } .ds-search input { flex: 1; min-width: 0; height: 100%; background: none; border: 0; outline: none; color: #ece5d6; caret-color: #d6b062; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 16px; } .ds-search input::placeholder { color: #8c8372; }"
+      "refersTo": "search-field",
+      "description": "The window's search, top-left of the title bar.",
+      "html": "<label class=\"ds-search\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"M15.5 15.5 21 21\"/></svg><input type=\"search\" placeholder=\"Search for dungeons or zones\"></label>",
+      "css": ".ds-search { display: flex; align-items: center; gap: 9px; width: 300px; height: 38px; padding: 0 12px; background: #110f0d; border: 1px solid #2c2722; border-radius: 6px; color: #8e8575; } .ds-search:focus-within { border-color: #d9b45f; color: #d9b45f; } .ds-search input { flex: 1; min-width: 0; height: 100%; background: none; border: 0; outline: none; color: #eee7d9; caret-color: #d9b45f; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 14.5px; } .ds-search input::placeholder { color: #8e8575; }"
     },
     {
-      "name": "Main Nav",
+      "name": "Header Nav",
       "kind": "nav",
       "refersTo": "nav-link",
-      "description": "Header links with a gold underline drawn from the left.",
-      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link on\" href=\"#\">Dungeons</a><a class=\"ds-nav-link\" href=\"#\">My Character</a><a class=\"ds-nav-link\" href=\"#\">About</a></nav>",
-      "css": ".ds-nav { display: flex; gap: 4px; background: #121110; border-bottom: 3px double #3b342a; } .ds-nav-link { position: relative; display: inline-flex; align-items: center; height: 70px; padding: 0 14px; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 15.5px; font-weight: 500; color: #ece5d6; text-decoration: none; } .ds-nav-link::after { content: ''; position: absolute; left: 14px; right: 14px; bottom: 18px; height: 1px; background: #d6b062; transform: scaleX(0); transform-origin: left; transition: transform 0.25s cubic-bezier(0.2,0.8,0.2,1); } .ds-nav-link:hover { color: #ecca80; } .ds-nav-link.on { color: #d6b062; } .ds-nav-link.on::after, .ds-nav-link:hover::after { transform: scaleX(1); } .ds-nav-link:focus-visible { outline: 2px solid #d6b062; outline-offset: 3px; }"
+      "description": "Tracked caps links centred in the one dark bar.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link on\" href=\"#\">Dungeons</a><a class=\"ds-nav-link\" href=\"#\">My Character</a><a class=\"ds-nav-link\" href=\"#\">Supporters</a><a class=\"ds-nav-link\" href=\"#\">About</a></nav>",
+      "css": ".ds-nav { display: flex; justify-content: center; gap: 6px; background: #0b0a08; border-bottom: 1px solid rgba(255,255,255,0.05); } .ds-nav-link { display: inline-flex; align-items: center; height: 64px; padding: 0 16px; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #c9c0b0; text-decoration: none; transition: color 0.15s; } .ds-nav-link:hover, .ds-nav-link.on { color: #eecb7e; } .ds-nav-link:focus-visible { outline: 2px solid #d9b45f; outline-offset: 3px; }"
     },
     {
       "name": "Faction Toggle",
       "kind": "chip",
-      "refersTo": "faction-toggle-on",
-      "description": "Segmented hairline strip; the selected segment lifts one tone and turns gold.",
-      "html": "<div class=\"ds-faction\"><button class=\"on\">Alliance</button><button>Horde</button></div>",
-      "css": ".ds-faction { display: inline-flex; border: 1px solid #3b342a; } .ds-faction button { height: 38px; padding: 0 14px; background: none; border: 0; cursor: pointer; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 14.5px; color: #aaa08d; } .ds-faction button + button { border-left: 1px solid #3b342a; } .ds-faction button:hover { color: #ece5d6; } .ds-faction button.on { background: #211e1a; color: #d6b062; } .ds-faction button:focus-visible { outline: 2px solid #d6b062; outline-offset: 3px; }"
-    },
-    {
-      "name": "Contents Line",
-      "kind": "custom",
-      "description": "Signature: name, dotted leader, tabular level range.",
-      "html": "<ol class=\"ds-toc\"><li><a href=\"#\"><span class=\"n\">The Deadmines</span><i></i><span class=\"l\">17-26</span></a></li><li><a href=\"#\"><span class=\"n\">Wailing Caverns</span><i></i><span class=\"l\">15-24</span></a></li></ol>",
-      "css": ".ds-toc { list-style: none; margin: 0; padding: 12px; width: 300px; background: #191714; } .ds-toc a { display: flex; align-items: baseline; gap: 6px; padding: 3px 0; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 14.5px; line-height: 1.4; color: #ece5d6; text-decoration: none; } .ds-toc i { flex: 1 1 auto; min-width: 14px; border-bottom: 1px dotted #6f675a; transform: translateY(-4px); } .ds-toc .l { font-size: 13.5px; color: #aaa08d; font-variant-numeric: tabular-nums; } .ds-toc a:hover .n, .ds-toc a:focus-visible .n { color: #ecca80; } .ds-toc a:hover i { border-bottom-color: #d6b062; } .ds-toc a:hover .l { color: #d6b062; } .ds-toc a:focus-visible { outline: 2px solid #d6b062; outline-offset: 3px; }"
-    },
-    {
-      "name": "Callout Disc",
-      "kind": "custom",
-      "refersTo": "callout-disc",
-      "description": "Signature: the guide's red numbered disc carrying a count.",
-      "html": "<span class=\"ds-quests\"><b class=\"ds-disc\">7</b> quests</span>",
-      "css": ".ds-quests { display: inline-flex; align-items: center; gap: 7px; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 14px; color: #ece5d6; } .ds-disc { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; background: #9b2b22; border: 1px solid #c4493c; color: #fff6ea; font-weight: 700; font-size: 12.5px; line-height: 1; font-variant-numeric: tabular-nums; }"
+      "refersTo": "faction-toggle",
+      "description": "Two crest buttons; the selected one takes a gold border and full-opacity crest.",
+      "html": "<div class=\"ds-faction\"><button class=\"on\" aria-label=\"Alliance\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\"><path d=\"M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5z\" fill=\"#3b6fd1\" stroke=\"#e6c066\" stroke-width=\"1.5\"/></svg></button><button aria-label=\"Horde\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\"><path d=\"M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5z\" fill=\"#b3261e\" stroke=\"#555\" stroke-width=\"1.5\"/></svg></button></div>",
+      "css": ".ds-faction { display: flex; gap: 6px; } .ds-faction button { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 40px; padding: 0; background: #221e1a; border: 1px solid #2c2722; border-radius: 6px; cursor: pointer; transition: border-color 0.15s, background-color 0.15s; } .ds-faction button svg { opacity: 0.45; transition: opacity 0.15s; } .ds-faction button:hover svg { opacity: 0.8; } .ds-faction button.on { border-color: #d9b45f; background: #2a2419; } .ds-faction button.on svg { opacity: 1; } .ds-faction button:focus-visible { outline: 2px solid #d9b45f; outline-offset: 3px; }"
     },
     {
       "name": "Dungeon Card",
       "kind": "card",
-      "description": "Painted plate in a print double frame above the name, facts and count.",
-      "html": "<a class=\"ds-card\" href=\"#\"><span class=\"art\"></span><span class=\"body\"><span class=\"name\">The Deadmines</span><span class=\"facts\">Levels 17-26 &middot; Westfall</span></span></a>",
-      "css": ".ds-card { display: flex; flex-direction: column; width: 300px; text-decoration: none; color: #ece5d6; } .ds-card .art { display: block; aspect-ratio: 16 / 7; background: linear-gradient(135deg, #3d5a4a, #1d2a33); border: 1px solid #000; outline: 1px solid #29251f; outline-offset: 3px; transition: filter 0.25s, outline-color 0.25s; } .ds-card .body { display: flex; flex-direction: column; gap: 6px; padding: 16px 2px 14px; border-bottom: 1px solid #29251f; } .ds-card .name { font-family: Marcellus, Georgia, serif; font-size: 22px; line-height: 1.15; transition: color 0.15s; } .ds-card .facts { font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 14px; color: #aaa08d; } .ds-card:hover .name, .ds-card:focus-visible .name { color: #ecca80; } .ds-card:hover .art { filter: brightness(1.12) saturate(1.05); outline-color: #d6b062; } .ds-card:focus-visible { outline: 2px solid #d6b062; outline-offset: 3px; }"
+      "refersTo": "dungeon-card",
+      "description": "Signature: the addon's 3:1 painted strip with name, quest count and level on the art.",
+      "html": "<a class=\"ds-card\" href=\"#\"><span class=\"name\">The Deadmines</span><span class=\"quests\">8 quests</span><span class=\"level\">LV 17-26</span></a>",
+      "css": ".ds-card { position: relative; display: block; width: 360px; aspect-ratio: 3 / 1; border: 1px solid #000; border-radius: 2px; overflow: hidden; background: linear-gradient(135deg, #2f5d63, #14262b 60%, #3a2b1a); box-shadow: inset 0 0 0 1px rgba(217,180,95,0.38); color: #fff; text-decoration: none; transition: box-shadow 0.18s; } .ds-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0) 62%, rgba(0,0,0,0.55) 100%); transition: opacity 0.18s; } .ds-card:hover, .ds-card:focus-visible { box-shadow: inset 0 0 0 1px #eecb7e, 0 8px 22px rgba(0,0,0,0.45); } .ds-card:hover::before { opacity: 0.75; } .ds-card span { position: absolute; z-index: 1; text-shadow: 0 1px 2px #000, 0 0 8px rgba(0,0,0,0.7); } .ds-card .name { top: 11px; left: 14px; font-family: Marcellus, 'Trajan Pro', Georgia, serif; font-size: 19px; line-height: 1.12; color: #f3d68e; } .ds-card .quests { top: 11px; right: 12px; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 13px; color: #f1e6cf; } .ds-card .level { bottom: 9px; left: 14px; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 11.5px; letter-spacing: 0.08em; color: #e6dcc8; } .ds-card:focus-visible { outline: 2px solid #d9b45f; outline-offset: 3px; }"
+    },
+    {
+      "name": "Journal Window",
+      "kind": "card",
+      "refersTo": "journal-window",
+      "description": "The one rounded dark window: search left, gold title centred, then the toolbar.",
+      "html": "<section class=\"ds-window\"><div class=\"bar\"><span class=\"search\">Search for dungeons or zones</span><h2>Dungeon Journal</h2><span></span></div><div class=\"tools\"><a href=\"#\">Download the addon</a></div></section>",
+      "css": ".ds-window { width: 640px; background: #1a1714; border: 1px solid #2c2722; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.35); } .ds-window .bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid #2c2722; } .ds-window .search { height: 38px; display: flex; align-items: center; padding: 0 12px; background: #110f0d; border: 1px solid #2c2722; border-radius: 6px; color: #8e8575; font-family: 'Noto Sans', Helvetica, Arial, sans-serif; font-size: 13px; } .ds-window h2 { margin: 0; font-family: Marcellus, 'Trajan Pro', Georgia, serif; font-weight: 400; font-size: 24px; line-height: 1; color: #f3d68e; } .ds-window .tools { display: flex; justify-content: flex-end; padding: 14px 20px; } .ds-window .tools a { display: inline-flex; align-items: center; height: 38px; padding: 0 16px; background: #221e1a; border: 1px solid #3d362e; border-radius: 6px; font-family: Marcellus, Georgia, serif; font-size: 15px; color: #f3d68e; text-decoration: none; transition: border-color 0.15s, color 0.15s; } .ds-window .tools a:hover { border-color: #d9b45f; color: #eecb7e; }"
+    },
+    {
+      "name": "Social Icon",
+      "kind": "button",
+      "refersTo": "social-icon",
+      "description": "Round social links in the header and footer.",
+      "html": "<a class=\"ds-social\" href=\"#\" aria-label=\"YouTube\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15V9l5.8 3z\"/></svg></a>",
+      "css": ".ds-social { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: #1c1915; color: #d8cfbf; transition: background-color 0.15s, color 0.15s; } .ds-social:hover { background: #2a251f; color: #eecb7e; } .ds-social:focus-visible { outline: 2px solid #d9b45f; outline-offset: 3px; }"
     }
   ],
   "narrative": {
-    "northStar": "The Official Strategy Guide",
-    "overview": "The site shell is set like a well-made printed strategy guide for the game: glossy near-black pages, gold chapter heads in a flared Roman capital, warm off-white body text, hairline rules, and contents lines with dotted leaders running out to a level range. The home page opens as a two-page spread on a single gutter (a chapter opener on the left, the Contents on the right), and every dungeon gets its page. Depth comes from paper, not light: a page panel sits a single step above the ground, framed by a hairline.\n\nPaintings are the only colour-rich surface and run at full colour with no haze or scrim; text never sits on a painting, it sits on its own page beneath or beside it. Gold is the ink of headings, the active state and the one primary action. Density is that of a reference book: compact lists, tabular numbers, generous chapter breaks.\n\nThe shell wraps a bounded sub-system, the in-game Encounter Journal window (parchment pane, dark chrome, red buttons, Manrope headings). That window mirrors the addon and keeps its own tokens; nothing in this system restyles it, and none of its tokens belong to the shell palette (see Components, \"The Journal Window\").",
+    "northStar": "The Quiet Window",
+    "overview": "The site is the addon's own Dungeon Journal home, rendered cleanly on the web. One dark bar sits over a near-black ground; below it a painting runs edge to edge and darkens into the page, carrying a large centred Marcellus title, one line and one gold action. Then the journal itself: a single dark rounded window with a centred gold title bar, a search field, the addon's emblems and faction choice, and the dungeons as wide 3:1 painted strips with their facts written on the art, the way the game draws them. A closing painted band and a quiet footer finish the page. The cleanliness bar is a modern game studio site: few surfaces, generous air, nothing ornamental between the player and the paintings.\n\nPaintings carry all the colour. Gold is the colour of names, the active state and the one filled action. Everything else is warm near-black, soft lines and off-white text. Density is that of the addon's window: a compact grid of strips, small labels, no apparatus around them.\n\nThe shell wraps a bounded sub-system, the in-game Encounter Journal window used on dungeon, quest, character, about, supporters and privacy pages (parchment pane, dark chrome, red buttons, Manrope headings). That window mirrors the addon and keeps its own tokens; nothing in this system restyles it, and none of its tokens belong to the shell palette (see Components, \"The Encounter Journal Window\").",
     "keyCharacteristics": [
-      "Warm near-black ground with pages lifted one tonal step and framed by hairlines.",
-      "Gold Marcellus chapter heads at weight 400; Noto Sans for everything read.",
-      "Dotted-leader contents lines with tabular level ranges.",
-      "Paintings at full colour inside a double-framed plate, never under text.",
-      "Square corners (0 to 2px); the only round shape is the red numbered callout disc.",
-      "Double rules close the header and open the footer, like a page's running head and back page."
+      "One dark header bar: logo left, tracked-caps nav centred, round social icons and the gold Download right.",
+      "Paintings edge to edge, capped at their export width and faded into the ground beyond it.",
+      "Gold Marcellus (weight 400) for titles and dungeon names; Noto Sans for everything else.",
+      "One rounded dark window holding the dungeon grid, lifted by a soft shadow.",
+      "Dungeon cards are 3:1 painted strips with name, quest count and level on the art.",
+      "Soft corners on surfaces and controls (6px and 12px); cards stay near-square (2px)."
     ],
     "rules": [
-      { "name": "The Gold Is Ink Rule", "body": "Gold is used as type and line (heads, active marks, focus, links) and as exactly one filled shape: the gold plate button. No gold panels, gold gradients or gold glows.", "section": "colors" },
-      { "name": "The Printed Callout Rule", "body": "Red and blue appear only as the guide's printed callouts (the numbered disc, the \"New in Forever\" note). They never carry actions or fill surfaces.", "section": "colors" },
-      { "name": "The Numbers Line Up Rule", "body": "Level ranges, counts and folio numbers use tabular figures so the right edge of every contents column aligns.", "section": "typography" },
-      { "name": "The Paper Not Light Rule", "body": "Pages separate by tone and hairline. No glows, no ambient shadows on cards or panels.", "section": "elevation" }
+      { "name": "The Paintings Carry Colour Rule", "body": "The shell has no hue of its own beyond gold. Colour on the page comes from the dungeon paintings and the addon's crests and emblems.", "section": "colors" },
+      { "name": "The One Gold Fill Rule", "body": "Gold fills only the primary action button (and the thin active slide bar). Everywhere else gold is type or a 1px line. No gold panels, gradients or glows on surfaces.", "section": "colors" },
+      { "name": "The Addon's Voice Rule", "body": "Anything the addon names in gold Friz (the journal title, dungeon names) is Marcellus in Name Gold. Labels and running text are Noto Sans.", "section": "typography" },
+      { "name": "The Never Stretched Rule", "body": "A painting never renders wider than its export allows: the hero art caps at 1440px and the band art at 1150px, fading into the ground beyond that with a mask, never scaled up to fill.", "section": "layout" },
+      { "name": "The Shade Where Text Sits Rule", "body": "A painting gets darkening only where text lies on it: the card's top and bottom shade (60% and 55% black at the edges, clear through the middle), the hero's foot fading into the ground, the band's copy side. Never a full haze over the art.", "section": "elevation" }
     ],
     "dos": [
-      "Do set every chapter head in Marcellus 400 in Leaf Gold; use Marcellus SC for group labels and running heads.",
-      "Do list dungeons as contents lines: name, dotted leader, tabular level range.",
-      "Do show paintings at full colour inside the print double frame, with text on the page below or beside them.",
-      "Do lift panels by one tone step and a hairline, never by shadow.",
-      "Do keep one gold plate per region; pair it with a text link or ruled outline for the second action.",
-      "Do close the header and open the footer with the 3px double hairline."
+      "Do show dungeons as the addon does: 3:1 painted strips with name, quest count and level on the art, in the journal window's grid.",
+      "Do set the journal title, logo and dungeon names in Marcellus 400 in Name Gold; everything else in Noto Sans.",
+      "Do keep one gold-filled button per region; pair it with a text link or a dark window button for a second action.",
+      "Do keep the Download reachable in the header at every width.",
+      "Do run paintings edge to edge but cap them at their export width and fade them into the ground beyond it.",
+      "Do shade a painting only where text sits on it."
     ],
     "donts": [
-      "Don't lay text over a painting or put a dark haze or gradient scrim on shell paintings.",
-      "Don't round shell corners past 2px; the callout disc is the only round shape.",
-      "Don't use red or blue for actions or surfaces; they are printed callouts only.",
-      "Don't add glows, gold gradients or ambient card shadows to the shell.",
-      "Don't fake small caps with `text-transform: uppercase` and tracking; use Marcellus SC.",
-      "Don't bring the journal window's parchment, red buttons, Manrope or `--wf-*` / `--ej-*` tokens into the shell, or shell tokens into the window."
+      "Don't bring back the guide-book apparatus the user rejected: contents pages with dotted leaders, fact bands under cards, red callout discs.",
+      "Don't crop a dungeon painting taller than the game does or stretch one past its export width.",
+      "Don't fill surfaces with gold or add gold gradients and glows to panels and buttons.",
+      "Don't put a full-cover haze over a painting.",
+      "Don't bring the Encounter Journal window's parchment, red buttons, Manrope or `--wf-*` / `--ej-*` tokens into the shell, or shell tokens into that window."
     ]
   }
 }
