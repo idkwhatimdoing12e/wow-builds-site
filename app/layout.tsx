@@ -7,6 +7,7 @@ import { getDungeonSummaries } from "./lib/journal";
 import { menuNames } from "./lib/i18n-server";
 import ItemTooltips from "./components/journal/ItemTooltips";
 import { NavTracker } from "./components/site/BackLink";
+import VercelAnalytics from "./components/site/VercelAnalytics";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "./lib/site";
 
 export const metadata: Metadata = {
@@ -65,6 +66,7 @@ export default function RootLayout({
         {/* The site's own item tooltip, for every link with data-item. */}
         <ItemTooltips />
         <NavTracker />
+        <VercelAnalytics />
 
         <SiteHeader
           dungeons={getDungeonSummaries().map((d) => ({
