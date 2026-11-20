@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import type { DungeonSummary } from "@/app/lib/journal";
-import { LINKS } from "@/app/lib/site";
 import { setFaction, useFaction } from "./useFaction";
 import HomeEmblems, { type EmblemText } from "./HomeEmblems";
 import { useHref, useT } from "@/app/components/i18n/I18n";
@@ -48,9 +47,6 @@ export default function JournalHome({ dungeons, emblemText }: Props) {
               <img src={f === "Horde" ? "/journal/horde.png" : "/journal/alliance.png"} alt="" width={26} height={26} />
             </button>
           ))}
-        </div>
-        <div className="jw-toolbar-end">
-          <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="jw-btn">{t("s_download_addon")}</a>
         </div>
       </div>
 

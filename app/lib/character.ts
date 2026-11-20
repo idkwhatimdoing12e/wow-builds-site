@@ -54,7 +54,27 @@ export interface Character {
   talents?: TalentTree[];
   /** The addon's Favourites, in its window's order (dungeon, then name); empty when there are none. */
   favourites: Favourite[];
+  /** The character plays in RPG Mode: the journal unlocks as it goes. */
+  rpg: boolean;
+  /** RPG Mode's Journey bar, as the game counts it (account-wide unlocks included). */
+  journey?: { points: number; max: number; quests: number; questTotal: number; pages: number; pageTotal: number };
+  /** RPG Mode, per dungeon slug: what the journal shows of it. */
+  rpgDungeons?: Map<string, RpgDungeon>;
   exportedAt?: Date;
+}
+
+/** One dungeon in RPG Mode, as the addon's journal shows it. */
+export interface RpgDungeon {
+  /** The page can't be opened: its card is not clickable. */
+  locked: boolean;
+  /** The card is a blank parchment page with a pencil sketch of the final boss. */
+  sketch: boolean;
+  /** Which sketch: the final boss's display ID, 0 for the unknown one. */
+  sketchArt: number;
+  /** Bosses not found yet, by name: "???", no portrait or loot. */
+  lockedBosses: Set<string>;
+  /** Quests not found yet: hidden on the dungeon's page. */
+  lockedQuests: Set<number>;
 }
 
 /** One item in the addon's Favourites. Everything but the ID can be missing. */
@@ -155,10 +175,16 @@ interface Snapshot {
   completed?: number[];
   talents?: { n?: string; p?: number; t?: number[][] }[];
   favourites?: { id?: number; name?: string; dungeon?: string; slug?: string; boss?: string; quest?: number; added?: number }[];
+  rpg?: boolean;
+  journey?: { points?: number; max?: number; quests?: number; questTotal?: number; pages?: number; pageTotal?: number };
   dungeons?: {
     slug?: string;
     cleared?: boolean;
-    quests?: { id?: number; name?: string; done?: boolean; lost?: boolean }[];
+    locked?: boolean;
+    sketch?: boolean;
+    sketchArt?: number;
+    quests?: { id?: number; name?: string; done?: boolean; lost?: boolean; locked?: boolean }[];
+    bosses?: { name?: string; locked?: boolean }[];
   }[];
 }
 
@@ -262,6 +288,33 @@ async function decodeSnapshot(code: string): Promise<DecodeResult> {
         .map((q) => ({ id: Number(q.id), name: q.name || "?", done: !!q.done })),
     );
   }
+  // RPG Mode: what the journal shows (older codes and Gamer Mode carry none of it).
+  const rpg = snap.rpg === true;
+  const num = (v: unknown) => (Number.isFinite(Number(v)) ? Number(v) : 0);
+  const journey =
+    rpg && snap.journey && num(snap.journey.max) > 0
+      ? {
+          points: num(snap.journey.points),
+          max: num(snap.journey.max),
+          quests: num(snap.journey.quests),
+          questTotal: num(snap.journey.questTotal),
+          pages: num(snap.journey.pages),
+          pageTotal: num(snap.journey.pageTotal),
+        }
+      : undefined;
+  const rpgDungeons = new Map<string, RpgDungeon>();
+  if (rpg) {
+    for (const d of snap.dungeons ?? []) {
+      if (!d?.slug) continue;
+      rpgDungeons.set(d.slug, {
+        locked: d.locked === true,
+        sketch: d.sketch === true,
+        sketchArt: num(d.sketchArt),
+        lockedBosses: new Set((d.bosses ?? []).filter((b) => b?.locked && b.name).map((b) => b.name as string)),
+        lockedQuests: new Set((d.quests ?? []).filter((q) => q?.locked).map((q) => Number(q.id)).filter(Number.isFinite)),
+      });
+    }
+  }
   return {
     ok: true,
     character: {
@@ -280,6 +333,9 @@ async function decodeSnapshot(code: string): Promise<DecodeResult> {
       dungeonQuests: dungeonQuests.size > 0 ? dungeonQuests : undefined,
       talents: readTalents(snap.talents),
       favourites: readFavourites(snap.favourites),
+      rpg,
+      ...(journey ? { journey } : {}),
+      ...(rpgDungeons.size > 0 ? { rpgDungeons } : {}),
       exportedAt:
         typeof snap.exportedAt === "number" && snap.exportedAt > 0 ? new Date(snap.exportedAt * 1000) : undefined,
     },
@@ -354,6 +410,7 @@ function decodeLegacy(code: string): DecodeResult {
       completed,
       cleared,
       favourites: [], // the pipe formats carry none
+      rpg: false,
       exportedAt: Number.isFinite(seconds) && seconds > 0 ? new Date(seconds * 1000) : undefined,
     },
   };
@@ -415,6 +472,11 @@ export interface DungeonProgress extends IndexDungeon {
   complete: boolean;
   /** The quests this character can do here, in journal order. */
   questState: QuestState[];
+  /** RPG Mode: the page can't be opened. */
+  locked: boolean;
+  /** RPG Mode: the card is the pencil sketch on parchment. */
+  sketch: boolean;
+  sketchArt: number;
 }
 
 /**
@@ -449,12 +511,16 @@ export function dungeonProgress(index: IndexDungeon[], c: Character): DungeonPro
           .filter((q) => questCountsFor(q, c, c.completed.has(q.id)))
           .map((q) => ({ id: q.id, name: q.name, slug: q.slug, done: c.completed.has(q.id) }));
     const questsDone = questState.filter((q) => q.done).length;
+    const rpg = c.rpgDungeons?.get(d.slug);
     return {
       ...d,
       questsDone,
       questsTotal: questState.length,
       complete: questState.length > 0 && questsDone === questState.length,
       questState,
+      locked: rpg?.locked ?? false,
+      sketch: !d.previewOnly && (rpg?.sketch ?? false),
+      sketchArt: rpg?.sketchArt ?? 0,
     };
   });
 }
@@ -494,6 +560,11 @@ export interface Journey {
  * killing its final boss. A quest listed under two dungeons counts once.
  */
 export function journeyProgress(rows: DungeonProgress[], c: Character): Journey {
+  // RPG Mode's code says it as the game counts it (account-wide unlocks too).
+  if (c.journey) {
+    const { points, max } = c.journey;
+    return { points, max, percent: max > 0 ? Math.floor((points / max) * 100) : 0 };
+  }
   const QUEST_POINTS = 5;
   const PAGE_POINTS = 10;
   const quests = new Map<number, boolean>();

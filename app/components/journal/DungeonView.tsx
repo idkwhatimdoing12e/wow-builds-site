@@ -23,6 +23,14 @@ export interface CharacterView {
   /** The character's quests here, in the addon's order. */
   quests: { id: number; done: boolean }[];
   faction: "Alliance" | "Horde" | "Unknown";
+  /** RPG Mode: bosses not found yet ("???", no portrait or loot) and quests not found yet (hidden). */
+  lockedBosses?: Set<string>;
+  lockedQuests?: Set<number>;
+}
+
+/** RPG Mode's stand-in for a boss not found yet, as the addon draws it. */
+function hiddenBoss(b: Dungeon["bosses"][number], hint: string): Dungeon["bosses"][number] {
+  return { name: "???", rare: false, loot: [], recipes: [], shared: [], description: hint, rpgHidden: true, npcID: b.npcID };
 }
 
 export default function DungeonView({
@@ -53,25 +61,42 @@ export default function DungeonView({
   const [expanded, setExpanded] = useState<number[]>([]);
   const [bossIdx, setBossIdx] = useState(0); // index into bosses; bosses.length = trash
   const detailRef = useRef<HTMLDivElement>(null);
+  const root = useRef<HTMLDivElement>(null);
 
-  // Deep links: #map, #bosses, #boss-<n>, #trash, #quest-<id>. Applied on the
-  // next frame so the server-rendered markup hydrates first (the lint rule's
-  // cascading-render concern). Item pages link to #boss-<n> and #trash.
+  // Where the reader is (tab, boss, quest) lives in the address on a dungeon
+  // page (#map, #bosses, #boss-<n>, #trash, #quests, #quest-<id>), and in this
+  // tab's session storage inside a character card (the address there is the
+  // character code). So Back from an item page returns to the same boss or
+  // quest, not the default tab. Item pages link to #boss-<n> and #trash too.
+  const viewKey = `dj.view.${d.slug}`;
+  const restored = useRef(false);
   useEffect(() => {
-    if (character) return; // the character page's fragment is its code
-    const apply = () => {
-      const h = window.location.hash.replace("#", "");
+    const apply = (initial: boolean) => {
+      let h = "";
+      if (character) {
+        try {
+          h = window.sessionStorage.getItem(viewKey) ?? "";
+        } catch {
+          h = "";
+        }
+      } else {
+        h = window.location.hash.replace("#", "");
+      }
+      let detail: "quests" | "bosses" | null = null;
       if (h === "bosses") setTab("bosses");
+      if (h === "quests") setTab("quests");
       if (h.startsWith("boss-")) {
         const i = parseInt(h.slice(5), 10);
         if (i >= 0 && i < d.bosses.length) {
           setTab("bosses");
           setBossIdx(i);
+          detail = "bosses";
         }
       }
       if (h === "trash" && d.trash.length > 0) {
         setTab("bosses");
         setBossIdx(d.bosses.length);
+        detail = "bosses";
       }
       if (h === "map" && d.map) setTab("map");
       if (h.startsWith("quest-")) {
@@ -81,14 +106,55 @@ export default function DungeonView({
           setTab("quests");
           setQuestId(id);
           setStep(null);
-          if (target.faction !== "Both") setFaction(target.faction);
+          if (!character && target.faction !== "Both") setFaction(target.faction);
+          detail = "quests";
         }
       }
+      restored.current = true;
+      // Back: bring the boss or quest back into view. On a phone it sits under
+      // the list; in a character card the page was rebuilt from the code, so the
+      // browser's own scroll position is gone.
+      const phone = !window.matchMedia("(min-width: 860px)").matches;
+      if (initial && detail && (phone || character)) {
+        const pane = detail;
+        requestAnimationFrame(() => {
+          const target = phone ? root.current?.querySelector(`[data-pane="${pane}"] .wf-pane-detail`) : root.current;
+          target?.scrollIntoView({ block: "start" });
+        });
+      }
     };
-    const raf = requestAnimationFrame(apply);
-    window.addEventListener("hashchange", apply);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("hashchange", apply); };
-  }, [d.quests, d.hiddenQuests, d.map, d.bosses.length, d.trash.length, character]);
+    const raf = requestAnimationFrame(() => apply(true));
+    const onHash = () => apply(false);
+    if (!character) window.addEventListener("hashchange", onHash);
+    return () => {
+      cancelAnimationFrame(raf);
+      if (!character) window.removeEventListener("hashchange", onHash);
+    };
+  }, [d.quests, d.hiddenQuests, d.map, d.bosses.length, d.trash.length, character, viewKey]);
+
+  // Keep it there as the reader moves (replacing the entry: no extra Back steps).
+  useEffect(() => {
+    if (!restored.current) return;
+    const h =
+      tab === "map"
+        ? "map"
+        : tab === "bosses"
+          ? bossIdx < d.bosses.length
+            ? `boss-${bossIdx}`
+            : "trash"
+          : questId !== null
+            ? `quest-${questId}`
+            : "quests";
+    if (character) {
+      try {
+        window.sessionStorage.setItem(viewKey, h);
+      } catch {
+        // storage blocked: Back just shows the default tab
+      }
+    } else if (window.location.hash !== `#${h}`) {
+      window.history.replaceState(window.history.state, "", `${window.location.pathname}${window.location.search}#${h}`);
+    }
+  }, [tab, bossIdx, questId, d.bosses.length, character, viewKey]);
 
   // On a phone the detail sits under the list: bring it into view after a pick.
   const revealDetail = (pane: "quests" | "bosses") => {
@@ -137,13 +203,30 @@ export default function DungeonView({
 
   const byId = new Map([...d.quests, ...d.hiddenQuests].map((q) => [q.id, q]));
   const quests = character
-    ? character.quests.map((c) => byId.get(c.id)).filter((q): q is NonNullable<typeof q> => !!q)
+    ? character.quests
+        .filter((c) => !character.lockedQuests?.has(c.id)) // RPG Mode: not found yet
+        .map((c) => byId.get(c.id))
+        .filter((q): q is NonNullable<typeof q> => !!q)
     : d.quests.filter((q) => questIsFor(q.faction, faction));
   const selectedQuest =
     quests.find((q) => q.id === questId) ?? d.hiddenQuests.find((q) => q.id === questId) ?? quests[0];
   const stepParent = step ? d.quests.find((q) => q.id === step.parent) : undefined;
   const selectedStep = step && stepParent ? stepParent.chain[step.index] : undefined;
-  const bossItems = d.bosses;
+  // RPG Mode: a boss not found yet is "???", with how to reveal it.
+  const locked = character?.lockedBosses;
+  const hint = t.or("RPG_BOSS_HIDDEN", "Defeat this boss to reveal it.");
+  const bossItems = locked?.size ? d.bosses.map((b) => (locked.has(b.name) ? hiddenBoss(b, hint) : b)) : d.bosses;
+  const map =
+    d.map && locked?.size
+      ? {
+          ...d.map,
+          bosses: d.map.bosses.map((p) =>
+            p.bossIndex !== undefined && locked.has(d.bosses[p.bossIndex]?.name)
+              ? { ...p, name: "???", displayId: undefined, portraitCrop: undefined, customPortrait: undefined }
+              : p,
+          ),
+        }
+      : d.map;
   const showTrash = d.trash.length > 0;
 
   const pickBoss = (i: number) => (e: React.MouseEvent) => {
@@ -159,7 +242,7 @@ export default function DungeonView({
   };
 
   return (
-    <>
+    <div ref={root} className="wf-dview">
       {!character && (
         <div className="wf-crumb">
           <Link href={h("/")} className="wf-btn wf-btn-red wf-btn-sm">{t("DUNGEONS")}</Link>
@@ -199,7 +282,7 @@ export default function DungeonView({
           <div className="wf-panes wf-panes-one" data-pane="map" hidden={tab !== "map"}>
             <div className="wf-pane wm-pane">
               <MapPane
-                map={d.map}
+                map={map ?? d.map}
                 onBoss={openBoss}
                 questFor={(ids) => {
                   const q = quests.find((x) => ids.includes(x.id));
@@ -371,6 +454,6 @@ export default function DungeonView({
           {next ? <Link href={h(`/dungeon/${next.slug}`)} className="wf-btn wf-btn-dark wf-btn-sm">{next.name} →</Link> : <span />}
         </div>
       )}
-    </>
+    </div>
   );
 }

@@ -50,7 +50,7 @@ export function BossPanel({ boss }: { boss: Boss }) {
       </div>
       {boss.description && <p className="wb-desc">{boss.description}</p>}
 
-      {boss.loot.length === 0 && boss.shared.length === 0 && boss.recipes.length === 0 && (
+      {!boss.rpgHidden && boss.loot.length === 0 && boss.shared.length === 0 && boss.recipes.length === 0 && (
         <p className="wb-desc">{t("s_no_loot")}</p>
       )}
       <ul className="wb-loot-list">

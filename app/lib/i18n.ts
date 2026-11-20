@@ -1,7 +1,7 @@
 // The site's languages: the addon's ten. English lives at the plain paths
 // (/dungeon/...), every other language under its code (/de/dungeon/...).
 // Only the home page, dungeon pages and quest pages are translated; the rest
-// (items, character, about, privacy) stay English.
+// (items, character, about) stay English.
 
 export const LANGS = [
   { code: "en", locale: "enUS", html: "en", short: "EN", label: "English" },

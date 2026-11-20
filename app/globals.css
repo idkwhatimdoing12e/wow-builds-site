@@ -424,6 +424,8 @@ body {
 /* Only the detail side keeps a floor: the list hugs its rows, so a dungeon
    with few quests does not trail an empty bordered box under the last one. */
 .wf-pane-detail { background: var(--wf-panel-alt); min-height: 420px; }
+/* brought back into view after Back: clear of the sticky header */
+.wf-pane-detail, .wf-dview { scroll-margin-top: calc(var(--sx-head-h, 64px) + 12px); }
 .wf-ptext { font-size: 17px; line-height: 1.5; }
 
 .wf-pane-head {
@@ -1030,6 +1032,8 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 /* logo */
 .sx-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--g-text); flex: 0 0 auto; }
 .sx-logo-badge { width: 36px; height: 36px; }
+/* the addon's book icon, framed like a game icon */
+.sx-logo-book { border-radius: 6px; box-shadow: 0 0 0 1px #000, 0 0 0 2px #8a6a33, 0 2px 6px rgba(0, 0, 0, 0.6); }
 .sx-logo-name { font-family: var(--g-display); font-weight: 600; font-size: 21px; line-height: 1; color: var(--g-name); white-space: nowrap; }
 .sx-logo-text { display: flex; flex-direction: column; line-height: 1; }
 .sx-logo-tag { margin-top: 5px; font-size: 12.5px; color: var(--g-muted); }
@@ -1122,12 +1126,22 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
   .sx-search-field:focus-within, .sx-search.on .sx-search-field { width: 300px; cursor: text; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
   .sx-search-field:focus-within input, .sx-search.on .sx-search-field input { opacity: 1; }
 }
-/* phones: the open search is a full-width bar under the header */
+/* phones and small tablets: no download button (the addon is installed on a
+   computer), and the search is a real field filling the header's free width;
+   its results open full width under the header */
 @media (max-width: 860px) {
-  .sx-search-field:focus-within, .sx-search.on .sx-search-field {
-    position: fixed; left: 12px; right: 12px; top: calc(var(--sx-head-h) + 8px); width: auto; height: 42px;
-  }
-  .sx-search-panel { position: fixed; left: 8px; right: 8px; top: calc(var(--sx-head-h) + 56px); width: auto; max-height: calc(100vh - var(--sx-head-h) - 72px); }
+  .sx-cta { display: none; }
+  .sx-bar-start { flex: 1 1 auto; }
+  .sx-search { flex: 1 1 auto; width: auto; min-width: 0; }
+  .sx-search-field,
+  .sx-search-field:focus-within,
+  .sx-search.on .sx-search-field { width: 100%; cursor: text; box-shadow: none; }
+  .sx-search-field input { opacity: 1; min-width: 0; }
+  .sx-search-panel { position: fixed; left: 8px; right: 8px; top: calc(var(--sx-head-h) + 8px); width: auto; max-height: calc(100vh - var(--sx-head-h) - 24px); }
+}
+/* phones: the book alone, so the search gets the room */
+@media (max-width: 600px) {
+  .sx-header .sx-logo-name { display: none; }
 }
 
 /* the language picker, top right */
@@ -1820,6 +1834,30 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 /* An opened card takes the full row and grows to fit its quests. */
 .ch-card-open { grid-column: 1 / -1; height: auto; }
 .ch-card-open .ch-card-face { background-size: cover; background-position: center; }
+
+/* RPG Mode: a page not unlocked yet, as the addon's journal draws it
+   (Systems/RPGMode.lua, JournalPage): the parchment's top 176 rows filling the
+   card 4px in, the final boss's pencil sketch centred on it (twice as wide as
+   tall), no art, name, level or tick, and no dark band over it. */
+.ch-card-sketch { background: #1a130b; }
+.ch-card-sketch::after { display: none; }
+.ch-sketch {
+  position: absolute; inset: 4px;
+  display: flex; align-items: center; justify-content: center;
+  background: url(/journal/rpg/parchment.webp) center / 100% 100% no-repeat;
+}
+.ch-sketch > img { display: block; height: calc(100% - 8px); width: auto; aspect-ratio: 2 / 1; }
+/* "Show dungeon quests": the usual count top right, on a dark backing */
+.ch-sketch .ch-sketch-count {
+  top: 3px; right: 6px;
+  padding: 2px 6px; border-radius: 2px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #f7e38a;
+  text-shadow: 1px 1px 0 #000;
+}
+/* A page that can't be opened: no lift on hover, no pointer. */
+.ch-card-locked { cursor: default; }
+.ch-card-locked:hover, .ch-card-locked:focus-within { transform: none; outline-color: var(--wf-border-light); }
 .ch-card-open:hover, .ch-card-open:focus-within { transform: none; }
 
 /* The name block can shrink on a phone, so the Journey bar under it fits. */

@@ -10,6 +10,8 @@ type Strings = Record<string, string>;
 const en: Strings = {
   s_hide_map: "Hide map",
   s_hero1_text: "Every quest, boss and drop in every dungeon on WoW Forever. A free addon, and the same journal here on the web.",
+  s_hero_import: "Import your character from the addon with /dj export: your quests, dungeons, talents and favourites, all in one place.",
+  s_hero_cta: "My Character",
   s_banner_title: "Take the journal into the game",
   s_banner_text: "The Dungeon Journal addon shows all of this in game: quests for your faction, the boss you're fighting, what it drops and where you are on the map. It's free and updated for every WoW Forever phase.",
   s_banner_cta: "Download on CurseForge",
@@ -65,6 +67,8 @@ const en: Strings = {
 const de: Strings = {
   s_hide_map: "Karte ausblenden",
   s_hero1_text: "Jede Quest, jeder Boss und jede Beute in jedem Dungeon von WoW Forever. Ein kostenloses Addon und dasselbe Journal hier im Web.",
+  s_hero_import: "Importiere deinen Charakter aus dem Addon mit /dj export: deine Quests, Dungeons, Talente und Favoriten an einem Ort.",
+  s_hero_cta: "Mein Charakter",
   s_banner_title: "Nimm das Journal mit ins Spiel",
   s_banner_text: "Das Dungeon-Journal-Addon zeigt all das im Spiel: Quests für deine Fraktion, den Boss, gegen den du kämpfst, was er fallen lässt und wo du auf der Karte bist. Es ist kostenlos und für jede Phase von WoW Forever aktuell.",
   s_banner_cta: "Auf CurseForge herunterladen",
@@ -120,6 +124,8 @@ const de: Strings = {
 const fr: Strings = {
   s_hide_map: "Masquer la carte",
   s_hero1_text: "Chaque quête, chaque boss et chaque butin de chaque donjon de WoW Forever. Un addon gratuit, et le même journal ici sur le web.",
+  s_hero_import: "Importez votre personnage depuis l'addon avec /dj export : vos quêtes, donjons, talents et favoris, au même endroit.",
+  s_hero_cta: "Mon personnage",
   s_banner_title: "Emportez le journal en jeu",
   s_banner_text: "L'addon Dungeon Journal affiche tout cela en jeu : les quêtes de votre faction, le boss que vous combattez, ce qu'il laisse tomber et votre position sur la carte. Il est gratuit et mis à jour à chaque phase de WoW Forever.",
   s_banner_cta: "Télécharger sur CurseForge",
@@ -175,6 +181,8 @@ const fr: Strings = {
 const es: Strings = {
   s_hide_map: "Ocultar el mapa",
   s_hero1_text: "Cada misión, jefe y botín de cada mazmorra de WoW Forever. Un addon gratuito, y el mismo diario aquí en la web.",
+  s_hero_import: "Importa tu personaje desde el addon con /dj export: tus misiones, mazmorras, talentos y favoritos, todo en un mismo lugar.",
+  s_hero_cta: "Mi personaje",
   s_banner_title: "Lleva el diario al juego",
   s_banner_text: "El addon Dungeon Journal muestra todo esto en el juego: misiones de tu facción, el jefe al que te enfrentas, lo que suelta y dónde estás en el mapa. Es gratuito y se actualiza en cada fase de WoW Forever.",
   s_banner_cta: "Descargar en CurseForge",
@@ -230,6 +238,8 @@ const es: Strings = {
 const it: Strings = {
   s_hide_map: "Nascondi la mappa",
   s_hero1_text: "Ogni missione, boss e bottino di ogni spedizione di WoW Forever. Un addon gratuito, e lo stesso diario qui sul web.",
+  s_hero_import: "Importa il tuo personaggio dall'addon con /dj export: missioni, spedizioni, talenti e preferiti, tutto in un unico posto.",
+  s_hero_cta: "Il mio personaggio",
   s_banner_title: "Porta il diario nel gioco",
   s_banner_text: "L'addon Dungeon Journal mostra tutto questo nel gioco: le missioni della tua fazione, il boss che stai affrontando, cosa lascia e dove sei sulla mappa. È gratuito e aggiornato a ogni fase di WoW Forever.",
   s_banner_cta: "Scarica su CurseForge",
@@ -285,6 +295,8 @@ const it: Strings = {
 const pt: Strings = {
   s_hide_map: "Ocultar o mapa",
   s_hero1_text: "Cada missão, chefe e saque de cada masmorra do WoW Forever. Um addon gratuito, e o mesmo diário aqui na web.",
+  s_hero_import: "Importe seu personagem do addon com /dj export: suas missões, masmorras, talentos e favoritos, tudo em um só lugar.",
+  s_hero_cta: "Meu personagem",
   s_banner_title: "Leve o diário para o jogo",
   s_banner_text: "O addon Dungeon Journal mostra tudo isso no jogo: as missões da sua facção, o chefe que você está enfrentando, o que ele deixa cair e onde você está no mapa. É gratuito e atualizado a cada fase do WoW Forever.",
   s_banner_cta: "Baixar no CurseForge",
@@ -340,6 +352,8 @@ const pt: Strings = {
 const ru: Strings = {
   s_hide_map: "Скрыть карту",
   s_hero1_text: "Все задания, боссы и добыча во всех подземельях WoW Forever. Бесплатный аддон и тот же журнал здесь, в интернете.",
+  s_hero_import: "Импортируйте персонажа из аддона командой /dj export: задания, подземелья, таланты и избранное в одном месте.",
+  s_hero_cta: "Мой персонаж",
   s_banner_title: "Возьмите журнал в игру",
   s_banner_text: "Аддон Dungeon Journal показывает всё это в игре: задания вашей фракции, босса, с которым вы сражаетесь, его добычу и ваше место на карте. Он бесплатный и обновляется к каждой фазе WoW Forever.",
   s_banner_cta: "Скачать на CurseForge",
@@ -395,6 +409,8 @@ const ru: Strings = {
 const ko: Strings = {
   s_hide_map: "지도 숨기기",
   s_hero1_text: "WoW Forever 모든 던전의 퀘스트, 우두머리, 전리품. 무료 애드온이자, 웹에서도 보는 같은 도감입니다.",
+  s_hero_import: "애드온에서 /dj export로 캐릭터를 가져오세요. 퀘스트, 던전, 특성, 즐겨찾기를 한곳에서 볼 수 있습니다.",
+  s_hero_cta: "내 캐릭터",
   s_banner_title: "도감을 게임 속으로",
   s_banner_text: "Dungeon Journal 애드온은 이 모든 것을 게임 안에서 보여 줍니다: 내 진영의 퀘스트, 싸우고 있는 우두머리와 그 전리품, 지도 위 내 위치까지. 무료이며 WoW Forever의 모든 단계에 맞춰 업데이트됩니다.",
   s_banner_cta: "CurseForge에서 다운로드",
@@ -450,6 +466,8 @@ const ko: Strings = {
 const zhCN: Strings = {
   s_hide_map: "隐藏地图",
   s_hero1_text: "WoW Forever 每个地下城的所有任务、首领与掉落。一款免费插件，以及网页上的同一本手册。",
+  s_hero_import: "用 /dj export 从插件导入你的角色：任务、地下城、天赋和收藏，一目了然。",
+  s_hero_cta: "我的角色",
   s_banner_title: "把手册带进游戏",
   s_banner_text: "Dungeon Journal 插件在游戏中显示这一切：你阵营的任务、正在对战的首领、它的掉落以及你在地图上的位置。完全免费，并随 WoW Forever 的每个阶段更新。",
   s_banner_cta: "在 CurseForge 下载",
@@ -505,6 +523,8 @@ const zhCN: Strings = {
 const zhTW: Strings = {
   s_hide_map: "隱藏地圖",
   s_hero1_text: "WoW Forever 每個地城的所有任務、首領與掉落。一款免費插件，以及網頁上的同一本手冊。",
+  s_hero_import: "用 /dj export 從插件匯入你的角色：任務、地城、天賦和收藏，一目了然。",
+  s_hero_cta: "我的角色",
   s_banner_title: "把手冊帶進遊戲",
   s_banner_text: "Dungeon Journal 插件在遊戲中顯示這一切：你陣營的任務、正在對戰的首領、它的掉落以及你在地圖上的位置。完全免費，並隨 WoW Forever 的每個階段更新。",
   s_banner_cta: "在 CurseForge 下載",

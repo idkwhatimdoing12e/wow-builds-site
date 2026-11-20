@@ -346,6 +346,8 @@ export interface Boss {
   loot: LootTuple[];
   recipes: LootTuple[];
   shared: LootTuple[];
+  /** RPG Mode on the character page: not found yet, shown as "???" with how to reveal it. */
+  rpgHidden?: boolean;
 }
 
 export interface TrashDrop {

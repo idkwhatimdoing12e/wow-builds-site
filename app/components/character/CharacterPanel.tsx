@@ -18,10 +18,13 @@ import {
   raceName,
   type Character,
   type DungeonProgress,
+  type RpgDungeon,
   type IndexDungeon,
 } from "@/app/lib/character";
 
 const STORAGE_KEY = "dj.character.code";
+/** This tab's open dungeon card, so Back from an item page reopens it. */
+const OPEN_KEY = "dj.character.open";
 
 /** The code lives in the URL fragment, which the browser never sends to a server. */
 function codeFromHash(): string {
@@ -45,28 +48,59 @@ function DungeonCard({
   faction,
   open,
   onToggle,
+  rpg,
 }: {
   d: DungeonProgress;
   faction: Character["faction"];
   open: boolean;
   onToggle: () => void;
+  rpg?: RpgDungeon;
 }) {
+  // RPG Mode: a page not unlocked yet is a blank parchment page with a pencil
+  // sketch of its final boss: no art, name, level or tick. With the player's
+  // "Show dungeon quests" it still opens, on its quests, with the count on it.
+  const sketch = d.sketch;
+  const art = sketch ? null : d.art;
+  const questCount = (
+    <span className={`wf-card-quests ch-card-quests ${sketch ? "ch-sketch-count" : ""}`}>
+      {faction !== "Unknown" && (
+        <img src={faction === "Alliance" ? "/journal/alliance.png" : "/journal/horde.png"} alt="" width={22} height={22} />
+      )}
+      {d.questsTotal > 0 ? `${d.questsDone}/${d.questsTotal} quests` : "0 quests"}
+    </span>
+  );
   return (
     <div
-      className={`wf-card ch-card ${d.complete ? "ch-card-done" : ""} ${open ? "ch-card-open" : ""} ${
+      className={`wf-card ch-card ${d.complete && !sketch ? "ch-card-done" : ""} ${open ? "ch-card-open" : ""} ${
         d.previewOnly ? "wf-card-preview" : ""
-      }`}
+      } ${sketch ? "ch-card-sketch" : ""} ${d.locked ? "ch-card-locked" : ""}`}
       // Open, the card grows to hold the quests: the art stays on its banner.
-      style={d.art && !open ? { backgroundImage: `url(${d.art})` } : undefined}
+      style={art && !open ? { backgroundImage: `url(${art})` } : undefined}
     >
       <button
         type="button"
         className="ch-card-face"
-        style={d.art && open ? { backgroundImage: `url(${d.art})` } : undefined}
+        style={art && open ? { backgroundImage: `url(${art})` } : undefined}
         onClick={onToggle}
         aria-expanded={open}
-        disabled={d.previewOnly || d.questsTotal === 0}
+        aria-label={sketch ? (d.locked ? `${d.name}: not unlocked yet` : `${d.name}: not unlocked yet, quests shown`) : undefined}
+        disabled={d.previewOnly || d.questsTotal === 0 || d.locked}
       >
+        {sketch ? (
+          <span className="ch-sketch" aria-hidden="true">
+            <img
+              src={`/journal/rpg/sketch-${d.sketchArt > 0 ? d.sketchArt : "unknown"}.webp`}
+              alt=""
+              width={256}
+              height={128}
+              onError={(e) => {
+                if (!e.currentTarget.src.endsWith("sketch-unknown.webp")) e.currentTarget.src = "/journal/rpg/sketch-unknown.webp";
+              }}
+            />
+            {!d.locked && questCount}
+          </span>
+        ) : (
+        <>
         <span className="wf-card-name">{d.name}</span>
         {d.previewOnly ? (
           <span className="wf-card-soon">Coming Soon</span>
@@ -79,26 +113,18 @@ function DungeonCard({
                 </svg>
               </span>
             )}
-            <span className="wf-card-quests ch-card-quests">
-              {faction !== "Unknown" && (
-                <img
-                  src={faction === "Alliance" ? "/journal/alliance.png" : "/journal/horde.png"}
-                  alt=""
-                  width={22}
-                  height={22}
-                />
-              )}
-              {d.questsTotal > 0 ? `${d.questsDone}/${d.questsTotal} quests` : "0 quests"}
-            </span>
+            {questCount}
           </>
         )}
         <span className="wf-card-level">LV {d.level}</span>
+        </>
+        )}
       </button>
 
       {/* The addon's Quests tab for this character: its list and the parchment. */}
       {open && (
         <div className="ch-quests">
-          <CharacterQuests slug={d.slug} quests={d.questState} faction={faction} />
+          <CharacterQuests slug={d.slug} quests={d.questState} faction={faction} rpg={rpg} />
         </div>
       )}
     </div>
@@ -141,6 +167,12 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
     setError("");
     setCharacter(result.character);
     setCode(trimmed);
+    // Back from an item page: the dungeon card that was open opens again.
+    try {
+      setOpen(window.sessionStorage.getItem(OPEN_KEY));
+    } catch {
+      // storage blocked: cards start closed
+    }
     setVisiting(source === "link" && !keep);
     if (keep && source !== "saved") {
       try {
@@ -351,7 +383,19 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
             d={d}
             faction={character.faction}
             open={open === d.slug}
-            onToggle={() => setOpen((cur) => (cur === d.slug ? null : d.slug))}
+            onToggle={() =>
+              setOpen((cur) => {
+                const next = cur === d.slug ? null : d.slug;
+                try {
+                  if (next) window.sessionStorage.setItem(OPEN_KEY, next);
+                  else window.sessionStorage.removeItem(OPEN_KEY);
+                } catch {
+                  // storage blocked: nothing to remember
+                }
+                return next;
+              })
+            }
+            rpg={character.rpgDungeons?.get(d.slug)}
           />
         ))}
       </div>

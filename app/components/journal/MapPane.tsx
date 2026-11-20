@@ -214,7 +214,7 @@ export default function MapPane({
                   if (quest === null) return null;
                   return (
                     <button
-                      key={`b${b.name}`}
+                      key={`b${b.name}-${b.x}-${b.y}`}
                       type="button"
                       className={`wm-boss ${quest ? "wm-questmob" : ""}`}
                       data-tip={b.name}

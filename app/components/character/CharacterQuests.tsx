@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Dungeon } from "@/app/lib/journal";
-import type { Character, QuestState } from "@/app/lib/character";
+import type { Character, QuestState, RpgDungeon } from "@/app/lib/character";
 import DungeonView from "@/app/components/journal/DungeonView";
 
 /** The dungeon and the dungeon page's skin (theme colours, header art). */
@@ -33,10 +33,13 @@ export default function CharacterDungeon({
   slug,
   quests,
   faction,
+  rpg,
 }: {
   slug: string;
   quests: QuestState[];
   faction: Character["faction"];
+  /** RPG Mode: what the character has found here. */
+  rpg?: RpgDungeon;
 }) {
   const [loaded, setLoaded] = useState<{ slug: string; d: Loaded | null } | null>(null);
 
@@ -56,7 +59,10 @@ export default function CharacterDungeon({
   // the dungeon page's in-game skin (.ej), in its own colours
   return (
     <div className="ej ch-ej" style={d.skin as React.CSSProperties}>
-      <DungeonView d={d} character={{ quests, faction }} />
+      <DungeonView
+        d={d}
+        character={{ quests, faction, lockedBosses: rpg?.lockedBosses, lockedQuests: rpg?.lockedQuests }}
+      />
     </div>
   );
 }

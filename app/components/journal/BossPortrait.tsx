@@ -9,6 +9,7 @@ import { LevelBadge } from "./Window";
 const BAKED = new Set<number>(bakedIds as number[]);
 
 function initials(name: string) {
+  if (/^\?+$/.test(name)) return "?"; // RPG Mode's boss not found yet
   const parts = name.replace(/[^A-Za-z' ]/g, "").split(/\s+/).filter(Boolean);
   return parts.slice(0, 2).map((p) => p[0]!.toUpperCase()).join("");
 }

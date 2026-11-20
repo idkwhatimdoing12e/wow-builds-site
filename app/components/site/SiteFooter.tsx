@@ -16,7 +16,7 @@ export default function SiteFooter() {
       <div className="sx-footer-in">
         <div className="sx-footer-about">
           <Link href={href(lang, "/")} className="sx-logo sx-logo-foot" aria-label={s.home}>
-            <img src="/journal/ui/forever-icon.png" alt="" width={64} height={64} className="sx-logo-badge" />
+            <img src="/journal/icons/inv_misc_book_09.webp" alt="" width={56} height={56} className="sx-logo-badge sx-logo-book" />
             <span className="sx-logo-text">
               <span className="sx-logo-name">Dungeon Journal</span>
               <span className="sx-logo-tag">{s.tag}</span>
@@ -47,7 +47,7 @@ export default function SiteFooter() {
       </div>
 
       <div className="sx-footer-legal">
-        <p>&copy; {new Date().getFullYear()} {SITE_NAME}. {s.rights} <Link href="/privacy">{s.privacy}</Link></p>
+        <p>&copy; {new Date().getFullYear()} {SITE_NAME}. {s.rights}</p>
         <p>{s.disclaimer}</p>
       </div>
     </footer>

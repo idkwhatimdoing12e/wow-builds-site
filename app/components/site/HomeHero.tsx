@@ -1,13 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { LINKS } from "@/app/lib/site";
 import { DownloadIcon } from "./icons";
 import { useT } from "@/app/components/i18n/I18n";
 
 /**
  * The home banner: a painting edge to edge that fades into the page, with the
- * title, a line and the download button centred over it. (It was a carousel;
- * the map and browse slides only pointed further down the same page.)
+ * title, a line and a button centred over it. Most visitors come from the
+ * addon, so it asks them to bring their character (/dj export) rather than
+ * to download it; the header and the closing band still offer the download.
  */
 export default function HomeHero() {
   const t = useT();
@@ -17,10 +19,10 @@ export default function HomeHero() {
         <div className="sx-slide-art" style={{ backgroundImage: "url(/journal/art/shadowfang-keep-card.webp)" }} />
         <div className="sx-slide-copy">
           <h1 className="sx-slide-title">Dungeon Journal</h1>
-          <p className="sx-slide-text">{t("s_hero1_text")}</p>
-          <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="sx-btn sx-btn-gold sx-btn-lg">
-            <DownloadIcon /> {t("s_download_addon")}
-          </a>
+          <p className="sx-slide-text">{t("s_hero_import")}</p>
+          <Link href="/character" className="sx-btn sx-btn-gold sx-btn-lg">
+            {t("s_hero_cta")}
+          </Link>
         </div>
       </div>
     </section>
