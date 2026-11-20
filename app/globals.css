@@ -967,6 +967,17 @@ body {
 .wp-page-next { background-image: url("/journal/ui/page-next-up.png"); }
 .wp-page-next:active { background-image: url("/journal/ui/page-next-down.png"); }
 .wp-page:hover { filter: brightness(1.25); }
+/* "← Back" above an item page's breadcrumb */
+.wf-back {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin: 0 0 8px; padding: 2px 4px 2px 0;
+  color: #e8c777; font-size: 14px; font-weight: 600; text-decoration: none;
+}
+.wf-back:hover { color: #ffe39a; text-decoration: underline; text-underline-offset: 3px; }
+/* the same arrows around the "Dungeons" button, greyed at the ends of the list */
+.wf-crumb-arrow { display: inline-block; width: 30px; height: 30px; flex: none; }
+.wf-crumb-arrow.wp-page-prev.is-off { background-image: url("/journal/ui/page-prev-disabled.png"); cursor: default; filter: none; }
+.wf-crumb-arrow.wp-page-next.is-off { background-image: url("/journal/ui/page-next-disabled.png"); cursor: default; filter: none; }
 .wp-avail .wp-note { margin-left: auto; }
 
 /* the addon's map tab icon (Ability_Spy) has a thin black frame */
@@ -1032,8 +1043,8 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 /* logo */
 .sx-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--g-text); flex: 0 0 auto; }
 .sx-logo-badge { width: 36px; height: 36px; }
-/* the addon's book icon, framed like a game icon */
-.sx-logo-book { border-radius: 6px; box-shadow: 0 0 0 1px #000, 0 0 0 2px #8a6a33, 0 2px 6px rgba(0, 0, 0, 0.6); }
+/* the Dungeon Journal's book, on no background */
+.sx-logo-book { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.7)); }
 .sx-logo-name { font-family: var(--g-display); font-weight: 600; font-size: 21px; line-height: 1; color: var(--g-name); white-space: nowrap; }
 .sx-logo-text { display: flex; flex-direction: column; line-height: 1; }
 .sx-logo-tag { margin-top: 5px; font-size: 12.5px; color: var(--g-muted); }

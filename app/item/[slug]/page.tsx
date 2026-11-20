@@ -8,6 +8,7 @@ import { SITE_NAME, SITE_URL } from "@/app/lib/site";
 import Window from "@/app/components/journal/Window";
 import AdSlot from "@/app/components/journal/AdSlot";
 import ItemTooltipBody from "@/app/components/journal/ItemTooltipBody";
+import BackLink from "@/app/components/site/BackLink";
 
 export function generateStaticParams() {
   return getItemSlugs().map((slug) => ({ slug }));
@@ -96,6 +97,8 @@ export default async function ItemPage({ params }: { params: Promise<{ slug: str
   return (
     <div className="journal wf-page">
       <Window style={themeVars(home.name) as React.CSSProperties}>
+        {/* back to the boss or quest the reader came from */}
+        <BackLink fallback={`/dungeon/${home.slug}`} />
         <div className="wf-crumb">
           <Link href="/" className="wf-btn wf-btn-red wf-btn-sm">Dungeons</Link>
           <Link href={`/dungeon/${home.slug}`} className="wf-btn wf-btn-red wf-btn-sm">{home.name}</Link>

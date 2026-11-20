@@ -16,7 +16,7 @@ export default function SiteFooter() {
       <div className="sx-footer-in">
         <div className="sx-footer-about">
           <Link href={href(lang, "/")} className="sx-logo sx-logo-foot" aria-label={s.home}>
-            <img src="/journal/icons/inv_misc_book_09.webp" alt="" width={56} height={56} className="sx-logo-badge sx-logo-book" />
+            <img src="/journal/ui/journal-book.webp" alt="" width={128} height={128} className="sx-logo-badge sx-logo-book" />
             <span className="sx-logo-text">
               <span className="sx-logo-name">Dungeon Journal</span>
               <span className="sx-logo-tag">{s.tag}</span>

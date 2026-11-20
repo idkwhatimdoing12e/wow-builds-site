@@ -245,7 +245,18 @@ export default function DungeonView({
     <div ref={root} className="wf-dview">
       {!character && (
         <div className="wf-crumb">
+          {/* The addon's arrows either side of "Dungeons": the previous and next dungeon. */}
+          {prev ? (
+            <Link href={h(`/dungeon/${prev.slug}`)} className="wp-page wp-page-prev wf-crumb-arrow" aria-label={prev.name} title={prev.name} />
+          ) : (
+            <span className="wp-page wp-page-prev wf-crumb-arrow is-off" aria-hidden="true" />
+          )}
           <Link href={h("/")} className="wf-btn wf-btn-red wf-btn-sm">{t("DUNGEONS")}</Link>
+          {next ? (
+            <Link href={h(`/dungeon/${next.slug}`)} className="wp-page wp-page-next wf-crumb-arrow" aria-label={next.name} title={next.name} />
+          ) : (
+            <span className="wp-page wp-page-next wf-crumb-arrow is-off" aria-hidden="true" />
+          )}
         </div>
       )}
 

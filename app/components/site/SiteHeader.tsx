@@ -23,8 +23,8 @@ export const levelRange = (level: string) => level.replace(/\s*-\s*/, "–");
 function Logo({ lang }: { lang: Lang }) {
   return (
     <Link href={href(lang, "/")} className="sx-logo" aria-label={SHELL[lang].home}>
-      {/* the addon's own icon (its minimap button and AddOns-list book) */}
-      <img src="/journal/icons/inv_misc_book_09.webp" alt="" width={56} height={56} className="sx-logo-badge sx-logo-book" />
+      {/* the Dungeon Journal's book, on no background */}
+      <img src="/journal/ui/journal-book.webp" alt="" width={128} height={128} className="sx-logo-badge sx-logo-book" />
       <span className="sx-logo-name">Dungeon Journal</span>
     </Link>
   );
