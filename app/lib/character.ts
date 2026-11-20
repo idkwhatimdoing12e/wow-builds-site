@@ -34,6 +34,8 @@ export interface Character {
   realm: string;
   /** Empty for a character exported before the addon sent its race. */
   raceToken: string;
+  /** The game's UnitSex: 2 male, 3 female; absent when the export does not say. */
+  sex?: number;
   classToken: string;
   level: number;
   faction: "Alliance" | "Horde" | "Unknown";
@@ -41,7 +43,49 @@ export interface Character {
   completed: Set<number>;
   /** Slugs of dungeons whose final boss the character has killed. */
   cleared: Set<string>;
+  /**
+   * FDJ3 only: each dungeon's quests exactly as the addon counts them for this
+   * character (its faction, its class, its professions; hidden, repeatable and
+   * lost quests left out), keyed by dungeon slug. Older codes carry no such
+   * list, and the site works it out from faction and class instead.
+   */
+  dungeonQuests?: Map<string, { id: number; name: string; done: boolean }[]>;
+  /** FDJ3 with addon 2.2+: the points in each talent tree, in the game's tab order. */
+  talents?: TalentTree[];
+  /** The addon's Favourites, in its window's order (dungeon, then name); empty when there are none. */
+  favourites: Favourite[];
   exportedAt?: Date;
+}
+
+/** One item in the addon's Favourites. Everything but the ID can be missing. */
+export interface Favourite {
+  id: number;
+  /** English, as the addon stored it when the item was favourited. */
+  name?: string;
+  /** The journal page it came from, English. */
+  dungeon?: string;
+  slug?: string;
+  /** The boss that drops it, English. */
+  boss?: string;
+  /** The quest it is a reward from. */
+  quest?: number;
+  added?: Date;
+}
+
+/**
+ * One talent tree as the addon exports it: WoW Forever's trait tree (C_Traits),
+ * each talent with points as [tier, column, rank, spellID, nodeID].
+ */
+export interface TalentTree {
+  /** The tree's name, as the game gave it. */
+  name: string;
+  points: number;
+  /** Rank by TraitNode ID: how the site places a talent. */
+  byNode: Map<number, number>;
+  /** Rank by spell ID, for codes with no node IDs (4 numbers per talent). */
+  bySpell: Map<number, number>;
+  /** Rank by "tier,column" (1-based), for the oldest codes (3 numbers per talent). */
+  byPlace: Map<string, number>;
 }
 
 export type DecodeResult =
@@ -103,12 +147,19 @@ interface Snapshot {
   name?: string;
   realm?: string;
   raceToken?: string;
+  sex?: number;
   classToken?: string;
   level?: number;
   faction?: string;
   exportedAt?: number;
   completed?: number[];
-  dungeons?: { slug?: string; cleared?: boolean }[];
+  talents?: { n?: string; p?: number; t?: number[][] }[];
+  favourites?: { id?: number; name?: string; dungeon?: string; slug?: string; boss?: string; quest?: number; added?: number }[];
+  dungeons?: {
+    slug?: string;
+    cleared?: boolean;
+    quests?: { id?: number; name?: string; done?: boolean; lost?: boolean }[];
+  }[];
 }
 
 /** Raw DEFLATE, as LibDeflate's CompressDeflate produces it. */
@@ -120,6 +171,51 @@ async function inflateRaw(bytes: Uint8Array): Promise<Uint8Array | null> {
   } catch {
     return null;
   }
+}
+
+function readTalents(raw: Snapshot["talents"]): TalentTree[] | undefined {
+  if (!Array.isArray(raw) || raw.length === 0) return undefined;
+  const trees: TalentTree[] = [];
+  for (const tree of raw) {
+    if (!tree || typeof tree.n !== "string") return undefined;
+    const byNode = new Map<number, number>();
+    const bySpell = new Map<number, number>();
+    const byPlace = new Map<string, number>();
+    let points = 0;
+    for (const t of Array.isArray(tree.t) ? tree.t : []) {
+      if (!Array.isArray(t) || t.length < 3) continue;
+      const [tier, column, rank, spell, node] = t.map(Number);
+      if (!(rank > 0)) continue;
+      if (node > 0) byNode.set(node, rank);
+      if (spell > 0) bySpell.set(spell, rank);
+      if (tier > 0 && column > 0) byPlace.set(`${tier},${column}`, rank);
+      points += rank;
+    }
+    trees.push({ name: tree.n, points: Number.isFinite(Number(tree.p)) && Number(tree.p) > points ? Number(tree.p) : points, byNode, bySpell, byPlace });
+  }
+  return trees;
+}
+
+function readFavourites(raw: Snapshot["favourites"]): Favourite[] {
+  if (!Array.isArray(raw)) return [];
+  const text = (v: unknown) => (typeof v === "string" && v.trim() !== "" ? v : undefined);
+  const out: Favourite[] = [];
+  for (const f of raw) {
+    const id = Number(f?.id);
+    if (!f || !(id > 0)) continue;
+    const quest = Number(f.quest);
+    const added = Number(f.added);
+    out.push({
+      id,
+      name: text(f.name),
+      dungeon: text(f.dungeon),
+      slug: text(f.slug),
+      boss: text(f.boss),
+      quest: quest > 0 ? quest : undefined,
+      added: added > 0 ? new Date(added * 1000) : undefined,
+    });
+  }
+  return out;
 }
 
 async function decodeSnapshot(code: string): Promise<DecodeResult> {
@@ -154,12 +250,25 @@ async function decodeSnapshot(code: string): Promise<DecodeResult> {
   }
 
   const faction = snap.faction === "Alliance" || snap.faction === "Horde" ? snap.faction : "Unknown";
+  // The addon leaves a "lost" quest (one that can no longer be done) out of its
+  // done/total, so the site does too.
+  const dungeonQuests = new Map<string, { id: number; name: string; done: boolean }[]>();
+  for (const d of snap.dungeons ?? []) {
+    if (!d?.slug || !Array.isArray(d.quests)) continue;
+    dungeonQuests.set(
+      d.slug,
+      d.quests
+        .filter((q) => q && Number.isFinite(Number(q.id)) && !q.lost)
+        .map((q) => ({ id: Number(q.id), name: q.name || "?", done: !!q.done })),
+    );
+  }
   return {
     ok: true,
     character: {
       name: snap.name || "Unknown",
       realm: snap.realm ?? "",
       raceToken: (snap.raceToken ?? "").toUpperCase(),
+      ...(snap.sex === 2 || snap.sex === 3 ? { sex: snap.sex } : {}),
       classToken: (snap.classToken ?? "").toUpperCase(),
       level: Number(snap.level) || 0,
       faction,
@@ -168,6 +277,9 @@ async function decodeSnapshot(code: string): Promise<DecodeResult> {
       cleared: new Set(
         (snap.dungeons ?? []).filter((d) => d?.cleared && d.slug).map((d) => d.slug as string),
       ),
+      dungeonQuests: dungeonQuests.size > 0 ? dungeonQuests : undefined,
+      talents: readTalents(snap.talents),
+      favourites: readFavourites(snap.favourites),
       exportedAt:
         typeof snap.exportedAt === "number" && snap.exportedAt > 0 ? new Date(snap.exportedAt * 1000) : undefined,
     },
@@ -241,6 +353,7 @@ function decodeLegacy(code: string): DecodeResult {
       faction: factionLetter === "A" ? "Alliance" : factionLetter === "H" ? "Horde" : "Unknown",
       completed,
       cleared,
+      favourites: [], // the pipe formats carry none
       exportedAt: Number.isFinite(seconds) && seconds > 0 ? new Date(seconds * 1000) : undefined,
     },
   };
@@ -269,6 +382,12 @@ export interface IndexQuest {
   id: number;
   name: string;
   slug: string;
+  faction: "Alliance" | "Horde" | "Both" | "Neutral";
+  /** Class tokens the quest is for; absent when any class can take it. */
+  classOnly?: string[];
+  /** Needs a profession the character may not have. */
+  profession: boolean;
+  repeatable: boolean;
 }
 export interface IndexDungeon {
   slug: string;
@@ -276,26 +395,65 @@ export interface IndexDungeon {
   level: string;
   art: string | null;
   previewOnly: boolean;
+  /** Worth Journey points once its final boss is down (see hasJourneyPage). */
+  journeyPage: boolean;
   quests: IndexQuest[];
+}
+
+export interface QuestState {
+  id: number;
+  name: string;
+  /** Absent for a quest this site does not list yet (a newer addon). */
+  slug?: string;
+  done: boolean;
 }
 
 export interface DungeonProgress extends IndexDungeon {
   questsDone: number;
   questsTotal: number;
-  cleared: boolean;
-  /** Each quest with whether this character has finished it, in journal order. */
-  questState: (IndexQuest & { done: boolean })[];
+  /** Every quest this character can do here is done: the addon's tick. */
+  complete: boolean;
+  /** The quests this character can do here, in journal order. */
+  questState: QuestState[];
+}
+
+/**
+ * The addon's rule, for codes that do not carry its own list (FDJ1, FDJ2, or a
+ * dungeon newer than the export): a quest counts when it is for the
+ * character's faction and class and is not repeatable. Professions are not in
+ * the code, so a profession quest counts only once it is done.
+ */
+function questCountsFor(q: IndexQuest, c: Character, done: boolean): boolean {
+  if (q.repeatable) return false;
+  if (c.faction !== "Unknown" && q.faction !== "Both" && q.faction !== "Neutral" && q.faction !== c.faction) {
+    return false;
+  }
+  if (q.classOnly && c.classToken && !q.classOnly.includes(c.classToken)) return false;
+  if (q.profession && !done) return false;
+  return true;
 }
 
 /** One row per dungeon, for the character page. */
 export function dungeonProgress(index: IndexDungeon[], c: Character): DungeonProgress[] {
   return index.map((d) => {
-    const questState = d.quests.map((q) => ({ ...q, done: c.completed.has(q.id) }));
+    const known = new Map(d.quests.map((q) => [q.id, q]));
+    const fromAddon = c.dungeonQuests?.get(d.slug);
+    const questState: QuestState[] = fromAddon
+      ? fromAddon.map((q) => ({
+          id: q.id,
+          name: known.get(q.id)?.name ?? q.name,
+          slug: known.get(q.id)?.slug,
+          done: q.done || c.completed.has(q.id),
+        }))
+      : d.quests
+          .filter((q) => questCountsFor(q, c, c.completed.has(q.id)))
+          .map((q) => ({ id: q.id, name: q.name, slug: q.slug, done: c.completed.has(q.id) }));
+    const questsDone = questState.filter((q) => q.done).length;
     return {
       ...d,
-      questsDone: questState.filter((q) => q.done).length,
+      questsDone,
       questsTotal: questState.length,
-      cleared: c.cleared.has(d.slug),
+      complete: questState.length > 0 && questsDone === questState.length,
       questState,
     };
   });
@@ -304,7 +462,9 @@ export function dungeonProgress(index: IndexDungeon[], c: Character): DungeonPro
 export interface ProgressTotals {
   questsDone: number;
   questsTotal: number;
-  dungeonsCleared: number;
+  /** Dungeons with at least one quest for this character, all of them done. */
+  dungeonsComplete: number;
+  /** Dungeons with at least one quest for this character. */
   dungeonsTotal: number;
   percent: number;
 }
@@ -316,10 +476,41 @@ export function progressTotals(rows: DungeonProgress[]): ProgressTotals {
   return {
     questsDone,
     questsTotal,
-    dungeonsCleared: live.filter((r) => r.cleared).length,
-    dungeonsTotal: live.length,
+    dungeonsComplete: live.filter((r) => r.complete).length,
+    dungeonsTotal: live.filter((r) => r.questsTotal > 0).length,
     percent: questsTotal > 0 ? Math.round((questsDone / questsTotal) * 100) : 0,
   };
+}
+
+export interface Journey {
+  points: number;
+  max: number;
+  percent: number;
+}
+
+/**
+ * RPG Mode's Journey bar (Systems/RPGMode.lua, Progress): 5 points for each
+ * of the character's quests handed in, 10 for each dungeon page unlocked by
+ * killing its final boss. A quest listed under two dungeons counts once.
+ */
+export function journeyProgress(rows: DungeonProgress[], c: Character): Journey {
+  const QUEST_POINTS = 5;
+  const PAGE_POINTS = 10;
+  const quests = new Map<number, boolean>();
+  let pages = 0;
+  let pagesDone = 0;
+  for (const r of rows) {
+    if (r.previewOnly) continue;
+    for (const q of r.questState) quests.set(q.id, (quests.get(q.id) ?? false) || q.done);
+    if (r.journeyPage) {
+      pages += 1;
+      if (c.cleared.has(r.slug)) pagesDone += 1;
+    }
+  }
+  const done = [...quests.values()].filter(Boolean).length;
+  const points = done * QUEST_POINTS + pagesDone * PAGE_POINTS;
+  const max = quests.size * QUEST_POINTS + pages * PAGE_POINTS;
+  return { points, max, percent: max > 0 ? Math.floor((points / max) * 100) : 0 };
 }
 
 /** The game's class colours, for the character's name. */
@@ -353,6 +544,40 @@ export const RACE_NAMES: Record<string, string> = {
   GOBLIN: "Goblin",
   PANDAREN: "Pandaren",
 };
+
+/**
+ * "EU PvP" from a realm name like "CAMWOW EU4 Realm 8 PvP": the region and the
+ * realm type, the part a player cares about. Empty when neither is in the name.
+ */
+export function realmTag(realm: string): string {
+  const r = ` ${realm.toUpperCase()} `;
+  const region = /[^A-Z](EU)\d*[^A-Z]/.test(r) ? "EU" : /[^A-Z](NA|US)\d*[^A-Z]/.test(r) ? "NA" : "";
+  const type = /RP\s*-?\s*PVP/.test(r)
+    ? "RP-PvP"
+    : /[^A-Z]PVP[^A-Z]/.test(r)
+      ? "PvP"
+      : /[^A-Z]PVE[^A-Z]/.test(r)
+        ? "PvE"
+        : /[^A-Z]RP[^A-Z]/.test(r)
+          ? "RP"
+          : "";
+  return [region, type].filter(Boolean).join(" ");
+}
+
+// Race portraits on the site (scripts/fetch-character-portraits.py): the
+// game's races in WoW Forever, each in both sexes.
+const RACE_ART: Record<string, string> = {
+  HUMAN: "human", DWARF: "dwarf", NIGHTELF: "nightelf", GNOME: "gnome", DRAENEI: "draenei",
+  ORC: "orc", SCOURGE: "undead", UNDEAD: "undead", TAUREN: "tauren", TROLL: "troll", BLOODELF: "bloodelf",
+};
+
+/** The character's portrait: its race's (by sex) when the export says the sex, else its class icon. */
+export function portraitSrc(c: Character): string | null {
+  const race = RACE_ART[c.raceToken];
+  if (race && c.sex) return `/journal/portraits/race/${race}_${c.sex === 3 ? "female" : "male"}.webp`;
+  const cls = c.classToken.toLowerCase();
+  return cls ? `/journal/portraits/class/${cls}.webp` : null;
+}
 
 /** "Orc", "Night Elf", or whatever the addon sent if this site does not know it. */
 export function raceName(token: string): string {

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { ZonePin } from "@/app/lib/journal";
+import { useT } from "@/app/components/i18n/I18n";
 
 /**
  * "Show on map" under a quest's Starts at line: opens the zone picture with the
@@ -10,6 +11,7 @@ import type { ZonePin } from "@/app/lib/journal";
  */
 export default function ZoneMap({ pin }: { pin: ZonePin }) {
   const [open, setOpen] = useState(false);
+  const t = useT();
   return (
     <div className="wp-zone">
       <button
@@ -19,7 +21,7 @@ export default function ZoneMap({ pin }: { pin: ZonePin }) {
         onClick={() => setOpen((v) => !v)}
       >
         <img src="/journal/ui/map-tab.png" alt="" width={16} height={16} aria-hidden />
-        {open ? "Hide map" : "Show on map"}
+        {open ? t("s_hide_map") : t("SHOW_ON_MAP")}
       </button>
 
       {open && (

@@ -1,7 +1,12 @@
 "use client";
 
+import bakedIds from "@/data/baked-portraits.json";
 import { NPC_RENDER_URL } from "@/app/lib/site";
 import { LevelBadge } from "./Window";
+
+// Display IDs the addon ships a portrait for (scripts/convert-portraits.py):
+// the same picture the addon shows, photographed in game.
+const BAKED = new Set<number>(bakedIds as number[]);
 
 function initials(name: string) {
   const parts = name.replace(/[^A-Za-z' ]/g, "").split(/\s+/).filter(Boolean);
@@ -27,8 +32,9 @@ function checkLoaded(img: HTMLImageElement | null) {
 }
 
 /**
- * The round portrait, like the addon's (SetPortraitTextureFromCreatureDisplayID):
- * Wowhead's model preview of the boss, zoomed onto the head. Fills its parent.
+ * The round portrait. The addon's own baked picture when it has one (all the
+ * journal's bosses today); otherwise Wowhead's model preview zoomed onto the
+ * head, as before. Fills its parent.
  */
 export function PortraitFace({
   name,
@@ -48,6 +54,15 @@ export function PortraitFace({
       <span className="wf-portrait-initials">{initials(name)}</span>
       {custom ? (
         <img className="wf-portrait-img wf-portrait-custom" src={custom} alt="" width={96} height={96} />
+      ) : displayId && BAKED.has(displayId) ? (
+        <img
+          className="wf-portrait-img wf-portrait-baked"
+          src={`/journal/portraits/baked/${displayId}.webp`}
+          alt=""
+          width={128}
+          height={128}
+          loading="lazy"
+        />
       ) : displayId ? (
         <img
           className="wf-portrait-img wf-portrait-render"

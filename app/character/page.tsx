@@ -4,6 +4,8 @@ import { SITE_URL } from "@/app/lib/site";
 import Window from "@/app/components/journal/Window";
 import CharacterPanel from "@/app/components/character/CharacterPanel";
 import { buildCharacterIndex } from "@/app/lib/character-index";
+import { I18nProvider } from "@/app/components/i18n/I18n";
+import { dictFor } from "@/app/lib/i18n-server";
 
 export const metadata: Metadata = {
   title: "Your character",
@@ -24,7 +26,10 @@ export default function CharacterPage() {
         </div>
         <div className="wf-pane wf-pane-single wf-pane-parchment">
           {/* Built here, not in the client component: see character-index.ts. */}
-          <CharacterPanel index={buildCharacterIndex()} />
+          {/* The addon's English strings, for the quest pane a dungeon card opens. */}
+          <I18nProvider lang="en" dict={dictFor("en")}>
+            <CharacterPanel index={buildCharacterIndex()} />
+          </I18nProvider>
         </div>
       </Window>
     </div>

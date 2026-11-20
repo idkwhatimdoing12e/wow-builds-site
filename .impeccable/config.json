@@ -14,6 +14,12 @@
         "value": "sfmono-regular",
         "createdAt": "2026-11-19T21:25:15.970Z",
         "reason": "agent decision: pre-existing monospace on the character page (.ch-cmd and the code field) sets a literal addon command and a pasted character code, a domain-appropriate use of mono"
+      },
+      {
+        "rule": "overused-font",
+        "value": "roboto",
+        "createdAt": "2026-11-19T22:40:26.179Z",
+        "reason": "user confirmed: the user asked for the standard Roboto font by name and showed a Google Fonts sample of it (2026-11-19)"
       }
     ]
   }

@@ -9,17 +9,22 @@ export default function Window({
   search,
   style,
   className = "",
+  title = "Dungeon Journal",
+  homeHref = "/",
 }: {
   children: React.ReactNode;
   search?: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
+  /** The window title, in the page's language (the addon's DUNGEON_JOURNAL). */
+  title?: string;
+  homeHref?: string;
 }) {
   return (
     <div className={`wf-window ${className}`} style={style}>
       <div className="wf-titlebar">
         <span className="wf-titlebar-spacer" aria-hidden="true" />
-        <Link href="/" className="wf-title">Dungeon Journal</Link>
+        <Link href={homeHref} className="wf-title">{title}</Link>
         <div className="wf-titlebar-right">{search}</div>
       </div>
       <div className="wf-body">{children}</div>

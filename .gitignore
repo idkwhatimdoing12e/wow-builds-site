@@ -46,3 +46,9 @@ __pycache__/
 
 # tiles fetched by scripts/build-tile-maps.py
 .tile-cache/
+
+# icon fetch downloads (scripts/item-dump/fetch-icons.py)
+scripts/item-dump/.cache/
+
+# addon release zips dropped next to the site
+/*.zip

@@ -121,17 +121,9 @@ def main():
     swirl = tree.find("MINIMAP/Dungeon_Icon.png")
     if swirl:
         Image.open(swirl).convert("RGBA").save(os.path.join(ui, "map-entrance.png"), optimize=True)
-    ring = tree.find("MINIMAP/MiniMap-TrackingBorder.png")
-    if ring:
-        r = Image.open(ring).convert("RGBA")
-        # The gold ring occupies pixels 4..31 of the 64px texture; crop it so it centres on the pin.
-        k = r.width / 64
-        ring_img = r.crop((round(4 * k), round(4 * k), round(32 * k), round(32 * k)))
-        # Keep only the round ring: clear the texture's square backdrop outside it.
-        mask = Image.new("L", ring_img.size, 0)
-        ImageDraw.Draw(mask).ellipse((0, 0, ring_img.width - 1, ring_img.height - 1), fill=255)
-        ring_img.putalpha(Image.composite(ring_img.getchannel("A"), Image.new("L", ring_img.size, 0), mask))
-        ring_img.save(os.path.join(ui, "map-ring.png"), optimize=True)
+    # The gold pin ring (map-ring.png) is drawn by scripts/make-map-ring.py at
+    # 128 px: the game's MiniMap-TrackingBorder is only 28 px where the ring
+    # sits and looked blocky at map size.
     # Map tab icon: the addon uses Interface\\Icons\\Ability_Spy (the Bloody Map item), edges trimmed.
     spy = tree.find("ICONS/Ability_Spy.png")
     if spy:

@@ -25,17 +25,18 @@ It is the addon's own data, rendered on the web the way the addon renders it in 
 
 - Players read it between pulls or before a run, often on a second monitor or a phone next to the game.
 - Faction (Alliance/Horde) changes which quests count; the choice persists in the browser.
-- The "WoW Forever only" filter and a greyed-out Raids medallion mirror the addon's home emblems.
+- The WoW Forever emblem (it opens the dungeon list, as the addon's dungeon tab does since 2.0.10) and a greyed-out Raids medallion mirror the addon's home emblems.
 - "My Character" imports a character code exported from the addon (`/dj export`) to show quest progress.
-- Item links use Wowhead's Forever database tooltips.
-- Distribution: CurseForge (primary download) and Wago. Community on Discord and YouTube; funding via Patreon, with a Supporters page.
+- Item links open the site's own item pages and tooltips.
+- Distribution: CurseForge (primary download) and Wago. Community on Discord and YouTube; funding via Patreon and Buy Me a Coffee (the Donate link); there is no supporters list.
 - Monetised with Google AdSense slots on dungeon and quest pages; GA4 analytics.
 
 ## Capabilities and Constraints
 
 - Next.js 16 app router, Tailwind 4 plus a large hand-written `app/globals.css`. Static data in `data/*.json` built from the addon.
 - 30+ dungeons, each with painted card art, quests, bosses, loot, and multi-level maps.
-- The journal window on dungeon, quest, character, about, supporters and privacy pages deliberately copies the in-game Encounter Journal skin (parchment pane, red buttons, Map/Bosses/Quests tabs). It stays matched to the addon; site-shell redesigns leave it alone.
+- A page for every item the journal shows (`/item/<id>-<name>`): its tooltip, the bosses that drop it, the quests that reward or use it, and the owner's own notes (`data/item-notes.json`). Item links open these pages and show the site's own tooltip on hover; nothing is loaded from Wowhead. Full stats come from an in-game dump (`scripts/item-dump`), icons and slots from the client's own data tables.
+- The journal window on dungeon, quest, character, about and privacy pages deliberately copies the in-game Encounter Journal skin (parchment pane, red buttons, Map/Bosses/Quests tabs). It stays matched to the addon; site-shell redesigns leave it alone.
 - Raids are not in the journal yet ("Coming Soon").
 
 ## Brand Commitments
@@ -49,7 +50,6 @@ It is the addon's own data, rendered on the web the way the addon renders it in 
 ## Evidence on Hand
 
 - Real dungeon data, quest counts per faction, level ranges, card art, maps, boss portraits, item icons (`data/`, `public/journal/`).
-- Supporters list (`data/supporters.json`).
 - No download counts, ratings, testimonials or press are on hand; do not invent them.
 
 ## Product Principles

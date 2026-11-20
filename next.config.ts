@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/low-level-builds", destination: "/", permanent: true },
+      // The Supporters page was removed (Nov 2026); donations go to Buy Me a Coffee.
+      { source: "/supporters", destination: "/", permanent: true },
       { source: "/low-level-builds/:path*", destination: "/", permanent: true },
       { source: "/:expansion(vanilla|tbc|wotlk)/:build", destination: "/", permanent: true },
     ];

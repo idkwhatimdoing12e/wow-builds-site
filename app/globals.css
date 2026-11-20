@@ -24,7 +24,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Noto Sans", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
 }
 /* =========================================================
    FORCE class card backgrounds (prevents mobile overrides)
@@ -98,7 +98,7 @@ body {
   color: rgba(255, 255, 255, 0.92) !important;
 }
 /* =========================================================
-   DUNGEON JOURNAL â€” the addon's window, on the web
+   DUNGEON JOURNAL - the addon's window, on the web
    ========================================================= */
 
 :root {
@@ -121,9 +121,9 @@ body {
   --parchment: #d6c097;
   --parchment-ink: #3b2a14;
   --parchment-title: #7d4c0c;
-  /* Blizzard's forum type: Object Sans headings (Manrope is the free stand-in), Noto Sans text */
+  /* Blizzard's forum type: Object Sans headings (Manrope is the free stand-in), Roboto text */
   --font-title: "Manrope", Helvetica, Arial, sans-serif;
-  --font-body: "Noto Sans", Helvetica, Arial, sans-serif;
+  --font-body: "Roboto", Helvetica, Arial, sans-serif;
 }
 
 .journal {
@@ -313,15 +313,14 @@ body {
   height: 128px;
   border-radius: 4px;
   border: 1px solid #000;
-  box-shadow: inset 0 0 0 1px var(--wf-border-light), 0 2px 8px rgba(0, 0, 0, 0.6);
+  outline: 1px solid var(--wf-border-light); outline-offset: -2px;
   background-size: cover;
   background-position: center;
   overflow: hidden;
   text-decoration: none;
   color: #fff;
   /* lifts off the grid on hover, like RestedXP's guide cards */
-  transition: transform 0.22s cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 0.22s ease;
-  will-change: transform;
+  transition: transform 0.22s cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
 .wf-card::after {
@@ -335,11 +334,8 @@ body {
 .wf-card:hover,
 .wf-card:focus-visible {
   transform: translateY(-7px) scale(1.025);
-  box-shadow:
-    inset 0 0 0 1px #ffd77a,
-    0 16px 30px rgba(0, 0, 0, 0.78),
-    0 0 20px rgba(255, 200, 80, 0.22);
-  /* sit above neighbouring cards so the shadow is not clipped by them */
+  outline-color: #ffd77a;
+  /* sit above neighbouring cards while lifted */
   z-index: 2;
 }
 
@@ -347,7 +343,7 @@ body {
 .wf-card:active { transform: translateY(-2px) scale(1.005); transition-duration: 0.08s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .wf-card { transition: box-shadow 0.2s ease; }
+  .wf-card { transition: none; }
   .wf-card:hover,
   .wf-card:focus-visible,
   .wf-card:active { transform: none; }
@@ -366,12 +362,12 @@ body {
 .wf-card-name, .wf-card-quests, .wf-card-level {
   position: absolute;
   z-index: 1;
-  text-shadow: 0 1px 2px #000, 0 0 6px rgba(0, 0, 0, 0.9);
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .wf-card-name { top: 10px; left: 14px; font-family: var(--font-title); font-weight: 800; font-size: 17px; color: #ffe39a; max-width: 62%; line-height: 1.15; }
 .wf-card-quests { top: 9px; right: 12px; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: #f6e7c4; }
-.wf-card-quests img { width: 22px; height: 22px; filter: drop-shadow(0 1px 1px #000); }
+.wf-card-quests img { width: 22px; height: 22px; }
 .wf-card-level { bottom: 10px; left: 14px; font-size: 12px; letter-spacing: 0.08em; color: #e9dcc2; }
 
 .wf-empty, .wf-foot, .wf-note, .wf-tbd { color: var(--wf-muted); font-size: 14px; }
@@ -508,6 +504,8 @@ body {
 /* Wowhead's full render, positioned by its head crop (style set inline) */
 .wf-portrait-render[style] { inset: auto; background: none; }
 .wf-portrait-custom { filter: none; }
+/* The addon's own picture, already round and lit as in game */
+.wf-portrait-baked { filter: none; background: none; }
 .wf-portrait .wf-lvl { position: absolute; left: -8px; bottom: -8px; z-index: 1; }
 .wf-portrait-trash img { width: 34px; height: 34px; }
 
@@ -554,18 +552,19 @@ body {
 .wb-recipes { margin-top: 10px; }
 .wb-recipes > summary { cursor: pointer; color: var(--wf-muted); font-size: 14px; padding: 4px 2px; list-style: none; }
 .wb-recipes > summary::-webkit-details-marker { display: none; }
-.wb-recipes > summary::before { content: "â–¸ "; }
-.wb-recipes[open] > summary::before { content: "â–¾ "; }
+/* Escaped, so a save in the wrong encoding can't garble the arrows again */
+.wb-recipes > summary::before { content: "\25B8\00a0"; }
+.wb-recipes[open] > summary::before { content: "\25BE\00a0"; }
 .wb-recipes .wb-loot-list { margin-top: 6px; }
 
+/* The bare icon, as the game draws it: a thin dark edge, no coloured frame */
 .wp-icon {
   flex: 0 0 auto;
   display: block;
   width: 36px; height: 36px;
-  border-radius: 4px;
-  border: 1px solid #6e5529;
-  background: linear-gradient(135deg, #2b2117, #120d09);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.6);
+  border-radius: 2px;
+  background: #120d09;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.75);
   overflow: hidden;
 }
 .wp-icon img { display: block; width: 100%; height: 100%; }
@@ -686,15 +685,21 @@ body {
   max-width: min(1002px, max(560px, calc((100vh - 360px) * 1.5)));
   margin: 0 auto;
   --pin: 0.9;
+  /* the zoomed map stays inside its frame */
+  overflow: hidden; border-radius: 2px;
 }
-.wm-art { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 2px; }
+/* What zooms: the art and its markers, scaled from the top left (MapPane) */
+.wm-layer { position: relative; transform-origin: 0 0; will-change: transform; --unzoom: 1; }
+.wm-zoomed { cursor: grab; }
+.wm-dragging, .wm-dragging * { cursor: grabbing !important; }
+.wm-art { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 2px; user-select: none; -webkit-user-drag: none; }
 
 /* boss portraits: round face in the minimap tracking ring */
 .wm-boss {
   position: absolute; z-index: 10;
   width: calc(max(26px, 6.33%) * var(--pin));
   aspect-ratio: 1;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(var(--unzoom));
   padding: 0; border: 0; border-radius: 50%;
   background: radial-gradient(circle at 40% 35%, #4a3822, #15100b 75%);
   font-family: var(--font-title); font-weight: 700; font-size: 11px; color: #e9cf8c;
@@ -712,7 +717,7 @@ body {
 .wm-ent {
   position: absolute; z-index: 15;
   width: max(22px, 5%); aspect-ratio: 1;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(var(--unzoom));
   pointer-events: none;
 }
 .wm-ent > img { width: 100%; height: 100%; }
@@ -730,7 +735,7 @@ body {
 .wm-ladder {
   position: absolute; z-index: 14;
   width: max(28px, 6.67%); aspect-ratio: 1;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(var(--unzoom));
   padding: 0; border: 0; background: none; cursor: pointer;
 }
 .wm-ladder > img { width: 100%; height: 100%; filter: drop-shadow(0 1px 2px #000); }
@@ -756,6 +761,16 @@ body {
   pointer-events: none;
 }
 .wm-ladder[data-tip]:hover::after { color: #59ff59; }
+/* A quest's target (the addon's questmob): its quest and "Quest target" under
+   its name, and the yellow ! badge on the portrait, greyed once handed in. */
+.wm-questmob[data-tip2]:hover::after { content: attr(data-tip) "\A" attr(data-tip2); white-space: pre; text-align: left; }
+.wm-qbadge {
+  position: absolute; right: -14%; top: -14%; z-index: 2;
+  width: 46%; height: 46%;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.9));
+  pointer-events: none;
+}
+.wm-qbadge.done { filter: grayscale(1) brightness(0.8) drop-shadow(0 1px 1px rgba(0, 0, 0, 0.9)); }
 
 /* "Boss icons" size control, bottom-left like the addon */
 .wm-size {
@@ -774,6 +789,13 @@ body {
   color: #ffd77a; font-weight: 700; cursor: pointer;
 }
 .wm-size-row button:disabled { opacity: 0.4; cursor: default; }
+/* the zoom level doubles as the reset button */
+.wm-size-row .wm-zoom-pct {
+  width: auto; min-width: 38px; padding: 0 3px;
+  background: none; border: 0; color: #f1e3c8; font-weight: 400; font-size: 11px;
+}
+.wm-size-row .wm-zoom-pct:not(:disabled):hover { color: #ffd77a; text-decoration: underline; }
+.wm-size-row .wm-zoom-pct:disabled { opacity: 1; }
 @media (max-width: 859px) {
   .wm-floors { position: static; flex-direction: row; flex-wrap: wrap; margin-bottom: 6px; }
   .wm-size { position: static; flex-direction: row; justify-content: center; margin-top: 6px; }
@@ -787,7 +809,7 @@ body {
   padding: 0; border: 0; background: none;
   display: inline-flex; align-items: center; justify-content: center;
 }
-.wf-forever { cursor: pointer; }
+.wf-forever { cursor: pointer; text-decoration: none; }
 .wf-forever-icon { position: relative; z-index: 2; width: 40px; height: 40px; transition: filter 0.1s; }
 .wf-forever:hover .wf-forever-icon { filter: brightness(1.35); }
 .wf-forever:active .wf-forever-icon { transform: translate(1px, 1px); }
@@ -966,7 +988,8 @@ body {
   --g-name: #f3d68e;       /* card names, like the addon's */
   --g-text: #eee7d9;
   --g-muted: #aba191;
-  --g-display: "Marcellus", "Trajan Pro", Georgia, serif;
+  --g-display: "Roboto", Helvetica, Arial, sans-serif;
+  --bounce: cubic-bezier(0.34, 1.56, 0.64, 1); /* springy: overshoots, then settles */
   --g-radius: 12px;
   --sx-head-h: 64px;
 }
@@ -1007,7 +1030,7 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 /* logo */
 .sx-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--g-text); flex: 0 0 auto; }
 .sx-logo-badge { width: 36px; height: 36px; }
-.sx-logo-name { font-family: var(--g-display); font-size: 21px; line-height: 1; color: var(--g-name); white-space: nowrap; }
+.sx-logo-name { font-family: var(--g-display); font-weight: 600; font-size: 21px; line-height: 1; color: var(--g-name); white-space: nowrap; }
 .sx-logo-text { display: flex; flex-direction: column; line-height: 1; }
 .sx-logo-tag { margin-top: 5px; font-size: 12.5px; color: var(--g-muted); }
 
@@ -1017,8 +1040,14 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 .sx-bar {
   position: relative;
   height: var(--sx-head-h); padding: 0 24px;
-  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px;
+  /* logo, socials and Download | the menu | language. The two sides share the
+     spare width equally, so the menu sits at the page's centre; neither side
+     shrinks below its content, so on a narrower screen the menu shifts right
+     rather than overlapping the left group. */
+  display: grid; grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr); align-items: center; gap: 20px;
 }
+.sx-bar-start { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.sx-bar-start .sx-logo { margin-right: 4px; }
 .sx-nav { display: flex; align-items: center; justify-content: center; gap: 6px; }
 .sx-nav-link {
   display: inline-flex; align-items: center; gap: 6px;
@@ -1029,7 +1058,104 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
   transition: color 0.15s;
 }
 .sx-nav-link:hover, .sx-nav-link.active { color: var(--g-gold-hi); }
-.sx-bar-end { display: flex; align-items: center; justify-content: flex-end; gap: 14px; }
+.sx-bar-end { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+
+/* the header search (SiteSearch): right of Download, results in a panel below */
+.sx-search { position: relative; flex: none; width: 200px; height: 36px; }
+.sx-search-field {
+  position: absolute; left: 0; top: 0; z-index: 5;
+  display: flex; align-items: center; gap: 8px;
+  width: 200px; height: 36px; padding: 0 12px;
+  background: var(--g-ink); border: 1px solid var(--g-line); border-radius: 6px;
+  color: #8e8575; cursor: text;
+  transition: width 0.15s ease, border-color 0.15s;
+}
+.sx-search-field:focus-within, .sx-search.on .sx-search-field { border-color: var(--g-gold); color: var(--g-gold); }
+.sx-search-field svg { flex: none; }
+.sx-search-field input {
+  flex: 1; min-width: 0; height: 100%;
+  background: none; border: 0; outline: none;
+  color: var(--g-text); font: inherit; font-size: 14px;
+}
+.sx-search-field input::placeholder { color: #8e8575; }
+.sx-search-field input::-webkit-search-cancel-button { filter: invert(0.7) sepia(1); }
+.sx-body .sx-search input:focus-visible { outline: none; }
+.sx-search-panel {
+  position: absolute; left: 0; top: calc(100% + 8px); z-index: 1100;
+  width: 440px; max-height: min(70vh, 600px); overflow-y: auto; overscroll-behavior: contain;
+  padding: 6px;
+  background: var(--g-panel); border: 1px solid var(--g-line); border-radius: var(--g-radius);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+.sx-search-empty { margin: 0; padding: 12px 10px; color: var(--g-muted); font-size: 14px; }
+.sx-search-group + .sx-search-group { margin-top: 4px; border-top: 1px solid var(--g-line); padding-top: 4px; }
+.sx-search-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 6px 10px 3px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--g-muted);
+}
+.sx-search-head span { letter-spacing: 0.04em; font-weight: 600; text-transform: none; font-variant-numeric: tabular-nums; }
+.sx-search-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 10px; border-radius: 6px;
+  color: var(--g-text); text-decoration: none;
+}
+.sx-search-row.on { background: var(--g-panel-2); }
+.sx-sr-pic {
+  flex: none; width: 32px; height: 32px; border-radius: 3px; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #0c0b0a; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7);
+}
+.sx-sr-pic img { display: block; max-width: none; }
+.sx-sr-d .sx-sr-pic img, .sx-sr-b .sx-sr-pic img, .sx-sr-i .sx-sr-pic img { width: 100%; height: 100%; object-fit: cover; }
+.sx-sr-b .sx-sr-pic { border-radius: 50%; }
+.sx-sr-text { display: flex; flex-direction: column; min-width: 0; }
+.sx-sr-name { font-size: 14px; font-weight: 600; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sx-sr-d .sx-sr-name { color: var(--g-name); }
+.sx-search-row.on .sx-sr-name { text-decoration: underline; text-underline-offset: 2px; }
+.sx-sr-sub { font-size: 12px; color: var(--g-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* narrower screens: a magnifier that opens into the field */
+@media (max-width: 1500px) {
+  .sx-search { width: 36px; }
+  .sx-search-field { width: 36px; padding: 0 10px; cursor: pointer; }
+  .sx-search-field input { opacity: 0; }
+  .sx-search-field:focus-within, .sx-search.on .sx-search-field { width: 300px; cursor: text; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+  .sx-search-field:focus-within input, .sx-search.on .sx-search-field input { opacity: 1; }
+}
+/* phones: the open search is a full-width bar under the header */
+@media (max-width: 860px) {
+  .sx-search-field:focus-within, .sx-search.on .sx-search-field {
+    position: fixed; left: 12px; right: 12px; top: calc(var(--sx-head-h) + 8px); width: auto; height: 42px;
+  }
+  .sx-search-panel { position: fixed; left: 8px; right: 8px; top: calc(var(--sx-head-h) + 56px); width: auto; max-height: calc(100vh - var(--sx-head-h) - 72px); }
+}
+
+/* the language picker, top right */
+.sx-lang { position: relative; }
+.sx-lang-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 11px;
+  border: 1px solid transparent; border-radius: 17px;
+  background: #1c1915; color: #d8cfbf; cursor: pointer;
+  font-family: var(--font-body); font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em;
+  transition: background-color 0.15s, color 0.15s;
+}
+.sx-lang-btn:hover, .sx-lang.on .sx-lang-btn { background: #2a251f; color: var(--g-gold-hi); }
+.sx-lang-menu {
+  position: absolute; right: 0; top: calc(100% + 8px); z-index: 1100;
+  min-width: 220px; margin: 0; padding: 6px; list-style: none;
+  background: var(--g-panel); border: 1px solid var(--g-line); border-radius: var(--g-radius);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+.sx-lang-menu a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 10px; border-radius: 6px;
+  color: var(--g-text); text-decoration: none; font-size: 14px;
+}
+.sx-lang-menu a:hover { background: var(--g-panel-2); color: var(--g-gold-hi); }
+.sx-lang-menu a.on { color: var(--g-gold); }
+.sx-lang-code { width: 36px; flex: none; font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; color: var(--g-muted); }
+.sx-lang-menu a.on .sx-lang-code { color: var(--g-gold); }
 .sx-socials { display: inline-flex; align-items: center; gap: 8px; }
 .sx-socials a {
   display: inline-flex; align-items: center; justify-content: center;
@@ -1046,9 +1172,9 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 .sx-drop-panel {
   display: none;
   position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
-  width: min(1040px, calc(100vw - 48px));
+  width: min(1180px, calc(100vw - 48px));
   padding: 22px 24px 18px;
-  grid-template-columns: 250px 1fr; gap: 6px 32px;
+  grid-template-columns: 228px minmax(0, 1fr); gap: 6px 24px;
   background: var(--g-panel);
   border: 1px solid var(--g-line); border-radius: var(--g-radius);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
@@ -1056,13 +1182,17 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 .sx-drop-panel::before { content: ""; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
 .sx-drop.on .sx-drop-panel, .sx-drop:hover .sx-drop-panel { display: grid; }
 .sx-drop-head { font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--g-muted); margin: 0 0 8px 10px; }
-.sx-drop-grid { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 8px; }
+.sx-drop-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 8px;
+  grid-auto-flow: column; grid-template-rows: repeat(var(--drop-rows, 9), auto);
+}
 .sx-drop-item {
   display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
   padding: 6px 10px; border-radius: 6px;
   color: var(--g-text); text-decoration: none; font-size: 14px;
 }
-.sx-drop-item span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sx-drop-item { min-width: 0; }
+.sx-drop-item span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sx-drop-item small { color: var(--g-muted); font-size: 12.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .sx-drop-item:hover { background: var(--g-panel-2); color: var(--g-gold-hi); }
 .sx-drop-all { grid-column: 1 / -1; justify-self: center; margin-top: 10px; color: var(--g-gold); font-size: 14px; font-weight: 600; text-decoration: none; }
@@ -1092,7 +1222,7 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 .sx-wrap { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
 
 /* hero: a painting edge to edge, fading into the page */
-.sx-hero { position: relative; height: clamp(480px, 70vh, 720px); overflow: hidden; background: var(--g-ink); }
+.sx-hero { position: relative; height: clamp(280px, 36vh, 380px); overflow: hidden; background: var(--g-ink); }
 .sx-slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity 0.9s ease, visibility 0.9s; }
 .sx-slide.on { opacity: 1; visibility: visible; }
 /* The paintings are 1200px exports: never stretch them past 1440px. On wider
@@ -1112,28 +1242,18 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
   background: linear-gradient(180deg, rgba(17, 15, 13, 0.2) 0%, rgba(17, 15, 13, 0.25) 40%, rgba(17, 15, 13, 0.82) 80%, var(--g-ink) 100%);
 }
 .sx-slide-copy {
-  position: absolute; z-index: 1; left: 0; right: 0; bottom: 72px;
-  display: flex; flex-direction: column; align-items: center; text-align: center;
+  position: absolute; z-index: 1; left: 0; right: 0; top: 0; bottom: 30px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
   padding: 0 24px;
 }
 .sx-slide-title {
-  font-family: var(--g-display); font-weight: 400;
-  font-size: clamp(46px, 6.4vw, 92px); line-height: 1; letter-spacing: 0.01em;
-  color: #f7e9c6; margin: 0 0 16px;
+  font-family: var(--g-display); font-weight: 700;
+  font-size: clamp(32px, 3.6vw, 52px); line-height: 1.05; letter-spacing: 0;
+  color: #f7e9c6; margin: 0 0 10px;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.65), 0 0 40px rgba(255, 214, 140, 0.18);
   text-wrap: balance;
 }
-.sx-slide-text { max-width: 50ch; font-size: 18px; line-height: 1.5; color: #f1eadc; margin: 0 0 28px; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8); text-wrap: balance; }
-.sx-folios { position: absolute; z-index: 2; left: 0; right: 0; bottom: 30px; display: flex; justify-content: center; gap: 8px; }
-.sx-folios button {
-  display: flex; align-items: center;
-  width: 32px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer;
-  font-size: 0; color: transparent;
-}
-.sx-folios button::before { width: 100%; }
-.sx-folios button::before { content: ""; display: block; height: 3px; border-radius: 2px; background: rgba(255, 255, 255, 0.35); transition: background-color 0.2s; }
-.sx-folios button:hover::before { background: rgba(255, 255, 255, 0.65); }
-.sx-folios button.on::before { background: var(--g-gold); }
+.sx-slide-text { max-width: 56ch; font-size: 16.5px; line-height: 1.45; color: #f1eadc; margin: 0 0 18px; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8); text-wrap: balance; }
 
 /* the journal window, like the addon's */
 .jw {
@@ -1148,17 +1268,7 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
   padding: 14px 20px;
   border-bottom: 1px solid var(--g-line);
 }
-.jw-title { font-family: var(--g-display); font-weight: 400; font-size: 24px; line-height: 1; color: var(--g-name); margin: 0; }
-.jw-search {
-  display: flex; align-items: center; gap: 9px;
-  width: min(300px, 100%); height: 38px; padding: 0 12px;
-  background: var(--g-ink); border: 1px solid var(--g-line); border-radius: 6px;
-  color: #8e8575;
-}
-.jw-search:focus-within { border-color: var(--g-gold); color: var(--g-gold); }
-.jw-search input { flex: 1; min-width: 0; height: 100%; background: none; border: 0; outline: none; color: var(--g-text); font: inherit; font-size: 14.5px; }
-.jw-search input::placeholder { color: #8e8575; }
-.jw-search input::-webkit-search-cancel-button { filter: invert(0.7) sepia(1); }
+.jw-title { font-family: var(--g-display); font-weight: 600; font-size: 24px; line-height: 1; color: var(--g-name); margin: 0; }
 
 .jw-toolbar { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding: 14px 20px; }
 .jw-toolbar .wf-emblems { padding-left: 4px; }
@@ -1167,9 +1277,12 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
   display: inline-flex; align-items: center; justify-content: center;
   width: 42px; height: 40px; padding: 0;
   background: var(--g-panel-2); border: 1px solid var(--g-line); border-radius: 6px; cursor: pointer;
-  transition: border-color 0.15s, background-color 0.15s;
+  transition: border-color 0.15s, background-color 0.15s, transform 0.45s var(--bounce);
 }
-.jw-faction button img { width: 26px; height: 26px; opacity: 0.45; transition: opacity 0.15s; }
+.jw-faction button img { width: 26px; height: 26px; opacity: 0.45; transition: opacity 0.15s, transform 0.5s var(--bounce); }
+.jw-faction button:hover { transform: translateY(-3px) scale(1.1); }
+.jw-faction button:hover img { transform: scale(1.12) rotate(-6deg); }
+.jw-faction button:active { transform: scale(0.9); transition-duration: 0.08s; }
 .jw-faction button:hover img { opacity: 0.8; }
 .jw-faction button.on { border-color: var(--g-gold); background: #2a2419; }
 .jw-faction button.on img { opacity: 1; }
@@ -1177,7 +1290,7 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 .jw-btn {
   display: inline-flex; align-items: center; height: 38px; padding: 0 16px;
   background: var(--g-panel-2); border: 1px solid var(--g-line-2); border-radius: 6px;
-  font-family: var(--g-display); font-size: 15px; color: var(--g-name); text-decoration: none; white-space: nowrap;
+  font-family: var(--g-display); font-weight: 600; font-size: 15px; color: var(--g-name); text-decoration: none; white-space: nowrap;
   transition: border-color 0.15s, color 0.15s;
 }
 .jw-btn:hover { border-color: var(--g-gold); color: var(--g-gold-hi); }
@@ -1189,21 +1302,27 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
   aspect-ratio: 3 / 1;
   border: 1px solid #000; border-radius: 2px; overflow: hidden;
   background-color: #0c0b0a; background-size: cover; background-position: center;
-  box-shadow: inset 0 0 0 1px rgba(217, 180, 95, 0.38);
+  /* The gold edge is an outline, not a box-shadow, and only the lift is
+     animated: Firefox repaints a card on every frame of a shadow, colour or
+     fade transition, which is what made hovering stutter there. */
+  outline: 1px solid rgba(217, 180, 95, 0.38); outline-offset: -2px;
   color: #fff; text-decoration: none;
-  transition: box-shadow 0.18s;
+  transition: transform 0.5s var(--bounce);
 }
+.jw-card:hover, .jw-card:focus-visible { transform: translateY(-6px) scale(1.025); }
+.jw-card:active { transform: translateY(-1px) scale(0.985); transition-duration: 0.08s; }
 .jw-card::before {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0) 62%, rgba(0, 0, 0, 0.55) 100%);
-  transition: opacity 0.18s;
 }
-.jw-card:hover, .jw-card:focus-visible { box-shadow: inset 0 0 0 1px var(--g-gold-hi), 0 8px 22px rgba(0, 0, 0, 0.45); }
+.jw-card:hover, .jw-card:focus-visible { outline-color: var(--g-gold-hi); }
 .jw-card:hover::before { opacity: 0.75; }
-.jw-card-name, .jw-card-quests, .jw-card-level { position: absolute; z-index: 1; text-shadow: 0 1px 2px #000, 0 0 8px rgba(0, 0, 0, 0.7); }
-.jw-card-name { top: 11px; left: 14px; right: 108px; font-family: var(--g-display); font-size: 19px; line-height: 1.12; color: var(--g-name); }
+/* The black stroke: four crisp offsets, no blurred glow (blur is what makes
+   Firefox stutter when a card moves). */
+.jw-card-name, .jw-card-quests, .jw-card-level { position: absolute; z-index: 1; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+.jw-card-name { top: 11px; left: 14px; right: 108px; font-family: var(--g-display); font-weight: 600; font-size: 19px; line-height: 1.12; color: var(--g-name); }
 .jw-card-quests { top: 11px; right: 12px; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #f1e6cf; white-space: nowrap; }
-.jw-card-quests img { width: 20px; height: 20px; filter: drop-shadow(0 1px 1px #000); }
+.jw-card-quests img { width: 20px; height: 20px; }
 .jw-card-level { bottom: 9px; left: 14px; font-size: 11.5px; letter-spacing: 0.08em; color: #e6dcc8; }
 .jw-card-soon { filter: grayscale(0.7) brightness(0.75); }
 .jw-empty { padding: 8px 20px 28px; margin: 0; color: var(--g-muted); font-size: 15px; }
@@ -1222,7 +1341,7 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 }
 .sx-banner-body { position: relative; z-index: 1; width: 100%; max-width: 1320px; margin: 0 auto; padding: 64px 24px; }
 .sx-banner-copy { max-width: 520px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
-.sx-banner-copy h2 { font-family: var(--g-display); font-weight: 400; font-size: clamp(32px, 3.2vw, 44px); line-height: 1.08; color: #f7e9c6; margin: 0; }
+.sx-banner-copy h2 { font-family: var(--g-display); font-weight: 600; font-size: clamp(32px, 3.2vw, 44px); line-height: 1.08; color: #f7e9c6; margin: 0; }
 .sx-banner-copy p { color: var(--g-text); font-size: 16.5px; line-height: 1.6; margin: 0; }
 .sx-banner-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 10px; }
 
@@ -1259,14 +1378,21 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 @media (prefers-reduced-motion: reduce) {
   .sx-slide, .sx-slide-art { transition: none; }
   .sx-slide-art, .sx-slide.on .sx-slide-art { transform: none; }
+  .jw-card, .jw-card:hover, .jw-card:focus-visible, .jw-card:active,
+  .jw-faction button, .jw-faction button:hover, .jw-faction button:active,
+  .jw-faction button img, .jw-faction button:hover img { transform: none; }
 }
 
 /* responsive */
 @media (max-width: 1180px) {
-  .sx-bar { grid-template-columns: 1fr auto auto; gap: 10px; }
+  .sx-bar { grid-template-columns: 1fr auto; gap: 10px; }
   .sx-nav, .sx-socials { display: none; }
   .sx-burger { display: flex; }
   .jw-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .sx-cta-label { display: none; }
+  .sx-bar-start { gap: 10px; }
 }
 @media (max-width: 860px) {
   :root { --sx-head-h: 58px; }
@@ -1275,12 +1401,11 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
   .sx-logo-name { font-size: 19px; }
   .sx-cta { height: 36px; padding: 0 12px; font-size: 14px; }
   .sx-wrap { padding: 0 12px; }
-  .sx-hero { height: 520px; }
-  .sx-slide-copy { bottom: 60px; }
-  .sx-slide-text { font-size: 16px; margin-bottom: 22px; }
+  .sx-hero { height: 360px; }
+  .sx-slide-copy { bottom: 30px; }
+  .sx-slide-text { font-size: 15.5px; margin-bottom: 16px; }
   .jw-bar { grid-template-columns: 1fr; justify-items: center; padding: 16px 14px 14px; gap: 12px; }
   .jw-bar-end { display: none; }
-  .jw-search { width: 100%; order: 2; }
   .jw-toolbar { padding: 12px 14px; gap: 14px; }
   .jw-toolbar-end { margin-left: 0; width: 100%; }
   .jw-toolbar-end { flex-wrap: nowrap; }
@@ -1472,17 +1597,8 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
     var(--parchment) url("/journal/parchment.jpg") center top / 512px auto repeat;
 }
 
-/* the thin rule between the two pages */
-.ej .wf-panes:not(.wf-panes-one)::before {
-  content: "";
-  position: absolute;
-  top: 16px;
-  bottom: 14px;
-  left: 50%;
-  width: 1px;
-  transform: translateX(-50%);
-  background: linear-gradient(180deg, transparent, rgba(120, 95, 50, 0.45) 12%, rgba(120, 95, 50, 0.45) 88%, transparent);
-}
+/* (No rule between the two panes: it sat at 50%, but the list pane is
+   narrower than the detail, so it ran through the quest and loot text.) */
 
 .ej .wf-pane,
 .ej .wf-pane-detail,
@@ -1568,6 +1684,8 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 .ej .wp-rewards-head,
 .ej .wp-sub,
 .ej .wp-title { color: #6b3f08; text-shadow: 0 1px 0 rgba(255, 250, 235, 0.6); }
+/* the summary sets its own pale colour, which was all but invisible on parchment */
+.ej .wb-recipes > summary { color: #6b3f08; font-weight: 700; }
 
 .ej .wf-note, .ej .wf-tbd, .ej .wf-ptext { color: var(--ej-ink); }
 
@@ -1634,7 +1752,15 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 }
 
 .ch-head { display: flex; align-items: center; gap: 14px; }
-.ch-crest { flex: 0 0 auto; }
+/* the faction crest, as big as the portrait beside it */
+.ch-crest { flex: 0 0 auto; width: 60px; height: 60px; object-fit: contain; }
+/* the character's portrait: race (by sex) or class icon, round, framed in the class colour */
+.ch-portrait {
+  flex: none; width: 60px; height: 60px; border-radius: 50%;
+  border: 2px solid; overflow: hidden; background: #120d09;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+.ch-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .ch-name { font-size: 26px; text-shadow: 0 1px 0 rgba(255, 240, 200, 0.5); }
 .ch-sub { color: var(--wf-text); font-size: 14.5px; margin-top: 2px; }
 
@@ -1671,6 +1797,7 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 .ch { padding: 2px; }
 .ch-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .ch-head-actions { margin-left: auto; }
+.ch-visiting { margin: 8px 0 0; font-size: 13.5px; color: var(--wf-muted, #b8a98a); }
 .ch-name {
   font-family: var(--font-title); font-weight: 800; font-size: 26px; line-height: 1.1;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85);
@@ -1692,22 +1819,202 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
 
 /* An opened card takes the full row and grows to fit its quests. */
 .ch-card-open { grid-column: 1 / -1; height: auto; }
+.ch-card-open .ch-card-face { background-size: cover; background-position: center; }
 .ch-card-open:hover, .ch-card-open:focus-within { transform: none; }
 
-.ch-card-foot {
-  position: absolute; z-index: 2; left: 10px; right: 10px; bottom: 9px;
+/* The name block can shrink on a phone, so the Journey bar under it fits. */
+.ch-who { flex: 1 1 260px; min-width: 0; }
+
+/* RPG Mode's Journey bar: a dark groove with the green profession-bar fill,
+   fading to white at its end, and the count centred in white. */
+.ch-journey {
+  position: relative; overflow: hidden;
+  width: 380px; max-width: 100%; height: 20px; margin-top: 8px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #050403, #17140e);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 0 1px #6b5732, 0 0 0 2px #120d07;
+}
+.ch-journey-fill {
+  position: absolute; top: 0; bottom: 0; left: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, transparent calc(100% - 56px), rgba(225, 255, 190, 0.55) calc(100% - 2px), #f4ffe6 100%),
+    linear-gradient(180deg, #7ddc45 0%, #45a823 42%, #2b7a14 58%, #55bd2e 100%);
+}
+.ch-journey-text {
+  position: relative; display: block;
+  font-size: 12.5px; line-height: 20px; font-weight: 600; text-align: center; white-space: nowrap;
+  color: #fff; text-shadow: 1px 1px 0 #000, 0 0 3px #000;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- talents (TalentWindow) ----------
+   "Talents 21 / 0 / 30" under the name, in the Journey bar's groove; a click
+   opens the three trees in the game's own colours: grey for a talent with no
+   points, green while it has some, gold at its last rank. */
+/* in the header's gap between the name and the buttons */
+.ch-who { flex: 1 1 220px; }
+.ch-who .ch-journey { width: min(380px, 100%); }
+.ch-head-talents { flex: 0 0 auto; display: flex; align-items: stretch; gap: 10px; }
+.ch-talents {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 6px 12px 7px;
+  border: 0; border-radius: 6px; cursor: pointer;
+  background: linear-gradient(180deg, #050403, #17140e);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 0 1px #6b5732, 0 0 0 2px #120d07;
+  font: 600 13px/1 var(--font-body); color: #b9b2a3;
+  font-variant-numeric: tabular-nums;
+  transition: box-shadow 0.15s ease;
+}
+.ch-talents:hover, .ch-talents:focus-visible { box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 0 1px #c8a04a, 0 0 0 2px #120d07, 0 0 12px rgba(255, 209, 0, 0.18); outline: none; }
+.ch-talents-label { color: #ffd100; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+.ch-talents-trees { display: flex; gap: 12px; }
+.ch-talents-tree { display: inline-flex; align-items: center; gap: 6px; }
+.ch-talents-tree img, .ch-talents-noicon {
+  display: block; width: 30px; height: 30px;
+  border: 1px solid #63605a; border-radius: 4px; background: #000;
+}
+.ch-talents-tree:not(.on) img { filter: saturate(0.55) brightness(0.8); }
+.ch-talents-pts { min-width: 16px; font-size: 15px; font-weight: 700; color: #d6cfbf; }
+.ch-talents-tree.on .ch-talents-pts { color: #fff; }
+
+/* ---------- favourites (FavouritesWindow) ----------
+   The addon's Favourites window: a gold title between two lines for each
+   dungeon, then a dark row per item with its icon, its name in its quality
+   colour and, under it, the quest it is a reward from or the boss that drops it. */
+.ch-favs-count { display: flex; align-items: center; gap: 7px; }
+.ch-favs-count img { display: block; }
+.ch-favs-count .ch-talents-pts { color: #fff; }
+.fv-box { width: min(400px, calc(100vw - 24px)); }
+.fv .tt-head { gap: 8px; }
+.fv .tt-close { margin-left: auto; }
+.fv-star { flex: none; }
+.fv-list { max-height: min(62vh, 560px); overflow-y: auto; margin: 0 -6px; padding: 0 6px; scrollbar-color: #6b5732 transparent; }
+.fv-group + .fv-group { margin-top: 4px; }
+.fv-divider {
   display: flex; align-items: center; gap: 8px;
+  margin: 4px 0 6px; font: 600 14px/1.3 var(--font-body); color: #ffd145;
 }
-.ch-card-bar {
-  flex: 1 1 auto; height: 7px; border-radius: 999px;
-  background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 255, 255, 0.25);
-  overflow: hidden;
+.fv-divider::before, .fv-divider::after { content: ""; flex: 1; height: 1px; background: rgba(138, 99, 43, 0.72); }
+.fv-divider a { color: inherit; text-decoration: none; }
+.fv-divider a:hover { text-decoration: underline; text-underline-offset: 2px; }
+.fv-group ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.fv-row {
+  display: flex; align-items: center; gap: 8px;
+  min-height: 48px; padding: 6px 8px;
+  background: rgba(31, 24, 17, 0.92);
+  border: 1px solid #6b5433; border-radius: 4px;
 }
-.ch-card-bar-fill { display: block; height: 100%; background: linear-gradient(90deg, #d8a83c, #ffd77a); }
-.ch-card-count {
-  flex: 0 0 auto; font-size: 12.5px; font-weight: 700; color: #ffe9b8;
-  text-shadow: 0 1px 2px #000; font-variant-numeric: tabular-nums;
+.fv-row:hover { background: rgba(48, 37, 24, 0.95); }
+.fv-icon { flex: none; display: block; width: 34px; height: 34px; border: 1px solid #000; border-radius: 3px; overflow: hidden; background: #000; }
+.fv-icon img { display: block; width: 100%; height: 100%; }
+.fv-text { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.fv-name { font: 600 14px/1.25 var(--font-body); text-decoration: none; text-shadow: 1px 1px 0 #000; }
+a.fv-name:hover { text-decoration: underline; text-underline-offset: 2px; }
+.fv-src { display: flex; align-items: center; gap: 4px; min-width: 0; font-size: 12.5px; color: #ad9e85; }
+.fv-src img { flex: none; }
+.fv-src a, .fv-src span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: inherit; text-decoration: none; }
+.fv-src a:hover { color: #e8dcc4; text-decoration: underline; text-underline-offset: 2px; }
+.fv-empty { max-width: 300px; margin: 28px auto; line-height: 1.45; }
+
+.tt {
+  margin: auto; /* the page's reset takes the dialog's own centring away */
+  padding: 0; border: 0; background: transparent; color: #fff;
+  max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); overflow: auto;
 }
+.tt::backdrop { background: rgba(0, 0, 0, 0.62); }
+.tt-box {
+  padding: 14px 16px 18px;
+  background: linear-gradient(180deg, #17130d, #0b0906);
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px #6b5732, 0 0 0 2px #120d07, 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+.tt-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.tt-title { margin: 0; font: 700 19px/1.2 var(--font-body); text-shadow: 1px 1px 0 #000; }
+.tt-title-rest { margin-left: 8px; color: #fff; }
+.tt-total { margin-left: auto; color: #ffd100; font-size: 13px; font-variant-numeric: tabular-nums; }
+.tt-close {
+  display: grid; place-items: center; width: 28px; height: 28px; flex: none;
+  padding: 0; border: 1px solid #4a3d26; border-radius: 4px; background: #0a0806;
+  color: #c9bfa8; cursor: pointer;
+}
+.tt-close:hover, .tt-close:focus-visible { color: #fff; border-color: #c8a04a; outline: none; }
+.tt-note { margin: 24px 0; color: #c9bfa8; text-align: center; }
+.tt-trees { display: grid; grid-template-columns: repeat(3, auto); gap: 12px; }
+.tt-tree {
+  --tt-cell: 46px;
+  padding: 8px 10px 12px;
+  background: rgba(0, 0, 0, 0.38);
+  border: 1px solid #3a2f1d; border-radius: 6px;
+}
+.tt-tree-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.tt-tree-head img { border: 1px solid #63605a; border-radius: 4px; background: #000; }
+.tt-tree-name { flex: 1; min-width: 0; font-size: 14.5px; font-weight: 700; text-shadow: 1px 1px 0 #000; }
+.tt-tree-points { min-width: 26px; color: #ffd100; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.tt-grid { position: relative; display: grid; grid-template-columns: repeat(4, var(--tt-cell)); gap: 8px 10px; }
+
+.tt-talent {
+  position: relative; z-index: 1;
+  justify-self: center; align-self: center;
+  width: 40px; height: 40px; padding: 0;
+  border: 2px solid #4a4a4a; border-radius: 5px; background: #000;
+  cursor: default;
+}
+.tt-talent img { display: block; width: 100%; height: 100%; border-radius: 3px; }
+.tt-off img { filter: grayscale(1) brightness(0.55); }
+.tt-part { border-color: #1eff00; }
+.tt-max { border-color: #ffd100; }
+.tt-talent:hover, .tt-talent:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
+.tt-rank {
+  position: absolute; right: -8px; bottom: -8px;
+  min-width: 24px; padding: 0 3px;
+  background: #000; border: 1px solid #3d3d3d; border-radius: 4px;
+  color: #9d9d9d; font: 700 11px/15px var(--font-body); font-variant-numeric: tabular-nums;
+}
+.tt-part .tt-rank { color: #1eff00; border-color: rgba(30, 255, 0, 0.45); }
+.tt-max .tt-rank { color: #ffd100; border-color: rgba(255, 209, 0, 0.45); }
+
+/* A talent that needs another: a bar from the one above (or beside) it, with
+   the head at its end, gold once the way is open. */
+.tt-arrow { position: relative; z-index: 0; pointer-events: none; --tt-c: #4d4d4d; --tt-edge: calc(var(--tt-cell) / 2 + 21px); }
+.tt-arrow.on { --tt-c: #ffd100; }
+.tt-arrow::before, .tt-arrow::after { content: ""; position: absolute; }
+.tt-arrow::before { background: var(--tt-c); box-shadow: 0 0 0 1px #000; }
+.tt-arrow-d::before { left: 50%; width: 4px; margin-left: -2px; top: var(--tt-edge); bottom: calc(var(--tt-edge) + 5px); }
+.tt-arrow-d::after {
+  left: 50%; margin-left: -6px; bottom: var(--tt-edge);
+  border: 6px solid transparent; border-bottom: 0; border-top: 7px solid var(--tt-c);
+}
+.tt-arrow-r::before, .tt-arrow-l::before { top: 50%; height: 4px; margin-top: -2px; }
+.tt-arrow-r::before { left: var(--tt-edge); right: calc(var(--tt-edge) + 5px); }
+.tt-arrow-l::before { right: var(--tt-edge); left: calc(var(--tt-edge) + 5px); }
+.tt-arrow-r::after, .tt-arrow-l::after { top: 50%; margin-top: -6px; border: 6px solid transparent; }
+.tt-arrow-r::after { right: var(--tt-edge); border-right: 0; border-left: 7px solid var(--tt-c); }
+.tt-arrow-l::after { left: var(--tt-edge); border-left: 0; border-right: 7px solid var(--tt-c); }
+
+.tt-tip {
+  position: fixed; z-index: 10;
+  width: 300px; max-width: calc(100vw - 24px);
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.6), 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+.tt-tip .it-name { font-size: 15px; }
+.tt-tip .it-line { font-size: 13px; }
+.tt-desc { color: #ffd100; }
+
+@media (max-width: 800px) {
+  .tt-trees { grid-template-columns: 1fr; justify-items: center; }
+  .tt-tree { width: 100%; max-width: 260px; }
+  .tt-grid { justify-content: center; }
+}
+@media (max-width: 420px) {
+  .tt-box { padding: 12px 10px 14px; }
+  .tt-tree { --tt-cell: 44px; padding: 8px 6px 12px; }
+  .tt-grid { gap: 8px 6px; }
+}
+
+/* The addon's quest count, top right, above the tick so it never hides behind it. */
+.ch-card-quests { z-index: 3; font-variant-numeric: tabular-nums; }
 
 /* The tick a cleared dungeon wears. */
 .ch-check {
@@ -1721,34 +2028,280 @@ html { scroll-padding-top: calc(var(--sx-head-h) + 20px); scrollbar-color: #3d36
   stroke-linecap: round; stroke-linejoin: round;
   filter: drop-shadow(0 0 6px rgba(40, 255, 90, 0.75)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.8));
 }
-.ch-card-done { box-shadow: inset 0 0 0 1px #49f06a, 0 2px 10px rgba(0, 0, 0, 0.6); }
+.ch-card-done { outline-color: #49f06a; }
 .ch-card-done .wf-card-name { color: #d6ffd9; }
 
-/* The quest list inside an opened card. */
+/* An opened card: the addon's Quests tab for this character (CharacterQuests),
+   the dungeon page's list and parchment, with the quests handed in framed in
+   green and ticked, as the addon shows them. */
 .ch-quests {
   position: relative; z-index: 2;
-  padding: 10px 14px 14px;
-  background: rgba(8, 6, 4, 0.9);
+  padding: 12px;
+  background: rgba(10, 8, 6, 0.94);
   border-top: 1px solid rgba(255, 215, 122, 0.35);
 }
-.ch-quests ul { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 22px; }
-.ch-quests li {
-  display: flex; align-items: baseline; gap: 8px;
-  padding: 3px 0; font-size: 14px;
-  break-inside: avoid;
+.ch-q-loading { margin: 12px 4px; }
+.ch-q-panes .wf-pane-detail { min-height: 360px; }
+/* the list's faction, lit; the other dimmed (the list is the character's) */
+.ch-q-crest {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 34px; border-radius: 3px; border: 1px solid #000;
+  box-shadow: inset 0 0 0 1px rgba(255, 215, 130, 0.25);
+  background: linear-gradient(180deg, #2a2420, #15110e);
 }
-.ch-q-tick { flex: 0 0 auto; color: #7a6a52; font-weight: 700; width: 14px; }
-.ch-q-done .ch-q-tick { color: #49f06a; }
-.ch-q-name { color: #cdbb97; text-decoration: none; }
-.ch-q-done .ch-q-name { color: #eaf7e4; }
-.ch-q-name:hover { text-decoration: underline; text-underline-offset: 2px; }
-.ch-q-more {
-  display: inline-block; margin-top: 10px;
-  color: #ffd77a; font-size: 13.5px; text-decoration: none; font-weight: 600;
+.ch-q-crest img { opacity: 0.45; }
+.ch-q-crest.on { background: linear-gradient(180deg, var(--wf-red), var(--wf-red-dark)); box-shadow: inset 0 0 0 1px rgba(255, 215, 130, 0.5); }
+.ch-q-crest.on img { opacity: 1; }
+
+/* The addon's "done" look: the green frame and tick on a handed-in quest. */
+.wf-row.wq-done { border-color: rgba(31, 255, 64, 0.9); box-shadow: inset 0 0 0 1px rgba(31, 255, 64, 0.25); }
+.wf-row.wq-done:not(.wf-row-selected) { background: color-mix(in srgb, var(--wf-row) 84%, #0d5914 16%); }
+.wq-tick { display: inline-flex; flex: none; }
+.wq-tick svg { width: 100%; height: 100%; overflow: visible; }
+.wq-tick path {
+  fill: none; stroke: #3df266; stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.85));
 }
-.ch-q-more:hover { text-decoration: underline; text-underline-offset: 2px; }
+.wq-row-tick { width: 30px; height: 30px; margin: 0 4px 0 8px; }
+/* On the dungeon skin's cream rows (.ej, also inside an opened card): the row
+   stays light, tinted green, so its dark ink still reads. */
+.ej .wf-row.wq-done { border-color: #2fb84a; box-shadow: inset 0 0 0 1px rgba(47, 184, 74, 0.35); }
+.ej .wf-row.wq-done:not(.wf-row-selected) { background: color-mix(in srgb, var(--ej-row) 84%, #3fcf5c 16%); }
+.ej .wf-row.wq-done:not(.wf-row-selected):hover { background: color-mix(in srgb, var(--ej-row-hover) 80%, #3fcf5c 20%); }
+.ej .wq-tick path { stroke: #1e9c37; filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.5)); }
+/* inside a character card: the skin's own header band, no outer page chrome */
+.ch-ej { border-radius: 4px; overflow: hidden; }
+.wp-done { width: 34px; height: 34px; margin-top: -2px; }
 
 @media (max-width: 640px) {
-  .ch-quests ul { columns: 1; }
   .ch-head-actions { margin-left: 0; }
+  .ch-head-talents { flex-basis: 100%; justify-content: flex-start; flex-wrap: wrap; }
+}
+
+/* ---------- item pages (/item/<id>-<name>) ----------
+   The game's own item tooltip (dark glass, quality-coloured name, slot on the
+   left and armour type on the right) with the icon beside it, the way Wowhead
+   lays an item out; the sources below sit on the journal's parchment. */
+.it-top { display: flex; align-items: flex-start; gap: 12px; }
+.it-icon {
+  flex: none; display: block; width: 58px; height: 58px;
+  border: 2px solid; border-radius: 6px; overflow: hidden; background: #000;
+}
+.it-icon img { display: block; width: 100%; height: 100%; }
+.it-tip {
+  min-width: 0; width: min(100%, 360px);
+  padding: 9px 12px 10px;
+  background: rgba(8, 10, 22, 0.94);
+  border: 1px solid #63605a; border-radius: 5px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.6);
+  color: #fff; font-size: 14px; line-height: 1.35;
+}
+.it-name { margin: 0 0 2px; font-family: var(--font-body); font-size: 17px; font-weight: 700; line-height: 1.25; }
+.it-row { display: flex; justify-content: space-between; gap: 16px; margin: 0; }
+/* pre-wrap keeps the game's indent on a set's piece names */
+.it-line { margin: 0; white-space: pre-wrap; }
+.it-source { margin: 6px 0 0; color: #ffd100; font-size: 13px; }
+
+/* The hover tooltip on item links (ItemTooltips): the same box, following the
+   cursor above everything, icon on its left like the game's. */
+.itt {
+  position: fixed; top: 0; left: 0; z-index: 2000;
+  display: flex; align-items: flex-start; gap: 4px;
+  pointer-events: none;
+}
+.itt-icon {
+  flex: none; width: 40px; height: 40px;
+  border: 1px solid #63605a; border-radius: 4px; background: #000;
+}
+.itt-body { width: 320px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55); }
+.itt .it-name { font-size: 15px; }
+.itt .it-row, .itt .it-line { font-size: 13px; }
+.it-gap { height: 0.6em; margin: 0; }
+.it-coin { margin-left: 4px; }
+.it-gold { color: #ffd100; }
+.it-silver { color: #c7c7cf; }
+.it-copper { color: #c8602c; }
+.it .wp-rewards-head { margin-top: 20px; }
+.it-list { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.it-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; color: var(--parchment-ink); }
+.it-list .wp-link { font-weight: 700; }
+.it-where { color: #6f5a3c; font-size: 13.5px; }
+.it-notes .wp-text + .wp-text { margin-top: 8px; }
+@media (max-width: 520px) {
+  .it-top { flex-direction: column; }
+  .it-tip { width: 100%; }
+}
+
+/* ==========================================================================
+   QUEST PANES: the addon's quest view (2.1.1), in its own type.
+   The game sets quest titles and the Rewards header in Morpheus and the rest
+   in Friz Quadrata; both belong to Blizzard, so the site uses free faces in
+   the same spirit (self-hosted, public/fonts): Metamorphous in small caps for
+   the titles, Marcellus for everything else. Scoped to .wq (quest panels) and
+   .wq-list (the quest list) so item, boss and other parchment pages keep
+   their type.
+   ========================================================================== */
+@font-face {
+  font-family: "Metamorphous";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/metamorphous-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Metamorphous";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/metamorphous-400-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Marcellus";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/marcellus-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Marcellus";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/marcellus-400-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Marcellus has old-style figures (its 1 and 0 read as I and O: "Level IO").
+   Digits come from Cinzel, a classical face with lining figures; the
+   unicode-range keeps it to 0-9, so letters stay Marcellus. */
+@font-face {
+  font-family: "Quest Digits";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/cinzel-latin.woff2") format("woff2");
+  unicode-range: U+0030-0039;
+}
+
+:root {
+  --font-quest-title: "Metamorphous", "Marcellus", Georgia, serif;
+  --font-quest: "Quest Digits", "Marcellus", Georgia, "Times New Roman", serif;
+  --quest-title-gold: #e2a63a;   /* the addon's gold title */
+  --quest-title-edge: #3d2306;   /* its dark brown shadow */
+  --quest-reward-head: #d1851a;  /* frame.questRewardHeader 0.82, 0.52, 0.10 */
+  --quest-ink: #2b1a08;
+  --quest-head-ink: #3a2208;
+}
+
+/* ---- the quest page ---- */
+.wp.wq { font-family: var(--font-quest); color: var(--quest-ink); }
+.wp.wq .wp-title {
+  font-family: var(--font-quest-title); font-weight: 400;
+  font-variant-caps: small-caps; letter-spacing: 0.01em;
+  font-size: 25px; line-height: 1.12; text-wrap: balance;
+  color: var(--quest-title-gold);
+  text-shadow: 1px 1px 0 var(--quest-title-edge), 0 0 1px var(--quest-title-edge);
+}
+.wp.wq .wp-avail { font-size: 14.5px; color: #4a3519; }
+/* Objective, Starts at, Turn in, Notes: bold white with a full black stroke
+   (four 1px offsets, the dungeon names' outline) plus the addon's drop shadow,
+   so they read on the light parchment. Marcellus has one weight: the bold is
+   the browser's. */
+.wp.wq .wp-sub {
+  font-family: var(--font-quest); font-weight: 700;
+  font-size: 17px; letter-spacing: 0.02em;
+  color: #ffffff; margin: 14px 0 3px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 1px 2px 1px rgba(0, 0, 0, 0.6);
+}
+/* "You will also receive:" and the reward group labels stay dark, as in game */
+.wp.wq .wp-also, .wp.wq .wp-rewards .wp-sub {
+  font-weight: 400;
+  color: var(--quest-head-ink);
+  text-shadow: 0 1px 0 rgba(255, 245, 220, 0.55);
+}
+.wp.wq .wp-text { font-size: 16px; line-height: 1.45; color: var(--quest-ink); text-wrap: pretty; max-width: 68ch; }
+.wp.wq .wp-note, .wp.wq .wp-line { font-size: 14.5px; }
+.wp.wq .wp-rewards-head {
+  font-family: var(--font-quest-title); font-weight: 400;
+  font-variant-caps: small-caps; letter-spacing: 0.02em;
+  font-size: 21px; line-height: 1.1; margin: 20px 0 8px;
+  color: var(--quest-reward-head);
+  text-shadow: 1px 1px 0 #000;
+}
+.wp.wq .wp-rewards .wp-sub { margin-top: 2px; font-size: 15px; }
+
+/* Reward items: the addon's dark boxes with the tooltip edge, two abreast */
+.wp.wq .wp-reward-list { flex-direction: row; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.wp.wq .wp-reward {
+  width: min(100%, 236px); min-height: 50px; gap: 9px;
+  padding: 5px 10px 5px 6px;
+  background: rgba(28, 20, 12, 0.94);
+  border: 2px solid #8d877c; border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.15s;
+}
+.wp.wq .wp-reward:hover { background: #4d3819; }
+.wp.wq .wp-reward .wp-icon { width: 36px; height: 36px; flex: none; }
+.wp.wq .wp-reward > span { font-size: 14.5px; line-height: 1.2; }
+.wp.wq .wp-reward .wi-link { font-weight: 400; color: #ffffff !important; }
+.wp.wq .wp-reward .wi-link[data-q="0"] { color: #9d9d9d !important; }
+.wp.wq .wp-reward .wi-link[data-q="2"] { color: #1eff00 !important; }
+.wp.wq .wp-reward .wi-link[data-q="3"] { color: #3d9bff !important; }
+.wp.wq .wp-reward .wi-link[data-q="4"] { color: #c27cff !important; }
+.wp.wq .wp-reward .wi-link[data-q="5"] { color: #ff8000 !important; }
+.wp.wq .wp-reward .wp-note { color: #cdb88f; font-size: 13px; }
+
+/* XP and money: the addon's pills */
+.wp.wq .wp-money { gap: 8px; margin-top: 12px; font-size: 14.5px; color: #4a3519; }
+.wp.wq .wp-xp {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 30px; padding: 0 12px 0 4px;
+  background: #422b6b; border: 2px solid #73529e; border-radius: 6px;
+  /* Roboto for the numbers: Marcellus's 1 reads as an I */
+  color: #ffffff; font-family: var(--font-body); font-size: 14px; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.wp.wq .wp-xp-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 26px; height: 20px; padding: 0 4px; border-radius: 3px;
+  background: #7333cc; color: #ffed80;
+  font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+}
+.wp.wq .wp-money-pill {
+  display: inline-flex; align-items: center;
+  height: 30px; padding: 0 10px;
+  background: #1a1206; border: 2px solid #734d1c; border-radius: 6px;
+  color: #ffebb8; font-family: var(--font-body); font-size: 14px; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.wp.wq .wp-money-pill .wp-coins { background: none; border: 0; box-shadow: none; padding: 0; color: inherit; font-weight: 400; }
+.wp.wq .wp-also { margin: 14px 0 0; font-size: 15px; }
+.wp.wq .wp-also + .wp-money { margin-top: 6px; }
+.wp.wq .wp-reps { margin-top: 8px; }
+/* Reputation: the addon's green pill, a darker "+100" badge and the faction */
+.wp.wq .wp-rep {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 30px; padding: 0 12px 0 4px;
+  background: #1f3d14; border: 2px solid #3f7d2a; border-radius: 6px;
+  color: #ffffff; font-family: var(--font-body); font-size: 14px; font-weight: 600;
+}
+.wp.wq .wp-rep-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 38px; height: 20px; padding: 0 5px; border-radius: 3px;
+  background: #2f6b1c; color: #d8ffc8;
+  font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.wp.wq .wp-rep-down { background: #3d1414; border-color: #7d2a2a; }
+.wp.wq .wp-rep-down .wp-rep-badge { background: #6b1c1c; color: #ffd0d0; }
+.wp.wq .wp-rep-text { color: #4a3519; }
+
+/* ---- the quest list (a dungeon's Quests tab) ---- */
+.wq-list .wf-pane-head { font-family: var(--font-quest); font-size: 17px; }
+.wq-list .wf-row-name { font-family: var(--font-quest); font-weight: 400; font-size: 17px; line-height: 1.2; }
+.wq-list .wf-row-sub { font-family: var(--font-quest); font-size: 14px; }
+.wf-q-ring {
+  flex: none; width: 34px; height: 34px; margin-left: 8px;
 }

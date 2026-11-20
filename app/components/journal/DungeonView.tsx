@@ -2,21 +2,50 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { questIsFor, type Dungeon } from "@/app/lib/journal";
-import { FactionCrest } from "./Window";
-import QuestPanel, { PrereqPanel } from "./QuestPanel";
+import { questIsFor } from "@/app/lib/journal-shared";
+import type { Dungeon } from "@/app/lib/journal";
+import QuestPanel, { PrereqPanel, QuestTick } from "./QuestPanel";
 import { BossPanel, TrashPanel } from "./BossPanel";
 import { BossPortrait } from "./BossPortrait";
 import MapPane from "./MapPane";
 import { setFaction, useFaction } from "./useFaction";
+import { useHref, useT } from "@/app/components/i18n/I18n";
 
 type Tab = "map" | "quests" | "bosses";
 
-export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { name: string; slug: string } | null; next: { name: string; slug: string } | null }) {
-  const [tab, setTab] = useState<Tab>(d.quests.length > 0 ? "quests" : "bosses");
+/**
+ * The dungeon window inside an opened card on the character page: the same
+ * tabs, with the character's own quests (the addon's list for it) and the ones
+ * it handed in framed in green and ticked. No breadcrumb or pager, and the
+ * address's fragment (the character code there) is left alone.
+ */
+export interface CharacterView {
+  /** The character's quests here, in the addon's order. */
+  quests: { id: number; done: boolean }[];
+  faction: "Alliance" | "Horde" | "Unknown";
+}
+
+export default function DungeonView({
+  d,
+  prev = null,
+  next = null,
+  character,
+}: {
+  d: Dungeon;
+  prev?: { name: string; slug: string } | null;
+  next?: { name: string; slug: string } | null;
+  character?: CharacterView;
+}) {
+  const t = useT();
+  const h = useHref();
+  const factionName = (f: "Alliance" | "Horde") => t(f === "Horde" ? "s_horde" : "s_alliance");
+  const hasQuests = character ? character.quests.length > 0 : d.quests.length > 0;
+  const [tab, setTab] = useState<Tab>(hasQuests ? "quests" : "bosses");
   // Like the addon, the quest list always shows one faction: the one picked on
-  // the home page (or here), remembered between visits.
-  const faction = useFaction();
+  // the home page (or here), remembered between visits; a character's, its own.
+  const picked = useFaction();
+  const faction = character && character.faction !== "Unknown" ? character.faction : picked;
+  const done = new Set(character ? character.quests.filter((q) => q.done).map((q) => q.id) : []);
   const [questId, setQuestId] = useState<number | null>(null);
   // A selected step of a quest's prerequisite chain (the addon's selectedPrereqStep).
   const [step, setStep] = useState<{ parent: number; index: number } | null>(null);
@@ -25,12 +54,25 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
   const [bossIdx, setBossIdx] = useState(0); // index into bosses; bosses.length = trash
   const detailRef = useRef<HTMLDivElement>(null);
 
-  // Deep links: #map, #bosses, #quest-<id>. Applied on the next frame so the
-  // server-rendered markup hydrates first (the lint rule's cascading-render concern).
+  // Deep links: #map, #bosses, #boss-<n>, #trash, #quest-<id>. Applied on the
+  // next frame so the server-rendered markup hydrates first (the lint rule's
+  // cascading-render concern). Item pages link to #boss-<n> and #trash.
   useEffect(() => {
+    if (character) return; // the character page's fragment is its code
     const apply = () => {
       const h = window.location.hash.replace("#", "");
       if (h === "bosses") setTab("bosses");
+      if (h.startsWith("boss-")) {
+        const i = parseInt(h.slice(5), 10);
+        if (i >= 0 && i < d.bosses.length) {
+          setTab("bosses");
+          setBossIdx(i);
+        }
+      }
+      if (h === "trash" && d.trash.length > 0) {
+        setTab("bosses");
+        setBossIdx(d.bosses.length);
+      }
       if (h === "map" && d.map) setTab("map");
       if (h.startsWith("quest-")) {
         const id = parseInt(h.slice(6), 10);
@@ -46,7 +88,7 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
     const raf = requestAnimationFrame(apply);
     window.addEventListener("hashchange", apply);
     return () => { cancelAnimationFrame(raf); window.removeEventListener("hashchange", apply); };
-  }, [d.quests, d.hiddenQuests, d.map]);
+  }, [d.quests, d.hiddenQuests, d.map, d.bosses.length, d.trash.length, character]);
 
   // On a phone the detail sits under the list: bring it into view after a pick.
   const revealDetail = (pane: "quests" | "bosses") => {
@@ -63,7 +105,7 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
   const selectQuest = (id: number) => {
     const target = d.quests.find((q) => q.id === id) ?? d.hiddenQuests.find((q) => q.id === id);
     if (!target) return;
-    if (target.faction !== "Both" && target.faction !== faction) setFaction(target.faction);
+    if (!character && target.faction !== "Both" && target.faction !== faction) setFaction(target.faction);
     setQuestId(id);
     setStep(null);
     revealDetail("quests");
@@ -93,7 +135,10 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
     });
   };
 
-  const quests = d.quests.filter((q) => questIsFor(q.faction, faction));
+  const byId = new Map([...d.quests, ...d.hiddenQuests].map((q) => [q.id, q]));
+  const quests = character
+    ? character.quests.map((c) => byId.get(c.id)).filter((q): q is NonNullable<typeof q> => !!q)
+    : d.quests.filter((q) => questIsFor(q.faction, faction));
   const selectedQuest =
     quests.find((q) => q.id === questId) ?? d.hiddenQuests.find((q) => q.id === questId) ?? quests[0];
   const stepParent = step ? d.quests.find((q) => q.id === step.parent) : undefined;
@@ -115,9 +160,11 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
 
   return (
     <>
-      <div className="wf-crumb">
-        <Link href="/" className="wf-btn wf-btn-red wf-btn-sm">Dungeons</Link>
-      </div>
+      {!character && (
+        <div className="wf-crumb">
+          <Link href={h("/")} className="wf-btn wf-btn-red wf-btn-sm">{t("DUNGEONS")}</Link>
+        </div>
+      )}
 
       <div className="wf-dheader">
         <div>
@@ -128,14 +175,14 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
           <div className="wf-dtabs">
             {d.map && (
               <button type="button" data-tab="map" className={`wf-btn wf-tab ${tab === "map" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("map")}>
-                <img className="wf-tab-ico wf-tab-ico-map" src="/journal/ui/map-tab.png" alt="" width={22} height={22} /> Map
+                <img className="wf-tab-ico wf-tab-ico-map" src="/journal/ui/map-tab.png" alt="" width={22} height={22} /> {t("MAP")}
               </button>
             )}
             <button type="button" data-tab="bosses" className={`wf-btn wf-tab ${tab === "bosses" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("bosses")}>
-              <img className="wf-tab-ico" src="/journal/ui/skull.png" alt="" width={24} height={24} /> Bosses
+              <img className="wf-tab-ico" src="/journal/ui/skull.png" alt="" width={24} height={24} /> {t("BOSSES")}
             </button>
             <button type="button" data-tab="quests" className={`wf-btn wf-tab ${tab === "quests" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("quests")}>
-              <img className="wf-tab-ico wf-tab-ico-q" src="/journal/ui/quest-available.png" alt="" width={24} height={24} /> Quests
+              <img className="wf-tab-ico wf-tab-ico-q" src="/journal/ui/quest-available.png" alt="" width={24} height={24} /> {t("QUESTS")}
             </button>
           </div>
         )}
@@ -144,21 +191,42 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
       {d.previewOnly ? (
         <div className="wf-pane wf-pane-single">
           <p className="wf-ptext">{d.description}</p>
-          <p className="wf-note">Opens with WoW Forever on November 4. Quests, bosses and loot are added to the addon and this page as they are verified.</p>
+          <p className="wf-note">{t("s_preview")}</p>
         </div>
       ) : (
         <>
         {d.map && (
           <div className="wf-panes wf-panes-one" data-pane="map" hidden={tab !== "map"}>
             <div className="wf-pane wm-pane">
-              <MapPane map={d.map} onBoss={openBoss} />
+              <MapPane
+                map={d.map}
+                onBoss={openBoss}
+                questFor={(ids) => {
+                  const q = quests.find((x) => ids.includes(x.id));
+                  return q ? { id: q.id, title: q.name, done: done.has(q.id) } : null;
+                }}
+                onQuest={(id) => {
+                  setTab("quests");
+                  selectQuest(id);
+                }}
+              />
             </div>
           </div>
         )}
         <div className="wf-panes" data-pane="quests" hidden={tab !== "quests"}>
-          <div className="wf-pane wf-pane-list">
+          <div className="wf-pane wf-pane-list wq-list">
             <div className="wf-pane-head">
-              <span>Quests <span className="wf-sep">|</span> {quests.length}</span>
+              <span>{t("QUESTS")} <span className="wf-sep">|</span> {quests.length}</span>
+              {character ? (
+                // the character's list: its faction lit, nothing to switch
+                <span className="wf-faction-toggle" aria-label={factionName(faction)}>
+                  {(["Alliance", "Horde"] as const).map((f) => (
+                    <span key={f} className={`ch-q-crest ${faction === f ? "on" : ""}`}>
+                      <img src={f === "Horde" ? "/journal/horde.png" : "/journal/alliance.png"} alt="" width={24} height={24} />
+                    </span>
+                  ))}
+                </span>
+              ) : (
               <span className="wf-faction-toggle">
                 {(["Alliance", "Horde"] as const).map((f) => (
                   <button
@@ -166,13 +234,14 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
                     type="button"
                     className={faction === f ? "on" : ""}
                     aria-pressed={faction === f}
-                    title={`${f} quests`}
+                    title={t("s_count_for", factionName(f))}
                     onClick={() => { setFaction(f); setQuestId(null); setStep(null); }}
                   >
-                    <img src={f === "Horde" ? "/journal/horde.png" : "/journal/alliance.png"} alt={f} width={24} height={24} />
+                    <img src={f === "Horde" ? "/journal/horde.png" : "/journal/alliance.png"} alt={factionName(f)} width={24} height={24} />
                   </button>
                 ))}
               </span>
+              )}
             </div>
             <ul className="wf-rows">
               {quests.map((q) => {
@@ -182,7 +251,7 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
                     <div
                       role="button"
                       tabIndex={0}
-                      className={`wf-row ${!step && selectedQuest?.id === q.id ? "wf-row-selected" : ""} ${step?.parent === q.id ? "wf-row-parent" : ""}`}
+                      className={`wf-row ${done.has(q.id) ? "wq-done" : ""} ${!step && selectedQuest?.id === q.id ? "wf-row-selected" : ""} ${step?.parent === q.id ? "wf-row-parent" : ""}`}
                       onClick={() => selectQuest(q.id)}
                       onKeyDown={onKey(() => selectQuest(q.id))}
                     >
@@ -190,25 +259,31 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
                       <span className="wf-row-text">
                         <span className="wf-row-name">{q.name}</span>
                         <span className="wf-row-sub">
-                          Available from Level {q.requires}
+                          {t("AVAILABLE_FROM_LEVEL", q.requires)}
                           {q.chain.length > 0 && (
                             <button
                               type="button"
                               className={`wf-chain-toggle ${open ? "on" : ""}`}
                               aria-expanded={open}
-                              aria-label="Required Quests: click to show the whole quest chain"
-                              data-tip="Required Quests"
-                              data-tip2="Click to show the whole quest chain"
+                              aria-label={`${t("REQUIRED_QUESTS")}: ${t("SHOW_WHOLE_CHAIN")}`}
+                              data-tip={t("REQUIRED_QUESTS")}
+                              data-tip2={t("SHOW_WHOLE_CHAIN")}
                               onClick={(e) => { e.stopPropagation(); toggleChain(q.id); }}
                               onKeyDown={(e) => e.stopPropagation()}
                             >
                               <img src="/journal/questchain.png" alt="" width={16} height={16} />
                             </button>
                           )}
-                          {q.classOnly && <span className="wf-class"> · {q.classOnly.charAt(0) + q.classOnly.slice(1).toLowerCase()}</span>}
+                          {q.classOnly && <span className="wf-class"> · {q.classOnly.map((c) => t.or(`CLASS_${c}`, c.charAt(0) + c.slice(1).toLowerCase())).join(" / ")}</span>}
                         </span>
                       </span>
-                      <FactionCrest faction={q.faction} size={20} />
+                      {/* As the addon's list (2.1.1): no faction crests, the list is
+                          one faction's; the round ! of a quest still to pick up. */}
+                      {done.has(q.id) ? (
+                        <QuestTick className="wq-row-tick" label={t.or("s_done", "Done")} />
+                      ) : (
+                        <img className="wf-q-ring" src="/journal/ui/pickup-mark.webp" alt="" width={34} height={34} />
+                      )}
                     </div>
                     {open && (
                       <div className="wf-chainpanel">
@@ -240,18 +315,19 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
             ) : selectedQuest ? (
               <QuestPanel
                 q={selectedQuest}
+                done={done.has(selectedQuest.id)}
                 onSelectQuest={selectQuest}
                 canSelect={(id) => inDungeon.has(id)}
                 onShowChain={() => showChain(selectedQuest.id)}
               />
             ) : (
-              <p className="wf-note">No {faction} quests in {d.name}. Pick the other crest to see the {faction === "Horde" ? "Alliance" : "Horde"} ones.</p>
+              <p className="wf-note">{t("NO_FACTION_QUESTS", factionName(faction))}</p>
             )}
           </div>
         </div>
         <div className="wf-panes" data-pane="bosses" hidden={tab !== "bosses"}>
           <div className="wf-pane wf-pane-list">
-            <div className="wf-pane-head"><span>Bosses</span></div>
+            <div className="wf-pane-head"><span>{t("BOSSES")}</span></div>
             <ul className="wf-rows">
               {bossItems.map((b, i) => (
                 <li key={b.name}>
@@ -260,7 +336,7 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
                     <span className="wf-row-text">
                       <span className="wf-row-name">{b.name}</span>
                       {(b.rare || b.factionOnly) && (
-                        <span className="wf-row-sub">{b.rare ? "Rare" : ""}{b.rare && b.factionOnly ? " · " : ""}{b.factionOnly ? `${b.factionOnly} only` : ""}</span>
+                        <span className="wf-row-sub">{b.rare ? t("s_rare") : ""}{b.rare && b.factionOnly ? " · " : ""}{b.factionOnly ? t("s_only", factionName(b.factionOnly)) : ""}</span>
                       )}
                     </span>
                   </a>
@@ -272,7 +348,7 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
                     <span className="wf-portrait wf-portrait-trash" aria-hidden>
                       <img src="/journal/lootbags.png" alt="" width={34} height={34} />
                     </span>
-                    <span className="wf-row-text"><span className="wf-row-name">Trash Drops</span></span>
+                    <span className="wf-row-text"><span className="wf-row-name">{t("s_trash")}</span></span>
                   </a>
                 </li>
               )}
@@ -286,13 +362,15 @@ export default function DungeonView({ d, prev, next }: { d: Dungeon; prev: { nam
       )}
 
       {d.fullItemsTBD && !d.previewOnly && (
-        <p className="wf-tbd">Items data for this dungeon is still being verified in the addon.</p>
+        <p className="wf-tbd">{t("s_items_tbd")}</p>
       )}
 
-      <div className="wf-pager">
-        {prev ? <Link href={`/dungeon/${prev.slug}`} className="wf-btn wf-btn-dark wf-btn-sm">← {prev.name}</Link> : <span />}
-        {next ? <Link href={`/dungeon/${next.slug}`} className="wf-btn wf-btn-dark wf-btn-sm">{next.name} →</Link> : <span />}
-      </div>
+      {!character && (
+        <div className="wf-pager">
+          {prev ? <Link href={h(`/dungeon/${prev.slug}`)} className="wf-btn wf-btn-dark wf-btn-sm">← {prev.name}</Link> : <span />}
+          {next ? <Link href={h(`/dungeon/${next.slug}`)} className="wf-btn wf-btn-dark wf-btn-sm">{next.name} →</Link> : <span />}
+        </div>
+      )}
     </>
   );
 }

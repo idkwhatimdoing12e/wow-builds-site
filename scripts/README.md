@@ -13,7 +13,6 @@ Pushing to `main` redeploys the site on Vercel. Run this after every addon relea
 so the website and the addon ship the same data on the same day.
 
 Site-wide constants (domain, links, item-link rules) live in `app/lib/site.ts`.
-Supporter names for `/supporters` live in `data/supporters.json`.
 Ad units: create a responsive display unit in AdSense and set
 `NEXT_PUBLIC_ADSENSE_SLOT_CONTENT=<slot id>` in Vercel's environment variables;
 until it is set the ad slots render nothing.
@@ -31,21 +30,80 @@ loading screen can't be read from the addon folder; their cards were extracted o
 from the game files and are committed in `public/journal/art/`, and the script keeps
 them in the manifest as long as the file is there.
 
-- **Item icons** — `data/item-icons.json` maps each item ID to its icon name and the
-  Wowhead database it was found in (16 = WoW Forever, 4 = Classic); the icons
-  themselves are committed in `public/journal/icons/` (56px webp). When the addon adds
-  items, look the new IDs up at
-  `https://nether.wowhead.com/tooltip/item/<id>?dataEnv=16` (fall back to `dataEnv=4`),
-  add `[icon, env]` entries and the missing icon files. Unknown items show a question mark.
-- **Item links** go to `wowhead.com/forever/item=<id>` (Classic for env-4 items);
-  Wowhead's `power.js` shows the tooltip on hover.
-- **Boss portraits** are round, like the addon's: Wowhead's model preview
-  (`https://wow.zamimg.com/modelviewer/classicplus/webthumbs/npc/<id & 255>/<id>.webp`,
-  by the creature display ID from the addon's `STATIC_DISPLAY_IDS`) zoomed onto the face
-  with the crop in `data/npc-portraits.json`, in the boss list, the boss pane and on the
-  map. If Wowhead's image can't load, `public/journal/portraits/<displayId>.webp` (the
-  same crop) is used. Bosses the addon draws with a `customIcon` (Magmatus, Lordaeron
-  Captain) use `public/journal/portraits/custom-<boss-slug>.webp`.
+- **Item icons** — `data/item-icons.json` maps each item ID to its icon name; the
+  icons themselves are committed in `public/journal/icons/` (56px webp). When the
+  addon adds items, run `python scripts/item-dump/make-ids.py` then
+  `python scripts/item-dump/fetch-icons.py`: it reads each new item's icon from the
+  WoW Forever client's own data tables (wago.tools), names it with the community
+  listfile and downloads it from Blizzard's render server. Unknown items show a
+  question mark.
+- **Item links** open the site's own item page (see "Item pages" below), and
+  `data-item="<id>"` gives them the site's own hover tooltip.
+- **Boss portraits** are the addon's own: the pictures it bakes in game with `/dj bake`
+  (`Media/Portraits/<displayID>.tga`, 128 px where there is one). After an addon
+  update, `python scripts/convert-portraits.py` copies them to
+  `public/journal/portraits/baked/` and lists them in `data/baked-portraits.json`.
+  A boss with no baked picture falls back to Wowhead's model preview, cropped by
+  `data/npc-portraits.json`. Bosses the addon draws with a `customIcon` (Magmatus,
+  Lordaeron Captain) use `public/journal/portraits/custom-<boss-slug>.webp`.
+
+## Languages
+
+The home, dungeon and quest pages exist in the addon's ten languages: English
+at the plain paths, the others under /de, /fr, /es, /it, /pt, /ru, /ko, /zh-cn
+and /zh-tw (`app/[lang]`). The language picker sits at the top right.
+
+- **The addon's translations** (interface strings, dungeon names, locations and
+  descriptions, boss names, quest text) come from its Localization folder:
+
+  ```bash
+  python scripts/locales-to-json.py
+  ```
+
+  writes `data/locales/<locale>.json`. Run it after every addon release, with
+  `lua-to-json.py`. Anything the addon has not translated shows in English.
+- **The site's own text** (header, footer, home banner, search, the labels the
+  addon words differently) is in `app/lib/shell-strings.ts` and
+  `app/lib/journal-strings.ts`; class names there are the game's own.
+- Item pages, the character page, about and privacy stay English.
+
+## Item pages
+
+Every item the journal shows has a page at `/item/<id>-<name>`, built from the
+same loot and quest data (`app/lib/item-index.ts`). Item links across the site
+open those pages, and hovering one shows the site's own tooltip
+(`ItemTooltips`, fed by a static `/tip/item/<id>` file per item). Nothing is
+loaded from Wowhead.
+
+- **Slot and type** ("One-Hand, Mace") for items the loot lists give none come
+  from the client's Item table: `python scripts/item-dump/item-slots.py`.
+
+- **Your own text** goes in `data/item-notes.json`, keyed by item ID: a list of
+  paragraphs and optional links. Its `_example` entry shows the shape.
+- **Full stats** come from the game itself. Until they are dumped, the tooltip
+  and the page show the name, slot, the addon's own lines and where the item
+  comes from. To dump them:
+
+  ```bash
+  python scripts/item-dump/make-ids.py
+  # copy scripts/item-dump/DJItemDump into
+  # C:/Program Files (x86)/World of Warcraft/_forever_/Interface/AddOns/
+  # in game: /djdump, wait for "done", then /reload
+  python scripts/item-dump/to-json.py
+  python scripts/item-dump/fetch-icons.py   # any icons the tables lacked
+  ```
+
+  That writes `data/item-tooltips.json` (the tooltip lines, colours and sell
+  price exactly as the client shows them) and `data/item-game.json` (each
+  item's name and quality as the game has them; the site uses these over the
+  addon's data, which has some wrong). The client leaves some effect lines out
+  of the dump ("Chance on hit: ..."); `spell_lines.py` rebuilds those from the
+  client's own data tables (wago.tools), and only where the dump lacks them.
+  The converter keeps the more complete of the new dump and the current data
+  per item; pass `--fresh` after a game patch to take the dump as it is. In
+  game, `/djdump refresh` re-reads every saved tooltip (and only ever keeps a
+  more complete read). Run it again after an addon data
+  update brings new items; `/djdump` only reads the items it has not saved yet.
 
 ## Map tab
 

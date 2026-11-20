@@ -51,7 +51,7 @@ export default function PrivacyPage() {
         </p>
 
         <p className="mt-4 text-white/70 leading-relaxed">
-          This site contains links to third-party websites (such as Wowhead). Each external
+          This site contains links to third-party websites (such as CurseForge and Wago). Each external
           website has its own privacy policies and practices which are not controlled by
           this site.
         </p>

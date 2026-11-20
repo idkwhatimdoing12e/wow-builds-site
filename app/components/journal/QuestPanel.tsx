@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import { zonePin, type ChainStepFull, type ItemRef, type Quest, type RewardTuple } from "@/app/lib/journal";
+import { useHref, useT, type T } from "@/app/components/i18n/I18n";
+import { zonePin } from "@/app/lib/journal-shared";
+import type { ChainStepFull, ItemRef, Quest, RewardTuple } from "@/app/lib/journal";
 import ItemLink, { ItemIcon } from "./ItemLink";
 import { FactionCrest } from "./Window";
 import ZoneMap from "./ZoneMap";
@@ -24,19 +28,30 @@ function Money({ text }: { text: string }) {
   );
 }
 
+/** The green tick the addon puts on a quest the character has handed in. */
+export function QuestTick({ className, label }: { className?: string; label?: string }) {
+  return (
+    <span className={`wq-tick ${className ?? ""}`} role={label ? "img" : undefined} aria-label={label} aria-hidden={label ? undefined : true}>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 12.5 L9.5 18 L20 6" />
+      </svg>
+    </span>
+  );
+}
+
 function titleCase(s: string) {
   return s.charAt(0) + s.slice(1).toLowerCase();
 }
 
-function Rewards({ items, header }: { items: RewardTuple[]; header: string }) {
+function Rewards({ items, header }: { items: RewardTuple[]; header?: string }) {
   if (items.length === 0) return null;
   return (
     <div className="wp-rewards">
-      <div className="wp-sub">{header}</div>
+      {header && <div className="wp-sub">{header}</div>}
       <ul className="wp-reward-list">
         {items.map(([id, name, quality, note]) => (
           <li key={id} className="wp-reward">
-            <ItemIcon id={id} quality={quality} />
+            <ItemIcon id={id} name={name} quality={quality} />
             <span>
               <ItemLink id={id} name={name} quality={quality} />
               {note && <span className="wp-note"> {note}</span>}
@@ -60,16 +75,65 @@ function RefLine({ label, item }: { label: string; item?: ItemRef }) {
   );
 }
 
-/** XP and money as the game's reward bar. */
+/** The addon's purple XP pill: an "XP" badge, then the amount. */
+function XpPill({ xp }: { xp: number }) {
+  return (
+    <span className="wp-xp">
+      <span className="wp-xp-badge" aria-hidden>XP</span>
+      {xp.toLocaleString("en-US")} XP
+    </span>
+  );
+}
+
+/** The addon's dark money pill beside the XP. */
+function MoneyPill({ text }: { text: string }) {
+  return (
+    <span className="wp-money-pill">
+      <Money text={text} />
+    </span>
+  );
+}
+
+/** XP and money as the addon's reward pills. */
 function RewardBar({ xp, money }: { xp?: number; money?: string }) {
   if (xp === undefined && !money) return null;
   return (
     <p className="wp-money">
-      {xp !== undefined && <span className="wp-xp">{xp.toLocaleString("en-US")} XP</span>}
-      {money && <Money text={money} />}
+      {xp !== undefined && <XpPill xp={xp} />}
+      {money && <MoneyPill text={money} />}
     </p>
   );
 }
+
+/** The addon's green reputation pill: a "+100" badge, then the faction. */
+function RepPill({ faction, amount }: { faction: string; amount: string }) {
+  const down = amount.startsWith("-");
+  return (
+    <span className={`wp-rep ${down ? "wp-rep-down" : ""}`}>
+      <span className="wp-rep-badge">{amount}</span>
+      {faction}
+    </span>
+  );
+}
+
+/** "Ironforge +100" as faction and amount; anything else stays plain text. */
+function repParts(text: string): { faction: string; amount: string } | null {
+  const m = text.match(/^(.*\S)\s+([+-]\d[\d,]*)$/);
+  return m ? { faction: m[1], amount: m[2] } : null;
+}
+
+/** The header the addon gives the rewards: "Choose one reward", "Reward", "Rewards". */
+function rewardTitle(t: T, count: number, choice = false) {
+  if (choice && count > 1) return t("CHOOSE_ONE_REWARD");
+  return count === 1 ? t("REWARD") : t("REWARDS");
+}
+
+/** "Warrior / Paladin only", in the page's language. */
+function classLine(t: T, classes: string[]) {
+  return t("s_only", classes.map((c) => t.or(`CLASS_${c}`, titleCase(c))).join(" / "));
+}
+
+const RELATED_KEYS: Record<string, string> = { "Starts with": "s_starts_with", "Leads to": "s_leads_to", "See also": "s_see_also" };
 
 /**
  * The parchment quest page from the addon's Quests tab.
@@ -84,59 +148,65 @@ export default function QuestPanel({
   onSelectQuest,
   canSelect,
   onShowChain,
+  done = false,
 }: {
   q: Quest;
+  /** The character on the character page has handed it in: the addon's green tick by the title. */
+  done?: boolean;
   full?: boolean;
   showDungeon?: boolean;
   onSelectQuest?: (id: number) => void;
   canSelect?: (id: number) => boolean;
   onShowChain?: () => void;
 }) {
+  const t = useT();
+  const h = useHref();
   const startsWith = q.related.find((r) => r.label === "Starts with");
   const leadsTo = q.related.find((r) => r.label === "Leads to");
   const selectable = (id: number) => !!onSelectQuest && (canSelect ? canSelect(id) : true);
   return (
-    <div className="wp">
+    <div className="wp wq">
       <div className="wp-head">
         <h2 className="wp-title">{q.name}</h2>
+        {done && <QuestTick className="wp-done" label={t.or("s_done", "Done")} />}
       </div>
       <p className="wp-avail">
-        Available from Level {q.requires}
+        {t("AVAILABLE_FROM_LEVEL", q.requires)}
         <FactionCrest faction={q.faction} size={18} />
-        {q.classOnly && <span className="wp-class">{titleCase(q.classOnly)} only</span>}
-        {q.startsInDungeon && <span className="wp-flag">Starts inside</span>}
-        {q.repeatable && <span className="wp-flag">Repeatable</span>}
-        {q.attunement && <span className="wp-flag">{titleCase(q.attunement)} attunement</span>}
-        {q.profession && <span className="wp-flag">{titleCase(q.profession)}</span>}
+        {q.classOnly && <span className="wp-class">{classLine(t, q.classOnly)}</span>}
+        {q.startsInDungeon && <span className="wp-flag">{t("s_starts_inside")}</span>}
+        {q.repeatable && <span className="wp-flag">{t("s_repeatable")}</span>}
+        {q.attunement && <span className="wp-flag">{t("s_attunement", titleCase(q.attunement))}</span>}
+        {q.profession && <span className="wp-flag">{t.or(`PROF_${q.profession.toUpperCase()}`, titleCase(q.profession))}</span>}
       </p>
       {showDungeon && (
         <p className="wp-line">
-          <span className="wp-label">Dungeon</span>{" "}
-          <Link href={`/dungeon/${q.dungeonSlug}`} className="wp-link">{q.dungeonName}</Link>
+          <span className="wp-label">{t("s_dungeon")}</span>{" "}
+          <Link href={h(`/dungeon/${q.dungeonSlug}`)} className="wp-link">{q.dungeonName}</Link>
         </p>
       )}
 
       {q.warning && <p className="wp-warning">{q.warning}</p>}
 
-      <div className="wp-sub">Objective</div>
+      <div className="wp-sub">{t("OBJECTIVE")}</div>
       <p className="wp-text">{q.objective}</p>
 
-      <div className="wp-sub">Starts at</div>
+      <div className="wp-sub">{t("STARTS_AT")}</div>
       <p className="wp-text">{q.pickup}</p>
       {q.startMap?.detail && <p className="wp-note">{q.startMap.detail}</p>}
       {q.startZone && <ZoneMap pin={q.startZone} />}
-      <RefLine label="Started by item:" item={q.startItem} />
+      <RefLine label={t("s_started_item")} item={q.startItem} />
       {q.startObject && (
         <p className="wp-line">
-          <span className="wp-label">Started by object:</span> {q.startObject[0]}
+          <span className="wp-label">{t("s_started_object")}</span> {q.startObject[0]}
           <span className="wp-note"> — {q.startObject[2]}</span>
         </p>
       )}
-      <RefLine label="You will need:" item={q.noteItem} />
+      <RefLine label={t("s_need")} item={q.noteItem} />
       {q.requiredItems.map((it) => (
-        <RefLine key={it[0]} label="Required:" item={it} />
+        <RefLine key={it[0]} label={t("s_required")} item={it} />
       ))}
-      <RefLine label="Provided:" item={q.providedItem} />
+      <RefLine label={t("s_provided")} item={q.providedItem} />
 
       {!full && startsWith && selectable(startsWith.id) && (
         <p className="wp-actions">
@@ -147,16 +217,16 @@ export default function QuestPanel({
       )}
       {!full && q.chain.length > 0 && (
         <>
-          <p className="wp-chain-notice">Requires a quest chain first.</p>
+          <p className="wp-chain-notice">{t("CHAIN_REQUIRED")}</p>
           {onShowChain && (
             <p className="wp-actions">
               <button
                 type="button"
                 className="wf-btn wf-btn-red wf-btn-sm wp-chain-btn"
-                title="Required Quests: open the required quest chain."
+                title={`${t("REQUIRED_QUESTS")}: ${t("OPEN_REQUIRED_CHAIN")}`}
                 onClick={onShowChain}
               >
-                Show Quest Chain
+                {t("SHOW_QUEST_CHAIN")}
                 <img src="/journal/questchain.png" alt="" width={17} height={17} />
               </button>
             </p>
@@ -164,60 +234,87 @@ export default function QuestPanel({
         </>
       )}
 
-      <div className="wp-sub">Turn in</div>
+      <div className="wp-sub">{t("TURN_IN")}</div>
       <p className="wp-text">{q.turnin}</p>
 
-      <div className="wp-rewards-head">{q.rewardHeader ?? "Rewards"}</div>
-      {q.rewardsText && q.rewardItems.length === 0 ? (
-        <p className="wp-text wp-pre">{q.rewardsText}</p>
-      ) : (
-        <>
-          <Rewards items={q.rewardItems} header={q.rewardChoice ? "Choose one" : "You receive"} />
-          <Rewards items={q.additionalRewardItems} header="Also" />
-          <Rewards items={q.noteRewardItems} header="Later in the chain" />
-        </>
-      )}
-      <p className="wp-money">
-        {q.xp !== undefined && <span className="wp-xp">{q.xp.toLocaleString("en-US")} XP</span>}
-        {q.rewardSummary &&
-          q.rewardSummary.split("•").map((part) => part.trim()).filter(Boolean).map((part) =>
-            isMoney(part) ? <Money key={part} text={part} /> : <span key={part}>{part}</span>,
-          )}
-      </p>
-
-      {!full && leadsTo && selectable(leadsTo.id) && (
-        <p className="wp-actions">
-          <button type="button" className="wf-btn wf-btn-red wf-btn-sm" onClick={() => onSelectQuest?.(leadsTo.id)}>
-            Leads to: {leadsTo.name}
-          </button>
-        </p>
-      )}
-
+      {/* The addon puts the notes before the rewards. */}
       {q.note && (
         <>
-          <div className="wp-sub">Notes</div>
+          <div className="wp-sub">{t("NOTES")}</div>
           <p className="wp-text wp-pre">{q.note}</p>
         </>
       )}
 
+      <div className="wp-rewards-head">
+        {q.rewardHeader ??
+          rewardTitle(
+            t,
+            q.rewardItems.length + q.additionalRewardItems.length + q.noteRewardItems.length,
+            q.rewardChoice && q.rewardItems.length > 1,
+          )}
+      </div>
+      {q.rewardsText && q.rewardItems.length === 0 ? (
+        <p className="wp-text wp-pre">{q.rewardsText}</p>
+      ) : (
+        <>
+          <Rewards items={q.rewardItems} />
+          <Rewards items={q.additionalRewardItems} header={t("s_also")} />
+          <Rewards items={q.noteRewardItems} header={t("s_later")} />
+        </>
+      )}
+      {(() => {
+        const parts = (q.rewardSummary ?? "").split("•").map((part) => part.trim()).filter(Boolean);
+        const money = parts.filter(isMoney);
+        const reps = parts.filter((part) => !isMoney(part));
+        const items = q.rewardItems.length + q.additionalRewardItems.length + q.noteRewardItems.length;
+        const extras = q.xp !== undefined || parts.length > 0;
+        return (
+          <>
+            {items > 0 && extras && <div className="wp-sub wp-also">{t("ALSO_RECEIVE")}</div>}
+            {(q.xp !== undefined || money.length > 0) && (
+              <p className="wp-money">
+                {q.xp !== undefined && <XpPill xp={q.xp} />}
+                {money.map((part) => <MoneyPill key={part} text={part} />)}
+              </p>
+            )}
+            {reps.length > 0 && (
+              <p className="wp-money wp-reps">
+                {reps.map((part) => {
+                  const rep = repParts(part);
+                  return rep ? <RepPill key={part} {...rep} /> : <span key={part} className="wp-rep-text">{part}</span>;
+                })}
+              </p>
+            )}
+          </>
+        );
+      })()}
+
+      {!full && leadsTo && selectable(leadsTo.id) && (
+        <p className="wp-actions">
+          <button type="button" className="wf-btn wf-btn-red wf-btn-sm" onClick={() => onSelectQuest?.(leadsTo.id)}>
+            {t("LEADS_TO", leadsTo.name)}
+          </button>
+        </p>
+      )}
+
       {full && q.chain.length > 0 && (
         <div className="wp-chain">
-          <div className="wp-rewards-head">Quest chain</div>
-          <p className="wp-note">Complete these first; <strong>{q.name}</strong> is the final step.</p>
+          <div className="wp-rewards-head">{t("s_quest_chain")}</div>
+          <p className="wp-note">{t("s_chain_final", q.name)}</p>
           <ol className="wp-steps">
             {q.chain.map((s, i) => (
               <li key={`${s.id}-${i}`} className="wp-step">
                 <span className="wp-stepno">{i + 1}</span>
                 <div>
                   <div className="wp-step-name">
-                    {s.slug ? <Link href={`/quest/${s.slug}`} className="wp-link">{s.name}</Link> : s.name}
-                    {s.detail?.level && <span className="wp-note"> · level {s.detail.level}</span>}
+                    {s.slug ? <Link href={h(`/quest/${s.slug}`)} className="wp-link">{s.name}</Link> : s.name}
+                    {s.detail?.level && <span className="wp-note"> · {t("s_level", s.detail.level)}</span>}
                   </div>
                   {s.detail?.objective && <div className="wp-text wp-small">{s.detail.objective}</div>}
                   {s.detail?.pickup && (
                     <div className="wp-note">
-                      Pick up: {s.detail.pickup}
-                      {s.detail.turnin && s.detail.turnin !== s.detail.pickup && <> · Turn in: {s.detail.turnin}</>}
+                      {t("s_pick_up")}: {s.detail.pickup}
+                      {s.detail.turnin && s.detail.turnin !== s.detail.pickup && <> · {t("TURN_IN")}: {s.detail.turnin}</>}
                     </div>
                   )}
                 </div>
@@ -233,12 +330,12 @@ export default function QuestPanel({
 
       {full && q.related.length > 0 && (
         <div className="wp-related">
-          <div className="wp-sub">Related</div>
+          <div className="wp-sub">{t("s_related")}</div>
           <ul>
             {q.related.map((r) => (
               <li key={`${r.label}-${r.id}`} className="wp-text wp-small">
-                <span className="wp-label">{r.label}:</span>{" "}
-                {r.slug ? <Link href={`/quest/${r.slug}`} className="wp-link">{r.name}</Link> : r.name}
+                <span className="wp-label">{RELATED_KEYS[r.label] ? t(RELATED_KEYS[r.label]) : r.label}:</span>{" "}
+                {r.slug ? <Link href={h(`/quest/${r.slug}`)} className="wp-link">{r.name}</Link> : r.name}
               </li>
             ))}
           </ul>
@@ -264,37 +361,38 @@ export function PrereqPanel({
   total: number;
   onStep: (index: number) => void;
 }) {
+  const t = useT();
   const d = s.detail ?? {};
   const stepPin = zonePin(d.map);
   const description = d.suppressDescription ? undefined : d.description;
   const body =
     d.objective && description && description !== d.objective
       ? `${d.objective}\n\n${description}`
-      : d.objective || description || "Quest text is not available for this step.";
+      : d.objective || description || t("s_no_step_text");
   return (
-    <div className="wp">
+    <div className="wp wq">
       <div className="wp-head">
         <h2 className="wp-title wp-title-step">{s.name}</h2>
         <span className="wp-steps-nav">
           {index > 0 && (
-            <button type="button" className="wp-page wp-page-prev" aria-label="Previous step" onClick={() => onStep(index - 1)} />
+            <button type="button" className="wp-page wp-page-prev" aria-label={t("s_prev_step")} onClick={() => onStep(index - 1)} />
           )}
           {index < total - 1 && (
-            <button type="button" className="wp-page wp-page-next" aria-label="Next step" onClick={() => onStep(index + 1)} />
+            <button type="button" className="wp-page wp-page-next" aria-label={t("s_next_step")} onClick={() => onStep(index + 1)} />
           )}
         </span>
       </div>
       <p className="wp-avail">
-        Required prerequisite{d.requires ? <>&nbsp; | &nbsp;Available from Level {d.requires}</> : null}
-        <span className="wp-note">Step {index + 1} of {total}</span>
+        {t("REQUIRED_PREREQUISITE")}{d.requires ? <>&nbsp; | &nbsp;{t("AVAILABLE_FROM_LEVEL", d.requires)}</> : null}
+        <span className="wp-note">{t("s_step_of", index + 1, total)}</span>
       </p>
 
-      <div className="wp-sub">Objective</div>
+      <div className="wp-sub">{t("OBJECTIVE")}</div>
       <p className="wp-text wp-pre">{body}</p>
 
       {(d.requiredItems ?? []).length > 0 && (
         <>
-          <div className="wp-sub">Required Items</div>
+          <div className="wp-sub">{t("REQUIRED_ITEMS")}</div>
           {(d.requiredItems ?? []).map((it) => (
             <RefLine key={it[0]} label="" item={it} />
           ))}
@@ -302,14 +400,14 @@ export function PrereqPanel({
       )}
       {d.providedItem && (
         <>
-          <div className="wp-sub">Provided Item</div>
+          <div className="wp-sub">{t("PROVIDED_ITEM")}</div>
           <RefLine label="" item={d.providedItem} />
         </>
       )}
 
       {(d.pickup || d.startItem || d.startObject) && (
         <>
-          <div className="wp-sub">Starts at</div>
+          <div className="wp-sub">{t("STARTS_AT")}</div>
           {d.startObject ? (
             <p className="wp-text">
               {d.startObject[0]}
@@ -325,7 +423,7 @@ export function PrereqPanel({
       )}
       {d.turnin && (
         <>
-          <div className="wp-sub">Turn in</div>
+          <div className="wp-sub">{t("TURN_IN")}</div>
           <p className="wp-text">{d.turnin}</p>
         </>
       )}
@@ -333,15 +431,18 @@ export function PrereqPanel({
       {d.warning && <p className="wp-warning">{d.warning}</p>}
       {d.note && (
         <>
-          <div className="wp-sub">Notes</div>
+          <div className="wp-sub">{t("NOTES")}</div>
           <p className="wp-text wp-pre">{d.note}</p>
         </>
       )}
 
       {(s.rewardItems.length > 0 || s.xp !== undefined || s.money) && (
         <>
-          <div className="wp-rewards-head">Rewards</div>
-          <Rewards items={s.rewardItems} header={s.rewardChoice ? "Choose one" : "You receive"} />
+          <div className="wp-rewards-head">{rewardTitle(t, s.rewardItems.length, s.rewardChoice)}</div>
+          <Rewards items={s.rewardItems} />
+          {s.rewardItems.length > 0 && (s.xp !== undefined || s.money) && (
+            <div className="wp-sub wp-also">{t("ALSO_RECEIVE")}</div>
+          )}
           <RewardBar xp={s.xp} money={s.money} />
         </>
       )}

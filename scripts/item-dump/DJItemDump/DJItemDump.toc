@@ -1,0 +1,11 @@
+## Interface: 16001
+## Title: DJ Item Dump
+## Notes: Saves the tooltip of every Dungeon Journal item for the website. Type /djdump (items) or /djdump talents.
+## Author: Exehn
+## Version: 1.5.0
+## SavedVariables: DJItemDumpDB
+
+ItemIDs.lua
+TalentSpells.lua
+DJItemDump.lua
+DJTalentDump.lua

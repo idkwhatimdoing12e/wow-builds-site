@@ -3,7 +3,10 @@
 
 import raw from "@/data/journal.json";
 import portraitsFile from "@/data/npc-portraits.json";
-import zonesFile from "@/data/zones.json";
+import gameItemsFile from "@/data/item-game.json";
+import { QUALITY_COLORS, QUALITY_NAMES, questIsFor, zonePin } from "./journal-shared";
+// Re-exported for server code; browser components import journal-shared directly.
+export { QUALITY_COLORS, QUALITY_NAMES, questIsFor, zonePin };
 
 /* ---------- raw shapes (mirror the Lua tables) ---------- */
 
@@ -46,7 +49,8 @@ export interface RawQuest {
   warning?: string;
   startsInDungeon?: boolean;
   hideFromMainList?: boolean;
-  classOnly?: string;
+  /** One class token, or since addon 2.1.0 a list of them ("Warrior, Paladin only"). */
+  classOnly?: string | string[];
   repeatable?: boolean;
   attunement?: string;
   profession?: string;
@@ -130,6 +134,8 @@ interface JournalData {
   DUNGEON_MAPS?: Record<string, RawDungeonMap>;
   MAP_LABELS?: Record<string, string>;
   FOREVER_DUNGEONS?: Record<string, boolean>;
+  /** The addon's search abbreviations (Data/DungeonAliases.lua): "rfc", "sm gy"... */
+  DUNGEON_SEARCH_ALIASES?: Record<string, string[]>;
   meta: { addonVersion: string; dungeonCount: number };
 }
 
@@ -146,7 +152,7 @@ interface RawDungeonMap {
   entrance?: RawEntrance;
   entrances?: RawEntrance[];
   transitions?: (RawMapPoint & { to?: number; note?: boolean; labelKey?: string })[];
-  bosses?: (RawMapPoint & { name: string; npcID?: number })[];
+  bosses?: (RawMapPoint & { name: string; npcID?: number; quest?: number | number[] })[];
 }
 
 export interface MapEntrance {
@@ -178,6 +184,12 @@ export interface MapBossPin {
   displayId?: number;
   portraitCrop?: [number, number, number];
   customPortrait?: string;
+  /**
+   * A quest's target, not a boss (Tunk, Zalfan Moonshadow, Highland Horror):
+   * the quest IDs it is for, one per faction where they differ. The addon
+   * shows it only for a quest in the list, badged, and opens the quest on a click.
+   */
+  quests?: number[];
 }
 export interface DungeonMap {
   floors: string[]; // image URLs, level 1 first
@@ -242,13 +254,25 @@ function tipLines(v: unknown): string[] | undefined {
   return lines.length > 0 ? lines : undefined;
 }
 
+// Item name and quality as the game client has them (the in-game dump,
+// scripts/item-dump/to-json.py). The addon's data has some wrong: a green item
+// listed as blue, a placeholder name. The game wins wherever it is known.
+const GAME_ITEMS = gameItemsFile as unknown as Record<string, [string, number]>;
+function gameName(id: number, name: string): string {
+  return GAME_ITEMS[String(id)]?.[0] ?? name;
+}
+function gameQuality(id: number, quality: number): number {
+  return GAME_ITEMS[String(id)]?.[1] ?? quality;
+}
+
 function asLoot(v: unknown): LootTuple[] {
   return asList<unknown>(v).flatMap((entry) => {
     const parts = tupleParts(entry);
     if (!parts) return [];
     const [id, name, slot, quality, source, extra] = parts as LootTuple;
     const tip = tipLines((entry as { tip?: unknown })?.tip);
-    return [[Number(id) || 0, String(name ?? ""), String(slot ?? ""), Number(quality ?? 1), source, extra, tip] as LootTuple];
+    const n = Number(id) || 0;
+    return [[n, gameName(n, String(name ?? "")), String(slot ?? ""), gameQuality(n, Number(quality ?? 1)), source, extra, tip] as LootTuple];
   });
 }
 
@@ -256,7 +280,19 @@ function asItemRef(v: unknown): ItemRef | undefined {
   const parts = tupleParts(v);
   if (!parts) return undefined;
   const [id, name, quality, source] = parts as ItemRef;
-  return [Number(id) || 0, String(name ?? ""), Number(quality ?? 1), source];
+  const n = Number(id) || 0;
+  return [n, gameName(n, String(name ?? "")), gameQuality(n, Number(quality ?? 1)), source];
+}
+
+/** Quest rewards: [id, name, quality, note?], corrected like the rest. */
+function asRewards(v: unknown): RewardTuple[] {
+  return asList<unknown>(v).flatMap((entry) => {
+    const parts = tupleParts(entry);
+    if (!parts) return [];
+    const [id, name, quality, note] = parts as RewardTuple;
+    const n = Number(id) || 0;
+    return [[n, gameName(n, String(name ?? "")), gameQuality(n, Number(quality ?? 1)), note] as RewardTuple];
+  });
 }
 
 function asItemRefs(v: unknown): ItemRef[] {
@@ -264,24 +300,6 @@ function asItemRefs(v: unknown): ItemRef[] {
     .map(asItemRef)
     .filter((it): it is ItemRef => it !== undefined);
 }
-
-export const QUALITY_COLORS: Record<number, string> = {
-  0: "#9d9d9d",
-  1: "#ffffff",
-  2: "#1eff00",
-  3: "#0070dd",
-  4: "#a335ee",
-  5: "#ff8000",
-};
-
-export const QUALITY_NAMES: Record<number, string> = {
-  0: "Poor",
-  1: "Common",
-  2: "Uncommon",
-  3: "Rare",
-  4: "Epic",
-  5: "Legendary",
-};
 
 export function isRecipe(slot: string): boolean {
   const s = slot.toLowerCase();
@@ -305,14 +323,11 @@ export interface DungeonSummary {
   /** Quests the addon's home card counts for each faction (no repeatables). */
   questsByFaction: Record<Faction, number>;
   bossCount: number;
+  /** Abbreviations the addon's search knows ("rfc", "bfd", "sm gy"). */
+  aliases: string[];
 }
 
 export type Faction = "Alliance" | "Horde";
-
-/** The addon's QuestMatchesFaction: shared quests count for both sides. */
-export function questIsFor(questFaction: string | undefined, faction: Faction): boolean {
-  return !questFaction || questFaction === "Both" || questFaction === "Neutral" || questFaction === faction;
-}
 
 export interface Boss {
   name: string;
@@ -347,12 +362,16 @@ export interface Dungeon extends DungeonSummary {
   map?: DungeonMap;
 }
 
-function mapLabel(key: string | undefined, fallback: string, n?: number): string {
-  const text = (key && data.MAP_LABELS?.[key]) || data.MAP_LABELS?.[fallback] || fallback;
+/** Translated map labels (the addon's MAP_* strings for a language), when given. */
+type Labels = Record<string, string> | undefined;
+
+function mapLabel(key: string | undefined, fallback: string, n?: number, labels?: Labels): string {
+  const text =
+    (key && (labels?.[key] || data.MAP_LABELS?.[key])) || labels?.[fallback] || data.MAP_LABELS?.[fallback] || fallback;
   return n === undefined ? text : text.replace("%d", String(n));
 }
 
-function buildMap(name: string, slug: string, bosses: Boss[]): DungeonMap | undefined {
+function buildMap(name: string, slug: string, bosses: Boss[], labels?: Labels): DungeonMap | undefined {
   const m = data.DUNGEON_MAPS?.[name];
   if (!m || !m.floors?.length) return undefined;
   const floors = m.floors.map((_, i) => `/journal/maps/${slug}-${i + 1}.webp`);
@@ -364,7 +383,7 @@ function buildMap(name: string, slug: string, bosses: Boss[]): DungeonMap | unde
       floor: e.floor ?? 1,
       x: e.x,
       y: e.y,
-      label: mapLabel(e.labelKey, "MAP_ENTRANCE"),
+      label: mapLabel(e.labelKey, "MAP_ENTRANCE", undefined, labels),
       side,
       color: c ? `rgb(${c.map((v) => Math.round(v * 255)).join(",")})` : undefined,
     };
@@ -376,8 +395,8 @@ function buildMap(name: string, slug: string, bosses: Boss[]): DungeonMap | unde
       x: t.x,
       y: t.y,
       to: t.note ? undefined : t.to,
-      label: t.note ? "" : mapLabel(t.labelKey, "MAP_FLOOR", t.to),
-      tip: t.note ? mapLabel(t.labelKey, "") : mapLabel(undefined, "MAP_FLOOR", t.to),
+      label: t.note ? "" : mapLabel(t.labelKey, "MAP_FLOOR", t.to, labels),
+      tip: t.note ? mapLabel(t.labelKey, "", undefined, labels) : mapLabel(undefined, "MAP_FLOOR", t.to, labels),
     }));
   const pins = (m.bosses ?? []).map((b) => {
     const bossIndex = bosses.findIndex((x) => x.name === b.name);
@@ -392,10 +411,11 @@ function buildMap(name: string, slug: string, bosses: Boss[]): DungeonMap | unde
       displayId,
       portraitCrop: displayId ? PORTRAIT_CROPS[String(displayId)] : undefined,
       customPortrait: boss?.customPortrait,
+      ...(b.quest ? { quests: [b.quest].flat().map(Number) } : {}),
     };
   });
   const startFloor = Math.min(Math.max(entrances[0]?.floor ?? 1, 1), floors.length);
-  const floorLabels = floors.map((_, i) => mapLabel(undefined, "MAP_FLOOR", i + 1));
+  const floorLabels = floors.map((_, i) => mapLabel(undefined, "MAP_FLOOR", i + 1, labels));
   return { floors, floorLabels, startFloor, entrances, transitions, bosses: pins };
 }
 
@@ -405,6 +425,19 @@ const PORTRAIT_CROPS = (portraitsFile as unknown as { crops: Record<string, [num
 function minLevelOf(range: string): number {
   const m = range.match(/\d+/);
   return m ? parseInt(m[0], 10) : 0;
+}
+
+/**
+ * RPG Mode's Journey counts one page per released dungeon that has a final
+ * boss to kill (Systems/RPGMode.lua, Build): the last boss that is neither
+ * trash nor a rare, found by NPC ID, or failing that by name.
+ */
+export function hasJourneyPage(name: string): boolean {
+  const d = data.DB[name];
+  if (!d || d.previewOnly) return false;
+  return asList<RawBoss & { recipeTab?: boolean }>(d.bosses).some(
+    (b) => b && !b.trash && !b.rare && (!!b.npcID || (!b.recipeTab && typeof b.name === "string")),
+  );
 }
 
 export function getDungeonSummaries(): DungeonSummary[] {
@@ -424,6 +457,7 @@ export function getDungeonSummaries(): DungeonSummary[] {
       fullItemsTBD: !!d.fullItemsTBD,
       questCount: quests.filter((q) => !q.hideFromMainList).length,
       forever: !!data.FOREVER_DUNGEONS?.[name],
+      aliases: asList<string>(data.DUNGEON_SEARCH_ALIASES?.[name]).filter((a) => typeof a === "string"),
       questsByFaction: {
         Alliance: counted.filter((q) => questIsFor(q.faction, "Alliance")).length,
         Horde: counted.filter((q) => questIsFor(q.faction, "Horde")).length,
@@ -437,7 +471,7 @@ export function getDungeonSlugs(): string[] {
   return getDungeonSummaries().map((d) => d.slug);
 }
 
-export function getDungeon(slug: string): Dungeon | null {
+export function getDungeon(slug: string, labels?: Labels): Dungeon | null {
   const summary = getDungeonSummaries().find((d) => d.slug === slug);
   if (!summary) return null;
   const d = data.DB[summary.name];
@@ -480,7 +514,7 @@ export function getDungeon(slug: string): Dungeon | null {
     });
   }
 
-  const map = buildMap(summary.name, summary.slug, bosses);
+  const map = buildMap(summary.name, summary.slug, bosses, labels);
   return { ...summary, entrance: d.entrance, quests, hiddenQuests, bosses, trash, ...(map ? { map } : {}) };
 }
 
@@ -504,7 +538,8 @@ export interface Quest {
   level: number;
   requires: number;
   faction: RawQuest["faction"];
-  classOnly?: string;
+  /** Class tokens the quest is for; absent when any class can take it. */
+  classOnly?: string[];
   objective: string;
   pickup: string;
   turnin: string;
@@ -556,19 +591,6 @@ export interface ZonePin {
  * Riverglades, for one - that Blizzard's texture repo has never heard of, so
  * the addon can point at a mapID this site has no picture for.
  */
-const ZONES_BUILT = new Set(zonesFile as number[]);
-
-export function zonePin(m?: MapPoint): ZonePin | undefined {
-  if (!m || !m.mapID || typeof m.x !== "number" || typeof m.y !== "number") return undefined;
-  if (!ZONES_BUILT.has(m.mapID)) return undefined; // no picture: show no map rather than a broken one
-  return {
-    src: `/journal/zones/${m.mapID}.webp`,
-    x: m.x,
-    y: m.y,
-    label: m.label || m.targetName || "Quest start",
-    targetName: m.targetName,
-  };
-}
 
 function questSlug(id: number, name: string): string {
   return `${id}-${slugify(name)}`;
@@ -624,7 +646,7 @@ function buildChainStep(s: ChainStep): ChainStepFull {
     ...s,
     slug: s.itemStep ? undefined : slugForQuestId(s.id),
     detail: buildPrereqDetail(data.QUEST_PREREQ_DETAILS[id]),
-    rewardItems: asList<RewardTuple>(items?.items),
+    rewardItems: asRewards(items?.items),
     rewardChoice: !!items?.choice,
     xp: s.itemStep ? undefined : (data.FOREVER_QUEST_XP_FALLBACK[id] ?? data.FOREVER_QUEST_BASE_XP[id]),
     money: formatMoney(data.PREREQ_REWARD_MONEY_FALLBACK?.[id] ?? 0),
@@ -651,7 +673,7 @@ function buildQuest(q: RawQuest, dungeonName: string): Quest {
     level: q.level,
     requires: q.requires,
     faction: q.faction ?? "Both",
-    classOnly: q.classOnly,
+    classOnly: q.classOnly ? [q.classOnly].flat() : undefined,
     objective: q.objective,
     pickup: q.pickup,
     turnin: q.turnin,
@@ -663,10 +685,10 @@ function buildQuest(q: RawQuest, dungeonName: string): Quest {
     rewardSummary: q.rewardSummary || undefined,
     rewardsText: q.rewards,
     rewardHeader: q.rewardHeader,
-    rewardItems: asList<RewardTuple>(q.rewardItems),
+    rewardItems: asRewards(q.rewardItems),
     rewardChoice: !!q.rewardChoice,
-    additionalRewardItems: asList<RewardTuple>(q.additionalRewardItems),
-    noteRewardItems: asList<RewardTuple>(q.noteRewardItems),
+    additionalRewardItems: asRewards(q.additionalRewardItems),
+    noteRewardItems: asRewards(q.noteRewardItems),
     note: q.note,
     warning: q.warning,
     startItem: asItemRef(q.startItem),

@@ -4,7 +4,8 @@ import Script from "next/script";
 import SiteHeader from "./components/site/SiteHeader";
 import SiteFooter from "./components/site/SiteFooter";
 import { getDungeonSummaries } from "./lib/journal";
-import WowheadInit from "./components/WowheadInit";
+import { menuNames } from "./lib/i18n-server";
+import ItemTooltips from "./components/journal/ItemTooltips";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "./lib/site";
 
 export const metadata: Metadata = {
@@ -25,17 +26,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Noto Sans for text everywhere. Marcellus sets the site's titles and card
-            names (a flared, Friz-like face, close to the game's); Manrope stays for the
-            in-game journal window, standing in for Blizzard's Object Sans. */}
+        {/* Roboto for the site: text, titles and dungeon names. Manrope stays for
+            the in-game journal window, standing in for Blizzard's Object Sans. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Marcellus&family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Roboto:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
           rel="stylesheet"
         />
 
-        {/* Google Analytics (GA4) */}
+        {/* Google Analytics (GA4). The address goes without its fragment: on
+            the character page that is the character code, which stays private. */}
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-WZL8YR2L05"
@@ -46,7 +47,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){window.dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-WZL8YR2L05');
+            gtag('config', 'G-WZL8YR2L05', { page_location: location.href.split('#')[0] });
           `}
         </Script>
 
@@ -60,8 +61,8 @@ export default function RootLayout({
       </head>
 
       <body className="sx-body">
-        {/* Must be mounted once globally for tooltips */}
-        <WowheadInit />
+        {/* The site's own item tooltip, for every link with data-item. */}
+        <ItemTooltips />
 
         <SiteHeader
           dungeons={getDungeonSummaries().map((d) => ({
@@ -71,6 +72,7 @@ export default function RootLayout({
             forever: d.forever,
             previewOnly: d.previewOnly,
           }))}
+          names={menuNames(getDungeonSummaries())}
         />
 
         <main className="sx-main">{children}</main>

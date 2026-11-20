@@ -1,0 +1,10 @@
+{
+  "_comment": "Your own text on item pages (/item/<id>-<name>). Add an entry under 'items', keyed by the item ID (the number at the start of the page address). 'notes' is a list of paragraphs; 'links' adds links under them. '_example' shows the shape and is never displayed.",
+  "_example": {
+    "5443": {
+      "notes": ["First paragraph.", "Second paragraph."],
+      "links": [{ "label": "My video on this shield", "url": "https://www.youtube.com/@Exehn" }]
+    }
+  },
+  "items": {}
+}

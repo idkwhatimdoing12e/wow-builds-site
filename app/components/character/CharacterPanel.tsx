@@ -2,12 +2,19 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import TalentWindow from "./TalentWindow";
+import { track } from "@/app/lib/analytics";
+import FavouritesWindow from "./FavouritesWindow";
+import CharacterQuests from "./CharacterQuests";
 import {
   CLASS_COLORS,
   CLASS_NAMES,
   decodeCharacter,
   dungeonProgress,
+  journeyProgress,
+  portraitSrc,
   progressTotals,
+  realmTag,
   raceName,
   type Character,
   type DungeonProgress,
@@ -22,27 +29,40 @@ function codeFromHash(): string {
   return decodeURIComponent(window.location.hash.replace(/^#/, "")).trim();
 }
 
-/** One dungeon tile: the home page's card, with progress and a quest list inside. */
+/** This browser's own character code, if it has one. */
+function readSaved(): string {
+  try {
+    return window.localStorage.getItem(STORAGE_KEY) ?? "";
+  } catch {
+    return "";
+  }
+}
+
+/** One dungeon tile, read like the addon's home card: faction crest and
+ *  "4/5 quests" top right ("0 quests" when none are for this character). */
 function DungeonCard({
   d,
+  faction,
   open,
   onToggle,
 }: {
   d: DungeonProgress;
+  faction: Character["faction"];
   open: boolean;
   onToggle: () => void;
 }) {
-  const pct = d.questsTotal > 0 ? Math.round((d.questsDone / d.questsTotal) * 100) : 0;
   return (
     <div
-      className={`wf-card ch-card ${d.cleared ? "ch-card-done" : ""} ${open ? "ch-card-open" : ""} ${
+      className={`wf-card ch-card ${d.complete ? "ch-card-done" : ""} ${open ? "ch-card-open" : ""} ${
         d.previewOnly ? "wf-card-preview" : ""
       }`}
-      style={d.art ? { backgroundImage: `url(${d.art})` } : undefined}
+      // Open, the card grows to hold the quests: the art stays on its banner.
+      style={d.art && !open ? { backgroundImage: `url(${d.art})` } : undefined}
     >
       <button
         type="button"
         className="ch-card-face"
+        style={d.art && open ? { backgroundImage: `url(${d.art})` } : undefined}
         onClick={onToggle}
         aria-expanded={open}
         disabled={d.previewOnly || d.questsTotal === 0}
@@ -52,39 +72,33 @@ function DungeonCard({
           <span className="wf-card-soon">Coming Soon</span>
         ) : (
           <>
-            {d.cleared && (
-              <span className="ch-check" aria-label="Cleared">
+            {d.complete && (
+              <span className="ch-check" aria-label="All quests done">
                 <svg viewBox="0 0 48 48" aria-hidden="true">
                   <path d="M8 25 L19 36 L40 12" />
                 </svg>
               </span>
             )}
-            <span className="ch-card-foot">
-              <span className="ch-card-bar">
-                <span className="ch-card-bar-fill" style={{ width: `${pct}%` }} />
-              </span>
-              <span className="ch-card-count">
-                {d.questsDone}/{d.questsTotal}
-              </span>
+            <span className="wf-card-quests ch-card-quests">
+              {faction !== "Unknown" && (
+                <img
+                  src={faction === "Alliance" ? "/journal/alliance.png" : "/journal/horde.png"}
+                  alt=""
+                  width={22}
+                  height={22}
+                />
+              )}
+              {d.questsTotal > 0 ? `${d.questsDone}/${d.questsTotal} quests` : "0 quests"}
             </span>
           </>
         )}
         <span className="wf-card-level">LV {d.level}</span>
       </button>
 
+      {/* The addon's Quests tab for this character: its list and the parchment. */}
       {open && (
         <div className="ch-quests">
-          <ul>
-            {d.questState.map((q) => (
-              <li key={q.id} className={q.done ? "ch-q-done" : ""}>
-                <span className="ch-q-tick" aria-hidden="true">{q.done ? "✓" : "○"}</span>
-                <Link href={`/quest/${q.slug}`} className="ch-q-name">{q.name}</Link>
-              </li>
-            ))}
-          </ul>
-          <Link href={`/dungeon/${d.slug}`} className="ch-q-more">
-            Open {d.name} →
-          </Link>
+          <CharacterQuests slug={d.slug} quests={d.questState} faction={faction} />
         </div>
       )}
     </div>
@@ -97,26 +111,56 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
   const [open, setOpen] = useState<string | null>(null);
+  // The code of the character on screen: the share link is built from it.
+  const [code, setCode] = useState("");
+  // Someone else's character, opened from a shared link (this browser keeps its own).
+  const [visiting, setVisiting] = useState(false);
 
-  // Async because an FDJ3 code has to be inflated by the browser.
-  const load = useCallback(async (code: string, remember: boolean) => {
-    const result = await decodeCharacter(code);
+  /**
+   * Show a character code. "paste": the visitor's own, remembered here, and the
+   * address stays clean. "link": from a shared link: remembered only when this
+   * browser has no character yet or it is the same one, so opening a friend's
+   * link never replaces your own; a friend's keeps the code in the address so a
+   * reload still shows it. "saved": this browser's own, already remembered.
+   */
+  const load = useCallback(async (raw: string, source: "paste" | "link" | "saved") => {
+    const trimmed = raw.trim();
+    const result = await decodeCharacter(trimmed);
     if (!result.ok) {
       setError(result.error);
       return false;
     }
+    let keep = source !== "saved";
+    if (source === "link") {
+      const saved = readSaved();
+      if (saved && saved !== trimmed) {
+        const mine = await decodeCharacter(saved);
+        keep = !mine.ok || (mine.character.name === result.character.name && mine.character.realm === result.character.realm);
+      }
+    }
     setError("");
     setCharacter(result.character);
-    if (remember) {
+    setCode(trimmed);
+    setVisiting(source === "link" && !keep);
+    if (keep && source !== "saved") {
       try {
-        window.localStorage.setItem(STORAGE_KEY, code.trim());
+        window.localStorage.setItem(STORAGE_KEY, trimmed);
       } catch {
         // Private windows and blocked storage: the character still shows, it
         // just will not be here next time.
       }
-      if (codeFromHash() !== code.trim()) {
-        window.history.replaceState(null, "", `#${encodeURIComponent(code.trim())}`);
-      }
+    }
+    // Counted anonymously: how a character arrived (pasted, opened from a link,
+    // or this browser's saved one on a return visit), with its class, faction and level.
+    track("character_loaded", {
+      source: source === "link" ? (keep ? "link_own" : "link_shared") : source,
+      class: result.character.classToken || "unknown",
+      faction: result.character.faction,
+      level: result.character.level,
+    });
+    // Your own character: a clean address. A friend's: the code stays in it.
+    if (!(source === "link" && !keep) && window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname);
     }
     return true;
   }, []);
@@ -125,29 +169,34 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
   // this browser's storage or the URL fragment.
   useEffect(() => {
     const shared = codeFromHash();
-    if (shared) {
-      void load(shared, true);
-      return;
+    if (shared) void load(shared, "link");
+    else {
+      const saved = readSaved();
+      if (saved) void load(saved, "saved");
     }
-    let saved = "";
-    try {
-      saved = window.localStorage.getItem(STORAGE_KEY) ?? "";
-    } catch {
-      saved = "";
-    }
-    if (saved) void load(saved, false);
+    // A link pasted into the address bar of this open page changes only the
+    // fragment: no reload, so the new character is picked up here.
+    const onHash = () => {
+      const next = codeFromHash();
+      if (next) void load(next, "link");
+    };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
   }, [load]);
 
   const rows = useMemo(() => (character ? dungeonProgress(index, character) : []), [character, index]);
   const totals = useMemo(() => progressTotals(rows), [rows]);
+  const journey = useMemo(() => (character ? journeyProgress(rows, character) : null), [rows, character]);
 
   async function onImport(e: React.FormEvent) {
     e.preventDefault();
-    if (await load(draft, true)) setDraft("");
+    if (await load(draft, "paste")) setDraft("");
   }
 
   function onClear() {
     setCharacter(null);
+    setCode("");
+    setVisiting(false);
     setDraft("");
     setError("");
     setOpen(null);
@@ -159,14 +208,24 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
     window.history.replaceState(null, "", window.location.pathname);
   }
 
+  // The link carries the whole character, however this page was reached.
+  const shareLink = () => `${window.location.origin}${window.location.pathname}#${encodeURIComponent(code)}`;
+
   async function onCopyLink() {
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(shareLink());
+      track("share_link_copied");
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
-      setError("Could not reach the clipboard. Copy the address bar instead.");
+      setError("Could not reach the clipboard.");
     }
+  }
+
+  function onShowMine() {
+    const saved = readSaved();
+    window.history.replaceState(null, "", window.location.pathname);
+    if (saved) void load(saved, "saved");
   }
 
   if (!character) {
@@ -204,6 +263,8 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
   const className = CLASS_NAMES[character.classToken] ?? character.classToken;
   // "Level 22 Orc Paladin"; older codes carry no race, so it is simply left out.
   const race = raceName(character.raceToken);
+  const realm = realmTag(character.realm);
+  const portrait = portraitSrc(character);
 
   return (
     <div className="ch">
@@ -213,26 +274,60 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
             className="ch-crest"
             src={character.faction === "Alliance" ? "/journal/alliance.png" : "/journal/horde.png"}
             alt={character.faction}
-            width={44}
-            height={44}
+            width={60}
+            height={60}
           />
         )}
-        <div>
+        {portrait && (
+          <span className="ch-portrait" style={{ borderColor: color }}>
+            <img src={portrait} alt="" width={56} height={56} />
+          </span>
+        )}
+        <div className="ch-who">
           <h1 className="ch-name" style={{ color }}>{character.name}</h1>
           <p className="ch-sub">
             Level {character.level} {race ? `${race} ` : ""}{className}
-            {character.realm ? ` · ${character.realm}` : ""}
+            {realm ? ` · ${realm}` : ""}
           </p>
+          {journey && journey.max > 0 && (
+            <div
+              className="ch-journey"
+              role="progressbar"
+              aria-label="Journey"
+              aria-valuemin={0}
+              aria-valuemax={journey.max}
+              aria-valuenow={journey.points}
+              title="5 points for each of your quests handed in, 10 for each dungeon's final boss killed"
+            >
+              <span className="ch-journey-fill" style={{ width: `${(journey.points / journey.max) * 100}%` }} />
+              <span className="ch-journey-text">
+                Journey {journey.points}/{journey.max} ({journey.percent}%)
+              </span>
+            </div>
+          )}
+        </div>
+        <div className="ch-head-talents">
+          <FavouritesWindow character={character} />
+          <TalentWindow character={character} color={color} />
         </div>
         <div className="ch-head-actions">
           <button type="button" className="wf-btn wf-btn-dark wf-btn-sm" onClick={onCopyLink}>
             {copied ? "Link copied" : "Copy share link"}
           </button>{" "}
-          <button type="button" className="wf-btn wf-btn-dark wf-btn-sm" onClick={onClear}>
-            Forget
-          </button>
+          {visiting ? (
+            <button type="button" className="wf-btn wf-btn-dark wf-btn-sm" onClick={onShowMine}>
+              Show mine
+            </button>
+          ) : (
+            <button type="button" className="wf-btn wf-btn-dark wf-btn-sm" onClick={onClear}>
+              Forget
+            </button>
+          )}
         </div>
       </div>
+      {visiting && (
+        <p className="ch-visiting">A shared character. Your own is still saved in this browser.</p>
+      )}
 
       <div className="ch-totals">
         <div className="ch-stat">
@@ -240,8 +335,8 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
           <span>quests done</span>
         </div>
         <div className="ch-stat">
-          <strong>{totals.dungeonsCleared}<span className="ch-of">/{totals.dungeonsTotal}</span></strong>
-          <span>dungeons cleared</span>
+          <strong>{totals.dungeonsComplete}<span className="ch-of">/{totals.dungeonsTotal}</span></strong>
+          <span>dungeons complete</span>
         </div>
         <div className="ch-stat">
           <strong>{totals.percent}%</strong>
@@ -254,6 +349,7 @@ export default function CharacterPanel({ index }: { index: IndexDungeon[] }) {
           <DungeonCard
             key={d.slug}
             d={d}
+            faction={character.faction}
             open={open === d.slug}
             onToggle={() => setOpen((cur) => (cur === d.slug ? null : d.slug))}
           />

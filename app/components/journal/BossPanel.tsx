@@ -1,4 +1,7 @@
+"use client";
+
 import type { Boss, LootTuple, TrashDrop } from "@/app/lib/journal";
+import { useT } from "@/app/components/i18n/I18n";
 import ItemLink, { ItemIcon } from "./ItemLink";
 import { BossPortrait } from "./BossPortrait";
 
@@ -6,7 +9,7 @@ function LootRow({ item, note }: { item: LootTuple; note?: string }) {
   const [id, name, slot, quality, , , tip] = item;
   return (
     <li className="wb-loot">
-      <ItemIcon id={id} quality={quality} />
+      <ItemIcon id={id} name={name} quality={quality} />
       <span className="wb-loot-text">
         <ItemLink id={id} name={name} quality={quality} tip={tip} />
         <span className="wb-slot">
@@ -20,6 +23,8 @@ function LootRow({ item, note }: { item: LootTuple; note?: string }) {
 
 /** Right-hand pane of the Bosses tab: boss name, level, loot list. */
 export function BossPanel({ boss }: { boss: Boss }) {
+  const t = useT();
+  const faction = (f: string) => t(f === "Horde" ? "s_horde" : "s_alliance");
   return (
     <div className="wb">
       {/* Like the addon: round portrait with the level badge, name beside it. */}
@@ -37,8 +42,8 @@ export function BossPanel({ boss }: { boss: Boss }) {
           <h2 className="wb-title">{boss.name}</h2>
           {(boss.rare || boss.factionOnly) && (
             <div className="wb-meta">
-              {boss.rare && <span className="wb-tag">Rare</span>}
-              {boss.factionOnly && <span className="wb-tag">{boss.factionOnly} only</span>}
+              {boss.rare && <span className="wb-tag">{t("s_rare")}</span>}
+              {boss.factionOnly && <span className="wb-tag">{t("s_only", faction(boss.factionOnly))}</span>}
             </div>
           )}
         </div>
@@ -46,19 +51,19 @@ export function BossPanel({ boss }: { boss: Boss }) {
       {boss.description && <p className="wb-desc">{boss.description}</p>}
 
       {boss.loot.length === 0 && boss.shared.length === 0 && boss.recipes.length === 0 && (
-        <p className="wb-desc">No loot recorded yet.</p>
+        <p className="wb-desc">{t("s_no_loot")}</p>
       )}
       <ul className="wb-loot-list">
         {boss.loot.map((it) => (
           <LootRow key={`${it[0]}-${it[1]}`} item={it} />
         ))}
         {boss.shared.map((it) => (
-          <LootRow key={`s${it[0]}-${it[1]}`} item={it} note="shared drop" />
+          <LootRow key={`s${it[0]}-${it[1]}`} item={it} note={t("s_shared_drop")} />
         ))}
       </ul>
       {boss.recipes.length > 0 && (
         <details className="wb-recipes">
-          <summary>Recipes &amp; Patterns ({boss.recipes.length})</summary>
+          <summary>{t("RECIPES_SECTION", boss.recipes.length)}</summary>
           <ul className="wb-loot-list">
             {boss.recipes.map((it) => (
               <LootRow key={`${it[0]}-${it[1]}`} item={it} />
@@ -71,10 +76,11 @@ export function BossPanel({ boss }: { boss: Boss }) {
 }
 
 export function TrashPanel({ trash }: { trash: TrashDrop[] }) {
+  const t = useT();
   return (
     <div className="wb">
-      <h2 className="wb-title">Trash Drops</h2>
-      <p className="wb-desc">Items that drop from the dungeon&apos;s regular enemies, with the mobs that carry them.</p>
+      <h2 className="wb-title">{t("s_trash")}</h2>
+      <p className="wb-desc">{t("s_trash_desc")}</p>
       <ul className="wb-loot-list">
         {trash.map(({ item, source }) => (
           <LootRow key={`${item[0]}-${item[1]}`} item={item} note={source} />

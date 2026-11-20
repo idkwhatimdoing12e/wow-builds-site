@@ -6,7 +6,7 @@
 // just to tick off quest names. The server calls this instead and passes the
 // result down as props, which is a few tens of KB of names and IDs.
 
-import { getDungeonSummaries, getDungeon } from "./journal";
+import { getDungeonSummaries, getDungeon, hasJourneyPage } from "./journal";
 import { cardArt } from "./art";
 import type { IndexDungeon } from "./character";
 
@@ -19,7 +19,16 @@ export function buildCharacterIndex(): IndexDungeon[] {
       level: s.level,
       art: cardArt(s.name),
       previewOnly: s.previewOnly,
-      quests: (d?.quests ?? []).map((q) => ({ id: q.id, name: q.name, slug: q.slug })),
+      journeyPage: hasJourneyPage(s.name),
+      quests: (d?.quests ?? []).map((q) => ({
+        id: q.id,
+        name: q.name,
+        slug: q.slug,
+        faction: q.faction,
+        classOnly: q.classOnly,
+        profession: !!q.profession,
+        repeatable: q.repeatable,
+      })),
     };
   });
 }

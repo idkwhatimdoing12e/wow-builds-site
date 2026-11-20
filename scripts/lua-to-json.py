@@ -29,6 +29,7 @@ DATA_FILES = [
     "Data/QuestRewards.lua",
     "Data/QuestShareability.lua",
     "Data/QuestUpdates.lua",
+    "Data/DungeonAliases.lua",
     "UI/ThemeData.lua",
 ]
 
@@ -132,6 +133,7 @@ def main():
         "QUEST_SHAREABILITY_AUDIT", "SHARED_BY_BOSS", "ENTRANCES", "ROUTES",
         "THEMES", "DUNGEON_HOME_ART", "DUNGEON_HOME_TEXCOORD",
         "DUNGEON_PAGE_ART", "DUNGEON_PAGE_TEXCOORD", "DUNGEON_MAPS", "FOREVER_DUNGEONS",
+        "DUNGEON_SEARCH_ALIASES",
     ]
     result = {}
     for key in export_keys:
