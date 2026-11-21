@@ -1,3 +1,8 @@
+// Fonts served from this site (no request to Google Fonts): Roboto for text,
+// Manrope for the journal window's titles.
+import "@fontsource-variable/roboto";
+import "@fontsource-variable/roboto/wght-italic.css";
+import "@fontsource-variable/manrope";
 import "./globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
@@ -9,6 +14,22 @@ import ItemTooltips from "./components/journal/ItemTooltips";
 import { NavTracker } from "./components/site/BackLink";
 import VercelAnalytics from "./components/site/VercelAnalytics";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "./lib/site";
+import { SHOW_MONETIZATION } from "./lib/release";
+
+// Consent Mode v2: in the EU/EEA, UK and Switzerland nothing is stored until
+// the visitor agrees in Google's consent window, which then sends the update
+// itself. Elsewhere the defaults stay granted. Off until monetisation starts
+// (app/lib/release.ts): without the consent window, it would only switch
+// Analytics off for those visitors.
+const CONSENT_DEFAULTS = `
+            gtag('consent', 'default', {
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              analytics_storage: 'denied',
+              region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH'],
+              wait_for_update: 500
+            });`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -28,15 +49,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Roboto for the site: text, titles and dungeon names. Manrope stays for
-            the in-game journal window, standing in for Blizzard's Object Sans. */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Roboto:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
-          rel="stylesheet"
-        />
-
         {/* Google Analytics (GA4). The address goes without its fragment: on
             the character page that is the character code, which stays private. */}
         <Script
@@ -47,7 +59,7 @@ export default function RootLayout({
         <Script id="ga4-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
-            function gtag(){window.dataLayer.push(arguments);}
+            function gtag(){window.dataLayer.push(arguments);}${SHOW_MONETIZATION ? CONSENT_DEFAULTS : ""}
             gtag('js', new Date());
             gtag('config', 'G-WZL8YR2L05', { page_location: location.href.split('#')[0] });
           `}

@@ -20,6 +20,16 @@
         "value": "roboto",
         "createdAt": "2026-11-19T22:40:26.179Z",
         "reason": "user confirmed: the user asked for the standard Roboto font by name and showed a Google Fonts sample of it (2026-11-19)"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "roboto variable",
+        "createdAt": "2026-11-21T11:38:58.244Z"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "manrope variable",
+        "createdAt": "2026-11-21T11:38:58.380Z"
       }
     ]
   }

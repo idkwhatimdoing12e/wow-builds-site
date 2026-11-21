@@ -13,6 +13,7 @@ export interface ShellStrings {
   quests: string;
   items: string;
   about: string;
+  privacy: string;
   download: string;
   downloadAddon: string;
   newInForever: string;
@@ -35,7 +36,7 @@ export const SHELL: Record<Lang, ShellStrings> = {
   en: {
     search: "Search the journal", noResults: "No results", bosses: "Bosses", quests: "Quests", items: "Items",
     donate: "Donate",
-    dungeons: "Dungeons", character: "My Character", about: "About",
+    dungeons: "Dungeons", character: "My Character", about: "About", privacy: "Privacy",
     download: "Download", downloadAddon: "Download the addon",
     newInForever: "New in WoW Forever", classicDungeons: "Classic dungeons", showAll: "Show all dungeons with their art", soon: "Soon",
     language: "Language", home: "Dungeon Journal home", tag: "for WoW Forever",
@@ -47,7 +48,7 @@ export const SHELL: Record<Lang, ShellStrings> = {
   de: {
     search: "Journal durchsuchen", noResults: "Keine Ergebnisse", bosses: "Bosse", quests: "Quests", items: "Gegenstände",
     donate: "Spenden",
-    dungeons: "Dungeons", character: "Mein Charakter", about: "Über",
+    dungeons: "Dungeons", character: "Mein Charakter", about: "Über", privacy: "Datenschutz",
     download: "Download", downloadAddon: "Addon herunterladen",
     newInForever: "Neu in WoW Forever", classicDungeons: "Klassische Dungeons", showAll: "Alle Dungeons mit Bildern zeigen", soon: "Bald",
     language: "Sprache", home: "Dungeon Journal Startseite", tag: "für WoW Forever",
@@ -59,7 +60,7 @@ export const SHELL: Record<Lang, ShellStrings> = {
   fr: {
     search: "Rechercher dans le journal", noResults: "Aucun résultat", bosses: "Boss", quests: "Quêtes", items: "Objets",
     donate: "Faire un don",
-    dungeons: "Donjons", character: "Mon personnage", about: "À propos",
+    dungeons: "Donjons", character: "Mon personnage", about: "À propos", privacy: "Confidentialité",
     download: "Télécharger", downloadAddon: "Télécharger l'addon",
     newInForever: "Nouveau dans WoW Forever", classicDungeons: "Donjons classiques", showAll: "Voir tous les donjons en images", soon: "Bientôt",
     language: "Langue", home: "Accueil de Dungeon Journal", tag: "pour WoW Forever",
@@ -71,7 +72,7 @@ export const SHELL: Record<Lang, ShellStrings> = {
   es: {
     search: "Buscar en el diario", noResults: "Sin resultados", bosses: "Jefes", quests: "Misiones", items: "Objetos",
     donate: "Donar",
-    dungeons: "Mazmorras", character: "Mi personaje", about: "Acerca de",
+    dungeons: "Mazmorras", character: "Mi personaje", about: "Acerca de", privacy: "Privacidad",
     download: "Descargar", downloadAddon: "Descargar el addon",
     newInForever: "Nuevo en WoW Forever", classicDungeons: "Mazmorras clásicas", showAll: "Ver todas las mazmorras con imágenes", soon: "Pronto",
     language: "Idioma", home: "Inicio de Dungeon Journal", tag: "para WoW Forever",
@@ -83,7 +84,7 @@ export const SHELL: Record<Lang, ShellStrings> = {
   it: {
     search: "Cerca nel diario", noResults: "Nessun risultato", bosses: "Boss", quests: "Missioni", items: "Oggetti",
     donate: "Dona",
-    dungeons: "Spedizioni", character: "Il mio personaggio", about: "Info",
+    dungeons: "Spedizioni", character: "Il mio personaggio", about: "Info", privacy: "Privacy",
     download: "Scarica", downloadAddon: "Scarica l'addon",
     newInForever: "Novità di WoW Forever", classicDungeons: "Spedizioni classiche", showAll: "Mostra tutte le spedizioni con le immagini", soon: "Presto",
     language: "Lingua", home: "Home di Dungeon Journal", tag: "per WoW Forever",
@@ -95,7 +96,7 @@ export const SHELL: Record<Lang, ShellStrings> = {
   pt: {
     search: "Buscar no diário", noResults: "Nenhum resultado", bosses: "Chefes", quests: "Missões", items: "Itens",
     donate: "Doar",
-    dungeons: "Masmorras", character: "Meu personagem", about: "Sobre",
+    dungeons: "Masmorras", character: "Meu personagem", about: "Sobre", privacy: "Privacidade",
     download: "Baixar", downloadAddon: "Baixar o addon",
     newInForever: "Novo no WoW Forever", classicDungeons: "Masmorras clássicas", showAll: "Ver todas as masmorras com imagens", soon: "Em breve",
     language: "Idioma", home: "Início do Dungeon Journal", tag: "para WoW Forever",
@@ -107,7 +108,7 @@ export const SHELL: Record<Lang, ShellStrings> = {
   ru: {
     search: "Поиск по журналу", noResults: "Ничего не найдено", bosses: "Боссы", quests: "Задания", items: "Предметы",
     donate: "Поддержать",
-    dungeons: "Подземелья", character: "Мой персонаж", about: "О проекте",
+    dungeons: "Подземелья", character: "Мой персонаж", about: "О проекте", privacy: "Конфиденциальность",
     download: "Скачать", downloadAddon: "Скачать аддон",
     newInForever: "Новое в WoW Forever", classicDungeons: "Классические подземелья", showAll: "Все подземелья с картинками", soon: "Скоро",
     language: "Язык", home: "Главная Dungeon Journal", tag: "для WoW Forever",
@@ -119,7 +120,7 @@ export const SHELL: Record<Lang, ShellStrings> = {
   ko: {
     search: "도감 검색", noResults: "검색 결과 없음", bosses: "우두머리", quests: "퀘스트", items: "아이템",
     donate: "후원하기",
-    dungeons: "던전", character: "내 캐릭터", about: "소개",
+    dungeons: "던전", character: "내 캐릭터", about: "소개", privacy: "개인정보 처리방침",
     download: "다운로드", downloadAddon: "애드온 다운로드",
     newInForever: "WoW Forever 신규", classicDungeons: "클래식 던전", showAll: "모든 던전을 그림과 함께 보기", soon: "곧 공개",
     language: "언어", home: "Dungeon Journal 홈", tag: "WoW Forever용",
@@ -131,7 +132,7 @@ export const SHELL: Record<Lang, ShellStrings> = {
   "zh-cn": {
     search: "搜索手册", noResults: "无结果", bosses: "首领", quests: "任务", items: "物品",
     donate: "捐助",
-    dungeons: "地下城", character: "我的角色", about: "关于",
+    dungeons: "地下城", character: "我的角色", about: "关于", privacy: "隐私政策",
     download: "下载", downloadAddon: "下载插件",
     newInForever: "WoW Forever 新增", classicDungeons: "经典地下城", showAll: "查看所有地下城图片", soon: "即将推出",
     language: "语言", home: "Dungeon Journal 首页", tag: "适用于 WoW Forever",
@@ -143,7 +144,7 @@ export const SHELL: Record<Lang, ShellStrings> = {
   "zh-tw": {
     search: "搜尋手冊", noResults: "無結果", bosses: "首領", quests: "任務", items: "物品",
     donate: "贊助",
-    dungeons: "地城", character: "我的角色", about: "關於",
+    dungeons: "地城", character: "我的角色", about: "關於", privacy: "隱私權政策",
     download: "下載", downloadAddon: "下載插件",
     newInForever: "WoW Forever 新增", classicDungeons: "經典地城", showAll: "查看所有地城圖片", soon: "即將推出",
     language: "語言", home: "Dungeon Journal 首頁", tag: "適用於 WoW Forever",
