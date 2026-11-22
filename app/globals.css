@@ -2408,3 +2408,7 @@ a.fv-name:hover { text-decoration: underline; text-underline-offset: 2px; }
 .wf-overview p { max-width: 100ch; }
 .wf-overview p + p { margin-top: 9px; }
 @media (max-width: 600px) { .wf-overview { padding: 12px 13px; font-size: 15px; } }
+
+
+/* The site is dark by design: no automatic dark-mode recolouring by the browser. */
+:root { color-scheme: dark; }

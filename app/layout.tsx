@@ -4,7 +4,7 @@ import "@fontsource-variable/roboto";
 import "@fontsource-variable/roboto/wght-italic.css";
 import "@fontsource-variable/manrope";
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import SiteHeader from "./components/site/SiteHeader";
 import SiteFooter from "./components/site/SiteFooter";
@@ -40,8 +40,18 @@ export const metadata: Metadata = {
   openGraph: { siteName: SITE_NAME, type: "website" },
   // AdSense site verification. The ad script itself loads only once
   // monetisation is switched on (app/lib/release.ts).
-  other: { "google-adsense-account": ADSENSE_CLIENT },
+  other: {
+    "google-adsense-account": ADSENSE_CLIENT,
+    // Brave's Night Mode (and the Dark Reader extension) recolour pages: they
+    // turn dark text light but leave the parchment pictures light, so quests
+    // become unreadable. This asks them to leave the site as it is.
+    "darkreader-lock": "true",
+  },
 };
+
+// The site is already dark: browsers' automatic dark modes should not
+// recolour it (Chrome on Android, Samsung Internet, ...).
+export const viewport: Viewport = { colorScheme: "dark" };
 
 export default function RootLayout({
   children,
