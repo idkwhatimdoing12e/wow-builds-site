@@ -38,11 +38,14 @@ export default function DungeonView({
   prev = null,
   next = null,
   character,
+  intro,
 }: {
   d: Dungeon;
   prev?: { name: string; slug: string } | null;
   next?: { name: string; slug: string } | null;
   character?: CharacterView;
+  /** The dungeon page's written overview, shown under the name and level. */
+  intro?: React.ReactNode;
 }) {
   const t = useT();
   const h = useHref();
@@ -281,6 +284,7 @@ export default function DungeonView({
           </div>
         )}
       </div>
+      {intro}
 
       {d.previewOnly ? (
         <div className="wf-pane wf-pane-single">

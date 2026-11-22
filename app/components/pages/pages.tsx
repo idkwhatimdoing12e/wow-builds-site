@@ -14,6 +14,7 @@ import Window from "@/app/components/journal/Window";
 import DungeonView from "@/app/components/journal/DungeonView";
 import QuestPanel from "@/app/components/journal/QuestPanel";
 import AdSlot from "@/app/components/journal/AdSlot";
+import { getOverview } from "@/app/lib/overviews";
 import JournalHome from "@/app/components/journal/JournalHome";
 import HomeHero, { DownloadBanner } from "@/app/components/site/HomeHero";
 
@@ -95,13 +96,28 @@ export function DungeonBody({ slug, lang }: { slug: string; lang: Lang }) {
 
   // The game's Encounter Journal skin (.ej): --ej-band is the picture behind the header band.
   const band = bandArt(english);
+  const overview = getOverview(slug, lang);
   const style = { ...themeVars(english), ...(band ? { "--ej-band": `url("${band}")` } : {}) } as React.CSSProperties;
 
   return (
     <I18nProvider lang={lang} dict={dict}>
       <div className="journal wf-page ej">
         <Window style={style} title={dict.DUNGEON_JOURNAL} homeHref={href(lang, "/")}>
-          <DungeonView d={d} prev={near(idx - 1)} next={near(idx + 1)} />
+          <DungeonView
+            d={d}
+            prev={near(idx - 1)}
+            next={near(idx + 1)}
+            intro={
+              // A written briefing under the name: where, who, which quests, what drops.
+              overview && (
+                <section className="wf-overview" lang={lang}>
+                  {overview.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </section>
+              )
+            }
+          />
         </Window>
         <AdSlot />
       </div>

@@ -47,8 +47,9 @@ function English() {
           <li>Dungeon Journal is free and made by one player. Ads pay for this site and keep the addon updated.</li>
           <li>Your character code stays in your browser. It is never sent to this site’s server.</li>
           <li>
-            If you visit from the EU, the UK or Switzerland, no ad or analytics cookies are set until you say yes.
-            Saying no still gets you the whole journal.
+            {SHOW_MONETIZATION
+              ? "If you visit from the EU, the UK or Switzerland, no ad or analytics cookies are set until you say yes. Saying no still gets you the whole journal."
+              : "Ads are not switched on yet. When they are, visitors from the EU, the UK and Switzerland will be asked first, and no ad or analytics cookies will be set until they say yes. Saying no will still get you the whole journal."}
           </li>
           {SHOW_MONETIZATION && <li>You can change your choice at any time:</li>}
         </ul>
@@ -106,6 +107,7 @@ function English() {
 
       <h2 className="wp-sub pv-h">6. The consent window</h2>
       <p className="wp-text">
+        {!SHOW_MONETIZATION && "Ads are not switched on yet, so this window does not appear yet. Once they are: "}
         If you visit from the EU/EEA, the UK or Switzerland, Google’s consent tool shows a consent window. Google
         certifies this tool for the IAB Transparency &amp; Consent Framework. The window lists the ad partners and what
         they want to do, and saves your choice in a cookie so you are not asked on every page. You can change or withdraw
@@ -116,6 +118,7 @@ function English() {
 
       <h2 className="wp-sub pv-h">7. Ads (Google AdSense)</h2>
       <p className="wp-text">
+        {!SHOW_MONETIZATION && "Ads are not switched on yet; this is how they will work. "}
         Ads are served by Google AdSense, run by Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland.
       </p>
       <ul className="pv-list">
@@ -147,12 +150,12 @@ function English() {
       <h2 className="wp-sub pv-h">8. Google Analytics</h2>
       <p className="wp-text">
         To see which pages are used and to fix what doesn’t work, the site uses Google Analytics 4 (Google Ireland
-        Limited). With your consent it records the pages you view, the site you came from, your device and browser,
+        Limited). {SHOW_MONETIZATION ? "With your consent it records" : "It records"} the pages you view, the site you came from, your device and browser,
         your approximate location (country and city, worked out from your IP address) and the anonymous character
-        counts from section 4. The part of the address after the # is never sent. If you visit from the EU/EEA, the UK
-        or Switzerland, Analytics sets no cookies until you agree in the consent window (Google Consent Mode). Until
-        then, Google only receives cookieless signals without identifiers, which it uses for estimated, combined visit
-        counts. The data is kept for {GA_RETENTION.en}. Legal basis: Art. 6(1)(a) GDPR and § 25(1) TDDDG; for the
+        counts from section 4. The part of the address after the # is never sent.{" "}
+        {SHOW_MONETIZATION
+          ? "If you visit from the EU/EEA, the UK or Switzerland, Analytics sets no cookies until you agree in the consent window (Google Consent Mode). Until then, Google only receives cookieless signals without identifiers, which it uses for estimated, combined visit counts."
+          : "For now, Analytics sets cookies to tell visits apart. Once ads are switched on, visitors from the EU/EEA, the UK and Switzerland will be asked first, and Analytics will set no cookies until they agree (Google Consent Mode); until then Google will only receive cookieless signals without identifiers."} The data is kept for {GA_RETENTION.en}. Legal basis: Art. 6(1)(a) GDPR and § 25(1) TDDDG; for the
         cookieless signals, Art. 6(1)(f) GDPR (my legitimate interest in basic visit statistics).
       </p>
 
@@ -218,8 +221,9 @@ function Deutsch() {
           <li>Dungeon Journal ist kostenlos und von einem Spieler gemacht. Werbung bezahlt diese Seite und hält das Addon aktuell.</li>
           <li>Dein Charakter-Code bleibt in deinem Browser. Er wird nie an den Server dieser Seite geschickt.</li>
           <li>
-            Wenn du aus der EU, dem Vereinigten Königreich oder der Schweiz kommst, werden Werbe- und Analyse-Cookies
-            erst gesetzt, nachdem du zugestimmt hast. Auch ohne Zustimmung bekommst du das ganze Journal.
+            {SHOW_MONETIZATION
+              ? "Wenn du aus der EU, dem Vereinigten Königreich oder der Schweiz kommst, werden Werbe- und Analyse-Cookies erst gesetzt, nachdem du zugestimmt hast. Auch ohne Zustimmung bekommst du das ganze Journal."
+              : "Werbung ist noch nicht eingeschaltet. Sobald sie es ist, werden Besucher aus der EU, dem Vereinigten Königreich und der Schweiz zuerst gefragt, und Werbe- und Analyse-Cookies werden erst nach ihrer Zustimmung gesetzt. Auch ohne Zustimmung bekommst du dann das ganze Journal."}
           </li>
           {SHOW_MONETIZATION && <li>Deine Auswahl kannst du jederzeit ändern:</li>}
         </ul>
@@ -279,6 +283,7 @@ function Deutsch() {
 
       <h2 className="wp-sub pv-h">6. Das Einwilligungsfenster</h2>
       <p className="wp-text">
+        {!SHOW_MONETIZATION && "Werbung ist noch nicht eingeschaltet, daher erscheint dieses Fenster noch nicht. Sobald sie es ist: "}
         Wenn du aus der EU/dem EWR, dem Vereinigten Königreich oder der Schweiz kommst, zeigt das Einwilligungs-Tool von
         Google ein Einwilligungsfenster. Google zertifiziert dieses Tool für das IAB Transparency &amp; Consent Framework.
         Das Fenster listet die Werbepartner und ihre Zwecke auf und speichert deine Auswahl in einem Cookie, damit du nicht
@@ -291,6 +296,7 @@ function Deutsch() {
 
       <h2 className="wp-sub pv-h">7. Werbung (Google AdSense)</h2>
       <p className="wp-text">
+        {!SHOW_MONETIZATION && "Werbung ist noch nicht eingeschaltet; so wird sie funktionieren. "}
         Die Werbung kommt von Google AdSense, betrieben von Google Ireland Limited, Gordon House, Barrow Street, Dublin 4,
         Irland.
       </p>
@@ -323,12 +329,12 @@ function Deutsch() {
       <h2 className="wp-sub pv-h">8. Google Analytics</h2>
       <p className="wp-text">
         Um zu sehen, welche Seiten genutzt werden, und um Fehler zu beheben, nutzt die Seite Google Analytics 4 (Google
-        Ireland Limited). Mit deiner Einwilligung erfasst es die aufgerufenen Seiten, die Seite, von der du kommst, dein
+        Ireland Limited). {SHOW_MONETIZATION ? "Mit deiner Einwilligung erfasst es" : "Es erfasst"} die aufgerufenen Seiten, die Seite, von der du kommst, dein
         Gerät und Browser, deinen ungefähren Standort (Land und Stadt, aus deiner IP-Adresse ermittelt) und die anonymen
-        Charakter-Zählungen aus Abschnitt 4. Der Teil der Adresse nach dem # wird nie übertragen. Wenn du aus der EU/dem
-        EWR, dem Vereinigten Königreich oder der Schweiz kommst, setzt Analytics keine Cookies, bis du im
-        Einwilligungsfenster zustimmst (Google Consent Mode). Bis dahin erhält Google nur cookielose Signale ohne
-        Kennungen, die es für geschätzte, zusammengefasste Besuchszahlen nutzt. Die Daten werden {GA_RETENTION.de}{" "}
+        Charakter-Zählungen aus Abschnitt 4. Der Teil der Adresse nach dem # wird nie übertragen.{" "}
+        {SHOW_MONETIZATION
+          ? "Wenn du aus der EU/dem EWR, dem Vereinigten Königreich oder der Schweiz kommst, setzt Analytics keine Cookies, bis du im Einwilligungsfenster zustimmst (Google Consent Mode). Bis dahin erhält Google nur cookielose Signale ohne Kennungen, die es für geschätzte, zusammengefasste Besuchszahlen nutzt."
+          : "Derzeit setzt Analytics Cookies, um Besuche zu unterscheiden. Sobald Werbung eingeschaltet ist, werden Besucher aus der EU/dem EWR, dem Vereinigten Königreich und der Schweiz zuerst gefragt, und Analytics setzt keine Cookies, bis sie zustimmen (Google Consent Mode); bis dahin erhält Google nur cookielose Signale ohne Kennungen."} Die Daten werden {GA_RETENTION.de}{" "}
         gespeichert. Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG; für die cookielosen Signale Art.
         6 Abs. 1 lit. f DSGVO (mein berechtigtes Interesse an einfachen Besucherzahlen).
       </p>
