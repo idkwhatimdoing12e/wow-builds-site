@@ -8,7 +8,9 @@
 const PRODUCTION_URL = "https://foreverjournal.pro";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL ? PRODUCTION_URL : "http://localhost:3000");
+  // Any production build (Cloudflare, Vercel, a local `next build`) speaks
+  // about the live site; only `next dev` about itself.
+  (process.env.NODE_ENV === "production" ? PRODUCTION_URL : "http://localhost:3000");
 export const SITE_NAME = "Dungeon Journal";
 export const SITE_TAGLINE = "Every quest, boss and drop in every dungeon on WoW Forever";
 

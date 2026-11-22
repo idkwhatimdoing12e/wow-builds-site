@@ -1,9 +1,17 @@
 {
   "name": "foreverjournal",
   "compatibility_date": "2026-11-22",
+  // No *.workers.dev copy of the site: only the real domain gets indexed.
+  "workers_dev": false,
   "assets": {
     "directory": "./out",
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash"
-  }
+  },
+  // The bare domain is the main address; www is sent to it by a Cloudflare
+  // Redirect Rule (dashboard: Rules > Redirect Rules), which runs before this.
+  "routes": [
+    { "pattern": "foreverjournal.pro", "custom_domain": true },
+    { "pattern": "www.foreverjournal.pro", "custom_domain": true }
+  ]
 }
