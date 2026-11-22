@@ -61,7 +61,12 @@ function LangMenu({ lang, pathname }: { lang: Lang; pathname: string }) {
   const box = useRef<HTMLDivElement>(null);
   const button = useRef<HTMLButtonElement>(null);
   const base = stripLang(pathname);
-  const target = (l: Lang) => (isTranslated(base) ? href(l, base) : href(l, "/"));
+  const target = (l: Lang) =>
+    base === "/privacy"
+      ? l === "de" ? "/de/privacy" : "/privacy" // the privacy page is in English and German only
+      : isTranslated(base)
+        ? href(l, base)
+        : href(l, "/");
 
   useEffect(() => {
     if (!open) return;
