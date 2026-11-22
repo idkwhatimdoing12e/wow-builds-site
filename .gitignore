@@ -52,3 +52,6 @@ scripts/item-dump/.cache/
 
 # addon release zips dropped next to the site
 /*.zip
+
+# Cloudflare Wrangler state
+/.wrangler/
