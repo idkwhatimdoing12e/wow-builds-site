@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LINKS, SITE_NAME } from "@/app/lib/site";
+import { CONTACT_EMAIL, LINKS, SITE_NAME } from "@/app/lib/site";
 import { href, langOf } from "@/app/lib/i18n";
 import { SHELL } from "@/app/lib/shell-strings";
-import { SHOW_MONETIZATION } from "@/app/lib/release";
 import { DiscordIcon, PatreonIcon, YouTubeIcon } from "./icons";
 
 /** The guide's back page: what this is, where to get it, and the small print. */
@@ -37,7 +36,8 @@ export default function SiteFooter() {
           <Link href="/character">{s.character}</Link>
           <a href={LINKS.donate} target="_blank" rel="noreferrer noopener">{s.donate}</a>
           <Link href="/about">{s.about}</Link>
-          {SHOW_MONETIZATION && <Link href={lang === "de" ? "/privacy#de" : "/privacy"}>{s.privacy}</Link>}
+          <Link href={lang === "de" ? "/privacy#de" : "/privacy"}>{s.privacy}</Link>
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </nav>
         <nav className="sx-footer-col" aria-label={s.getAddon}>
           <h2>{s.getAddon}</h2>

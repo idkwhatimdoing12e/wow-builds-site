@@ -12,7 +12,7 @@ import { getDungeonSummaries } from "./lib/journal";
 import { menuNames } from "./lib/i18n-server";
 import ItemTooltips from "./components/journal/ItemTooltips";
 import { NavTracker } from "./components/site/BackLink";
-import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "./lib/site";
+import { ADSENSE_CLIENT, SITE_NAME, SITE_TAGLINE, SITE_URL } from "./lib/site";
 import { SHOW_MONETIZATION } from "./lib/release";
 
 // Consent Mode v2: in the EU/EEA, UK and Switzerland nothing is stored until
@@ -38,6 +38,9 @@ export const metadata: Metadata = {
   },
   description: `${SITE_TAGLINE}. The web version of the Dungeon Journal addon for WoW Forever.`,
   openGraph: { siteName: SITE_NAME, type: "website" },
+  // AdSense site verification. The ad script itself loads only once
+  // monetisation is switched on (app/lib/release.ts).
+  other: { "google-adsense-account": ADSENSE_CLIENT },
 };
 
 export default function RootLayout({
@@ -64,13 +67,16 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Google AdSense (site verification + ads) */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7979214898290780"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        {/* Google AdSense: ads and Google's consent window. Off until monetisation
+            is switched on; the site is verified by the meta tag above meanwhile. */}
+        {SHOW_MONETIZATION && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
       </head>
 
       <body className="sx-body">

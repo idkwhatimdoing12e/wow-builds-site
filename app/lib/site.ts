@@ -12,6 +12,8 @@ export const SITE_URL =
   // about the live site; only `next dev` about itself.
   (process.env.NODE_ENV === "production" ? PRODUCTION_URL : "http://localhost:3000");
 export const SITE_NAME = "Dungeon Journal";
+/** Where readers (and Google's reviewers) can reach the site's owner. */
+export const CONTACT_EMAIL = "exehntv@gmail.com";
 export const SITE_TAGLINE = "Every quest, boss and drop in every dungeon on WoW Forever";
 
 export const LINKS = {

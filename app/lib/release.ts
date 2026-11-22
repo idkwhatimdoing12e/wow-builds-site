@@ -1,11 +1,12 @@
 // What is built but not switched on yet.
 
 /**
- * Monetisation (ads, Google's consent window, the privacy page and its footer
- * link). It is all built and ready, but stays off on the live site until ads
- * start: then set this to true. Until then, the live site behaves as before.
+ * Monetisation: the AdSense script (ads and Google's consent window), the
+ * Consent Mode defaults and the privacy page's "Change my cookie choices"
+ * button. All built, but off on the live site until ads start: then set this
+ * to true. The privacy page itself, ads.txt and the AdSense verification tag
+ * are always on (needed for Google's review).
  */
-// When this goes true, also delete the /privacy line in public/_redirects.
 export const MONETIZATION_LIVE = false;
 
 /**

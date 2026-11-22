@@ -77,6 +77,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title,
     description,
     alternates: { canonical: `${SITE_URL}/item/${item.slug}` },
+    // Item pages stay for visitors (tooltips, links) but out of search results:
+    // thousands of short, similar pages would weigh on the dungeon pages.
+    robots: { index: false, follow: true },
     openGraph: { title: `${title} - ${SITE_NAME}`, description, url: `${SITE_URL}/item/${item.slug}` },
   };
 }

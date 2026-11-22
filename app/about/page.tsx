@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LINKS, SITE_URL } from "@/app/lib/site";
+import { CONTACT_EMAIL, LINKS, SITE_URL } from "@/app/lib/site";
 import Window from "@/app/components/journal/Window";
 
 export const metadata: Metadata = {
@@ -27,6 +27,12 @@ export default function AboutPage() {
             <p className="wp-text">
               <a href={LINKS.curseforge} target="_blank" rel="noreferrer noopener" className="wf-btn wf-btn-red">Download the addon</a>{" "}
               <a href={LINKS.discord} target="_blank" rel="noreferrer noopener" className="wf-btn wf-btn-dark">Join Discord</a>
+            </p>
+            <h2 className="wp-sub">Contact</h2>
+            <p className="wp-text">
+              Questions, corrections or a missing drop? Write to{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="wp-link">{CONTACT_EMAIL}</a>, or find me on{" "}
+              <a href={LINKS.discord} target="_blank" rel="noreferrer noopener" className="wp-link">Discord</a>.
             </p>
             <p className="wp-note">
               World of Warcraft and related trademarks are the property of Blizzard Entertainment. This site is a fan project

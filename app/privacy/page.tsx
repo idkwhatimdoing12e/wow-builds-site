@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { LINKS, SITE_URL } from "@/app/lib/site";
-import { MONETIZATION_LIVE, SHOW_MONETIZATION } from "@/app/lib/release";
+import { CONTACT_EMAIL, LINKS, SITE_URL } from "@/app/lib/site";
+import { SHOW_MONETIZATION } from "@/app/lib/release";
 import Window from "@/app/components/journal/Window";
 import ConsentSettingsButton from "@/app/components/site/ConsentSettingsButton";
 
-// ---- Fill these in before the page goes live --------------------------------
-// The address is the one from the Impressum address service, not a home address.
-const CONTROLLER = {
-  name: "[Your full name]",
-  address: "[Street and number], [Postcode] [City], Germany",
-  email: "exehntv@gmail.com",
-};
+// ------------------------------------------------------------------------------
+const CONTROLLER = { email: CONTACT_EMAIL };
 // Google Analytics > Admin > Data collection and modification > Data retention.
 // "2 months" is Google's default; change both lines if it is set to 14 months.
 const GA_RETENTION = { en: "2 months", de: "2 Monate" };
@@ -23,8 +17,6 @@ export const metadata: Metadata = {
   title: "Privacy",
   description: "How Dungeon Journal handles your data: ads, analytics, your character code and your choices.",
   alternates: { canonical: `${SITE_URL}/privacy` },
-  // Not in search results until monetisation is switched on (app/lib/release.ts).
-  ...(MONETIZATION_LIVE ? {} : { robots: { index: false, follow: false } }),
 };
 
 function Ext({ href, children }: { href: string; children: React.ReactNode }) {
@@ -58,18 +50,20 @@ function English() {
             If you visit from the EU, the UK or Switzerland, no ad or analytics cookies are set until you say yes.
             Saying no still gets you the whole journal.
           </li>
-          <li>You can change your choice at any time:</li>
+          {SHOW_MONETIZATION && <li>You can change your choice at any time:</li>}
         </ul>
-        <ConsentSettingsButton
-          label="Change my cookie choices"
-          unavailable="The consent window could not be opened. Usually a blocker stops it from loading, or you are outside the EU, UK and Switzerland, where it is not shown. While it is blocked, no ad or analytics cookies are set through it."
-        />
+        {SHOW_MONETIZATION && (
+          <ConsentSettingsButton
+            label="Change my cookie choices"
+            unavailable="The consent window could not be opened. Usually a blocker stops it from loading, or you are outside the EU, UK and Switzerland, where it is not shown. While it is blocked, no ad or analytics cookies are set through it."
+          />
+        )}
       </div>
 
       <h2 className="wp-sub pv-h">1. Who runs this site</h2>
       <p className="wp-text">
-        {CONTROLLER.name}, {CONTROLLER.address}. Email: <Mail />. I am responsible for the data processing described
-        here (the “controller” under the GDPR).
+        Email: <Mail />. I run this site on my own and am responsible for the data processing described here (the
+        “controller” under the GDPR).
       </p>
 
       <h2 className="wp-sub pv-h">2. Why ads, and why I ask for your OK</h2>
@@ -82,11 +76,11 @@ function English() {
 
       <h2 className="wp-sub pv-h">3. When you open a page (hosting)</h2>
       <p className="wp-text">
-        This site is hosted by Vercel Inc. (USA). To deliver a page, Vercel’s servers process your IP address, the page
+        This site is hosted by Cloudflare, Inc. (USA). To deliver a page, Cloudflare’s servers process your IP address, the page
         you asked for, the time and your browser’s identification, and keep short-lived logs to run the service and keep
         it secure. The site’s fonts and pictures are served from this site too, so no other company is contacted for
         them. Legal basis: Art. 6(1)(f) GDPR (my legitimate interest in a working, secure website). See{" "}
-        <Ext href="https://vercel.com/legal/privacy-policy">Vercel’s privacy policy</Ext>.
+        <Ext href="https://www.cloudflare.com/privacypolicy/">Cloudflare’s privacy policy</Ext>.
       </p>
 
       <h2 className="wp-sub pv-h">4. Your character (My Character)</h2>
@@ -115,8 +109,8 @@ function English() {
         If you visit from the EU/EEA, the UK or Switzerland, Google’s consent tool shows a consent window. Google
         certifies this tool for the IAB Transparency &amp; Consent Framework. The window lists the ad partners and what
         they want to do, and saves your choice in a cookie so you are not asked on every page. You can change or withdraw
-        your choice at any time with the button at the top of this page or the “Privacy and cookie settings” link Google
-        adds to the site. Legal basis for saving your choice: Art. 6(1)(c) GDPR with Art. 7(1) GDPR, and § 25(2) no. 2
+        your choice at any time with {SHOW_MONETIZATION ? "the button at the top of this page or " : ""}the “Privacy and
+        cookie settings” link Google adds to the site. Legal basis for saving your choice: Art. 6(1)(c) GDPR with Art. 7(1) GDPR, and § 25(2) no. 2
         TDDDG.
       </p>
 
@@ -162,11 +156,11 @@ function English() {
         cookieless signals, Art. 6(1)(f) GDPR (my legitimate interest in basic visit statistics).
       </p>
 
-      <h2 className="wp-sub pv-h">9. Visitor counts (Vercel Web Analytics)</h2>
+      <h2 className="wp-sub pv-h">9. Visitor counts (Cloudflare)</h2>
       <p className="wp-text">
-        Vercel Web Analytics counts visits, pages, referring sites, countries and device types. It uses no cookies and
-        stores nothing on your device. The address is sent without the part after the #. Legal basis: Art. 6(1)(f) GDPR
-        (my legitimate interest in knowing how much the site is used).
+        Cloudflare counts requests, pages, countries and device types from the records its servers keep anyway (section
+        3). It uses no cookies and stores nothing on your device, and I only see the combined totals. Legal basis: Art.
+        6(1)(f) GDPR (my legitimate interest in knowing how much the site is used).
       </p>
 
       <h2 className="wp-sub pv-h">10. Links to other sites</h2>
@@ -179,7 +173,7 @@ function English() {
 
       <h2 className="wp-sub pv-h">11. Data sent outside the EU</h2>
       <p className="wp-text">
-        Vercel and Google may process data in the USA. For US companies certified under the EU-US
+        Cloudflare and Google may process data in the USA. For US companies certified under the EU-US
         Data Privacy Framework, the European Commission has decided that the level of protection is adequate (Art. 45
         GDPR). Otherwise the providers rely on the EU standard contractual clauses (Art. 46(2)(c) GDPR).
       </p>
@@ -227,17 +221,19 @@ function Deutsch() {
             Wenn du aus der EU, dem Vereinigten Königreich oder der Schweiz kommst, werden Werbe- und Analyse-Cookies
             erst gesetzt, nachdem du zugestimmt hast. Auch ohne Zustimmung bekommst du das ganze Journal.
           </li>
-          <li>Deine Auswahl kannst du jederzeit ändern:</li>
+          {SHOW_MONETIZATION && <li>Deine Auswahl kannst du jederzeit ändern:</li>}
         </ul>
-        <ConsentSettingsButton
-          label="Cookie-Einstellungen ändern"
-          unavailable="Das Einwilligungsfenster ließ sich nicht öffnen. Meist verhindert ein Blocker, dass es lädt, oder du bist außerhalb der EU, des Vereinigten Königreichs und der Schweiz, wo es nicht angezeigt wird. Solange es blockiert ist, werden darüber keine Werbe- oder Analyse-Cookies gesetzt."
-        />
+        {SHOW_MONETIZATION && (
+          <ConsentSettingsButton
+            label="Cookie-Einstellungen ändern"
+            unavailable="Das Einwilligungsfenster ließ sich nicht öffnen. Meist verhindert ein Blocker, dass es lädt, oder du bist außerhalb der EU, des Vereinigten Königreichs und der Schweiz, wo es nicht angezeigt wird. Solange es blockiert ist, werden darüber keine Werbe- oder Analyse-Cookies gesetzt."
+          />
+        )}
       </div>
 
       <h2 className="wp-sub pv-h">1. Verantwortlicher</h2>
       <p className="wp-text">
-        {CONTROLLER.name}, {CONTROLLER.address}. E-Mail: <Mail />. Ich bin für die hier beschriebene Datenverarbeitung
+        E-Mail: <Mail />. Ich betreibe diese Seite allein und bin für die hier beschriebene Datenverarbeitung
         verantwortlich (Verantwortlicher im Sinne der DSGVO).
       </p>
 
@@ -251,12 +247,12 @@ function Deutsch() {
 
       <h2 className="wp-sub pv-h">3. Beim Aufruf einer Seite (Hosting)</h2>
       <p className="wp-text">
-        Diese Seite wird von Vercel Inc. (USA) gehostet. Um eine Seite auszuliefern, verarbeiten die Server von Vercel
+        Diese Seite wird von Cloudflare, Inc. (USA) gehostet. Um eine Seite auszuliefern, verarbeiten die Server von Cloudflare
         deine IP-Adresse, die aufgerufene Seite, die Uhrzeit und die Kennung deines Browsers und speichern kurzlebige
         Protokolle für Betrieb und Sicherheit. Schriftarten und Bilder kommen ebenfalls von dieser Seite, dafür wird also
         keine andere Firma kontaktiert. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (mein berechtigtes Interesse an
         einer funktionierenden, sicheren Website). Siehe die{" "}
-        <Ext href="https://vercel.com/legal/privacy-policy">Datenschutzerklärung von Vercel</Ext>.
+        <Ext href="https://www.cloudflare.com/privacypolicy/">Datenschutzerklärung von Cloudflare</Ext>.
       </p>
 
       <h2 className="wp-sub pv-h">4. Dein Charakter (Mein Charakter)</h2>
@@ -286,8 +282,9 @@ function Deutsch() {
         Wenn du aus der EU/dem EWR, dem Vereinigten Königreich oder der Schweiz kommst, zeigt das Einwilligungs-Tool von
         Google ein Einwilligungsfenster. Google zertifiziert dieses Tool für das IAB Transparency &amp; Consent Framework.
         Das Fenster listet die Werbepartner und ihre Zwecke auf und speichert deine Auswahl in einem Cookie, damit du nicht
-        auf jeder Seite gefragt wirst. Du kannst deine Auswahl jederzeit ändern oder widerrufen, mit dem Button oben auf
-        dieser Seite oder über den Link „Privacy and cookie settings“, den Google auf der Seite einblendet. Rechtsgrundlage
+        auf jeder Seite gefragt wirst. Du kannst deine Auswahl jederzeit ändern oder widerrufen,{" "}
+        {SHOW_MONETIZATION ? "mit dem Button oben auf dieser Seite oder " : ""}über den Link „Privacy and cookie settings“,
+        den Google auf der Seite einblendet. Rechtsgrundlage
         für das Speichern deiner Auswahl: Art. 6 Abs. 1 lit. c DSGVO i. V. m. Art. 7 Abs. 1 DSGVO sowie § 25 Abs. 2 Nr. 2
         TDDDG.
       </p>
@@ -336,11 +333,12 @@ function Deutsch() {
         6 Abs. 1 lit. f DSGVO (mein berechtigtes Interesse an einfachen Besucherzahlen).
       </p>
 
-      <h2 className="wp-sub pv-h">9. Besucherzählung (Vercel Web Analytics)</h2>
+      <h2 className="wp-sub pv-h">9. Besucherzählung (Cloudflare)</h2>
       <p className="wp-text">
-        Vercel Web Analytics zählt Besuche, Seiten, verweisende Websites, Länder und Gerätetypen. Es nutzt keine Cookies
-        und speichert nichts auf deinem Gerät. Die Adresse wird ohne den Teil nach dem # übertragen. Rechtsgrundlage: Art.
-        6 Abs. 1 lit. f DSGVO (mein berechtigtes Interesse daran, zu wissen, wie viel die Seite genutzt wird).
+        Cloudflare zählt Aufrufe, Seiten, Länder und Gerätetypen aus den Protokollen, die seine Server ohnehin führen
+        (Abschnitt 3). Es nutzt keine Cookies und speichert nichts auf deinem Gerät, und ich sehe nur die
+        zusammengefassten Zahlen. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (mein berechtigtes Interesse daran, zu
+        wissen, wie viel die Seite genutzt wird).
       </p>
 
       <h2 className="wp-sub pv-h">10. Links zu anderen Seiten</h2>
@@ -353,7 +351,7 @@ function Deutsch() {
 
       <h2 className="wp-sub pv-h">11. Übermittlung außerhalb der EU</h2>
       <p className="wp-text">
-        Vercel und Google können Daten in den USA verarbeiten. Für US-Unternehmen, die unter dem
+        Cloudflare und Google können Daten in den USA verarbeiten. Für US-Unternehmen, die unter dem
         EU-US Data Privacy Framework zertifiziert sind, hat die Europäische Kommission ein angemessenes Schutzniveau
         festgestellt (Art. 45 DSGVO). Andernfalls stützen sich die Anbieter auf die EU-Standardvertragsklauseln (Art. 46
         Abs. 2 lit. c DSGVO).
@@ -389,8 +387,6 @@ function Deutsch() {
 }
 
 export default function PrivacyPage() {
-  // Hidden on the live site until monetisation starts (app/lib/release.ts).
-  if (!SHOW_MONETIZATION) notFound();
   return (
     <div className="journal wf-page">
       <Window>

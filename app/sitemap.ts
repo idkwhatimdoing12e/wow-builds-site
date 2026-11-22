@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getDungeonSlugs, getQuestSlugs } from "@/app/lib/journal";
 import { SITE_URL } from "@/app/lib/site";
-import { getItemSlugs } from "@/app/lib/item-index";
 import { PREFIXED } from "@/app/lib/i18n";
 
 export const dynamic = "force-static";
@@ -22,12 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
-    ...getItemSlugs().map((slug) => ({
-      url: `${SITE_URL}/item/${slug}`,
-      lastModified: now,
-      changeFrequency: "monthly" as const,
-      priority: 0.5,
-    })),
+    // Item pages are noindex (app/item/[slug]/page.tsx), so they stay out.
     // The translated home, dungeon and quest pages: /de, /de/dungeon/x, ...
     ...PREFIXED.flatMap((lang) => [
       { url: `${SITE_URL}/${lang}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
