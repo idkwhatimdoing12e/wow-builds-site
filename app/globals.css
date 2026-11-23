@@ -2408,6 +2408,24 @@ a.fv-name:hover { text-decoration: underline; text-underline-offset: 2px; }
 .wf-overview p { max-width: 100ch; }
 .wf-overview p + p { margin-top: 9px; }
 @media (max-width: 600px) { .wf-overview { padding: 12px 13px; font-size: 15px; } }
+/* On a phone the overview folds to its first lines so the tabs, bosses and quests come first. */
+.wf-overview-more { display: none; }
+@media (max-width: 859px) {
+  .wf-overview:not(.is-open) .wf-overview-text {
+    max-height: calc(1.62em * 4);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
+    mask-image: linear-gradient(to bottom, #000 45%, transparent);
+  }
+  .wf-overview-more {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 6px; padding: 6px 0; min-height: 32px;
+    background: none; border: 0; cursor: pointer;
+    color: #eecb7e; font: inherit; font-size: 14px; font-weight: 600;
+  }
+  .wf-overview-more::after { content: "▾"; font-size: 12px; transition: transform 0.15s; }
+  .wf-overview.is-open .wf-overview-more::after { transform: rotate(180deg); }
+}
 
 
 /* The site is dark by design: no automatic dark-mode recolouring by the browser. */

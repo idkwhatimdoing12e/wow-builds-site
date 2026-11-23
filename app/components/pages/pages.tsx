@@ -15,6 +15,7 @@ import DungeonView from "@/app/components/journal/DungeonView";
 import QuestPanel from "@/app/components/journal/QuestPanel";
 import AdSlot from "@/app/components/journal/AdSlot";
 import { getOverview } from "@/app/lib/overviews";
+import Overview from "@/app/components/journal/Overview";
 import JournalHome from "@/app/components/journal/JournalHome";
 import HomeHero, { DownloadBanner } from "@/app/components/site/HomeHero";
 
@@ -109,13 +110,8 @@ export function DungeonBody({ slug, lang }: { slug: string; lang: Lang }) {
             next={near(idx + 1)}
             intro={
               // A written briefing under the name: where, who, which quests, what drops.
-              overview && (
-                <section className="wf-overview" lang={lang}>
-                  {overview.map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
-                </section>
-              )
+              // Folded on a phone so the tabs come first.
+              overview && <Overview paragraphs={overview} lang={lang} />
             }
           />
         </Window>
