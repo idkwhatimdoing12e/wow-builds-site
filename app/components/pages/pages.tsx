@@ -4,11 +4,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getDungeonSummaries, getQuestBySlug } from "@/app/lib/journal";
+import { chainPageKind, getDungeonSummaries, getQuestBySlug, getTierSets } from "@/app/lib/journal";
+import { itemIconSrc, itemPath } from "@/app/lib/items";
 import { bandArt, cardArt, cardGradient, themeVars } from "@/app/lib/art";
 import { SITE_NAME, SITE_URL } from "@/app/lib/site";
 import { LANGS, format, href, type Lang } from "@/app/lib/i18n";
-import { dictFor, dungeonText, getLocalizedDungeon, localizeQuest, localizeSummary } from "@/app/lib/i18n-server";
+import { bossName, dictFor, dungeonText, getLocalizedChainPage, getLocalizedDungeon, localizeQuest, localizeSummary, questName } from "@/app/lib/i18n-server";
 import { I18nProvider } from "@/app/components/i18n/I18n";
 import Window from "@/app/components/journal/Window";
 import DungeonView from "@/app/components/journal/DungeonView";
@@ -17,6 +18,8 @@ import AdSlot from "@/app/components/journal/AdSlot";
 import { getOverview } from "@/app/lib/overviews";
 import Overview from "@/app/components/journal/Overview";
 import JournalHome from "@/app/components/journal/JournalHome";
+import HomeEmblems, { type EmblemText } from "@/app/components/journal/HomeEmblems";
+import TierSetsView, { type TierClassView } from "@/app/components/journal/TierSetsView";
 import HomeHero, { DownloadBanner } from "@/app/components/site/HomeHero";
 
 /** canonical + hreflang for a path that exists in every language. */
@@ -165,6 +168,117 @@ export function QuestBody({ slug, lang }: { slug: string; lang: Lang }) {
           </div>
           <div className="wf-pane wf-pane-single wf-pane-parchment">
             <QuestPanel q={q} full />
+          </div>
+        </Window>
+        <AdSlot />
+      </div>
+    </I18nProvider>
+  );
+}
+
+/* ---------- the home tabs' pages: quest chains and Tier Sets ---------- */
+
+function emblemText(dict: Record<string, string>): EmblemText {
+  return { dungeonsTitle: dict.DUNGEONS, raidsTitle: dict.RAIDS_TITLE, comingSoon: dict.COMING_SOON };
+}
+
+export function chainPageMetadata(slug: string, lang: Lang): Metadata {
+  const d = getLocalizedChainPage(slug, lang);
+  if (!d) return {};
+  const q = d.quests[0];
+  const dict = dictFor(lang);
+  const title = lang === "en" ? `${d.name}: the full quest chain (WoW Forever)` : `${d.name} - ${dict.QUESTS}`;
+  const steps = [...new Set(d.quests.flatMap((x) => [...x.chain.map((c) => c.name), x.name]))];
+  const description = (
+    lang === "en" ? `Every step of the ${d.name} quest chain on WoW Forever: ${steps.slice(0, 6).join(", ")}.` : `${q?.objective ?? d.name}`
+  ).slice(0, 160);
+  return {
+    title,
+    description,
+    alternates: alternates(lang, `/${slug}`),
+    openGraph: { title: `${title} - ${SITE_NAME}`, description, url: `${SITE_URL}${href(lang, `/${slug}`)}` },
+  };
+}
+
+/** The Onyxia Attunement and Cozy Sleeping Bag pages: the dungeon page with its Quests tab only, under the home tabs. */
+export function ChainPageBody({ slug, lang }: { slug: string; lang: Lang }) {
+  const d = getLocalizedChainPage(slug, lang);
+  const kind = chainPageKind(slug);
+  if (!d || !kind) notFound();
+  const dict = dictFor(lang);
+  return (
+    <I18nProvider lang={lang} dict={dict}>
+      <div className="journal wf-page ej">
+        <Window title={dict.DUNGEON_JOURNAL} homeHref={href(lang, "/")}>
+          <DungeonView d={d} tabs={<HomeEmblems text={emblemText(dict)} active={kind} />} />
+        </Window>
+        <AdSlot />
+      </div>
+    </I18nProvider>
+  );
+}
+
+export function tierSetsMetadata(lang: Lang): Metadata {
+  const dict = dictFor(lang);
+  const title =
+    lang === "en" ? "Tier 0 and Tier 0.5 sets for every class (WoW Forever)" : `${dict.TIER_TITLE} - ${dict.TIER_0}, ${dict.TIER_05}`;
+  const description =
+    lang === "en"
+      ? "Every Tier 0 and WoW Forever Tier 0.5 piece for every class: the boss and dungeon each drops in, and the quest that gives each Tier 0.5 piece."
+      : dict.TIER_ICON_TIP;
+  return {
+    title,
+    description,
+    alternates: alternates(lang, "/tier-sets"),
+    openGraph: { title: `${title} - ${SITE_NAME}`, description, url: `${SITE_URL}${href(lang, "/tier-sets")}` },
+  };
+}
+
+export function TierSetsBody({ lang }: { lang: Lang }) {
+  const sets = getTierSets();
+  if (!sets) notFound();
+  const dict = dictFor(lang);
+  const quests = sets.quests.map((q) => questName(q.id, q.name, lang));
+  const classes: TierClassView[] = sets.classes.map((c) => {
+    const piece = (p: (typeof c.tier0.pieces)[number]) => ({
+      id: p.id,
+      name: p.name,
+      quality: p.quality,
+      icon: itemIconSrc(p.id),
+      ...(p.page ? { href: itemPath(p.id, p.name) } : {}),
+      sources: p.sources.map((s) => ({
+        boss: s.trash ? (dict.s_trash ?? s.boss) : bossName(s.boss, lang),
+        dungeon: dungeonText(s.dungeon, lang).name,
+        href: href(lang, `/dungeon/${s.dungeonSlug}#${s.trash ? "trash" : `boss-${s.bossIndex}`}`),
+      })),
+      ...(p.quest !== undefined ? { quest: quests[p.quest] } : {}),
+    });
+    return {
+      token: c.token,
+      className: dict[`CLASS_${c.token}`] ?? c.token,
+      classIcon: `/journal/icons/classicon_${c.token.toLowerCase()}.webp`,
+      tier0: { name: c.tier0.name, pieces: c.tier0.pieces.map(piece) },
+      tier05: c.tier05
+        ? {
+            name: c.tier05.name,
+            versions: c.tier05.versions.map((v) => ({
+              ...(v.specIcon ? { specIcon: `/journal/icons/${v.specIcon}.webp` } : {}),
+              ...(v.role ? { specName: dict[`TIER05_SPEC_${c.token}_${v.role}`] ?? v.role } : {}),
+              pieces: v.pieces.map(piece),
+            })),
+          }
+        : null,
+    };
+  });
+  return (
+    <I18nProvider lang={lang} dict={dict}>
+      <div className="journal wf-page ej">
+        <Window title={dict.DUNGEON_JOURNAL} homeHref={href(lang, "/")}>
+          <div className="wf-dview">
+            <div className="wf-crumb wf-crumb-tabs">
+              <HomeEmblems text={emblemText(dict)} active="tier" />
+            </div>
+            <TierSetsView title={dict.TIER_TITLE ?? "Tier Sets"} classes={classes} />
           </div>
         </Window>
         <AdSlot />

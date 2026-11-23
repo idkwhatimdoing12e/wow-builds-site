@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useHref } from "@/app/components/i18n/I18n";
+import { useHref, useT } from "@/app/components/i18n/I18n";
 
 export interface EmblemText {
   dungeonsTitle: string;
@@ -9,17 +9,44 @@ export interface EmblemText {
   comingSoon: string;
 }
 
+/** Which of the home tabs is open. */
+export type HomeTab = "dungeons" | "sleeping-bag" | "onyxia" | "tier";
+
 /**
- * The addon's top-left home emblems (Systems/ForeverFilter.lua, 2.1.0):
- * - the WoW Forever emblem is the dungeon list's tab: it opens the list of
- *   dungeons, with its soft gold halo so it reads as clickable;
- * - the Raids medallion, greyed out until raids are added.
+ * The pages the tabs open. The two quest chains are the addon's own pages
+ * (FDJ.SLEEPING_BAG_PAGE, FDJ.ONYXIA_PAGE), at their names' slugs.
  */
-export default function HomeEmblems({ text }: { text: EmblemText }) {
+export const HOME_TAB_PATHS: Record<Exclude<HomeTab, "dungeons">, string> = {
+  "sleeping-bag": "/cozy-sleeping-bag",
+  onyxia: "/onyxia-attunement",
+  tier: "/tier-sets",
+};
+
+/**
+ * The addon's row of home icons (Systems/ForeverFilter.lua, TierSets.lua
+ * "hometabs"), working as tabs:
+ * - the WoW Forever emblem: the dungeon list;
+ * - the Raids medallion, greyed out until raids are added;
+ * - the Cozy Sleeping Bag, Onyxia Attunement and Tier Sets icons: their pages.
+ * The open page's icon is lit (the emblem's gold ring and brighter halo).
+ */
+export default function HomeEmblems({ text, active = "dungeons" }: { text: EmblemText; active?: HomeTab }) {
   const h = useHref();
+  const t = useT();
+  const tabs: { key: Exclude<HomeTab, "dungeons">; icon: string; title: string; tip: string }[] = [
+    { key: "sleeping-bag", icon: "/journal/icons/inv_misc_bag_bigbagofenchantments.webp", title: t.or("SLEEPING_BAG_TITLE", "Cozy Sleeping Bag"), tip: t.or("SLEEPING_BAG_HOW", "How to get Sleeping Bag") },
+    { key: "onyxia", icon: "/journal/ui/onyxia-icon.png", title: t.or("ATTUNE_ONYXIA", "Onyxia Attunement"), tip: t.or("ONYXIA_ICON_TIP", "") },
+    // The Tier Sets icon: the Vest of Elements (Tier 0 shaman chest).
+    { key: "tier", icon: "/journal/icons/inv_chest_chain_11.webp", title: t.or("TIER_TITLE", "Tier Sets"), tip: t.or("TIER_ICON_TIP", "") },
+  ];
   return (
     <div className="wf-emblems">
-      <Link href={h("/#dungeons")} className="wf-forever on" aria-current="page" aria-label={text.dungeonsTitle}>
+      <Link
+        href={h("/#dungeons")}
+        className={`wf-forever ${active === "dungeons" ? "on" : ""}`}
+        aria-current={active === "dungeons" ? "page" : undefined}
+        aria-label={text.dungeonsTitle}
+      >
         <img className="wf-forever-halo" src="/journal/ui/forever-halo.png" alt="" width={128} height={128} />
         <img className="wf-forever-ring" src="/journal/ui/forever-ring.png" alt="" width={128} height={128} />
         <img className="wf-forever-icon" src="/journal/ui/forever-icon.png" alt="" width={64} height={64} />
@@ -34,6 +61,27 @@ export default function HomeEmblems({ text }: { text: EmblemText }) {
           <span>{text.comingSoon}</span>
         </span>
       </span>
+      {tabs.map((tab) => {
+        const on = active === tab.key;
+        return (
+          <Link
+            key={tab.key}
+            // A lit tab goes back to the dungeon list, as in the addon.
+            href={on ? h("/#dungeons") : h(HOME_TAB_PATHS[tab.key])}
+            className={`wf-forever wf-hometab ${on ? "on" : ""}`}
+            aria-current={on ? "page" : undefined}
+            aria-label={tab.title}
+          >
+            <img className="wf-forever-halo" src="/journal/ui/forever-halo.png" alt="" width={128} height={128} />
+            <img className="wf-forever-ring" src="/journal/ui/forever-ring.png" alt="" width={128} height={128} />
+            <img className="wf-hometab-icon" src={tab.icon} alt="" width={56} height={56} />
+            <span className="wf-tip" role="tooltip">
+              <span className="wf-tip-title">{tab.title}</span>
+              {tab.tip && <span>{tab.tip}</span>}
+            </span>
+          </Link>
+        );
+      })}
     </div>
   );
 }

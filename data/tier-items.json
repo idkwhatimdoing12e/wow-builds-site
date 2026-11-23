@@ -1,0 +1,578 @@
+{
+ "226772": [
+  "Feralheart Sash",
+  3
+ ],
+ "226773": [
+  "Feralheart Cowl",
+  4
+ ],
+ "226774": [
+  "Feralheart Galoshes",
+  4
+ ],
+ "226775": [
+  "Feralheart Wraps",
+  3
+ ],
+ "226776": [
+  "Feralheart Vest",
+  4
+ ],
+ "226777": [
+  "Feralheart Hands",
+  4
+ ],
+ "226778": [
+  "Feralheart Spaulders",
+  3
+ ],
+ "226779": [
+  "Feralheart Kilt",
+  3
+ ],
+ "226780": [
+  "Feralheart Cord",
+  3
+ ],
+ "226781": [
+  "Feralheart Sandals",
+  4
+ ],
+ "226782": [
+  "Feralheart Bindings",
+  3
+ ],
+ "226783": [
+  "Feralheart Embrace",
+  4
+ ],
+ "226784": [
+  "Feralheart Gauntlets",
+  4
+ ],
+ "226785": [
+  "Feralheart Mantle",
+  3
+ ],
+ "226786": [
+  "Feralheart Headdress",
+  4
+ ],
+ "226787": [
+  "Feralheart Pants",
+  3
+ ],
+ "226788": [
+  "Feralheart Bands",
+  3
+ ],
+ "226789": [
+  "Feralheart Girdle",
+  3
+ ],
+ "226790": [
+  "Feralheart Epaulets",
+  3
+ ],
+ "226791": [
+  "Feralheart Trousers",
+  3
+ ],
+ "226792": [
+  "Feralheart Cap",
+  4
+ ],
+ "226793": [
+  "Feralheart Fists",
+  4
+ ],
+ "226794": [
+  "Feralheart Walkers",
+  4
+ ],
+ "226795": [
+  "Feralheart Tunic",
+  4
+ ],
+ "226796": [
+  "Feralheart Wristguards",
+  3
+ ],
+ "226797": [
+  "Feralheart Waistguard",
+  3
+ ],
+ "226798": [
+  "Feralheart Pauldrons",
+  3
+ ],
+ "226799": [
+  "Feralheart Legguards",
+  3
+ ],
+ "226801": [
+  "Feralheart Faceguard",
+  4
+ ],
+ "226802": [
+  "Feralheart Grips",
+  4
+ ],
+ "226803": [
+  "Feralheart Treads",
+  4
+ ],
+ "226804": [
+  "Feralheart Armor",
+  4
+ ],
+ "226825": [
+  "Darkmantle Tunic",
+  4
+ ],
+ "226826": [
+  "Darkmantle Spaulders",
+  3
+ ],
+ "226827": [
+  "Darkmantle Pants",
+  3
+ ],
+ "226828": [
+  "Darkmantle Grips",
+  4
+ ],
+ "226829": [
+  "Darkmantle Cap",
+  4
+ ],
+ "226830": [
+  "Darkmantle Bracers",
+  3
+ ],
+ "226831": [
+  "Darkmantle Footpads",
+  4
+ ],
+ "226832": [
+  "Darkmantle Belt",
+  3
+ ],
+ "226857": [
+  "Battleboots of Heroism",
+  4
+ ],
+ "226858": [
+  "Spaulders of Heroism",
+  3
+ ],
+ "226859": [
+  "Legplates of Heroism",
+  3
+ ],
+ "226860": [
+  "Crown of Heroism",
+  4
+ ],
+ "226861": [
+  "Gauntlets of Heroism",
+  4
+ ],
+ "226862": [
+  "Breastplate of Heroism",
+  4
+ ],
+ "226863": [
+  "Bracers of Heroism",
+  3
+ ],
+ "226864": [
+  "Belt of Heroism",
+  3
+ ],
+ "226865": [
+  "Wristguards of Heroism",
+  3
+ ],
+ "226866": [
+  "Waistguard of Heroism",
+  3
+ ],
+ "226867": [
+  "Pauldrons of Heroism",
+  3
+ ],
+ "226868": [
+  "Legguards of Heroism",
+  3
+ ],
+ "226869": [
+  "Faceguard of Heroism",
+  4
+ ],
+ "226870": [
+  "Handguards of Heroism",
+  4
+ ],
+ "226871": [
+  "Sabatons of Heroism",
+  4
+ ],
+ "226872": [
+  "Chestguard of Heroism",
+  4
+ ],
+ "226881": [
+  "Beastmaster's Treads",
+  4
+ ],
+ "226882": [
+  "Beastmaster's Pants",
+  3
+ ],
+ "226883": [
+  "Beastmaster's Gauntlets",
+  4
+ ],
+ "226884": [
+  "Beastmaster's Mantle",
+  3
+ ],
+ "226885": [
+  "Beastmaster's Bindings",
+  3
+ ],
+ "226886": [
+  "Beastmaster's Tunic",
+  4
+ ],
+ "226887": [
+  "Beastmaster's Cap",
+  4
+ ],
+ "226888": [
+  "Beastmaster's Belt",
+  3
+ ],
+ "226905": [
+  "Deathmist Belt",
+  3
+ ],
+ "226906": [
+  "Deathmist Robe",
+  4
+ ],
+ "226907": [
+  "Deathmist Bracers",
+  3
+ ],
+ "226908": [
+  "Deathmist Sandals",
+  4
+ ],
+ "226909": [
+  "Deathmist Mask",
+  4
+ ],
+ "226910": [
+  "Deathmist Leggings",
+  3
+ ],
+ "226911": [
+  "Deathmist Wraps",
+  4
+ ],
+ "226912": [
+  "Deathmist Mantle",
+  3
+ ],
+ "226929": [
+  "Sorcerer's Bindings",
+  3
+ ],
+ "226930": [
+  "Sorcerer's Gauntlets",
+  4
+ ],
+ "226931": [
+  "Sorcerer's Sandals",
+  4
+ ],
+ "226932": [
+  "Sorcerer's Robes",
+  4
+ ],
+ "226933": [
+  "Sorcerer's Leggings",
+  3
+ ],
+ "226934": [
+  "Sorcerer's Belt",
+  3
+ ],
+ "226935": [
+  "Sorcerer's Crown",
+  4
+ ],
+ "226936": [
+  "Sorcerer's Mantle",
+  3
+ ],
+ "226945": [
+  "Virtuous Robe",
+  4
+ ],
+ "226946": [
+  "Virtuous Skirt",
+  3
+ ],
+ "226947": [
+  "Virtuous Crown",
+  4
+ ],
+ "226948": [
+  "Virtuous Belt",
+  3
+ ],
+ "226949": [
+  "Virtuous Bracers",
+  3
+ ],
+ "226950": [
+  "Virtuous Mitts",
+  4
+ ],
+ "226951": [
+  "Virtuous Mantle",
+  3
+ ],
+ "226952": [
+  "Virtuous Sandals",
+  4
+ ],
+ "226953": [
+  "Virtuous Wraps",
+  3
+ ],
+ "226954": [
+  "Virtuous Cord",
+  3
+ ],
+ "226955": [
+  "Virtuous Epaulets",
+  3
+ ],
+ "226956": [
+  "Virtuous Leggings",
+  3
+ ],
+ "226957": [
+  "Virtuous Cowl",
+  4
+ ],
+ "226958": [
+  "Virtuous Hands",
+  4
+ ],
+ "226959": [
+  "Virtuous Slippers",
+  4
+ ],
+ "226960": [
+  "Virtuous Gown",
+  4
+ ],
+ "226969": [
+  "Soulforge Spaulders",
+  3
+ ],
+ "226970": [
+  "Soulforge Bracers",
+  3
+ ],
+ "226971": [
+  "Soulforge Belt",
+  3
+ ],
+ "226972": [
+  "Soulforge Legplates",
+  3
+ ],
+ "226973": [
+  "Soulforge Breastplate",
+  4
+ ],
+ "226974": [
+  "Soulforge Warboots",
+  4
+ ],
+ "226975": [
+  "Soulforge Gauntlets",
+  4
+ ],
+ "226976": [
+  "Soulforge Greathelm",
+  4
+ ],
+ "226977": [
+  "Soulforge Bindings",
+  3
+ ],
+ "226978": [
+  "Soulforge Cord",
+  3
+ ],
+ "226979": [
+  "Soulforge Epaulets",
+  3
+ ],
+ "226980": [
+  "Soulforge Leggings",
+  3
+ ],
+ "226981": [
+  "Soulforge Crown",
+  4
+ ],
+ "226982": [
+  "Soulforge Fists",
+  4
+ ],
+ "226983": [
+  "Soulforge Treads",
+  4
+ ],
+ "226984": [
+  "Soulforge Embrace",
+  4
+ ],
+ "226985": [
+  "Soulforge Wristguards",
+  3
+ ],
+ "226986": [
+  "Soulforge Waistguard",
+  3
+ ],
+ "226987": [
+  "Soulforge Pauldrons",
+  3
+ ],
+ "226988": [
+  "Soulforge Legguards",
+  3
+ ],
+ "226989": [
+  "Soulforge Faceguard",
+  4
+ ],
+ "226990": [
+  "Soulforge Handguards",
+  4
+ ],
+ "226991": [
+  "Soulforge Sabatons",
+  4
+ ],
+ "226992": [
+  "Soulforge Chestguards",
+  4
+ ],
+ "227001": [
+  "Bindings of The Five Thunders",
+  3
+ ],
+ "227002": [
+  "Coif of The Five Thunders",
+  4
+ ],
+ "227003": [
+  "Pauldrons of The Five Thunders",
+  3
+ ],
+ "227004": [
+  "Vest of The Five Thunders",
+  4
+ ],
+ "227005": [
+  "Kilt of The Five Thunders",
+  3
+ ],
+ "227006": [
+  "Gauntlets of The Five Thunders",
+  4
+ ],
+ "227007": [
+  "Slippers of The Five Thunders",
+  4
+ ],
+ "227008": [
+  "Cord of The Five Thunders",
+  3
+ ],
+ "227009": [
+  "Bracers of The Five Thunders",
+  3
+ ],
+ "227010": [
+  "Sash of The Five Thunders",
+  3
+ ],
+ "227011": [
+  "Mantle of The Five Thunders",
+  3
+ ],
+ "227012": [
+  "Leggings of The Five Thunders",
+  3
+ ],
+ "227013": [
+  "Crown of The Five Thunders",
+  4
+ ],
+ "227014": [
+  "Grasp of The Five Thunders",
+  4
+ ],
+ "227015": [
+  "Greaves of The Five Thunders",
+  4
+ ],
+ "227016": [
+  "Tunic of The Five Thunders",
+  4
+ ],
+ "227017": [
+  "Bands of The Five Thunders",
+  3
+ ],
+ "227018": [
+  "Girdle of The Five Thunders",
+  3
+ ],
+ "227019": [
+  "Spaulders of The Five Thunders",
+  3
+ ],
+ "227020": [
+  "Legplates of The Five Thunders",
+  3
+ ],
+ "227021": [
+  "Face of The Five Thunders",
+  4
+ ],
+ "227022": [
+  "Fists of The Five Thunders",
+  4
+ ],
+ "227023": [
+  "Treads of The Five Thunders",
+  4
+ ],
+ "227024": [
+  "Chain of The Five Thunders",
+  4
+ ]
+}

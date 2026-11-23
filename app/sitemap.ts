@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getDungeonSlugs, getQuestSlugs } from "@/app/lib/journal";
+import { getChainPageSlugs, getDungeonSlugs, getQuestSlugs } from "@/app/lib/journal";
 import { SITE_URL } from "@/app/lib/site";
 import { PREFIXED } from "@/app/lib/i18n";
 
@@ -9,6 +9,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   return [
     { url: `${SITE_URL}/`, lastModified: now, changeFrequency: "weekly", priority: 1 },
+    // The home tabs' pages: the quest chains (Sleeping Bag, Onyxia) and Tier Sets.
+    ...[...getChainPageSlugs(), "tier-sets"].map((slug) => ({
+      url: `${SITE_URL}/${slug}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })),
     ...getDungeonSlugs().map((slug) => ({
       url: `${SITE_URL}/dungeon/${slug}`,
       lastModified: now,
@@ -25,6 +32,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // The translated home, dungeon and quest pages: /de, /de/dungeon/x, ...
     ...PREFIXED.flatMap((lang) => [
       { url: `${SITE_URL}/${lang}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
+      ...[...getChainPageSlugs(), "tier-sets"].map((slug) => ({
+        url: `${SITE_URL}/${lang}/${slug}`,
+        lastModified: now,
+        changeFrequency: "weekly" as const,
+        priority: 0.6,
+      })),
       ...getDungeonSlugs().map((slug) => ({
         url: `${SITE_URL}/${lang}/dungeon/${slug}`,
         lastModified: now,

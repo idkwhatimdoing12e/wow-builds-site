@@ -125,6 +125,46 @@ def main():
                 "local _, FDJ = ...\n" + m.group(0))("ForeverDungeonJournal", fdj)
             print("loaded FOREVER_DUNGEONS from Systems/ForeverFilter.lua")
 
+    # Tier Sets (Systems/TierSets.lua): the sets live in the page's own code,
+    # not in Data/. Run just their tables: from "local SETS = {" to the
+    # CLASS_ORDER line, plus SPEC_ICONS, and hand back plain lists.
+    tier = None
+    ts = os.path.join(addon_dir, "Systems", "TierSets.lua")
+    if os.path.exists(ts):
+        src = open(ts, encoding="utf-8").read()
+        sets = re.search(r"^local SETS = \{.*?^local CLASS_ORDER = [^\n]*\n", src, re.S | re.M)
+        spec = re.search(r"^local SPEC_ICONS = \{.*?^\}", src, re.S | re.M)
+        if sets and spec:
+            block = sets.group(0) + spec.group(0) + r"""
+local unpack = table.unpack or unpack
+local T0, T05 = {}, {}
+for token, set in pairs(SETS) do T0[token] = { name = set.name, items = { unpack(set, 1, 8) } } end
+for token, set in pairs(SETS2) do
+    local versions = {}
+    for i, v in ipairs(set) do versions[i] = { role = v.role, items = { unpack(v, 1, 8) } } end
+    T05[token] = { name = set.name, versions = versions }
+end
+return { classes = CLASS_ORDER, tier0 = T0, tier05 = T05, pieceQuest = PIECE_QUEST,
+    quests05 = QUEST05, quests05Names = QUEST05_EN, specIcons = SPEC_ICONS }
+"""
+            tier = lua.eval("function(src) return load(src, '@Systems/TierSets.lua (sets)') end")(block)()
+            print("loaded TIER_SETS from Systems/TierSets.lua")
+
+    # The Cozy Sleeping Bag's chain differs by faction: step 1 is a quest of
+    # each side's own and step 2 starts at that side's Nailed Plank. The data
+    # files leave it set for the Alliance; switch to the Horde, keep what
+    # changes, and switch back.
+    variants = {}
+    if fdj["SetSleepingBagFaction"] is not None and fdj["SLEEPING_BAG_PAGE"] is not None:
+        page = fdj["SLEEPING_BAG_PAGE"]
+        main_id = fdj["DB"][page]["quests"][1]["id"]
+        fdj["SetSleepingBagFaction"]("Horde")
+        chain = lua_to_py(fdj["QUEST_PREREQ_CHAINS"][main_id], lua)
+        details = {str(s["id"]): lua_to_py(fdj["QUEST_PREREQ_DETAILS"][s["id"]], lua) for s in chain}
+        variants[page] = {"Horde": {"quest": main_id, "chain": chain, "details": details}}
+        fdj["SetSleepingBagFaction"]("Alliance")
+        print(f"loaded the Horde's {page} chain")
+
     export_keys = [
         "DB", "ORDER", "BOSS_LEVELS", "STATIC_DISPLAY_IDS",
         "QUEST_START_MAPS", "QUEST_PREREQ_CHAINS", "QUEST_PREREQ_DETAILS",
@@ -140,6 +180,13 @@ def main():
         val = fdj[key]
         if val is not None:
             result[key] = lua_to_py(val, lua)
+
+    if tier is not None:
+        result["TIER_SETS"] = lua_to_py(tier, lua)
+    result["FACTION_VARIANTS"] = variants
+    for key in ("SLEEPING_BAG_PAGE", "ONYXIA_PAGE", "SLEEPING_BAG_ITEM"):
+        if fdj[key] is not None:
+            result.setdefault("PAGES", {})[key] = fdj[key]
 
     # English UI labels (map labels, the Forever emblem's tooltip...) from the addon's locale table.
     labels = {}

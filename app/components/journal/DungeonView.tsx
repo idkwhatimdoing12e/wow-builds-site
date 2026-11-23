@@ -39,6 +39,7 @@ export default function DungeonView({
   next = null,
   character,
   intro,
+  tabs,
 }: {
   d: Dungeon;
   prev?: { name: string; slug: string } | null;
@@ -46,6 +47,8 @@ export default function DungeonView({
   character?: CharacterView;
   /** The dungeon page's written overview, shown under the name and level. */
   intro?: React.ReactNode;
+  /** A quest-chain page's row of home tabs, shown where the Dungeons button and arrows are. */
+  tabs?: React.ReactNode;
 }) {
   const t = useT();
   const h = useHref();
@@ -61,7 +64,8 @@ export default function DungeonView({
   // A selected step of a quest's prerequisite chain (the addon's selectedPrereqStep).
   const [step, setStep] = useState<{ parent: number; index: number } | null>(null);
   // Quests whose chain is unfolded under their row (the addon's expandedQuestChains).
-  const [expanded, setExpanded] = useState<number[]>([]);
+  // A quest-chain page opens with its chain unfolded, as the addon does.
+  const [expanded, setExpanded] = useState<number[]>(() => (d.chainPage ? d.quests.map((q) => q.id) : []));
   const [bossIdx, setBossIdx] = useState(0); // index into bosses; bosses.length = trash
   const detailRef = useRef<HTMLDivElement>(null);
   const root = useRef<HTMLDivElement>(null);
@@ -72,6 +76,14 @@ export default function DungeonView({
   // character code). So Back from an item page returns to the same boss or
   // quest, not the default tab. Item pages link to #boss-<n> and #trash too.
   const viewKey = `dj.view.${d.slug}`;
+  // The quest with this ID, the reader's faction's own first (the Sleeping
+  // Bag's chain is one quest ID with a version per faction).
+  const factionRef = useRef<"Alliance" | "Horde">("Alliance");
+  factionRef.current = faction;
+  const findQuest = (id: number) =>
+    d.quests.find((q) => q.id === id && questIsFor(q.faction, factionRef.current)) ??
+    d.quests.find((q) => q.id === id) ??
+    d.hiddenQuests.find((q) => q.id === id);
   const restored = useRef(false);
   useEffect(() => {
     const apply = (initial: boolean) => {
@@ -104,7 +116,7 @@ export default function DungeonView({
       if (h === "map" && d.map) setTab("map");
       if (h.startsWith("quest-")) {
         const id = parseInt(h.slice(6), 10);
-        const target = d.quests.find((q) => q.id === id) ?? d.hiddenQuests.find((q) => q.id === id);
+        const target = findQuest(id);
         if (target) {
           setTab("quests");
           setQuestId(id);
@@ -172,7 +184,7 @@ export default function DungeonView({
   // never leave the page. Hidden quests (reached through "Starts with" / "Leads to")
   // can be shown too.
   const selectQuest = (id: number) => {
-    const target = d.quests.find((q) => q.id === id) ?? d.hiddenQuests.find((q) => q.id === id);
+    const target = findQuest(id);
     if (!target) return;
     if (!character && target.faction !== "Both" && target.faction !== faction) setFaction(target.faction);
     setQuestId(id);
@@ -213,7 +225,7 @@ export default function DungeonView({
     : d.quests.filter((q) => questIsFor(q.faction, faction));
   const selectedQuest =
     quests.find((q) => q.id === questId) ?? d.hiddenQuests.find((q) => q.id === questId) ?? quests[0];
-  const stepParent = step ? d.quests.find((q) => q.id === step.parent) : undefined;
+  const stepParent = step ? (quests.find((q) => q.id === step.parent) ?? d.quests.find((q) => q.id === step.parent)) : undefined;
   const selectedStep = step && stepParent ? stepParent.chain[step.index] : undefined;
   // RPG Mode: a boss not found yet is "???", with how to reveal it.
   const locked = character?.lockedBosses;
@@ -246,7 +258,8 @@ export default function DungeonView({
 
   return (
     <div ref={root} className="wf-dview">
-      {!character && (
+      {!character && d.chainPage && tabs && <div className="wf-crumb wf-crumb-tabs">{tabs}</div>}
+      {!character && !d.chainPage && (
         <div className="wf-crumb">
           {/* The addon's arrows either side of "Dungeons": the previous and next dungeon. */}
           {prev ? (
@@ -270,14 +283,16 @@ export default function DungeonView({
         </div>
         {!d.previewOnly && (
           <div className="wf-dtabs">
-            {d.map && (
+            {d.map && !d.chainPage && (
               <button type="button" data-tab="map" className={`wf-btn wf-tab ${tab === "map" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("map")}>
                 <img className="wf-tab-ico wf-tab-ico-map" src="/journal/ui/map-tab.png" alt="" width={22} height={22} /> {t("MAP")}
               </button>
             )}
-            <button type="button" data-tab="bosses" className={`wf-btn wf-tab ${tab === "bosses" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("bosses")}>
-              <img className="wf-tab-ico" src="/journal/ui/skull.png" alt="" width={24} height={24} /> {t("BOSSES")}
-            </button>
+            {!d.chainPage && (
+              <button type="button" data-tab="bosses" className={`wf-btn wf-tab ${tab === "bosses" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("bosses")}>
+                <img className="wf-tab-ico" src="/journal/ui/skull.png" alt="" width={24} height={24} /> {t("BOSSES")}
+              </button>
+            )}
             <button type="button" data-tab="quests" className={`wf-btn wf-tab ${tab === "quests" ? "wf-tab-active" : "wf-btn-red"}`} onClick={() => setTab("quests")}>
               <img className="wf-tab-ico wf-tab-ico-q" src="/journal/ui/quest-available.png" alt="" width={24} height={24} /> {t("QUESTS")}
             </button>
@@ -423,6 +438,7 @@ export default function DungeonView({
             )}
           </div>
         </div>
+        {!d.chainPage && (
         <div className="wf-panes" data-pane="bosses" hidden={tab !== "bosses"}>
           <div className="wf-pane wf-pane-list">
             <div className="wf-pane-head"><span>{t("BOSSES")}</span></div>
@@ -456,6 +472,7 @@ export default function DungeonView({
             {bossIdx < bossItems.length ? <BossPanel boss={bossItems[bossIdx]} /> : <TrashPanel trash={d.trash} />}
           </div>
         </div>
+        )}
         </>
       )}
 
@@ -463,7 +480,7 @@ export default function DungeonView({
         <p className="wf-tbd">{t("s_items_tbd")}</p>
       )}
 
-      {!character && (
+      {!character && !d.chainPage && (
         <div className="wf-pager">
           {prev ? <Link href={h(`/dungeon/${prev.slug}`)} className="wf-btn wf-btn-dark wf-btn-sm">← {prev.name}</Link> : <span />}
           {next ? <Link href={h(`/dungeon/${next.slug}`)} className="wf-btn wf-btn-dark wf-btn-sm">{next.name} →</Link> : <span />}

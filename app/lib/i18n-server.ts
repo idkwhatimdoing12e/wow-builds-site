@@ -14,7 +14,7 @@ import zhCN from "@/data/locales/zhCN.json";
 import zhTW from "@/data/locales/zhTW.json";
 import { langInfo, type Lang, type Locale } from "./i18n";
 import { JOURNAL_STRINGS } from "./journal-strings";
-import { getDungeon, type ChainStepFull, type Dungeon, type DungeonSummary, type Quest } from "./journal";
+import { chainPageKind, getChainPage, getDungeon, type ChainStepFull, type Dungeon, type DungeonSummary, type Quest } from "./journal";
 
 interface LocaleDoc {
   ui: Record<string, string>;
@@ -45,6 +45,9 @@ const ADDON_KEYS = [
   "OBJECTIVE", "STARTS_AT", "TURN_IN", "NOTES", "REWARD", "REWARDS", "CHOOSE_ONE_REWARD", "ALSO_RECEIVE",
   "SHOW_QUEST_CHAIN", "OPEN_REQUIRED_CHAIN", "CHAIN_REQUIRED", "LEADS_TO", "REQUIRED_PREREQUISITE",
   "REQUIRED_ITEMS", "PROVIDED_ITEM", "SHOW_ON_MAP", "PROF_BLACKSMITHING", "PROF_MINING",
+  // the home page's tabs and their pages (Systems/TierSets.lua, OnyxiaAttunement.lua, QuestText.lua)
+  "TIER_TITLE", "TIER_0", "TIER_05", "TIER05_FROM", "TIER_ICON_TIP", "TIER_SHOW_CLASSES", "TIER_ALL", "TIER_PIECE_TIP",
+  "ATTUNE_ONYXIA", "ONYXIA_ICON_TIP", "SLEEPING_BAG", "SLEEPING_BAG_TITLE", "SLEEPING_BAG_HOW",
 ];
 
 /** Every string the translated pages show, in one language, English where a translation is missing. */
@@ -53,6 +56,12 @@ export function dictFor(lang: Lang): Record<string, string> {
   const en = DOCS.enUS.ui;
   const ui = doc(lang).ui;
   for (const key of ADDON_KEYS) {
+    const v = (lang !== "en" && ui[key]) || en[key];
+    if (v) out[key] = v;
+  }
+  // Tier 0.5's spec names (TIER05_SPEC_<CLASS>_<ROLE>), every one the addon has.
+  for (const key of Object.keys(en)) {
+    if (!key.startsWith("TIER05_SPEC_")) continue;
     const v = (lang !== "en" && ui[key]) || en[key];
     if (v) out[key] = v;
   }
@@ -162,4 +171,19 @@ export function menuNames(slugsByName: { slug: string; name: string }[]): Record
     out[locale] = names;
   }
   return out;
+}
+
+/** A quest-chain page (Onyxia Attunement, Cozy Sleeping Bag) in a language: its title is the addon's own string. */
+export function getLocalizedChainPage(slug: string, lang: Lang): Dungeon | null {
+  const d = getChainPage(slug);
+  if (!d) return null;
+  const kind = chainPageKind(slug);
+  const key = kind === "onyxia" ? "ATTUNE_ONYXIA" : kind === "sleeping-bag" ? "SLEEPING_BAG_TITLE" : "";
+  const name = (key && ((lang !== "en" && doc(lang).ui[key]) || DOCS.enUS.ui[key])) || d.name;
+  return { ...d, name, quests: d.quests.map((q) => localizeQuest(q, lang)) };
+}
+
+/** A quest's name in a language (the addon's translation), English when it has none. */
+export function questName(id: number, english: string, lang: Lang): string {
+  return questText(id, lang)?.name || english;
 }

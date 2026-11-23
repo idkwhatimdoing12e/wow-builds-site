@@ -82,6 +82,41 @@ def main():
         except Exception as err:  # a file that needs the game: its tables are mostly set before
             print(f"partial {rel}: {str(err)[:120]}")
 
+    # The features in Systems/ keep their own strings in a "local strings =
+    # { enUS = {...}, deDE = {...} }" table each (Tier Sets, Onyxia, the
+    # Sleeping Bag...), merged into FDJ.Locales when the game loads them. Run
+    # just those tables, and merge the same way: never over a key already set.
+    merge = lua.eval("""function(src, name, FDJ)
+        local chunk = load(src .. [[
+            for loc, entries in pairs(strings) do
+                local t = FDJ.Locales and FDJ.Locales[loc]
+                if t and type(entries) == "table" then
+                    for k, v in pairs(entries) do
+                        if type(v) == "string" and t[k] == nil then t[k] = v end
+                    end
+                end
+            end]], '@' .. name, "t", setmetatable({ FDJ = FDJ }, { __index = _G }))
+        if not chunk then return false end
+        return pcall(chunk)
+    end""")
+    systems = os.path.join(addon, "Systems")
+    merged = 0
+    for fn in sorted(os.listdir(systems)) if os.path.isdir(systems) else []:
+        if not fn.endswith(".lua"):
+            continue
+        lines = open(os.path.join(systems, fn), encoding="utf-8").read().split("\n")
+        for i, line in enumerate(lines):
+            m = re.match(r"^(\s*)local strings = \{\s*$", line)
+            if not m:
+                continue
+            close = m.group(1) + "}"
+            end = next((j for j in range(i + 1, len(lines)) if lines[j].rstrip() == close), None)
+            if end is None:
+                continue
+            ok = merge("\n".join(lines[i:end + 1]) + "\nstrings.esMX = strings.esMX or strings.esES\n", f"Systems/{fn}", fdj)
+            merged += 1 if ok else 0
+    print(f"merged {merged} string tables from Systems/")
+
     locales = py(fdj["Locales"]) or {}
     content = py(fdj["ContentLocales"]) or {}
     os.makedirs(OUT_DIR, exist_ok=True)

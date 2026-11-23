@@ -4,6 +4,7 @@
 import raw from "@/data/journal.json";
 import portraitsFile from "@/data/npc-portraits.json";
 import gameItemsFile from "@/data/item-game.json";
+import tierItemsFile from "@/data/tier-items.json";
 import { QUALITY_COLORS, QUALITY_NAMES, questIsFor, zonePin } from "./journal-shared";
 // Re-exported for server code; browser components import journal-shared directly.
 export { QUALITY_COLORS, QUALITY_NAMES, questIsFor, zonePin };
@@ -137,6 +138,28 @@ interface JournalData {
   /** The addon's search abbreviations (Data/DungeonAliases.lua): "rfc", "sm gy"... */
   DUNGEON_SEARCH_ALIASES?: Record<string, string[]>;
   meta: { addonVersion: string; dungeonCount: number };
+  /** The addon's pages that are one quest chain, not a dungeon (lua-to-json.py). */
+  PAGES?: { SLEEPING_BAG_PAGE?: string; ONYXIA_PAGE?: string; SLEEPING_BAG_ITEM?: number };
+  /** A chain page's other faction, where its chain differs (the Sleeping Bag's Horde). */
+  FACTION_VARIANTS?: Record<string, Partial<Record<Faction, FactionVariant>>>;
+  TIER_SETS?: RawTierSets;
+}
+
+interface FactionVariant {
+  quest: number;
+  chain: ChainStep[];
+  details: Record<string, PrereqDetail>;
+}
+
+interface RawTierSets {
+  classes: string[];
+  tier0: Record<string, { name: string; items: number[] }>;
+  tier05: Record<string, { name: string; versions: { role?: string; items: number[] }[] }>;
+  /** For each piece (Head ... Feet), which of the four Tier 0.5 quests gives it (1-4). */
+  pieceQuest: number[];
+  quests05: number[];
+  quests05Names: string[];
+  specIcons: Record<string, Record<string, string>>;
 }
 
 /* ---------- Map tab (the addon's FDJ.DUNGEON_MAPS) ---------- */
@@ -356,6 +379,8 @@ export interface TrashDrop {
 }
 
 export interface Dungeon extends DungeonSummary {
+  /** One quest chain, not a dungeon (Onyxia Attunement, Cozy Sleeping Bag): its Quests tab only. */
+  chainPage?: boolean;
   entrance?: MapPoint;
   quests: Quest[];
   hiddenQuests: Quest[];
@@ -520,6 +545,160 @@ export function getDungeon(slug: string, labels?: Labels): Dungeon | null {
   return { ...summary, entrance: d.entrance, quests, hiddenQuests, bosses, trash, ...(map ? { map } : {}) };
 }
 
+/* ---------- quest chain pages (the addon's questChainPage) ---------- */
+
+/** The addon's quest-chain pages the site shows. */
+function chainPageNames(): string[] {
+  const p = data.PAGES ?? {};
+  return [p.SLEEPING_BAG_PAGE, p.ONYXIA_PAGE].filter((n): n is string => !!n && !!data.DB[n]);
+}
+
+export function getChainPageSlugs(): string[] {
+  return chainPageNames().map(slugify);
+}
+
+/** Which page a slug is, for the home tabs. */
+export function chainPageKind(slug: string): "sleeping-bag" | "onyxia" | null {
+  const p = data.PAGES ?? {};
+  if (p.SLEEPING_BAG_PAGE && slugify(p.SLEEPING_BAG_PAGE) === slug) return "sleeping-bag";
+  if (p.ONYXIA_PAGE && slugify(p.ONYXIA_PAGE) === slug) return "onyxia";
+  return null;
+}
+
+/**
+ * A quest-chain page as a Dungeon with quests only. Where the addon swaps the
+ * chain for the other faction (the Sleeping Bag: step 1 is each side's own
+ * quest, step 2 starts at that side's plank), that faction gets its own copy
+ * of the quest, with its chain.
+ */
+export function getChainPage(slug: string): Dungeon | null {
+  const name = chainPageNames().find((n) => slugify(n) === slug);
+  if (!name) return null;
+  const d = data.DB[name];
+  const raws = asList<RawQuest>(d.quests).filter((q) => q && q.id);
+  const variants = Object.entries(data.FACTION_VARIANTS?.[name] ?? {}) as [Faction, FactionVariant][];
+  const quests: Quest[] = [];
+  for (const q of raws) {
+    const built = buildQuest(q, name);
+    quests.push(built);
+    for (const [faction, v] of variants) {
+      if (v.quest !== q.id || faction === q.faction) continue;
+      quests.push({ ...built, faction, chain: v.chain.map((s) => buildChainStep(s, v.details[String(s.id)])) });
+    }
+  }
+  const counted = quests.filter((q) => !q.repeatable);
+  return {
+    slug,
+    name,
+    level: d.level,
+    minLevel: minLevelOf(d.level),
+    location: d.location ?? "",
+    description: d.description ?? "",
+    previewOnly: false,
+    fullItemsTBD: false,
+    questCount: quests.length,
+    forever: false,
+    aliases: [],
+    questsByFaction: {
+      Alliance: counted.filter((q) => questIsFor(q.faction, "Alliance")).length,
+      Horde: counted.filter((q) => questIsFor(q.faction, "Horde")).length,
+    },
+    bossCount: 0,
+    chainPage: true,
+    quests,
+    hiddenQuests: [],
+    bosses: [],
+    trash: [],
+  };
+}
+
+/* ---------- Tier Sets (the addon's Systems/TierSets.lua) ---------- */
+
+export interface TierPiece {
+  id: number;
+  name: string;
+  quality: number;
+  /** Has an item page on the site (every piece a boss drops). */
+  page: boolean;
+  /** Every boss (or the trash) whose loot lists it, in the journal's dungeon order. */
+  sources: { boss: string; dungeon: string; dungeonSlug: string; bossIndex: number; trash?: boolean }[];
+  /** Tier 0.5: which of the four quests gives it (index into TierSets.quests). */
+  quest?: number;
+}
+
+export interface TierClass {
+  token: string;
+  tier0: { name: string; pieces: TierPiece[] };
+  tier05: { name: string; versions: { role?: string; specIcon?: string; pieces: TierPiece[] }[] } | null;
+}
+
+export interface TierSets {
+  classes: TierClass[];
+  /** The Tier 0.5 quests, in order (An Earnest Proposition ... Saving the Best for Last). */
+  quests: { id: number; name: string }[];
+}
+
+const TIER_ITEMS = tierItemsFile as unknown as Record<string, [string, number]>;
+
+/** Tier Sets: each class's Tier 0 and Tier 0.5 pieces, Head to Feet, and where each comes from. */
+export function getTierSets(): TierSets | null {
+  const t = data.TIER_SETS;
+  if (!t) return null;
+  // Where every item drops: boss loot across the journal's dungeons. The index
+  // is the boss's place in the page's Bosses list (trash is not in it).
+  const drops = new Map<number, { item: LootTuple; source: TierPiece["sources"][number] }[]>();
+  for (const name of data.ORDER) {
+    const d = data.DB[name];
+    if (!d || d.previewOnly) continue;
+    let index = 0;
+    for (const b of asList<RawBoss>(d.bosses)) {
+      if (!b || !b.name) continue;
+      // Trash Drops count too, as in the addon (the Tier 0 belts drop from trash).
+      const source = { boss: b.name, dungeon: name, dungeonSlug: slugify(name), bossIndex: b.trash ? -1 : index, ...(b.trash ? { trash: true } : {}) };
+      for (const item of asLoot(b.loot)) {
+        const list = drops.get(item[0]) ?? [];
+        list.push({ item, source });
+        drops.set(item[0], list);
+      }
+      if (!b.trash) index++;
+    }
+  }
+  const piece = (id: number, quest?: number): TierPiece => {
+    const found = drops.get(id) ?? [];
+    const own = TIER_ITEMS[String(id)];
+    const first = found[0]?.item;
+    return {
+      id,
+      name: GAME_ITEMS[String(id)]?.[0] ?? first?.[1] ?? own?.[0] ?? `Item ${id}`,
+      quality: GAME_ITEMS[String(id)]?.[1] ?? own?.[1] ?? first?.[3] ?? 3,
+      page: found.length > 0,
+      sources: found.map((f) => f.source),
+      ...(quest !== undefined ? { quest } : {}),
+    };
+  };
+  return {
+    quests: t.quests05.map((id, i) => ({ id, name: t.quests05Names[i] ?? "" })),
+    classes: t.classes.map((token) => {
+      const s0 = t.tier0[token];
+      const s05 = t.tier05[token];
+      return {
+        token,
+        tier0: { name: s0?.name ?? "", pieces: (s0?.items ?? []).map((id) => piece(id)) },
+        tier05: s05
+          ? {
+              name: s05.name,
+              versions: s05.versions.map((v) => ({
+                role: v.role,
+                specIcon: v.role ? t.specIcons[token]?.[v.role]?.toLowerCase() : undefined,
+                pieces: v.items.map((id, i) => piece(id, (t.pieceQuest[i] ?? 1) - 1)),
+              })),
+            }
+          : null,
+      };
+    }),
+  };
+}
+
 /* ---------- quests ---------- */
 
 export interface ChainStepFull extends ChainStep {
@@ -641,13 +820,13 @@ function buildPrereqDetail(d?: PrereqDetail): PrereqDetail | undefined {
   };
 }
 
-function buildChainStep(s: ChainStep): ChainStepFull {
+function buildChainStep(s: ChainStep, detailOverride?: PrereqDetail): ChainStepFull {
   const id = String(s.id);
   const items = data.PREREQ_REWARD_ITEMS_FALLBACK?.[id];
   return {
     ...s,
     slug: s.itemStep ? undefined : slugForQuestId(s.id),
-    detail: buildPrereqDetail(data.QUEST_PREREQ_DETAILS[id]),
+    detail: buildPrereqDetail(detailOverride ?? data.QUEST_PREREQ_DETAILS[id]),
     rewardItems: asRewards(items?.items),
     rewardChoice: !!items?.choice,
     xp: s.itemStep ? undefined : (data.FOREVER_QUEST_XP_FALLBACK[id] ?? data.FOREVER_QUEST_BASE_XP[id]),
@@ -657,7 +836,7 @@ function buildChainStep(s: ChainStep): ChainStepFull {
 
 function buildQuest(q: RawQuest, dungeonName: string): Quest {
   const chainRaw = asList<ChainStep>(data.QUEST_PREREQ_CHAINS[String(q.id)]);
-  const chain: ChainStepFull[] = chainRaw.map(buildChainStep);
+  const chain: ChainStepFull[] = chainRaw.map((s) => buildChainStep(s));
   const related: Quest["related"] = [];
   const push = (label: string, l?: { id: number; name: string }) => {
     if (l) related.push({ label, id: l.id, name: l.name, slug: slugForQuestId(l.id) });

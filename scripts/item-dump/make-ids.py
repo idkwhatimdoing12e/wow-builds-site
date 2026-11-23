@@ -58,6 +58,13 @@ def main():
     collect(journal.get("SHARED_BY_BOSS", {}), ids, True)
     collect(journal.get("QUEST_PREREQ_DETAILS", {}), ids)
     collect(journal.get("PREREQ_REWARD_ITEMS_FALLBACK", {}), ids)
+    # Tier Sets: the pieces are bare IDs (Tier 0.5's are Forever's own items, in no loot list).
+    tier = journal.get("TIER_SETS") or {}
+    for s in (tier.get("tier0") or {}).values():
+        ids.update(int(i) for i in s.get("items", []))
+    for s in (tier.get("tier05") or {}).values():
+        for v in s.get("versions", []):
+            ids.update(int(i) for i in v.get("items", []))
     ids = sorted(i for i in ids if i > 0)
     lines = ["-- Written by scripts/item-dump/make-ids.py: do not edit.", "DJItemDump_IDS = {"]
     for n in range(0, len(ids), 12):
