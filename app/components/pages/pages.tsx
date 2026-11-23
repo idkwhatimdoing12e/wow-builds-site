@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { chainPageKind, getDungeonSummaries, getQuestBySlug, getTierSets } from "@/app/lib/journal";
 import { itemIconSrc, itemPath } from "@/app/lib/items";
+import { getItemById } from "@/app/lib/item-index";
 import { bandArt, cardArt, cardGradient, themeVars } from "@/app/lib/art";
 import { SITE_NAME, SITE_URL } from "@/app/lib/site";
 import { LANGS, format, href, type Lang } from "@/app/lib/i18n";
@@ -245,7 +246,7 @@ export function TierSetsBody({ lang }: { lang: Lang }) {
       name: p.name,
       quality: p.quality,
       icon: itemIconSrc(p.id),
-      ...(p.page ? { href: itemPath(p.id, p.name) } : {}),
+      ...(getItemById(p.id) ? { href: itemPath(p.id, p.name) } : {}),
       sources: p.sources.map((s) => ({
         boss: s.trash ? (dict.s_trash ?? s.boss) : bossName(s.boss, lang),
         dungeon: dungeonText(s.dungeon, lang).name,

@@ -5,9 +5,11 @@
 import notesFile from "@/data/item-notes.json";
 import tooltipsFile from "@/data/item-tooltips.json";
 import slotsFile from "@/data/item-slots.json";
+import tierTooltipsFile from "@/data/tier-tooltips.json";
 import {
   getDungeon,
   getDungeonSlugs,
+  getTierSets,
   QUALITY_NAMES,
   type ItemRef,
   type LootTuple,
@@ -33,7 +35,8 @@ export type SourceKind =
 
 export interface ItemSource {
   kind: SourceKind;
-  dungeon: { name: string; slug: string };
+  /** Absent for a Tier 0.5 piece: its quest belongs to no dungeon. */
+  dungeon?: { name: string; slug: string };
   /** Bosses: the name and its place in the dungeon's boss list (for #boss-N). */
   boss?: { name: string; index: number };
   /** Quests: slug is absent for a chain step the journal has no page for. */
@@ -68,6 +71,9 @@ export interface ItemEntry {
 
 const NOTES = (notesFile as { items?: Record<string, ItemNotes> }).items ?? {};
 const TOOLTIPS = (tooltipsFile as { items?: Record<string, TooltipLine[]> }).items ?? {};
+// Forever's Tier 0.5 pieces, which the dump has not seen yet
+// (scripts/item-dump/tier-tooltips.py). The dump's own lines win.
+const TIER_TOOLTIPS = tierTooltipsFile as Record<string, TooltipLine[]>;
 // "One-Hand, Mace" from the client's Item table (scripts/item-dump/item-slots.py),
 // for items the loot lists give no slot.
 const SLOTS = slotsFile as Record<string, string>;
@@ -98,14 +104,18 @@ function buildIndex(): Map<number, ItemEntry> {
         icon: itemIconSrc(id),
         sources: [],
         ...(NOTES[String(id)] ? { extra: NOTES[String(id)] } : {}),
-        ...(TOOLTIPS[String(id)]?.length ? { lines: TOOLTIPS[String(id)] } : {}),
+        ...(TOOLTIPS[String(id)]?.length
+          ? { lines: TOOLTIPS[String(id)] }
+          : TIER_TOOLTIPS[String(id)]?.length
+            ? { lines: TIER_TOOLTIPS[String(id)] }
+            : {}),
       };
       out.set(id, e);
     }
     // Loot rows know the slot and the addon's tooltip lines; rewards do not.
     if (extra.slot && !e.slot) e.slot = extra.slot;
     if (extra.tip?.length && !e.tip) e.tip = extra.tip;
-    const key = [id, source.kind, source.dungeon.slug, source.boss?.name ?? "", source.quest?.id ?? ""].join("|");
+    const key = [id, source.kind, source.dungeon?.slug ?? "", source.boss?.name ?? "", source.quest?.id ?? ""].join("|");
     if (seen.has(key)) return;
     seen.add(key);
     e.sources.push(source);
@@ -156,7 +166,28 @@ function buildIndex(): Map<number, ItemEntry> {
     d.hiddenQuests.forEach(questItems);
   }
 
+  // Tier 0.5 pieces: rewards of the four Tier 0.5 quests, which no dungeon
+  // page lists. The Tier Sets tab links to them.
+  const tiers = getTierSets();
+  for (const c of tiers?.classes ?? []) {
+    for (const v of c.tier05?.versions ?? []) {
+      for (const p of v.pieces) {
+        const q = p.quest !== undefined ? tiers?.quests[p.quest] : undefined;
+        add(p.id, p.name, p.quality, {
+          kind: "reward",
+          ...(q ? { quest: { id: q.id, name: q.name } } : {}),
+          note: "Tier 0.5",
+        });
+      }
+    }
+  }
+
   for (const e of out.values()) {
+    // "Head" / "Leather" from the tooltip's slot row, for items no loot list gives a slot.
+    if (!e.slot && e.lines && !SLOTS[String(e.id)]) {
+      const row = e.lines.slice(1, 5).find((l) => l.r && !l.price);
+      if (row) e.slot = `${row.l}, ${row.r}`;
+    }
     if (!e.slot && SLOTS[String(e.id)]) e.slot = SLOTS[String(e.id)];
   }
 
@@ -174,9 +205,9 @@ export function itemTip(e: ItemEntry): ItemTip {
   const trash = e.sources.find((s) => s.kind === "trash");
   const reward = e.sources.find((s) => s.kind === "reward" || s.kind === "choice" || s.kind === "also" || s.kind === "later");
   const source = drop
-    ? `Dropped by ${drop.boss?.name} (${drop.dungeon.name})`
+    ? `Dropped by ${drop.boss?.name} (${drop.dungeon?.name})`
     : trash
-      ? `Dropped by trash in ${trash.dungeon.name}`
+      ? `Dropped by trash in ${trash.dungeon?.name}`
       : reward
         ? `Reward from ${reward.quest?.name}`
         : undefined;

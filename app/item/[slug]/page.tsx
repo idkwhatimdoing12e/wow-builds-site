@@ -28,7 +28,8 @@ const DROP_KINDS = new Set(["drop", "shared", "recipe", "trash"]);
 const REWARD_KINDS = new Set(["reward", "choice", "also", "later"]);
 
 function where(s: ItemSource): string {
-  return s.boss?.name === "Trash" ? `/dungeon/${s.dungeon.slug}#trash` : `/dungeon/${s.dungeon.slug}#boss-${s.boss?.index ?? 0}`;
+  const slug = s.dungeon?.slug ?? "";
+  return s.boss?.name === "Trash" ? `/dungeon/${slug}#trash` : `/dungeon/${slug}#boss-${s.boss?.index ?? 0}`;
 }
 
 /** One line of the drop sources, a sentence a reader can follow. */
@@ -94,17 +95,20 @@ export default async function ItemPage({ params }: { params: Promise<{ slug: str
   const drops = item.sources.filter((s) => DROP_KINDS.has(s.kind));
   const rewards = item.sources.filter((s) => REWARD_KINDS.has(s.kind));
   const uses = item.sources.filter((s) => s.kind in USE_TAG);
-  const home = item.sources[0].dungeon;
+  // A Tier 0.5 piece belongs to no dungeon: it goes home to the Tier Sets tab.
+  const home = item.sources.find((s) => s.dungeon)?.dungeon;
+  const homeHref = home ? `/dungeon/${home.slug}` : "/tier-sets";
+  const homeName = home ? home.name : "Tier Sets";
   const extra = item.extra;
 
   return (
     <div className="journal wf-page">
-      <Window style={themeVars(home.name) as React.CSSProperties}>
+      <Window style={(home ? themeVars(home.name) : undefined) as React.CSSProperties | undefined}>
         {/* back to the boss or quest the reader came from */}
-        <BackLink fallback={`/dungeon/${home.slug}`} />
+        <BackLink fallback={homeHref} />
         <div className="wf-crumb">
           <Link href="/" className="wf-btn wf-btn-red wf-btn-sm">Dungeons</Link>
-          <Link href={`/dungeon/${home.slug}`} className="wf-btn wf-btn-red wf-btn-sm">{home.name}</Link>
+          <Link href={homeHref} className="wf-btn wf-btn-red wf-btn-sm">{homeName}</Link>
         </div>
         <div className="wf-pane wf-pane-single wf-pane-parchment">
           <div className="wp it">
@@ -126,7 +130,7 @@ export default async function ItemPage({ params }: { params: Promise<{ slug: str
                   {drops.map((s, i) => (
                     <li key={i}>
                       <Link href={where(s)} className="wp-link">{sourceLine(s)}</Link>
-                      <span className="it-where">{s.dungeon.name}</span>
+                      <span className="it-where">{s.dungeon?.name}</span>
                     </li>
                   ))}
                 </ul>
@@ -143,7 +147,8 @@ export default async function ItemPage({ params }: { params: Promise<{ slug: str
                       <span className="it-where">
                         {side(s)}
                         {REWARD_TAG[s.kind]}
-                        {s.note ? ` · ${s.note}` : ""} · {s.dungeon.name}
+                        {s.note ? ` · ${s.note}` : ""}
+                        {s.dungeon ? ` · ${s.dungeon.name}` : ""}
                       </span>
                     </li>
                   ))}
@@ -160,7 +165,8 @@ export default async function ItemPage({ params }: { params: Promise<{ slug: str
                       <QuestName s={s} />
                       <span className="it-where">
                         {side(s)}
-                        {USE_TAG[s.kind]} · {s.dungeon.name}
+                        {USE_TAG[s.kind]}
+                        {s.dungeon ? ` · ${s.dungeon.name}` : ""}
                       </span>
                     </li>
                   ))}
