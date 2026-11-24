@@ -7,7 +7,7 @@ import { useT } from "@/app/components/i18n/I18n";
 
 /**
  * The home banner: a painting edge to edge that fades into the page, with the
- * title, a line and a button centred over it. Most visitors come from the
+ * a line (the page's heading) and a button centred over it. Most visitors come from the
  * addon, so it asks them to bring their character (/dj export) rather than
  * to download it; the header and the closing band still offer the download.
  * (The Latest Drama banner it replaced for a while is in git history, commit
@@ -20,8 +20,7 @@ export default function HomeHero() {
       <div className="sx-slide on">
         <div className="sx-slide-art" style={{ backgroundImage: "url(/journal/art/shadowfang-keep-card.webp)" }} />
         <div className="sx-slide-copy">
-          <h1 className="sx-slide-title">Dungeon Journal</h1>
-          <p className="sx-slide-text">{t("s_hero_import")}</p>
+          <h1 className="sx-slide-text">{t("s_hero_import")}</h1>
           <Link href="/character" className="sx-btn sx-btn-gold sx-btn-lg">
             {t("s_hero_cta")}
           </Link>
