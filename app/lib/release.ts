@@ -21,3 +21,18 @@ export const SHOW_MONETIZATION =
   env === "preview" ||
   process.env.NODE_ENV === "development" ||
   process.env.NEXT_PUBLIC_SHOW_UNRELEASED === "1";
+
+/**
+ * Comments on blue posts (Discord sign-in, characters, the word filter):
+ * the comment box and list, comment counts on the home page's blue-post
+ * cards, and the privacy page's text about them. Built, but off until
+ * launch. The Worker has its own switch, COMMENTS_LIVE in wrangler.jsonc's
+ * vars: turn both on together (and apply the D1 migrations first).
+ */
+export const COMMENTS_LIVE = false;
+
+export const SHOW_COMMENTS =
+  COMMENTS_LIVE ||
+  env === "preview" ||
+  process.env.NODE_ENV === "development" ||
+  process.env.NEXT_PUBLIC_SHOW_UNRELEASED === "1";

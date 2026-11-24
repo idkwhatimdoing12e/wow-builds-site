@@ -8,6 +8,8 @@ import type { Lang } from "./i18n";
 type Strings = Record<string, string>;
 
 const en: Strings = {
+  s_blue_title: "Blue Posts",
+  s_blue_more: "All on the forum",
   s_hide_map: "Hide map",
   s_hero1_text: "Every quest, boss and drop in every dungeon on WoW Forever. A free addon, and the same journal here on the web.",
   s_hero_import: "Import your character from the addon with /dj export: your quests, dungeons, talents and favourites, all in one place.",
@@ -70,6 +72,8 @@ const en: Strings = {
 };
 
 const de: Strings = {
+  s_blue_title: "Blue Posts",
+  s_blue_more: "Alle im Forum",
   s_hide_map: "Karte ausblenden",
   s_hero1_text: "Jede Quest, jeder Boss und jede Beute in jedem Dungeon von WoW Forever. Ein kostenloses Addon und dasselbe Journal hier im Web.",
   s_hero_import: "Importiere deinen Charakter aus dem Addon mit /dj export: deine Quests, Dungeons, Talente und Favoriten an einem Ort.",
@@ -132,6 +136,8 @@ const de: Strings = {
 };
 
 const fr: Strings = {
+  s_blue_title: "Messages bleus",
+  s_blue_more: "Tout sur le forum",
   s_hide_map: "Masquer la carte",
   s_hero1_text: "Chaque quête, chaque boss et chaque butin de chaque donjon de WoW Forever. Un addon gratuit, et le même journal ici sur le web.",
   s_hero_import: "Importez votre personnage depuis l'addon avec /dj export : vos quêtes, donjons, talents et favoris, au même endroit.",
@@ -194,6 +200,8 @@ const fr: Strings = {
 };
 
 const es: Strings = {
+  s_blue_title: "Mensajes azules",
+  s_blue_more: "Todo en el foro",
   s_hide_map: "Ocultar el mapa",
   s_hero1_text: "Cada misión, jefe y botín de cada mazmorra de WoW Forever. Un addon gratuito, y el mismo diario aquí en la web.",
   s_hero_import: "Importa tu personaje desde el addon con /dj export: tus misiones, mazmorras, talentos y favoritos, todo en un mismo lugar.",
@@ -256,6 +264,8 @@ const es: Strings = {
 };
 
 const it: Strings = {
+  s_blue_title: "Post blu",
+  s_blue_more: "Tutto sul forum",
   s_hide_map: "Nascondi la mappa",
   s_hero1_text: "Ogni missione, boss e bottino di ogni spedizione di WoW Forever. Un addon gratuito, e lo stesso diario qui sul web.",
   s_hero_import: "Importa il tuo personaggio dall'addon con /dj export: missioni, spedizioni, talenti e preferiti, tutto in un unico posto.",
@@ -318,6 +328,8 @@ const it: Strings = {
 };
 
 const pt: Strings = {
+  s_blue_title: "Posts azuis",
+  s_blue_more: "Tudo no fórum",
   s_hide_map: "Ocultar o mapa",
   s_hero1_text: "Cada missão, chefe e saque de cada masmorra do WoW Forever. Um addon gratuito, e o mesmo diário aqui na web.",
   s_hero_import: "Importe seu personagem do addon com /dj export: suas missões, masmorras, talentos e favoritos, tudo em um só lugar.",
@@ -380,6 +392,8 @@ const pt: Strings = {
 };
 
 const ru: Strings = {
+  s_blue_title: "Синие посты",
+  s_blue_more: "Все на форуме",
   s_hide_map: "Скрыть карту",
   s_hero1_text: "Все задания, боссы и добыча во всех подземельях WoW Forever. Бесплатный аддон и тот же журнал здесь, в интернете.",
   s_hero_import: "Импортируйте персонажа из аддона командой /dj export: задания, подземелья, таланты и избранное в одном месте.",
@@ -442,6 +456,8 @@ const ru: Strings = {
 };
 
 const ko: Strings = {
+  s_blue_title: "블루 포스트",
+  s_blue_more: "포럼에서 모두 보기",
   s_hide_map: "지도 숨기기",
   s_hero1_text: "WoW Forever 모든 던전의 퀘스트, 우두머리, 전리품. 무료 애드온이자, 웹에서도 보는 같은 도감입니다.",
   s_hero_import: "애드온에서 /dj export로 캐릭터를 가져오세요. 퀘스트, 던전, 특성, 즐겨찾기를 한곳에서 볼 수 있습니다.",
@@ -504,6 +520,8 @@ const ko: Strings = {
 };
 
 const zhCN: Strings = {
+  s_blue_title: "蓝帖",
+  s_blue_more: "在论坛查看全部",
   s_hide_map: "隐藏地图",
   s_hero1_text: "WoW Forever 每个地下城的所有任务、首领与掉落。一款免费插件，以及网页上的同一本手册。",
   s_hero_import: "用 /dj export 从插件导入你的角色：任务、地下城、天赋和收藏，一目了然。",
@@ -566,6 +584,8 @@ const zhCN: Strings = {
 };
 
 const zhTW: Strings = {
+  s_blue_title: "藍帖",
+  s_blue_more: "在論壇查看全部",
   s_hide_map: "隱藏地圖",
   s_hero1_text: "WoW Forever 每個地城的所有任務、首領與掉落。一款免費插件，以及網頁上的同一本手冊。",
   s_hero_import: "用 /dj export 從插件匯入你的角色：任務、地城、天賦和收藏，一目了然。",

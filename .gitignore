@@ -55,3 +55,6 @@ scripts/item-dump/.cache/
 
 # Cloudflare Wrangler state
 /.wrangler/
+
+# local Worker secrets (wrangler dev)
+.dev.vars

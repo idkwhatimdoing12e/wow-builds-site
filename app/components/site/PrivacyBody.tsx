@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CONTACT_EMAIL, LINKS } from "@/app/lib/site";
-import { SHOW_MONETIZATION } from "@/app/lib/release";
+import { SHOW_COMMENTS, SHOW_MONETIZATION } from "@/app/lib/release";
 import Window from "@/app/components/journal/Window";
 import ConsentSettingsButton from "@/app/components/site/ConsentSettingsButton";
 
@@ -10,7 +10,7 @@ const CONTROLLER = { email: CONTACT_EMAIL };
 // Google Analytics > Admin > Data collection and modification > Data retention.
 // "2 months" is Google's default; change both lines if it is set to 14 months.
 const GA_RETENTION = { en: "2 months", de: "2 Monate" };
-const UPDATED = { en: "21 November 2026", de: "21. November 2026" };
+const UPDATED = { en: "24 November 2026", de: "24. November 2026" };
 // ------------------------------------------------------------------------------
 
 function Ext({ href, children }: { href: string; children: React.ReactNode }) {
@@ -39,7 +39,12 @@ function English() {
         <h2 className="wp-sub">The short version</h2>
         <ul className="pv-list">
           <li>Dungeon Journal is free and made by one player. Ads pay for this site and keep the addon updated.</li>
-          <li>Your character code stays in your browser. It is never sent to this site’s server.</li>
+          <li>
+            Your character code stays in your browser.{" "}
+            {SHOW_COMMENTS
+              ? "Only if you sign in to comment are your character’s name and details sent, and shown with your comments."
+              : "It is never sent to this site’s server."}
+          </li>
           <li>
             {SHOW_MONETIZATION
               ? "If you visit from the EU, the UK or Switzerland, no ad or analytics cookies are set until you say yes. Saying no still gets you the whole journal."
@@ -82,7 +87,8 @@ function English() {
       <p className="wp-text">
         When you paste the code from <strong>/dj export</strong>, it is read in your browser. The code lives in the part
         of the address after the # and in your browser’s local storage. Browsers never send the part after the # to a
-        server, so your character’s name, realm and progress never reach this site’s server. The <strong>Forget</strong>{" "}
+        server, so your character’s name, realm and progress never reach this site’s server
+        {SHOW_COMMENTS ? ", unless you sign in to comment, which shows the character with your comments (section 5)" : ""}. The <strong>Forget</strong>{" "}
         button on the character page deletes the saved code from your browser.
       </p>
       <p className="wp-text">
@@ -91,7 +97,38 @@ function English() {
         from, class, faction, level), never the name, realm or code.
       </p>
 
-      <h2 className="wp-sub pv-h">5. Things saved in your browser</h2>
+      <h2 className="wp-sub pv-h">5. {SHOW_COMMENTS ? "Blue posts and comments (Discord sign-in)" : "Blue posts"}</h2>
+      <p className="wp-text">
+        The Blue Posts pages show posts by Blizzard staff from the official World of Warcraft forums. This site fetches
+        them from Blizzard’s forum itself and shows the forum’s pictures and avatars through this site, so your browser
+        does not contact Blizzard{SHOW_COMMENTS ? " or Discord" : ""} while you read.
+      </p>
+{SHOW_COMMENTS && (
+        <>
+      <p className="wp-text">
+        To comment, you sign in with Discord. Discord tells this site your Discord user ID, display name and avatar
+        (the “identify” permission only: never your email address or your servers). I store those, your comments and
+        when you wrote them, the comments you report, and the characters you add (commenting needs one, and you can keep
+        up to 10): their name, realm, class, race, sex, level and faction, read from your /dj export code in your
+        browser. Other readers see your comments with the character you wrote them as, and nothing else:{" "}
+        <strong>your Discord name, avatar and ID are never shown to them</strong>. Only I, as the site’s operator, can
+        see which Discord account wrote a comment, for moderation. A character’s name and realm can belong to one
+        account only, so no one else can comment as it. A cookie (dj_sid) keeps you signed in for 30
+        days; it is strictly necessary for signing in (§ 25(2) no. 2 TDDDG). The data is kept in a Cloudflare D1
+        database in Western Europe.
+      </p>
+      <p className="wp-text">
+        Legal basis: Art. 6(1)(b) GDPR (the comment feature you sign up for) and, for moderation (posting limits,
+        reports, bans), Art. 6(1)(f) GDPR (my legitimate interest in keeping comments free of spam and abuse). Your
+        comments stay until you delete them or I remove them for breaking the rules. <strong>Delete my account</strong>{" "}
+        under the comments deletes your account, comments and reports at once; for a banned account only the Discord
+        ID is kept, so the ban holds. See <Ext href="https://discord.com/privacy">Discord’s privacy policy</Ext>.
+      </p>
+
+        </>
+      )}
+
+      <h2 className="wp-sub pv-h">6. Things saved in your browser</h2>
       <p className="wp-text">
         The site saves a few things in your browser’s local and session storage so its features work: your faction
         choice, display options, your character code (see above) and the pages you came from, so the Back button works.
@@ -99,7 +136,7 @@ function English() {
         consent (§ 25(2) no. 2 TDDDG). You can delete it at any time in your browser settings.
       </p>
 
-      <h2 className="wp-sub pv-h">6. The consent window</h2>
+      <h2 className="wp-sub pv-h">7. The consent window</h2>
       <p className="wp-text">
         {!SHOW_MONETIZATION && "Ads are not switched on yet, so this window does not appear yet. Once they are: "}
         If you visit from the EU/EEA, the UK or Switzerland, Google’s consent tool shows a consent window. Google
@@ -110,7 +147,7 @@ function English() {
         TDDDG.
       </p>
 
-      <h2 className="wp-sub pv-h">7. Ads (Google AdSense)</h2>
+      <h2 className="wp-sub pv-h">8. Ads (Google AdSense)</h2>
       <p className="wp-text">
         {!SHOW_MONETIZATION && "Ads are not switched on yet; this is how they will work. "}
         Ads are served by Google AdSense, run by Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland.
@@ -141,7 +178,7 @@ function English() {
       </ul>
       <p className="wp-text">Legal basis: your consent, Art. 6(1)(a) GDPR and § 25(1) TDDDG.</p>
 
-      <h2 className="wp-sub pv-h">8. Google Analytics</h2>
+      <h2 className="wp-sub pv-h">9. Google Analytics</h2>
       <p className="wp-text">
         To see which pages are used and to fix what doesn’t work, the site uses Google Analytics 4 (Google Ireland
         Limited). {SHOW_MONETIZATION ? "With your consent it records" : "It records"} the pages you view, the site you came from, your device and browser,
@@ -153,14 +190,14 @@ function English() {
         cookieless signals, Art. 6(1)(f) GDPR (my legitimate interest in basic visit statistics).
       </p>
 
-      <h2 className="wp-sub pv-h">9. Visitor counts (Cloudflare)</h2>
+      <h2 className="wp-sub pv-h">10. Visitor counts (Cloudflare)</h2>
       <p className="wp-text">
         Cloudflare counts requests, pages, countries and device types from the records its servers keep anyway (section
         3). It uses no cookies and stores nothing on your device, and I only see the combined totals. Legal basis: Art.
         6(1)(f) GDPR (my legitimate interest in knowing how much the site is used).
       </p>
 
-      <h2 className="wp-sub pv-h">10. Links to other sites</h2>
+      <h2 className="wp-sub pv-h">11. Links to other sites</h2>
       <p className="wp-text">
         Links to <Ext href={LINKS.curseforge}>CurseForge</Ext>, <Ext href={LINKS.wago}>Wago</Ext>,{" "}
         <Ext href={LINKS.discord}>Discord</Ext>, <Ext href={LINKS.youtube}>YouTube</Ext>,{" "}
@@ -168,32 +205,34 @@ function English() {
         Nothing is loaded from those sites until you click. After that, their privacy policies apply.
       </p>
 
-      <h2 className="wp-sub pv-h">11. Data sent outside the EU</h2>
+      <h2 className="wp-sub pv-h">12. Data sent outside the EU</h2>
       <p className="wp-text">
-        Cloudflare and Google may process data in the USA. For US companies certified under the EU-US
+        Cloudflare{SHOW_COMMENTS ? ", Google and, when you sign in with it, Discord" : " and Google"} may process data in the USA. For US companies certified under the EU-US
         Data Privacy Framework, the European Commission has decided that the level of protection is adequate (Art. 45
         GDPR). Otherwise the providers rely on the EU standard contractual clauses (Art. 46(2)(c) GDPR).
       </p>
 
-      <h2 className="wp-sub pv-h">12. Your rights</h2>
+      <h2 className="wp-sub pv-h">13. Your rights</h2>
       <p className="wp-text">
         You have the right to access your data (Art. 15 GDPR), to have it corrected (Art. 16), deleted (Art. 17) or
         restricted (Art. 18), and to receive it in a portable format (Art. 20). You can withdraw your consent at any time
         with effect for the future (Art. 7(3)). <strong>Where I rely on legitimate interest, you can object at any time
-        for reasons arising from your situation (Art. 21 GDPR).</strong> Just email <Mail />. I have no accounts and
-        don’t know who you are, so for ad and analytics data Google’s own tools are often the quickest route.
+        for reasons arising from your situation (Art. 21 GDPR).</strong> Just email <Mail />.{" "}
+        {SHOW_COMMENTS ? "Apart from comment accounts (section 5), I don’t know who you are" : "I have no accounts and don’t know who you are"}, so for ad and analytics data Google’s own tools are often the
+        quickest route.
       </p>
       <p className="wp-text">
         You can also complain to a data protection authority, for example the one in the country where you live.
       </p>
 
-      <h2 className="wp-sub pv-h">13. Children</h2>
+      <h2 className="wp-sub pv-h">14. Children</h2>
       <p className="wp-text">
         Everyone is welcome to use the journal. Saying yes to ad and analytics cookies is a choice the law leaves to
         people aged 16 and over, so if you are younger, please ask a parent before you agree in the consent window.
+        {SHOW_COMMENTS && " Commenting needs a Discord account, which Discord only allows from age 13 (older in some countries)."}
       </p>
 
-      <h2 className="wp-sub pv-h">14. Changes</h2>
+      <h2 className="wp-sub pv-h">15. Changes</h2>
       <p className="wp-text">
         I update this page when the site changes. The date at the top shows the current version.
       </p>
@@ -211,7 +250,12 @@ function Deutsch() {
         <h2 className="wp-sub">Kurz gesagt</h2>
         <ul className="pv-list">
           <li>Dungeon Journal ist kostenlos und von einem Spieler gemacht. Werbung bezahlt diese Seite und hält das Addon aktuell.</li>
-          <li>Dein Charakter-Code bleibt in deinem Browser. Er wird nie an den Server dieser Seite geschickt.</li>
+          <li>
+            Dein Charakter-Code bleibt in deinem Browser.{" "}
+            {SHOW_COMMENTS
+              ? "Nur wenn du dich zum Kommentieren anmeldest, werden Name und Angaben deines Charakters geschickt und bei deinen Kommentaren angezeigt."
+              : "Er wird nie an den Server dieser Seite geschickt."}
+          </li>
           <li>
             {SHOW_MONETIZATION
               ? "Wenn du aus der EU, dem Vereinigten Königreich oder der Schweiz kommst, werden Werbe- und Analyse-Cookies erst gesetzt, nachdem du zugestimmt hast. Auch ohne Zustimmung bekommst du das ganze Journal."
@@ -255,7 +299,8 @@ function Deutsch() {
       <p className="wp-text">
         Wenn du den Code aus <strong>/dj export</strong> einfügst, wird er in deinem Browser gelesen. Der Code steht im Teil
         der Adresse nach dem # und im lokalen Speicher deines Browsers. Browser schicken den Teil nach dem # nie an einen
-        Server, deshalb erreichen Name, Realm und Fortschritt deines Charakters nie den Server dieser Seite. Der Button{" "}
+        Server, deshalb erreichen Name, Realm und Fortschritt deines Charakters nie den Server dieser Seite
+        {SHOW_COMMENTS ? ", außer du meldest dich zum Kommentieren an, dann steht der Charakter bei deinen Kommentaren (Abschnitt 5)" : ""}. Der Button{" "}
         <strong>Forget</strong> auf der Charakterseite löscht den gespeicherten Code aus deinem Browser.
       </p>
       <p className="wp-text">
@@ -264,7 +309,42 @@ function Deutsch() {
         (Herkunft, Klasse, Fraktion, Stufe), nie mit Name, Realm oder Code.
       </p>
 
-      <h2 className="wp-sub pv-h">5. Was in deinem Browser gespeichert wird</h2>
+      <h2 className="wp-sub pv-h">5. {SHOW_COMMENTS ? "Blue Posts und Kommentare (Anmeldung mit Discord)" : "Blue Posts"}</h2>
+      <p className="wp-text">
+        Die Blue-Posts-Seiten zeigen Beiträge von Blizzard-Mitarbeitern aus den offiziellen World-of-Warcraft-Foren.
+        Diese Seite holt sie selbst aus dem Blizzard-Forum und zeigt die Bilder und Avatare des Forums über diese Seite
+        an, sodass dein Browser beim Lesen {SHOW_COMMENTS ? "weder Blizzard noch Discord" : "Blizzard nicht"} kontaktiert.
+      </p>
+{SHOW_COMMENTS && (
+        <>
+      <p className="wp-text">
+        Zum Kommentieren meldest du dich mit Discord an. Discord teilt dieser Seite deine Discord-Nutzer-ID, deinen
+        Anzeigenamen und deinen Avatar mit (nur die Berechtigung „identify“: nie deine E-Mail-Adresse oder deine
+        Server). Ich speichere diese Angaben, deine Kommentare mit Zeitpunkt, die Kommentare, die du meldest, und die
+        Charaktere, die du hinzufügst (zum Kommentieren ist einer nötig, bis zu 10 sind möglich): Name, Realm, Klasse,
+        Volk, Geschlecht, Stufe und Fraktion, in deinem Browser aus deinem /dj export-Code gelesen. Andere Leser sehen
+        deine Kommentare nur mit dem Charakter, mit dem du sie geschrieben hast:{" "}
+        <strong>dein Discord-Name, dein Avatar und deine ID werden ihnen nie gezeigt</strong>. Nur ich als Betreiber
+        der Seite kann zur Moderation sehen, welches Discord-Konto einen Kommentar geschrieben hat. Name und Realm eines
+        Charakters können nur zu einem Konto gehören, damit niemand sonst als dieser Charakter kommentieren kann. Ein
+        Cookie (dj_sid) hält dich 30 Tage angemeldet; es
+        ist für die Anmeldung unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Die Daten liegen in einer
+        Cloudflare-D1-Datenbank in Westeuropa.
+      </p>
+      <p className="wp-text">
+        Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (die Kommentarfunktion, für die du dich anmeldest) und für die
+        Moderation (Beitragslimits, Meldungen, Sperren) Art. 6 Abs. 1 lit. f DSGVO (mein berechtigtes Interesse an
+        Kommentaren ohne Spam und Missbrauch). Deine Kommentare bleiben, bis du sie löschst oder ich sie wegen eines
+        Regelverstoßes entferne. <strong>Mein Konto löschen</strong> unter den Kommentaren löscht dein Konto, deine
+        Kommentare und deine Meldungen auf einmal; bei einem gesperrten Konto bleibt nur die Discord-ID gespeichert,
+        damit die Sperre bestehen bleibt. Siehe die{" "}
+        <Ext href="https://discord.com/privacy">Datenschutzerklärung von Discord</Ext>.
+      </p>
+
+        </>
+      )}
+
+      <h2 className="wp-sub pv-h">6. Was in deinem Browser gespeichert wird</h2>
       <p className="wp-text">
         Die Seite speichert ein paar Dinge im lokalen Speicher und Sitzungsspeicher deines Browsers, damit ihre Funktionen
         laufen: deine Fraktionswahl, Anzeigeoptionen, deinen Charakter-Code (siehe oben) und die zuvor besuchten Seiten,
@@ -273,7 +353,7 @@ function Deutsch() {
         Du kannst sie jederzeit in den Einstellungen deines Browsers löschen.
       </p>
 
-      <h2 className="wp-sub pv-h">6. Das Einwilligungsfenster</h2>
+      <h2 className="wp-sub pv-h">7. Das Einwilligungsfenster</h2>
       <p className="wp-text">
         {!SHOW_MONETIZATION && "Werbung ist noch nicht eingeschaltet, daher erscheint dieses Fenster noch nicht. Sobald sie es ist: "}
         Wenn du aus der EU/dem EWR, dem Vereinigten Königreich oder der Schweiz kommst, zeigt das Einwilligungs-Tool von
@@ -286,7 +366,7 @@ function Deutsch() {
         TDDDG.
       </p>
 
-      <h2 className="wp-sub pv-h">7. Werbung (Google AdSense)</h2>
+      <h2 className="wp-sub pv-h">8. Werbung (Google AdSense)</h2>
       <p className="wp-text">
         {!SHOW_MONETIZATION && "Werbung ist noch nicht eingeschaltet; so wird sie funktionieren. "}
         Die Werbung kommt von Google AdSense, betrieben von Google Ireland Limited, Gordon House, Barrow Street, Dublin 4,
@@ -318,7 +398,7 @@ function Deutsch() {
       </ul>
       <p className="wp-text">Rechtsgrundlage: deine Einwilligung, Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG.</p>
 
-      <h2 className="wp-sub pv-h">8. Google Analytics</h2>
+      <h2 className="wp-sub pv-h">9. Google Analytics</h2>
       <p className="wp-text">
         Um zu sehen, welche Seiten genutzt werden, und um Fehler zu beheben, nutzt die Seite Google Analytics 4 (Google
         Ireland Limited). {SHOW_MONETIZATION ? "Mit deiner Einwilligung erfasst es" : "Es erfasst"} die aufgerufenen Seiten, die Seite, von der du kommst, dein
@@ -331,7 +411,7 @@ function Deutsch() {
         6 Abs. 1 lit. f DSGVO (mein berechtigtes Interesse an einfachen Besucherzahlen).
       </p>
 
-      <h2 className="wp-sub pv-h">9. Besucherzählung (Cloudflare)</h2>
+      <h2 className="wp-sub pv-h">10. Besucherzählung (Cloudflare)</h2>
       <p className="wp-text">
         Cloudflare zählt Aufrufe, Seiten, Länder und Gerätetypen aus den Protokollen, die seine Server ohnehin führen
         (Abschnitt 3). Es nutzt keine Cookies und speichert nichts auf deinem Gerät, und ich sehe nur die
@@ -339,7 +419,7 @@ function Deutsch() {
         wissen, wie viel die Seite genutzt wird).
       </p>
 
-      <h2 className="wp-sub pv-h">10. Links zu anderen Seiten</h2>
+      <h2 className="wp-sub pv-h">11. Links zu anderen Seiten</h2>
       <p className="wp-text">
         Links zu <Ext href={LINKS.curseforge}>CurseForge</Ext>, <Ext href={LINKS.wago}>Wago</Ext>,{" "}
         <Ext href={LINKS.discord}>Discord</Ext>, <Ext href={LINKS.youtube}>YouTube</Ext>,{" "}
@@ -347,34 +427,37 @@ function Deutsch() {
         Von diesen Seiten wird nichts geladen, bis du klickst. Danach gelten deren Datenschutzerklärungen.
       </p>
 
-      <h2 className="wp-sub pv-h">11. Übermittlung außerhalb der EU</h2>
+      <h2 className="wp-sub pv-h">12. Übermittlung außerhalb der EU</h2>
       <p className="wp-text">
-        Cloudflare und Google können Daten in den USA verarbeiten. Für US-Unternehmen, die unter dem
+        {SHOW_COMMENTS ? "Cloudflare, Google und, wenn du dich damit anmeldest, Discord können" : "Cloudflare und Google können"} Daten in den USA verarbeiten. Für US-Unternehmen, die unter dem
         EU-US Data Privacy Framework zertifiziert sind, hat die Europäische Kommission ein angemessenes Schutzniveau
         festgestellt (Art. 45 DSGVO). Andernfalls stützen sich die Anbieter auf die EU-Standardvertragsklauseln (Art. 46
         Abs. 2 lit. c DSGVO).
       </p>
 
-      <h2 className="wp-sub pv-h">12. Deine Rechte</h2>
+      <h2 className="wp-sub pv-h">13. Deine Rechte</h2>
       <p className="wp-text">
         Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der
         Verarbeitung (Art. 18) und Datenübertragbarkeit (Art. 20). Eine Einwilligung kannst du jederzeit mit Wirkung für
         die Zukunft widerrufen (Art. 7 Abs. 3). <strong>Soweit ich mich auf ein berechtigtes Interesse stütze, kannst du
         aus Gründen, die sich aus deiner besonderen Situation ergeben, jederzeit widersprechen (Art. 21 DSGVO).</strong>{" "}
-        Schreib einfach an <Mail />. Ich habe keine Nutzerkonten und weiß nicht, wer du bist, daher sind für Werbe- und
-        Analysedaten oft die Tools von Google der schnellste Weg.
+        Schreib einfach an <Mail />.{" "}
+        {SHOW_COMMENTS ? "Abgesehen von Kommentar-Konten (Abschnitt 5) weiß ich nicht, wer du bist" : "Ich habe keine Nutzerkonten und weiß nicht, wer du bist"}, daher sind
+        für Werbe- und Analysedaten oft die Tools von Google der schnellste Weg.
       </p>
       <p className="wp-text">
         Du kannst dich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der in deinem Land.
       </p>
 
-      <h2 className="wp-sub pv-h">13. Kinder</h2>
+      <h2 className="wp-sub pv-h">14. Kinder</h2>
       <p className="wp-text">
         Jeder kann das Journal nutzen. Die Zustimmung zu Werbe- und Analyse-Cookies überlässt das Gesetz Menschen ab 16
         Jahren. Wenn du jünger bist, frag deshalb bitte deine Eltern, bevor du im Einwilligungsfenster zustimmst.
+        {SHOW_COMMENTS &&
+          " Zum Kommentieren brauchst du ein Discord-Konto, das Discord erst ab 13 Jahren erlaubt (in manchen Ländern ab einem höheren Alter)."}
       </p>
 
-      <h2 className="wp-sub pv-h">14. Änderungen</h2>
+      <h2 className="wp-sub pv-h">15. Änderungen</h2>
       <p className="wp-text">
         Ich passe diese Seite an, wenn sich die Website ändert. Das Datum oben zeigt die aktuelle Fassung.
       </p>

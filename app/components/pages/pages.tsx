@@ -22,6 +22,7 @@ import JournalHome from "@/app/components/journal/JournalHome";
 import HomeEmblems, { type EmblemText } from "@/app/components/journal/HomeEmblems";
 import TierSetsView, { type TierClassView } from "@/app/components/journal/TierSetsView";
 import HomeHero, { DownloadBanner } from "@/app/components/site/HomeHero";
+import BluePosts from "@/app/components/site/BluePosts";
 
 /** canonical + hreflang for a path that exists in every language. */
 function alternates(lang: Lang, p: string): Metadata["alternates"] {
@@ -56,6 +57,7 @@ export function HomeBody({ lang }: { lang: Lang }) {
       <div className="sx-home">
         <HomeHero />
         <div className="sx-wrap">
+          <BluePosts />
           <JournalHome
             dungeons={dungeons}
             emblemText={{ dungeonsTitle: dict.DUNGEONS, raidsTitle: dict.RAIDS_TITLE, comingSoon: dict.COMING_SOON }}

@@ -5,10 +5,32 @@
   "compatibility_date": "2026-11-22",
   // No *.workers.dev copy of the site: only the real domain gets indexed.
   "workers_dev": false,
+  // Static files, except /api/*: worker/index.js (the home page's blue posts).
+  "main": "worker/index.js",
   "assets": {
     "directory": "./out",
+    "binding": "ASSETS",
+    // The API, and the blue post pages (one static page serves every thread).
+    "run_worker_first": ["/api/*", "/blue/*", "/de/blue/*", "/fr/blue/*", "/es/blue/*", "/it/blue/*", "/pt/blue/*", "/ru/blue/*", "/ko/blue/*", "/zh-cn/blue/*", "/zh-tw/blue/*"],
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash"
+  },
+  // Blue post comments and the Discord accounts that write them (migrations/).
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "foreverjournal-comments",
+      "database_id": "7406e340-cf0b-48f8-94ed-5c50323afb3d",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // Discord sign-in: the app's public client ID, and the Discord user IDs that can
+  // moderate comments. The client secret is a secret: npx wrangler secret put DISCORD_CLIENT_SECRET
+  // COMMENTS_LIVE: "1" turns comments and sign-in on (with COMMENTS_LIVE in app/lib/release.ts).
+  "vars": {
+    "COMMENTS_LIVE": "0",
+    "DISCORD_CLIENT_ID": "",
+    "ADMIN_IDS": ""
   },
   // The bare domain is the main address; www is sent to it by a Cloudflare
   // Redirect Rule (dashboard: Rules > Redirect Rules), which runs before this.
