@@ -4,30 +4,26 @@ import Link from "next/link";
 import { LINKS } from "@/app/lib/site";
 import { DownloadIcon } from "./icons";
 import { useT } from "@/app/components/i18n/I18n";
-import { NEWS } from "@/app/lib/news";
 
 /**
- * The home banner: Latest Drama. The newest post's picture sits sharp in the
- * middle, with a blurred copy of it filling the sides (the screenshots are
- * narrower than the banner), and the title, a line and a button over it.
- * My Character stays in the header (s_hero_import / s_hero_cta are its old
- * line and button, kept for when it comes back here). The page's h1 stays the
- * site's name for search engines, hidden.
+ * The home banner: a painting edge to edge that fades into the page, with the
+ * title, a line and a button centred over it. Most visitors come from the
+ * addon, so it asks them to bring their character (/dj export) rather than
+ * to download it; the header and the closing band still offer the download.
+ * (The Latest Drama banner it replaced for a while is in git history, commit
+ * 0465d2f; its News page is parked in app/_news.)
  */
 export default function HomeHero() {
   const t = useT();
-  const pic = NEWS[0]?.hero ?? "/journal/art/shadowfang-keep-card.webp";
   return (
-    <section className="sx-hero sx-hero-drama" aria-label={t("s_hero_news_cta")}>
+    <section className="sx-hero" aria-label="Dungeon Journal">
       <div className="sx-slide on">
-        <div className="sx-slide-art sx-drama-blur" style={{ backgroundImage: `url(${pic})` }} />
-        <div className="sx-drama-pic" style={{ backgroundImage: `url(${pic})` }} />
+        <div className="sx-slide-art" style={{ backgroundImage: "url(/journal/art/shadowfang-keep-card.webp)" }} />
         <div className="sx-slide-copy">
-          <h1 className="sx-sr">Dungeon Journal</h1>
-          <p className="sx-slide-title sx-drama-title">{t("s_hero_news_cta")}</p>
-          <p className="sx-slide-text">{t("s_hero_news")}</p>
-          <Link href="/news" className="sx-btn sx-btn-gold sx-btn-lg">
-            {t("s_hero_news_read")}
+          <h1 className="sx-slide-title">Dungeon Journal</h1>
+          <p className="sx-slide-text">{t("s_hero_import")}</p>
+          <Link href="/character" className="sx-btn sx-btn-gold sx-btn-lg">
+            {t("s_hero_cta")}
           </Link>
         </div>
       </div>
