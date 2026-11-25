@@ -10,8 +10,11 @@ site only shows tooltips for items that have a page.
 """
 import json
 import os
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+from pvp_ids import pvp_item_ids  # noqa: E402
 ROOT = os.path.dirname(os.path.dirname(HERE))
 JOURNAL = os.path.join(ROOT, "data", "journal.json")
 OUT = os.path.join(HERE, "DJItemDump", "ItemIDs.lua")
@@ -65,6 +68,8 @@ def main():
     for s in (tier.get("tier05") or {}).values():
         for v in s.get("versions", []):
             ids.update(int(i) for i in v.get("items", []))
+    # PvP: the battlegrounds' rewards, Alterac Valley's quests, Honor & Ranks.
+    ids.update(pvp_item_ids(journal))
     ids = sorted(i for i in ids if i > 0)
     lines = ["-- Written by scripts/item-dump/make-ids.py: do not edit.", "DJItemDump_IDS = {"]
     for n in range(0, len(ids), 12):

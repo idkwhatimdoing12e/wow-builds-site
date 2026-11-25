@@ -2,6 +2,10 @@ import type { MetadataRoute } from "next";
 import { getChainPageSlugs, getDungeonSlugs, getQuestSlugs } from "@/app/lib/journal";
 import { SITE_URL } from "@/app/lib/site";
 import { PREFIXED } from "@/app/lib/i18n";
+import { pvpSlugs, questPageSlugs } from "@/app/lib/pvp";
+
+// The PvP tab: /pvp, each battleground's page and Honor & Ranks, and Alterac Valley's quests.
+const PVP_PATHS = ["pvp", ...pvpSlugs().map((s) => `pvp/${s}`), ...questPageSlugs().map((s) => `pvp/${s}/quests`)];
 
 export const dynamic = "force-static";
 
@@ -10,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${SITE_URL}/`, lastModified: now, changeFrequency: "weekly", priority: 1 },
     // The home tabs' pages: the quest chains (Sleeping Bag, Onyxia) and Tier Sets.
-    ...[...getChainPageSlugs(), "tier-sets"].map((slug) => ({
+    ...[...getChainPageSlugs(), "tier-sets", ...PVP_PATHS].map((slug) => ({
       url: `${SITE_URL}/${slug}`,
       lastModified: now,
       changeFrequency: "weekly" as const,
@@ -32,7 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // The translated home, dungeon and quest pages: /de, /de/dungeon/x, ...
     ...PREFIXED.flatMap((lang) => [
       { url: `${SITE_URL}/${lang}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
-      ...[...getChainPageSlugs(), "tier-sets"].map((slug) => ({
+      ...[...getChainPageSlugs(), "tier-sets", ...PVP_PATHS].map((slug) => ({
         url: `${SITE_URL}/${lang}/${slug}`,
         lastModified: now,
         changeFrequency: "weekly" as const,

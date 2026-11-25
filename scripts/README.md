@@ -119,3 +119,20 @@ the addon's own map art from `Media/`, or the game's map tiles stitched from an 
 of the game's UI textures (https://github.com/Gethe/wow-ui-textures, `classic` branch),
 with the addon's `MapPatches` painted over the game's own skulls. Re-run both after
 changing map positions in the addon.
+
+## PvP tab
+
+The addon's PvP tab (Systems/PvP.lua, PvPRewards.lua, PvPQuests.lua and
+Data/PvPRewards.lua) is at /pvp: the battlegrounds' cards, a rewards page per
+battleground (both sides), Honor & Ranks, and Alterac Valley's quests at
+/pvp/alterac-valley/quests. `lua-to-json.py` exports it as `PVP` (and runs
+PvPQuests.lua for the quest page); `locales-to-json.py` adds those quests'
+translations. After an addon update that touches PvP:
+
+```bash
+python scripts/item-dump/make-ids.py      # the PvP items join the list
+python scripts/item-dump/tier-items.py    # names and quality (scripts/item-dump/pvp_ids.py)
+python scripts/item-dump/tier-tooltips.py # their tooltips
+python scripts/item-dump/fetch-icons.py   # their icons
+python scripts/convert-pvp-art.py         # the cards' loading screens
+```

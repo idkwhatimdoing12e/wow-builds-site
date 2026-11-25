@@ -95,10 +95,12 @@ export default async function ItemPage({ params }: { params: Promise<{ slug: str
   const drops = item.sources.filter((s) => DROP_KINDS.has(s.kind));
   const rewards = item.sources.filter((s) => REWARD_KINDS.has(s.kind));
   const uses = item.sources.filter((s) => s.kind in USE_TAG);
-  // A Tier 0.5 piece belongs to no dungeon: it goes home to the Tier Sets tab.
+  const pvp = item.sources.filter((s) => s.kind === "pvp" && s.pvp).map((s) => s.pvp!);
+  // A Tier 0.5 piece belongs to no dungeon: it goes home to the Tier Sets tab;
+  // a PvP reward to its battleground's page or Honor & Ranks.
   const home = item.sources.find((s) => s.dungeon)?.dungeon;
-  const homeHref = home ? `/dungeon/${home.slug}` : "/tier-sets";
-  const homeName = home ? home.name : "Tier Sets";
+  const homeHref = home ? `/dungeon/${home.slug}` : pvp[0] ? pvp[0].href : "/tier-sets";
+  const homeName = home ? home.name : pvp[0] ? pvp[0].page : "Tier Sets";
   const extra = item.extra;
 
   return (
@@ -167,6 +169,22 @@ export default async function ItemPage({ params }: { params: Promise<{ slug: str
                         {side(s)}
                         {USE_TAG[s.kind]}
                         {s.dungeon ? ` · ${s.dungeon.name}` : ""}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {pvp.length > 0 && (
+              <section>
+                <h2 className="wp-rewards-head">PvP</h2>
+                <ul className="it-list">
+                  {pvp.map((s, i) => (
+                    <li key={i}>
+                      <Link href={s.href} className="wp-link">{s.page}</Link>
+                      <span className="it-where">
+                        {s.faction} · {s.note}
                       </span>
                     </li>
                   ))}

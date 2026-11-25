@@ -117,6 +117,22 @@ def main():
             merged += 1 if ok else 0
     print(f"merged {merged} string tables from Systems/")
 
+    # Alterac Valley's quests (Systems/PvPQuests.lua): their names, objectives
+    # and NPCs in each language come from Data/PvPRewards.lua, put into the
+    # content tables when the addon loads. Run the data, then the file up to
+    # the part that needs the game.
+    pvp_data = os.path.join(addon, "Data", "PvPRewards.lua")
+    pvp_quests = os.path.join(systems, "PvPQuests.lua")
+    if os.path.exists(pvp_data) and os.path.exists(pvp_quests):
+        lua.execute("""local FDJ = _G.ForeverDungeonJournal_NS
+            FDJ.DB = FDJ.DB or {}; FDJ.QUEST_PREREQ_CHAINS = FDJ.QUEST_PREREQ_CHAINS or {}
+            FDJ.QUEST_PREREQ_DETAILS = FDJ.QUEST_PREREQ_DETAILS or {}""")
+        loader(open(pvp_data, encoding="utf-8").read(), "Data/PvPRewards.lua")("ForeverDungeonJournal", fdj)
+        src = open(pvp_quests, encoding="utf-8").read()
+        cut = re.search(r"^-- -+ opening it", src, re.M)
+        loader(src[: cut.start()] if cut else src, "Systems/PvPQuests.lua")()
+        print("added Alterac Valley's quests from Systems/PvPQuests.lua")
+
     locales = py(fdj["Locales"]) or {}
     content = py(fdj["ContentLocales"]) or {}
     os.makedirs(OUT_DIR, exist_ok=True)

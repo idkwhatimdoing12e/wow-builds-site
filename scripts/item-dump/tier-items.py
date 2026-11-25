@@ -1,4 +1,4 @@
-"""Names and quality for the Tier Sets pieces the journal's data does not name.
+"""Names and quality for the Tier Sets pieces and PvP items the journal's data does not name.
 
     python scripts/item-dump/tier-items.py
 
@@ -16,11 +16,14 @@ Run after lua-to-json.py; fetch-icons.py fetches their icons.
 import importlib.util
 import json
 import os
+import sys
 import time
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
+sys.path.insert(0, HERE)
+from pvp_ids import pvp_item_ids  # noqa: E402
 OUT = os.path.join(ROOT, "data", "tier-items.json")
 
 
@@ -41,6 +44,9 @@ def main():
     for s in (tier.get("tier05") or {}).values():
         for v in s.get("versions", []):
             ids.update(int(i) for i in v.get("items", []))
+    # The PvP pages' items (most are Forever's own: the Premier sets, the
+    # Darkspear Islands rewards) are named the same way.
+    ids |= pvp_item_ids(journal)
     wanted = {i for i in ids if str(i) not in game}
     out = {}
     if wanted:

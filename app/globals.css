@@ -2725,3 +2725,146 @@ a.ts-src:hover .ts-boss { text-decoration: underline; }
 .bpc-queue a:hover .bpc-queue-body { text-decoration: underline; }
 .bpc-queue .bpc-flag { display: inline; margin: 0; }
 .bpc-queue-body { display: block; margin-top: 2px; font-size: 14px; color: var(--g-text); overflow-wrap: anywhere; }
+
+/* ---- PvP tab (the addon's Systems/PvP.lua, PvPRewards.lua; PvpViews.tsx) ---- */
+.pv {
+  padding: 0 0 14px;
+  background:
+    linear-gradient(rgba(235, 223, 195, 0.72), rgba(222, 206, 172, 0.72)),
+    var(--parchment) url("/journal/parchment.jpg") center top / 512px auto repeat;
+  color: var(--ej-ink, #2e2317);
+}
+.pv-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 14px 18px;
+  background: linear-gradient(180deg, #1d1509, #140e07);
+  border-bottom: 1px solid #000;
+}
+.pv-head .wf-dname { color: #ffe9b0; font-size: 30px; margin: 0; }
+.pv-title { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; min-width: 0; }
+.pv-meta { font-size: 12.5px; letter-spacing: 0.06em; color: #d9c8a4; }
+.pv-back {
+  flex: none; width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid #000; box-shadow: inset 0 0 0 1px rgba(255, 215, 130, 0.35);
+  background: linear-gradient(180deg, var(--wf-red), var(--wf-red-dark));
+  position: relative;
+}
+.pv-back::before {
+  content: ""; position: absolute; left: 11px; top: 9px; width: 9px; height: 9px;
+  border-left: 2px solid #ffe6ab; border-bottom: 2px solid #ffe6ab; transform: rotate(45deg);
+}
+.pv-back:hover { filter: brightness(1.2); }
+.pv-back:focus-visible { outline: 2px solid #ffd77a; outline-offset: 2px; }
+.pv-sides button { width: 40px; height: 34px; }
+.pv-sides button img { width: 24px; height: 24px; opacity: 0.55; }
+
+/* the cards */
+.pv-cards { list-style: none; margin: 0; padding: 16px 18px 6px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.pv-card { aspect-ratio: 3 / 1; }
+.pv-card-honor { background: radial-gradient(120% 140% at 85% 50%, #2b3f6e 0%, #172240 45%, #0c1020 100%); }
+.pv-card-emblem {
+  position: absolute; z-index: 1; right: 22px; top: 50%; width: 64px; height: 64px; margin-top: -32px;
+  border-radius: 50%; box-shadow: 0 0 0 2px #000, 0 0 0 3px #d9b45f, 0 0 18px rgba(255, 209, 0, 0.35);
+}
+.pv-card-meta { right: 104px; letter-spacing: 0.02em; font-size: 12.5px; }
+
+/* the row of battlegrounds at the top of each page */
+.pv-jumps { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 18px; background: #140e07; border-bottom: 1px solid #000; }
+.pv-jump {
+  display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px;
+  border: 1px solid #000; border-radius: 22px;
+  background: linear-gradient(180deg, #2a2420, #15110e); box-shadow: inset 0 0 0 1px rgba(255, 215, 130, 0.18);
+  color: #e9dcc2; font-size: 13px; font-weight: 600; text-decoration: none;
+}
+.pv-jump:hover { filter: brightness(1.2); }
+.pv-jump.on { box-shadow: inset 0 0 0 1px #e8c169, 0 0 10px rgba(255, 200, 80, 0.3); color: #ffe6ab; }
+.pv-jump-art, .pv-jump img { flex: none; width: 34px; height: 34px; border-radius: 50%; background-size: cover; background-position: center; box-shadow: 0 0 0 1px #000, 0 0 0 2px #8f7136; }
+.pv-jump.on .pv-jump-art, .pv-jump.on img { box-shadow: 0 0 0 1px #000, 0 0 0 2px #ffd77a; }
+
+/* the quartermaster */
+.pv-qm { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-bottom: 1px solid rgba(120, 95, 50, 0.35); }
+.pv-qm-inline { padding: 4px 0 8px; border-bottom: 0; }
+.pv-portrait { flex: none; display: inline-flex; border-radius: 50%; overflow: hidden; width: 64px; height: 64px; background: #1a120a; box-shadow: 0 0 0 2px #000, 0 0 0 3px #b9933f; }
+.pv-portrait img { width: 64px; height: 64px; object-fit: cover; }
+.pv-qm-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.pv-faction { font-family: var(--font-title); font-weight: 800; font-size: 18px; color: #7a4a0c; }
+.pv-qm-who { font-weight: 700; font-size: 14.5px; }
+.pv-qm-where { font-size: 13.5px; color: var(--ej-ink-soft, #6b5a42); }
+.pv-quests-btn { flex: none; }
+.pv-back-rewards { margin-right: 6px; }
+
+/* the sections and the item rows, two to a line */
+.pv-sec { padding: 14px 18px 4px; }
+.pv-sec + .pv-sec { border-top: 1px solid rgba(120, 95, 50, 0.35); }
+.pv-sec-head { margin: 0 0 10px; font-family: var(--font-title); font-weight: 800; font-size: 18px; color: #7a4a0c; }
+.pv-sec-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+.pv-sec-bar .pv-sec-head { margin: 0; }
+.pv-text { margin: 0 0 12px; font-size: 14px; line-height: 1.5; max-width: 75ch; }
+.pv-rows { list-style: none; margin: 0 0 10px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 10px; }
+.pv-row {
+  display: flex; align-items: center; gap: 10px; min-width: 0; padding: 6px 8px;
+  background: rgba(255, 252, 240, 0.6); border: 1px solid rgba(150, 125, 80, 0.4); border-radius: 6px;
+}
+.pv-icon { flex: none; display: inline-flex; border: 2px solid; border-radius: 5px; background: #000; box-shadow: 0 0 0 1px #000; }
+.pv-icon img { width: 40px; height: 40px; border-radius: 3px; display: block; }
+/* the quality's glow, as the addon's PvP items (pvpglow) */
+.pv-q2 { box-shadow: 0 0 0 1px #000, 0 0 7px rgba(30, 255, 0, 0.45); }
+.pv-q3 { box-shadow: 0 0 0 1px #000, 0 0 7px rgba(0, 112, 221, 0.55); }
+.pv-q4 { box-shadow: 0 0 0 1px #000, 0 0 8px rgba(163, 53, 238, 0.6); }
+a.pv-icon:hover { filter: brightness(1.15); }
+.pv-row-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pv-name { font-size: 14px; font-weight: 700; line-height: 1.2; text-decoration: none; }
+.pv-name:hover { text-decoration: underline; }
+.pv-name { color: #2b1d0e; }
+.pv-name[data-q="0"] { color: #5d5649; }
+.pv-name[data-q="2"] { color: #0f6a00; }
+.pv-name[data-q="3"] { color: #004d9e; }
+.pv-name[data-q="4"] { color: #6a1fae; }
+.pv-name[data-q="5"] { color: #a85300; }
+.pv-sub { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 12.5px; color: var(--ej-ink-soft, #6b5a42); }
+.pv-levels a { color: #6b5a42; font-weight: 700; text-decoration: none; }
+.pv-levels a:hover { text-decoration: underline; color: #2e2317; }
+.pv-levels a.on { color: #1c6b0e; }
+.pv-dot { color: #9a876a; }
+.pv-quest { display: inline-flex; align-items: center; gap: 3px; color: #7a4a0c; font-weight: 700; text-decoration: none; }
+.pv-quest:hover { text-decoration: underline; }
+.pv-inline { display: inline-flex; vertical-align: -3px; }
+.pv-inline img { width: 16px; height: 16px; border-radius: 2px; box-shadow: 0 0 0 1px #000; }
+.pv-cost { white-space: nowrap; }
+.pv-rank { font-weight: 700; color: #2e2317; }
+
+/* Honor & Ranks: the Premier sets, each rare piece beside its epic */
+.pv-classes { justify-content: flex-end; }
+.pv-set { margin: 0 0 14px; }
+.pv-set-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 8px; font-size: 15px; font-weight: 800; color: #2e2317; }
+.pv-set-head img { width: 24px; height: 24px; border-radius: 4px; box-shadow: 0 0 0 1px #000, 0 0 0 2px #b9933f; }
+.pv-set-spec { color: #7a4a0c; }
+.pv-set-name { font-weight: 600; font-size: 13px; color: var(--ej-ink-soft, #6b5a42); }
+.pv-pairs { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.pv-pair {
+  display: grid; grid-template-columns: minmax(0, 1fr) 128px minmax(0, 1fr); align-items: center; gap: 8px;
+  padding: 6px 8px; background: rgba(255, 252, 240, 0.6); border: 1px solid rgba(150, 125, 80, 0.4); border-radius: 6px;
+}
+.pv-pair-side { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.pv-pair-seal { position: relative; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 12px; color: var(--ej-ink-soft, #6b5a42); padding-bottom: 10px; }
+.pv-pair-rank { font-weight: 700; color: #2e2317; }
+.pv-arrow { position: absolute; left: 8px; right: 8px; bottom: 2px; height: 2px; background: #a8873f; }
+.pv-arrow::after {
+  content: ""; position: absolute; right: -1px; top: -4px; width: 8px; height: 8px;
+  border-right: 2px solid #a8873f; border-top: 2px solid #a8873f; transform: rotate(45deg);
+}
+
+/* a quest's reputation need (QuestPanel), as the addon's warning line */
+.wp-rep-need { margin: 10px 0 0; font-weight: 700; font-size: 14px; color: #8a1d0c; }
+
+@media (max-width: 859px) {
+  .pv-head, .pv-qm, .pv-sec, .pv-jumps { padding-left: 12px; padding-right: 12px; }
+  .pv-head .wf-dname { font-size: 24px; }
+  .pv-cards { grid-template-columns: minmax(0, 1fr); padding: 12px 12px 4px; }
+  .pv-rows { grid-template-columns: minmax(0, 1fr); }
+  .pv-pair { grid-template-columns: minmax(0, 1fr); }
+  .pv-pair-seal { justify-content: flex-start; padding: 0 0 0 52px; }
+  .pv-arrow { display: none; }
+  .pv-jump-name { display: none; }
+  .pv-jump { padding: 3px; }
+}

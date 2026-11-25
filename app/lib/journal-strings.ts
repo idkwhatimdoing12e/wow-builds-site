@@ -69,6 +69,15 @@ const en: Strings = {
   s_next_step: "Next step",
   CLASS_WARRIOR: "Warrior", CLASS_PALADIN: "Paladin", CLASS_HUNTER: "Hunter", CLASS_ROGUE: "Rogue", CLASS_PRIEST: "Priest",
   CLASS_SHAMAN: "Shaman", CLASS_MAGE: "Mage", CLASS_WARLOCK: "Warlock", CLASS_DRUID: "Druid",
+  s_standing_4: "Neutral",
+  s_standing_5: "Friendly",
+  s_standing_6: "Honored",
+  s_standing_7: "Revered",
+  s_standing_8: "Exalted",
+  s_pvp_field: "Field of Honor",
+  s_spec_feral: "Feral",
+  s_pvp_tip: "Battleground rewards, Honor and ranks",
+  s_pvp_meta: "Battleground quartermasters, reputation rewards, Premier gear and rank rewards on WoW Forever.",
 };
 
 const de: Strings = {
@@ -133,6 +142,15 @@ const de: Strings = {
   s_next_step: "Nächster Schritt",
   CLASS_WARRIOR: "Krieger", CLASS_PALADIN: "Paladin", CLASS_HUNTER: "Jäger", CLASS_ROGUE: "Schurke", CLASS_PRIEST: "Priester",
   CLASS_SHAMAN: "Schamane", CLASS_MAGE: "Magier", CLASS_WARLOCK: "Hexenmeister", CLASS_DRUID: "Druide",
+  s_standing_4: "Neutral",
+  s_standing_5: "Freundlich",
+  s_standing_6: "Wohlwollend",
+  s_standing_7: "Respektvoll",
+  s_standing_8: "Ehrfürchtig",
+  s_pvp_field: "Feld der Ehre",
+  s_spec_feral: "Wilder Kampf",
+  s_pvp_tip: "Schlachtfeldbelohnungen, Ehre und Ränge",
+  s_pvp_meta: "Rüstmeister der Schlachtfelder, Rufbelohnungen, Ehrenausrüstung und Rangbelohnungen in WoW Forever.",
 };
 
 const fr: Strings = {
@@ -197,6 +215,15 @@ const fr: Strings = {
   s_next_step: "Étape suivante",
   CLASS_WARRIOR: "Guerrier", CLASS_PALADIN: "Paladin", CLASS_HUNTER: "Chasseur", CLASS_ROGUE: "Voleur", CLASS_PRIEST: "Prêtre",
   CLASS_SHAMAN: "Chaman", CLASS_MAGE: "Mage", CLASS_WARLOCK: "Démoniste", CLASS_DRUID: "Druide",
+  s_standing_4: "Neutre",
+  s_standing_5: "Amical",
+  s_standing_6: "Honoré",
+  s_standing_7: "Révéré",
+  s_standing_8: "Exalté",
+  s_pvp_field: "Champ d'honneur",
+  s_spec_feral: "Combat farouche",
+  s_pvp_tip: "Récompenses des champs de bataille, honneur et rangs",
+  s_pvp_meta: "Intendants des champs de bataille, récompenses de réputation, équipement d'honneur et récompenses de rang sur WoW Forever.",
 };
 
 const es: Strings = {
@@ -261,6 +288,15 @@ const es: Strings = {
   s_next_step: "Paso siguiente",
   CLASS_WARRIOR: "Guerrero", CLASS_PALADIN: "Paladín", CLASS_HUNTER: "Cazador", CLASS_ROGUE: "Pícaro", CLASS_PRIEST: "Sacerdote",
   CLASS_SHAMAN: "Chamán", CLASS_MAGE: "Mago", CLASS_WARLOCK: "Brujo", CLASS_DRUID: "Druida",
+  s_standing_4: "Neutral",
+  s_standing_5: "Amistoso",
+  s_standing_6: "Honorable",
+  s_standing_7: "Reverenciado",
+  s_standing_8: "Exaltado",
+  s_pvp_field: "Campo de honor",
+  s_spec_feral: "Combate feral",
+  s_pvp_tip: "Recompensas de campos de batalla, honor y rangos",
+  s_pvp_meta: "Intendentes de los campos de batalla, recompensas de reputación, equipo de honor y recompensas de rango en WoW Forever.",
 };
 
 const it: Strings = {
@@ -325,6 +361,15 @@ const it: Strings = {
   s_next_step: "Passo successivo",
   CLASS_WARRIOR: "Guerriero", CLASS_PALADIN: "Paladino", CLASS_HUNTER: "Cacciatore", CLASS_ROGUE: "Ladro", CLASS_PRIEST: "Sacerdote",
   CLASS_SHAMAN: "Sciamano", CLASS_MAGE: "Mago", CLASS_WARLOCK: "Stregone", CLASS_DRUID: "Druido",
+  s_standing_4: "Neutrale",
+  s_standing_5: "Amichevole",
+  s_standing_6: "Onorato",
+  s_standing_7: "Riverito",
+  s_standing_8: "Osannato",
+  s_pvp_field: "Campo d'onore",
+  s_spec_feral: "Aggressività ferina",
+  s_pvp_tip: "Ricompense dei campi di battaglia, onore e gradi",
+  s_pvp_meta: "Furieri dei campi di battaglia, ricompense di reputazione, equipaggiamento d'onore e ricompense di grado su WoW Forever.",
 };
 
 const pt: Strings = {
@@ -389,6 +434,15 @@ const pt: Strings = {
   s_next_step: "Próxima etapa",
   CLASS_WARRIOR: "Guerreiro", CLASS_PALADIN: "Paladino", CLASS_HUNTER: "Caçador", CLASS_ROGUE: "Ladino", CLASS_PRIEST: "Sacerdote",
   CLASS_SHAMAN: "Xamã", CLASS_MAGE: "Mago", CLASS_WARLOCK: "Bruxo", CLASS_DRUID: "Druida",
+  s_standing_4: "Neutro",
+  s_standing_5: "Respeitado",
+  s_standing_6: "Honrado",
+  s_standing_7: "Reverenciado",
+  s_standing_8: "Exaltado",
+  s_pvp_field: "Campo de Honra",
+  s_spec_feral: "Combate Feral",
+  s_pvp_tip: "Recompensas de campos de batalha, honra e patentes",
+  s_pvp_meta: "Intendentes dos campos de batalha, recompensas de reputação, equipamento de honra e recompensas de patente no WoW Forever.",
 };
 
 const ru: Strings = {
@@ -453,6 +507,15 @@ const ru: Strings = {
   s_next_step: "Следующий шаг",
   CLASS_WARRIOR: "Воин", CLASS_PALADIN: "Паладин", CLASS_HUNTER: "Охотник", CLASS_ROGUE: "Разбойник", CLASS_PRIEST: "Жрец",
   CLASS_SHAMAN: "Шаман", CLASS_MAGE: "Маг", CLASS_WARLOCK: "Чернокнижник", CLASS_DRUID: "Друид",
+  s_standing_4: "Равнодушие",
+  s_standing_5: "Дружелюбие",
+  s_standing_6: "Уважение",
+  s_standing_7: "Почтение",
+  s_standing_8: "Превознесение",
+  s_pvp_field: "Поле чести",
+  s_spec_feral: "Сила зверя",
+  s_pvp_tip: "Награды полей боя, честь и звания",
+  s_pvp_meta: "Интенданты полей боя, награды за репутацию, снаряжение за честь и награды за звания в WoW Forever.",
 };
 
 const ko: Strings = {
@@ -517,6 +580,15 @@ const ko: Strings = {
   s_next_step: "다음 단계",
   CLASS_WARRIOR: "전사", CLASS_PALADIN: "성기사", CLASS_HUNTER: "사냥꾼", CLASS_ROGUE: "도적", CLASS_PRIEST: "사제",
   CLASS_SHAMAN: "주술사", CLASS_MAGE: "마법사", CLASS_WARLOCK: "흑마법사", CLASS_DRUID: "드루이드",
+  s_standing_4: "중립",
+  s_standing_5: "약간 우호적",
+  s_standing_6: "우호적",
+  s_standing_7: "매우 우호적",
+  s_standing_8: "확고한 동맹",
+  s_pvp_field: "명예의 전장",
+  s_spec_feral: "야성",
+  s_pvp_tip: "전장 보상, 명예와 계급",
+  s_pvp_meta: "WoW Forever의 전장 병참장교, 평판 보상, 명예 장비와 계급 보상.",
 };
 
 const zhCN: Strings = {
@@ -581,6 +653,15 @@ const zhCN: Strings = {
   s_next_step: "下一步",
   CLASS_WARRIOR: "战士", CLASS_PALADIN: "圣骑士", CLASS_HUNTER: "猎人", CLASS_ROGUE: "潜行者", CLASS_PRIEST: "牧师",
   CLASS_SHAMAN: "萨满祭司", CLASS_MAGE: "法师", CLASS_WARLOCK: "术士", CLASS_DRUID: "德鲁伊",
+  s_standing_4: "中立",
+  s_standing_5: "友善",
+  s_standing_6: "尊敬",
+  s_standing_7: "崇敬",
+  s_standing_8: "崇拜",
+  s_pvp_field: "荣誉战场",
+  s_spec_feral: "野性战斗",
+  s_pvp_tip: "战场奖励、荣誉与军衔",
+  s_pvp_meta: "WoW Forever 的战场军需官、声望奖励、荣誉装备与军衔奖励。",
 };
 
 const zhTW: Strings = {
@@ -645,6 +726,15 @@ const zhTW: Strings = {
   s_next_step: "下一步",
   CLASS_WARRIOR: "戰士", CLASS_PALADIN: "聖騎士", CLASS_HUNTER: "獵人", CLASS_ROGUE: "盜賊", CLASS_PRIEST: "牧師",
   CLASS_SHAMAN: "薩滿", CLASS_MAGE: "法師", CLASS_WARLOCK: "術士", CLASS_DRUID: "德魯伊",
+  s_standing_4: "中立",
+  s_standing_5: "友好",
+  s_standing_6: "尊敬",
+  s_standing_7: "崇敬",
+  s_standing_8: "崇拜",
+  s_pvp_field: "榮譽戰場",
+  s_spec_feral: "野性戰鬥",
+  s_pvp_tip: "戰場獎勵、榮譽與軍階",
+  s_pvp_meta: "WoW Forever 的戰場軍需官、聲望獎勵、榮譽裝備與軍階獎勵。",
 };
 
 export const JOURNAL_STRINGS: Record<Lang, Strings> = {

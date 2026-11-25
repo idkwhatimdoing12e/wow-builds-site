@@ -28,6 +28,14 @@ export interface MapPoint {
   markerType?: string;
 }
 
+/** The reputation a quest needs (Data/Dungeons.lua, PvPQuests.lua): standing 4 Neutral ... 8 Exalted; value: that far into it. */
+export interface RepNeed {
+  faction: number;
+  name: string;
+  standing: number;
+  value?: number;
+}
+
 export interface RawQuest {
   id: number;
   name: string;
@@ -63,6 +71,7 @@ export interface RawQuest {
   requiredItems?: ItemRef[];
   requiredItem?: [number, string, number, number];
   providedItem?: ItemRef;
+  repNeeds?: RepNeed[];
   noteQuestLink?: { id: number; name: string };
   leadsToQuestLink?: { id: number; name: string };
   startQuestLink?: { id: number; name: string };
@@ -117,6 +126,7 @@ export interface PrereqDetail {
   providedItem?: ItemRef;
   requiredItems?: ItemRef[];
   startsInDungeon?: boolean;
+  repNeeds?: RepNeed[];
 }
 
 interface JournalData {
@@ -139,7 +149,7 @@ interface JournalData {
   DUNGEON_SEARCH_ALIASES?: Record<string, string[]>;
   meta: { addonVersion: string; dungeonCount: number };
   /** The addon's pages that are one quest chain, not a dungeon (lua-to-json.py). */
-  PAGES?: { SLEEPING_BAG_PAGE?: string; ONYXIA_PAGE?: string; SLEEPING_BAG_ITEM?: number };
+  PAGES?: { SLEEPING_BAG_PAGE?: string; ONYXIA_PAGE?: string; SLEEPING_BAG_ITEM?: number; PVP_AV_PAGE?: string };
   /** A chain page's other faction, where its chain differs (the Sleeping Bag's Horde). */
   FACTION_VARIANTS?: Record<string, Partial<Record<Faction, FactionVariant>>>;
   TIER_SETS?: RawTierSets;
@@ -557,11 +567,12 @@ export function getChainPageSlugs(): string[] {
   return chainPageNames().map(slugify);
 }
 
-/** Which page a slug is, for the home tabs. */
-export function chainPageKind(slug: string): "sleeping-bag" | "onyxia" | null {
+/** Which page a slug is, for the home tabs (pvp: a battleground's quests, under the PvP tab). */
+export function chainPageKind(slug: string): "sleeping-bag" | "onyxia" | "pvp" | null {
   const p = data.PAGES ?? {};
   if (p.SLEEPING_BAG_PAGE && slugify(p.SLEEPING_BAG_PAGE) === slug) return "sleeping-bag";
   if (p.ONYXIA_PAGE && slugify(p.ONYXIA_PAGE) === slug) return "onyxia";
+  if (p.PVP_AV_PAGE && slugify(p.PVP_AV_PAGE) === slug) return "pvp";
   return null;
 }
 
@@ -572,7 +583,9 @@ export function chainPageKind(slug: string): "sleeping-bag" | "onyxia" | null {
  * of the quest, with its chain.
  */
 export function getChainPage(slug: string): Dungeon | null {
-  const name = chainPageNames().find((n) => slugify(n) === slug);
+  // (Alterac Valley's quests: at /pvp/alterac-valley/quests, not among the home's chain pages)
+  const pvp = data.PAGES?.PVP_AV_PAGE;
+  const name = [...chainPageNames(), ...(pvp && data.DB[pvp] ? [pvp] : [])].find((n) => slugify(n) === slug);
   if (!name) return null;
   const d = data.DB[name];
   const raws = asList<RawQuest>(d.quests).filter((q) => q && q.id);
@@ -746,6 +759,7 @@ export interface Quest {
   noteItem?: ItemRef;
   requiredItems: ItemRef[];
   providedItem?: ItemRef;
+  repNeeds?: RepNeed[];
   chain: ChainStepFull[];
   related: { label: string; id: number; name: string; slug?: string }[];
   dungeonName: string;
@@ -817,6 +831,7 @@ function buildPrereqDetail(d?: PrereqDetail): PrereqDetail | undefined {
     startItem: asItemRef(d.startItem),
     providedItem: asItemRef(d.providedItem),
     requiredItems: asItemRefs(d.requiredItems),
+    ...(d.repNeeds ? { repNeeds: asList<RepNeed>(d.repNeeds) } : {}),
   };
 }
 
@@ -879,6 +894,7 @@ function buildQuest(q: RawQuest, dungeonName: string): Quest {
     noteItem: asItemRef(q.noteItem),
     requiredItems: asItemRefs(q.requiredItems),
     providedItem: asItemRef(q.providedItem),
+    ...(q.repNeeds ? { repNeeds: asList<RepNeed>(q.repNeeds) } : {}),
     chain,
     related,
     dungeonName,

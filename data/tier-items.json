@@ -1,4 +1,1344 @@
 {
+ "17348": [
+  "Major Healing Draught",
+  1
+ ],
+ "17349": [
+  "Superior Healing Draught",
+  1
+ ],
+ "17351": [
+  "Major Mana Draught",
+  1
+ ],
+ "17352": [
+  "Superior Mana Draught",
+  1
+ ],
+ "17690": [
+  "Frostwolf Insignia Rank 1",
+  2
+ ],
+ "17691": [
+  "Stormpike Insignia Rank 1",
+  2
+ ],
+ "17900": [
+  "Stormpike Insignia Rank 2",
+  2
+ ],
+ "17901": [
+  "Stormpike Insignia Rank 3",
+  2
+ ],
+ "17902": [
+  "Stormpike Insignia Rank 4",
+  3
+ ],
+ "17903": [
+  "Stormpike Insignia Rank 5",
+  3
+ ],
+ "17904": [
+  "Stormpike Insignia Rank 6",
+  4
+ ],
+ "17905": [
+  "Frostwolf Insignia Rank 2",
+  2
+ ],
+ "17906": [
+  "Frostwolf Insignia Rank 3",
+  2
+ ],
+ "17907": [
+  "Frostwolf Insignia Rank 4",
+  3
+ ],
+ "17908": [
+  "Frostwolf Insignia Rank 5",
+  3
+ ],
+ "17909": [
+  "Frostwolf Insignia Rank 6",
+  4
+ ],
+ "18241": [
+  "Black War Steed Bridle",
+  4
+ ],
+ "18242": [
+  "Reins of the Black War Tiger",
+  4
+ ],
+ "18243": [
+  "Black Battlestrider",
+  4
+ ],
+ "18244": [
+  "Black War Ram",
+  4
+ ],
+ "18245": [
+  "Horn of the Black War Wolf",
+  4
+ ],
+ "18246": [
+  "Whistle of the Black War Raptor",
+  4
+ ],
+ "18247": [
+  "Black War Kodo",
+  4
+ ],
+ "18248": [
+  "Red Skeletal Warhorse",
+  4
+ ],
+ "18606": [
+  "Alliance Battle Standard",
+  1
+ ],
+ "18607": [
+  "Horde Battle Standard",
+  1
+ ],
+ "18706": [
+  "Arena Master",
+  2
+ ],
+ "18839": [
+  "Combat Healing Potion",
+  1
+ ],
+ "18841": [
+  "Combat Mana Potion",
+  1
+ ],
+ "19024": [
+  "Arena Grand Master",
+  3
+ ],
+ "19029": [
+  "Horn of the Frostwolf Howler",
+  4
+ ],
+ "19030": [
+  "Stormpike Battle Charger",
+  4
+ ],
+ "19031": [
+  "Frostwolf Battle Tabard",
+  1
+ ],
+ "19032": [
+  "Stormpike Battle Tabard",
+  1
+ ],
+ "19045": [
+  "Stormpike Battle Standard",
+  3
+ ],
+ "19046": [
+  "Frostwolf Battle Standard",
+  3
+ ],
+ "19060": [
+  "Warsong Gulch Enriched Ration",
+  1
+ ],
+ "19061": [
+  "Warsong Gulch Iron Ration",
+  1
+ ],
+ "19062": [
+  "Warsong Gulch Field Ration",
+  1
+ ],
+ "19066": [
+  "Warsong Gulch Runecloth Bandage",
+  1
+ ],
+ "19067": [
+  "Warsong Gulch Mageweave Bandage",
+  1
+ ],
+ "19068": [
+  "Warsong Gulch Silk Bandage",
+  1
+ ],
+ "19083": [
+  "Frostwolf Legionnaire's Cloak",
+  3
+ ],
+ "19084": [
+  "Stormpike Soldier's Cloak",
+  3
+ ],
+ "19085": [
+  "Frostwolf Advisor's Cloak",
+  3
+ ],
+ "19086": [
+  "Stormpike Sage's Cloak",
+  3
+ ],
+ "19087": [
+  "Frostwolf Plate Belt",
+  3
+ ],
+ "19088": [
+  "Frostwolf Mail Belt",
+  3
+ ],
+ "19089": [
+  "Frostwolf Leather Belt",
+  3
+ ],
+ "19090": [
+  "Frostwolf Cloth Belt",
+  3
+ ],
+ "19091": [
+  "Stormpike Plate Girdle",
+  3
+ ],
+ "19092": [
+  "Stormpike Mail Girdle",
+  3
+ ],
+ "19093": [
+  "Stormpike Leather Girdle",
+  3
+ ],
+ "19094": [
+  "Stormpike Cloth Girdle",
+  3
+ ],
+ "19095": [
+  "Frostwolf Legionnaire's Pendant",
+  3
+ ],
+ "19096": [
+  "Frostwolf Advisor's Pendant",
+  3
+ ],
+ "19097": [
+  "Stormpike Soldier's Pendant",
+  3
+ ],
+ "19098": [
+  "Stormpike Sage's Pendant",
+  3
+ ],
+ "19099": [
+  "Glacial Blade",
+  3
+ ],
+ "19100": [
+  "Electrified Dagger",
+  3
+ ],
+ "19101": [
+  "Whiteout Staff",
+  3
+ ],
+ "19102": [
+  "Crackling Staff",
+  3
+ ],
+ "19103": [
+  "Frostbite",
+  3
+ ],
+ "19104": [
+  "Stormstrike Hammer",
+  3
+ ],
+ "19106": [
+  "Ice Barbed Spear",
+  3
+ ],
+ "19107": [
+  "Bloodseeker",
+  3
+ ],
+ "19108": [
+  "Wand of Biting Cold",
+  3
+ ],
+ "19301": [
+  "Alterac Manna Biscuit",
+  1
+ ],
+ "19307": [
+  "Alterac Heavy Runecloth Bandage",
+  1
+ ],
+ "19308": [
+  "Tome of Arcane Domination",
+  4
+ ],
+ "19309": [
+  "Tome of Shadow Force",
+  4
+ ],
+ "19310": [
+  "Tome of the Ice Lord",
+  4
+ ],
+ "19311": [
+  "Tome of Fiery Arcana",
+  4
+ ],
+ "19312": [
+  "Lei of the Lifegiver",
+  4
+ ],
+ "19315": [
+  "Therazane's Touch",
+  4
+ ],
+ "19316": [
+  "Ice Threaded Arrow",
+  2
+ ],
+ "19317": [
+  "Ice Threaded Bullet",
+  2
+ ],
+ "19318": [
+  "Bottled Alterac Spring Water",
+  1
+ ],
+ "19319": [
+  "Harpy Hide Quiver",
+  3
+ ],
+ "19320": [
+  "Gnoll Skin Bandolier",
+  3
+ ],
+ "19321": [
+  "The Immovable Object",
+  4
+ ],
+ "19323": [
+  "The Unstoppable Force",
+  4
+ ],
+ "19324": [
+  "The Lobotomizer",
+  4
+ ],
+ "19325": [
+  "Don Julio's Band",
+  4
+ ],
+ "19483": [
+  "Peeling the Onion",
+  1
+ ],
+ "19484": [
+  "The Frostwolf Artichoke",
+  1
+ ],
+ "19505": [
+  "Warsong Battle Tabard",
+  1
+ ],
+ "19506": [
+  "Silverwing Battle Tabard",
+  1
+ ],
+ "19510": [
+  "Legionnaire's Band",
+  3
+ ],
+ "19511": [
+  "Legionnaire's Band",
+  3
+ ],
+ "19512": [
+  "Legionnaire's Band",
+  3
+ ],
+ "19513": [
+  "Legionnaire's Band",
+  3
+ ],
+ "19514": [
+  "Protector's Band",
+  3
+ ],
+ "19515": [
+  "Protector's Band",
+  3
+ ],
+ "19516": [
+  "Protector's Band",
+  3
+ ],
+ "19517": [
+  "Protector's Band",
+  3
+ ],
+ "19518": [
+  "Advisor's Ring",
+  3
+ ],
+ "19519": [
+  "Advisor's Ring",
+  3
+ ],
+ "19520": [
+  "Advisor's Ring",
+  3
+ ],
+ "19521": [
+  "Advisor's Ring",
+  3
+ ],
+ "19522": [
+  "Lorekeeper's Ring",
+  3
+ ],
+ "19523": [
+  "Lorekeeper's Ring",
+  3
+ ],
+ "19524": [
+  "Lorekeeper's Ring",
+  3
+ ],
+ "19525": [
+  "Lorekeeper's Ring",
+  3
+ ],
+ "19526": [
+  "Battle Healer's Cloak",
+  3
+ ],
+ "19527": [
+  "Battle Healer's Cloak",
+  3
+ ],
+ "19528": [
+  "Battle Healer's Cloak",
+  3
+ ],
+ "19529": [
+  "Battle Healer's Cloak",
+  3
+ ],
+ "19530": [
+  "Caretaker's Cape",
+  3
+ ],
+ "19531": [
+  "Caretaker's Cape",
+  3
+ ],
+ "19532": [
+  "Caretaker's Cape",
+  3
+ ],
+ "19533": [
+  "Caretaker's Cape",
+  3
+ ],
+ "19534": [
+  "Scout's Medallion",
+  3
+ ],
+ "19535": [
+  "Scout's Medallion",
+  3
+ ],
+ "19536": [
+  "Scout's Medallion",
+  3
+ ],
+ "19537": [
+  "Scout's Medallion",
+  3
+ ],
+ "19538": [
+  "Sentinel's Medallion",
+  3
+ ],
+ "19539": [
+  "Sentinel's Medallion",
+  3
+ ],
+ "19540": [
+  "Sentinel's Medallion",
+  3
+ ],
+ "19541": [
+  "Sentinel's Medallion",
+  3
+ ],
+ "19542": [
+  "Scout's Blade",
+  3
+ ],
+ "19543": [
+  "Scout's Blade",
+  3
+ ],
+ "19544": [
+  "Scout's Blade",
+  3
+ ],
+ "19545": [
+  "Scout's Blade",
+  3
+ ],
+ "19546": [
+  "Sentinel's Blade",
+  3
+ ],
+ "19547": [
+  "Sentinel's Blade",
+  3
+ ],
+ "19548": [
+  "Sentinel's Blade",
+  3
+ ],
+ "19549": [
+  "Sentinel's Blade",
+  3
+ ],
+ "19550": [
+  "Legionnaire's Sword",
+  3
+ ],
+ "19551": [
+  "Legionnaire's Sword",
+  3
+ ],
+ "19552": [
+  "Legionnaire's Sword",
+  3
+ ],
+ "19553": [
+  "Legionnaire's Sword",
+  3
+ ],
+ "19554": [
+  "Protector's Sword",
+  3
+ ],
+ "19555": [
+  "Protector's Sword",
+  3
+ ],
+ "19556": [
+  "Protector's Sword",
+  3
+ ],
+ "19557": [
+  "Protector's Sword",
+  3
+ ],
+ "19558": [
+  "Outrider's Bow",
+  3
+ ],
+ "19559": [
+  "Outrider's Bow",
+  3
+ ],
+ "19560": [
+  "Outrider's Bow",
+  3
+ ],
+ "19561": [
+  "Outrider's Bow",
+  3
+ ],
+ "19562": [
+  "Outrunner's Bow",
+  3
+ ],
+ "19563": [
+  "Outrunner's Bow",
+  3
+ ],
+ "19564": [
+  "Outrunner's Bow",
+  3
+ ],
+ "19565": [
+  "Outrunner's Bow",
+  3
+ ],
+ "19566": [
+  "Advisor's Gnarled Staff",
+  3
+ ],
+ "19567": [
+  "Advisor's Gnarled Staff",
+  3
+ ],
+ "19568": [
+  "Advisor's Gnarled Staff",
+  3
+ ],
+ "19569": [
+  "Advisor's Gnarled Staff",
+  3
+ ],
+ "19570": [
+  "Lorekeeper's Staff",
+  3
+ ],
+ "19571": [
+  "Lorekeeper's Staff",
+  3
+ ],
+ "19572": [
+  "Lorekeeper's Staff",
+  3
+ ],
+ "19573": [
+  "Lorekeeper's Staff",
+  3
+ ],
+ "19578": [
+  "Berserker Bracers",
+  4
+ ],
+ "19580": [
+  "Berserker Bracers",
+  4
+ ],
+ "19581": [
+  "Berserker Bracers",
+  4
+ ],
+ "19582": [
+  "Windtalker's Wristguards",
+  4
+ ],
+ "19583": [
+  "Windtalker's Wristguards",
+  4
+ ],
+ "19584": [
+  "Windtalker's Wristguards",
+  4
+ ],
+ "19587": [
+  "Forest Stalker's Bracers",
+  4
+ ],
+ "19589": [
+  "Forest Stalker's Bracers",
+  4
+ ],
+ "19590": [
+  "Forest Stalker's Bracers",
+  4
+ ],
+ "19595": [
+  "Dryad's Wrist Bindings",
+  4
+ ],
+ "19596": [
+  "Dryad's Wrist Bindings",
+  4
+ ],
+ "19597": [
+  "Dryad's Wrist Bindings",
+  4
+ ],
+ "20041": [
+  "Highlander's Plate Girdle",
+  3
+ ],
+ "20042": [
+  "Highlander's Lamellar Girdle",
+  3
+ ],
+ "20043": [
+  "Highlander's Chain Girdle",
+  3
+ ],
+ "20045": [
+  "Highlander's Leather Girdle",
+  3
+ ],
+ "20046": [
+  "Highlander's Lizardhide Girdle",
+  3
+ ],
+ "20047": [
+  "Highlander's Cloth Girdle",
+  3
+ ],
+ "20048": [
+  "Highlander's Plate Greaves",
+  3
+ ],
+ "20049": [
+  "Highlander's Lamellar Greaves",
+  3
+ ],
+ "20050": [
+  "Highlander's Chain Greaves",
+  3
+ ],
+ "20052": [
+  "Highlander's Leather Boots",
+  3
+ ],
+ "20053": [
+  "Highlander's Lizardhide Boots",
+  3
+ ],
+ "20054": [
+  "Highlander's Cloth Boots",
+  3
+ ],
+ "20055": [
+  "Highlander's Chain Pauldrons",
+  4
+ ],
+ "20057": [
+  "Highlander's Plate Spaulders",
+  4
+ ],
+ "20058": [
+  "Highlander's Lamellar Spaulders",
+  4
+ ],
+ "20059": [
+  "Highlander's Leather Shoulders",
+  4
+ ],
+ "20060": [
+  "Highlander's Lizardhide Shoulders",
+  4
+ ],
+ "20061": [
+  "Highlander's Epaulets",
+  4
+ ],
+ "20068": [
+  "Deathguard's Cloak",
+  4
+ ],
+ "20069": [
+  "Ironbark Staff",
+  4
+ ],
+ "20070": [
+  "Sageclaw",
+  4
+ ],
+ "20071": [
+  "Talisman of Arathor",
+  3
+ ],
+ "20072": [
+  "Defiler's Talisman",
+  3
+ ],
+ "20073": [
+  "Cloak of the Honor Guard",
+  4
+ ],
+ "20088": [
+  "Highlander's Chain Girdle",
+  3
+ ],
+ "20089": [
+  "Highlander's Chain Girdle",
+  3
+ ],
+ "20090": [
+  "Highlander's Chain Girdle",
+  3
+ ],
+ "20091": [
+  "Highlander's Chain Greaves",
+  3
+ ],
+ "20092": [
+  "Highlander's Chain Greaves",
+  3
+ ],
+ "20093": [
+  "Highlander's Chain Greaves",
+  3
+ ],
+ "20094": [
+  "Highlander's Cloth Boots",
+  3
+ ],
+ "20095": [
+  "Highlander's Cloth Boots",
+  3
+ ],
+ "20096": [
+  "Highlander's Cloth Boots",
+  3
+ ],
+ "20097": [
+  "Highlander's Cloth Girdle",
+  3
+ ],
+ "20098": [
+  "Highlander's Cloth Girdle",
+  3
+ ],
+ "20099": [
+  "Highlander's Cloth Girdle",
+  3
+ ],
+ "20100": [
+  "Highlander's Lizardhide Boots",
+  3
+ ],
+ "20101": [
+  "Highlander's Lizardhide Boots",
+  3
+ ],
+ "20102": [
+  "Highlander's Lizardhide Boots",
+  3
+ ],
+ "20103": [
+  "Highlander's Lizardhide Girdle",
+  3
+ ],
+ "20104": [
+  "Highlander's Lizardhide Girdle",
+  3
+ ],
+ "20105": [
+  "Highlander's Lizardhide Girdle",
+  3
+ ],
+ "20106": [
+  "Highlander's Lamellar Girdle",
+  3
+ ],
+ "20107": [
+  "Highlander's Lamellar Girdle",
+  3
+ ],
+ "20108": [
+  "Highlander's Lamellar Girdle",
+  3
+ ],
+ "20109": [
+  "Highlander's Lamellar Greaves",
+  3
+ ],
+ "20110": [
+  "Highlander's Lamellar Greaves",
+  3
+ ],
+ "20111": [
+  "Highlander's Lamellar Greaves",
+  3
+ ],
+ "20112": [
+  "Highlander's Leather Boots",
+  3
+ ],
+ "20113": [
+  "Highlander's Leather Boots",
+  3
+ ],
+ "20114": [
+  "Highlander's Leather Boots",
+  3
+ ],
+ "20115": [
+  "Highlander's Leather Girdle",
+  3
+ ],
+ "20116": [
+  "Highlander's Leather Girdle",
+  3
+ ],
+ "20117": [
+  "Highlander's Leather Girdle",
+  3
+ ],
+ "20124": [
+  "Highlander's Plate Girdle",
+  3
+ ],
+ "20125": [
+  "Highlander's Plate Girdle",
+  3
+ ],
+ "20126": [
+  "Highlander's Plate Girdle",
+  3
+ ],
+ "20127": [
+  "Highlander's Plate Greaves",
+  3
+ ],
+ "20128": [
+  "Highlander's Plate Greaves",
+  3
+ ],
+ "20129": [
+  "Highlander's Plate Greaves",
+  3
+ ],
+ "20150": [
+  "Defiler's Chain Girdle",
+  3
+ ],
+ "20151": [
+  "Defiler's Chain Girdle",
+  3
+ ],
+ "20152": [
+  "Defiler's Chain Girdle",
+  3
+ ],
+ "20153": [
+  "Defiler's Chain Girdle",
+  3
+ ],
+ "20154": [
+  "Defiler's Chain Greaves",
+  3
+ ],
+ "20155": [
+  "Defiler's Chain Greaves",
+  3
+ ],
+ "20156": [
+  "Defiler's Chain Greaves",
+  3
+ ],
+ "20157": [
+  "Defiler's Chain Greaves",
+  3
+ ],
+ "20158": [
+  "Defiler's Chain Pauldrons",
+  4
+ ],
+ "20159": [
+  "Defiler's Cloth Boots",
+  3
+ ],
+ "20160": [
+  "Defiler's Cloth Boots",
+  3
+ ],
+ "20161": [
+  "Defiler's Cloth Boots",
+  3
+ ],
+ "20162": [
+  "Defiler's Cloth Boots",
+  3
+ ],
+ "20163": [
+  "Defiler's Cloth Girdle",
+  3
+ ],
+ "20164": [
+  "Defiler's Cloth Girdle",
+  3
+ ],
+ "20165": [
+  "Defiler's Cloth Girdle",
+  3
+ ],
+ "20166": [
+  "Defiler's Cloth Girdle",
+  3
+ ],
+ "20167": [
+  "Defiler's Lizardhide Boots",
+  3
+ ],
+ "20168": [
+  "Defiler's Lizardhide Boots",
+  3
+ ],
+ "20169": [
+  "Defiler's Lizardhide Boots",
+  3
+ ],
+ "20170": [
+  "Defiler's Lizardhide Boots",
+  3
+ ],
+ "20171": [
+  "Defiler's Lizardhide Girdle",
+  3
+ ],
+ "20172": [
+  "Defiler's Lizardhide Girdle",
+  3
+ ],
+ "20173": [
+  "Defiler's Lizardhide Girdle",
+  3
+ ],
+ "20174": [
+  "Defiler's Lizardhide Girdle",
+  3
+ ],
+ "20175": [
+  "Defiler's Lizardhide Shoulders",
+  4
+ ],
+ "20176": [
+  "Defiler's Epaulets",
+  4
+ ],
+ "20186": [
+  "Defiler's Leather Boots",
+  3
+ ],
+ "20187": [
+  "Defiler's Leather Boots",
+  3
+ ],
+ "20188": [
+  "Defiler's Leather Boots",
+  3
+ ],
+ "20189": [
+  "Defiler's Leather Boots",
+  3
+ ],
+ "20190": [
+  "Defiler's Leather Girdle",
+  3
+ ],
+ "20191": [
+  "Defiler's Leather Girdle",
+  3
+ ],
+ "20192": [
+  "Defiler's Leather Girdle",
+  3
+ ],
+ "20193": [
+  "Defiler's Leather Girdle",
+  3
+ ],
+ "20194": [
+  "Defiler's Leather Shoulders",
+  4
+ ],
+ "20195": [
+  "Defiler's Mail Girdle",
+  3
+ ],
+ "20196": [
+  "Defiler's Mail Girdle",
+  3
+ ],
+ "20197": [
+  "Defiler's Mail Girdle",
+  3
+ ],
+ "20198": [
+  "Defiler's Mail Girdle",
+  3
+ ],
+ "20199": [
+  "Defiler's Mail Greaves",
+  3
+ ],
+ "20200": [
+  "Defiler's Mail Greaves",
+  3
+ ],
+ "20201": [
+  "Defiler's Mail Greaves",
+  3
+ ],
+ "20202": [
+  "Defiler's Mail Greaves",
+  3
+ ],
+ "20203": [
+  "Defiler's Mail Pauldrons",
+  4
+ ],
+ "20204": [
+  "Defiler's Plate Girdle",
+  3
+ ],
+ "20205": [
+  "Defiler's Plate Girdle",
+  3
+ ],
+ "20206": [
+  "Defiler's Plate Girdle",
+  3
+ ],
+ "20207": [
+  "Defiler's Plate Girdle",
+  3
+ ],
+ "20208": [
+  "Defiler's Plate Greaves",
+  3
+ ],
+ "20209": [
+  "Defiler's Plate Greaves",
+  3
+ ],
+ "20210": [
+  "Defiler's Plate Greaves",
+  3
+ ],
+ "20211": [
+  "Defiler's Plate Greaves",
+  3
+ ],
+ "20212": [
+  "Defiler's Plate Spaulders",
+  4
+ ],
+ "20214": [
+  "Mindfang",
+  4
+ ],
+ "20220": [
+  "Ironbark Staff",
+  4
+ ],
+ "20222": [
+  "Defiler's Enriched Ration",
+  1
+ ],
+ "20223": [
+  "Defiler's Field Ration",
+  1
+ ],
+ "20224": [
+  "Defiler's Iron Ration",
+  1
+ ],
+ "20225": [
+  "Highlander's Enriched Ration",
+  1
+ ],
+ "20226": [
+  "Highlander's Field Ration",
+  1
+ ],
+ "20227": [
+  "Highlander's Iron Ration",
+  1
+ ],
+ "20232": [
+  "Defiler's Mageweave Bandage",
+  1
+ ],
+ "20234": [
+  "Defiler's Runecloth Bandage",
+  1
+ ],
+ "20235": [
+  "Defiler's Silk Bandage",
+  1
+ ],
+ "20237": [
+  "Highlander's Mageweave Bandage",
+  1
+ ],
+ "20243": [
+  "Highlander's Runecloth Bandage",
+  1
+ ],
+ "20244": [
+  "Highlander's Silk Bandage",
+  1
+ ],
+ "20425": [
+  "Advisor's Gnarled Staff",
+  3
+ ],
+ "20426": [
+  "Advisor's Ring",
+  3
+ ],
+ "20427": [
+  "Battle Healer's Cloak",
+  3
+ ],
+ "20428": [
+  "Caretaker's Cape",
+  3
+ ],
+ "20429": [
+  "Legionnaire's Band",
+  3
+ ],
+ "20430": [
+  "Legionnaire's Sword",
+  3
+ ],
+ "20431": [
+  "Lorekeeper's Ring",
+  3
+ ],
+ "20434": [
+  "Lorekeeper's Staff",
+  3
+ ],
+ "20437": [
+  "Outrider's Bow",
+  3
+ ],
+ "20438": [
+  "Outrunner's Bow",
+  3
+ ],
+ "20439": [
+  "Protector's Band",
+  3
+ ],
+ "20440": [
+  "Protector's Sword",
+  3
+ ],
+ "20441": [
+  "Scout's Blade",
+  3
+ ],
+ "20442": [
+  "Scout's Medallion",
+  3
+ ],
+ "20443": [
+  "Sentinel's Blade",
+  3
+ ],
+ "20444": [
+  "Sentinel's Medallion",
+  3
+ ],
+ "20558": [
+  "Warsong Gulch Mark of Honor",
+  2
+ ],
+ "20559": [
+  "Arathi Basin Mark of Honor",
+  2
+ ],
+ "20560": [
+  "Alterac Valley Mark of Honor",
+  2
+ ],
+ "20648": [
+  "Cold Forged Hammer",
+  3
+ ],
+ "21115": [
+  "Defiler's Talisman",
+  3
+ ],
+ "21116": [
+  "Defiler's Talisman",
+  3
+ ],
+ "21117": [
+  "Talisman of Arathor",
+  3
+ ],
+ "21118": [
+  "Talisman of Arathor",
+  3
+ ],
+ "21119": [
+  "Talisman of Arathor",
+  3
+ ],
+ "21120": [
+  "Defiler's Talisman",
+  3
+ ],
+ "21563": [
+  "Don Rodrigo's Band",
+  4
+ ],
+ "21565": [
+  "Rune of Perfection",
+  3
+ ],
+ "21566": [
+  "Rune of Perfection",
+  3
+ ],
+ "21567": [
+  "Rune of Duty",
+  3
+ ],
+ "21568": [
+  "Rune of Duty",
+  3
+ ],
+ "22651": [
+  "Outrider's Plate Legguards",
+  4
+ ],
+ "22672": [
+  "Sentinel's Plate Legguards",
+  4
+ ],
+ "22673": [
+  "Outrider's Chain Leggings",
+  4
+ ],
+ "22676": [
+  "Outrider's Mail Leggings",
+  4
+ ],
+ "22740": [
+  "Outrider's Leather Pants",
+  4
+ ],
+ "22741": [
+  "Outrider's Lizardhide Pants",
+  4
+ ],
+ "22747": [
+  "Outrider's Silk Leggings",
+  4
+ ],
+ "22748": [
+  "Sentinel's Chain Leggings",
+  4
+ ],
+ "22749": [
+  "Sentinel's Leather Pants",
+  4
+ ],
+ "22750": [
+  "Sentinel's Lizardhide Pants",
+  4
+ ],
+ "22752": [
+  "Sentinel's Silk Leggings",
+  4
+ ],
+ "22753": [
+  "Sentinel's Lamellar Legguards",
+  4
+ ],
  "226772": [
   "Feralheart Sash",
   3
@@ -573,6 +1913,2594 @@
  ],
  "227024": [
   "Chain of The Five Thunders",
+  4
+ ],
+ "271903": [
+  "Enriched Seal",
+  3
+ ],
+ "271904": [
+  "Volunteer's Lucky Seal",
+  3
+ ],
+ "271905": [
+  "Enriched Seal",
+  3
+ ],
+ "271906": [
+  "Volunteer's Lucky Seal",
+  3
+ ],
+ "271907": [
+  "Expeditionary's Cape",
+  3
+ ],
+ "271908": [
+  "Theramore Signet",
+  3
+ ],
+ "271909": [
+  "Theramore Signet",
+  3
+ ],
+ "271910": [
+  "Theramore Signet",
+  3
+ ],
+ "271913": [
+  "Militant's Band",
+  3
+ ],
+ "271914": [
+  "Militant's Band",
+  3
+ ],
+ "271915": [
+  "Militant's Band",
+  3
+ ],
+ "271917": [
+  "Seal of the Expedition",
+  3
+ ],
+ "271918": [
+  "Seal of the Expedition",
+  3
+ ],
+ "271919": [
+  "Seal of the Expedition",
+  3
+ ],
+ "271921": [
+  "Expeditionary's Cape",
+  3
+ ],
+ "271922": [
+  "Expeditionary's Cape",
+  3
+ ],
+ "271924": [
+  "Rebels' Rugged Reaper",
+  3
+ ],
+ "271925": [
+  "Rebels' Rugged Reaper",
+  3
+ ],
+ "271926": [
+  "Rebels' Rugged Reaper",
+  3
+ ],
+ "271928": [
+  "Clever Expeditionary's Spellblade",
+  3
+ ],
+ "271929": [
+  "Clever Expeditionary's Spellblade",
+  3
+ ],
+ "271930": [
+  "Clever Expeditionary's Spellblade",
+  3
+ ],
+ "271932": [
+  "Insurgent's Manifesto",
+  3
+ ],
+ "271933": [
+  "Insurgent's Manifesto",
+  3
+ ],
+ "271934": [
+  "Insurgent's Manifesto",
+  3
+ ],
+ "271936": [
+  "Guerrilla's Jagged Mace",
+  3
+ ],
+ "271937": [
+  "Guerrilla's Jagged Mace",
+  3
+ ],
+ "271938": [
+  "Guerrilla's Jagged Mace",
+  3
+ ],
+ "271940": [
+  "Theramore Gauntlets",
+  4
+ ],
+ "271941": [
+  "Theramore Gauntlets",
+  4
+ ],
+ "271945": [
+  "Theramore Handwraps",
+  4
+ ],
+ "271946": [
+  "Theramore Handwraps",
+  4
+ ],
+ "271948": [
+  "Theramore Gloves",
+  4
+ ],
+ "271949": [
+  "Theramore Gloves",
+  4
+ ],
+ "271950": [
+  "Theramore Handguards",
+  4
+ ],
+ "271951": [
+  "Theramore Handguards",
+  4
+ ],
+ "271953": [
+  "Theramore Shoulderpads",
+  4
+ ],
+ "271954": [
+  "Theramore Shoulders",
+  4
+ ],
+ "271955": [
+  "Theramore Pauldrons",
+  4
+ ],
+ "271956": [
+  "Theramore Epaulets",
+  4
+ ],
+ "271957": [
+  "Theramore Mantle",
+  4
+ ],
+ "271959": [
+  "Theramore Spaulders",
+  4
+ ],
+ "272053": [
+  "Darkspear Islands Field Ration",
+  1
+ ],
+ "272054": [
+  "Darkspear Islands Iron Ration",
+  1
+ ],
+ "272055": [
+  "Darkspear Islands Enriched Ration",
+  1
+ ],
+ "272056": [
+  "Darkspear Islands Silk Bandage",
+  1
+ ],
+ "272057": [
+  "Darkspear Islands Mageweave Bandage",
+  1
+ ],
+ "272058": [
+  "Darkspear Islands Runecloth Bandage",
+  1
+ ],
+ "272059": [
+  "Darkspear Voodoo Seal",
+  3
+ ],
+ "272060": [
+  "Relentless Raider's Seal",
+  3
+ ],
+ "272061": [
+  "Darkspear Voodoo Seal",
+  3
+ ],
+ "272062": [
+  "Relentless Raider's Seal",
+  3
+ ],
+ "272063": [
+  "Darkspear Raider's Cloak",
+  3
+ ],
+ "272064": [
+  "Insurgent's Band",
+  3
+ ],
+ "272065": [
+  "Insurgent's Band",
+  3
+ ],
+ "272066": [
+  "Insurgent's Band",
+  3
+ ],
+ "272067": [
+  "Insurgent's Band",
+  3
+ ],
+ "272068": [
+  "Darkspear Signet",
+  3
+ ],
+ "272069": [
+  "Darkspear Signet",
+  3
+ ],
+ "272070": [
+  "Darkspear Signet",
+  3
+ ],
+ "272071": [
+  "Darkspear Signet",
+  3
+ ],
+ "272072": [
+  "Darkspear Warding Pendant",
+  3
+ ],
+ "272073": [
+  "Darkspear Warding Pendant",
+  3
+ ],
+ "272074": [
+  "Darkspear Warding Pendant",
+  3
+ ],
+ "272075": [
+  "Darkspear Warding Pendant",
+  3
+ ],
+ "272076": [
+  "Darkspear Raider's Cloak",
+  3
+ ],
+ "272077": [
+  "Darkspear Raider's Cloak",
+  3
+ ],
+ "272078": [
+  "Darkspear Raider's Cloak",
+  3
+ ],
+ "272079": [
+  "Darkspear Raider's Reaper",
+  3
+ ],
+ "272080": [
+  "Darkspear Raider's Reaper",
+  3
+ ],
+ "272081": [
+  "Darkspear Raider's Reaper",
+  3
+ ],
+ "272082": [
+  "Darkspear Raider's Reaper",
+  3
+ ],
+ "272083": [
+  "Darkspear Insurgent's Spellblade",
+  3
+ ],
+ "272084": [
+  "Darkspear Insurgent's Spellblade",
+  3
+ ],
+ "272085": [
+  "Darkspear Insurgent's Spellblade",
+  3
+ ],
+ "272086": [
+  "Darkspear Insurgent's Spellblade",
+  3
+ ],
+ "272087": [
+  "Tome of the Darkspear Prophecy",
+  3
+ ],
+ "272088": [
+  "Tome of the Darkspear Prophecy",
+  3
+ ],
+ "272089": [
+  "Tome of the Darkspear Prophecy",
+  3
+ ],
+ "272090": [
+  "Tome of the Darkspear Prophecy",
+  3
+ ],
+ "272091": [
+  "Darkspear Skirmisher's Bludgeon",
+  3
+ ],
+ "272092": [
+  "Darkspear Skirmisher's Bludgeon",
+  3
+ ],
+ "272093": [
+  "Darkspear Skirmisher's Bludgeon",
+  3
+ ],
+ "272094": [
+  "Darkspear Skirmisher's Bludgeon",
+  3
+ ],
+ "272095": [
+  "Raider Gauntlets",
+  4
+ ],
+ "272096": [
+  "Raider Gauntlets",
+  4
+ ],
+ "272097": [
+  "Raider Handwraps",
+  4
+ ],
+ "272098": [
+  "Raider Handwraps",
+  4
+ ],
+ "272099": [
+  "Raider Gloves",
+  4
+ ],
+ "272100": [
+  "Raider Gloves",
+  4
+ ],
+ "272101": [
+  "Raider Handguards",
+  4
+ ],
+ "272102": [
+  "Raider Handguards",
+  4
+ ],
+ "272103": [
+  "Darkspear Shoulderpads",
+  4
+ ],
+ "272104": [
+  "Darkspear Shoulders",
+  4
+ ],
+ "272105": [
+  "Darkspear Pauldrons",
+  4
+ ],
+ "272106": [
+  "Darkspear Epaulets",
+  4
+ ],
+ "272107": [
+  "Darkspear Mantle",
+  4
+ ],
+ "272108": [
+  "Darkspear Spaulders",
+  4
+ ],
+ "272449": [
+  "Scout's Tabard",
+  1
+ ],
+ "272450": [
+  "Stone Guard's Herald",
+  1
+ ],
+ "272452": [
+  "Premier High Warlord's Blade",
+  4
+ ],
+ "272453": [
+  "Premier Magus Footwraps",
+  3
+ ],
+ "272454": [
+  "Premier Magus Cuffs",
+  3
+ ],
+ "272455": [
+  "Premier Magus Gloves",
+  3
+ ],
+ "272456": [
+  "Premier Magus Belt",
+  3
+ ],
+ "272457": [
+  "Premier Magus Hood",
+  3
+ ],
+ "272458": [
+  "Premier Magus Pants",
+  3
+ ],
+ "272459": [
+  "Premier Magus Robes",
+  3
+ ],
+ "272461": [
+  "Premier Kodohide Armguards",
+  3
+ ],
+ "272462": [
+  "Premier Dragonhide Boots",
+  3
+ ],
+ "272463": [
+  "Premier Dragonhide Waistband",
+  3
+ ],
+ "272464": [
+  "Premier Kodohide Gauntlets",
+  3
+ ],
+ "272465": [
+  "Premier Shadowhide Armguards",
+  3
+ ],
+ "272467": [
+  "Premier Shadowhide Vices",
+  3
+ ],
+ "272468": [
+  "Premier Shadowhide Girdle",
+  3
+ ],
+ "272469": [
+  "Premier Dragonhide Spaulders",
+  3
+ ],
+ "272470": [
+  "Premier Dragonhide Trousers",
+  3
+ ],
+ "272471": [
+  "Premier Dragonhide Helm",
+  3
+ ],
+ "272472": [
+  "Premier Dragonhide Breastplate",
+  3
+ ],
+ "272473": [
+  "Premier Shadowhide Hauberk",
+  3
+ ],
+ "272474": [
+  "Premier Shadowhide Headguard",
+  3
+ ],
+ "272475": [
+  "Premier Shadowhide Mantle",
+  3
+ ],
+ "272476": [
+  "Premier Shadowhide Leggings",
+  3
+ ],
+ "272477": [
+  "Premier Mortarplate Boots",
+  3
+ ],
+ "272478": [
+  "Premier Mortarplate Gloves",
+  3
+ ],
+ "272479": [
+  "Premier Mortarplate Armor",
+  3
+ ],
+ "272480": [
+  "Premier Mortarplate Headguard",
+  3
+ ],
+ "272481": [
+  "Premier Mortarplate Legguards",
+  3
+ ],
+ "272483": [
+  "Premier Chain Bracers",
+  3
+ ],
+ "272484": [
+  "Premier Mail Walkers",
+  3
+ ],
+ "272485": [
+  "Premier Linked Grips",
+  3
+ ],
+ "272486": [
+  "Premier Mail Helm",
+  3
+ ],
+ "272487": [
+  "Premier Mail Chestpiece",
+  3
+ ],
+ "272488": [
+  "Premier Linked Leggings",
+  3
+ ],
+ "272489": [
+  "Premier Linked Shoulders",
+  3
+ ],
+ "272490": [
+  "Premier Chain Breastplate",
+  3
+ ],
+ "272491": [
+  "Premier Chain Headguard",
+  3
+ ],
+ "272492": [
+  "Premier Chain Leggings",
+  3
+ ],
+ "272494": [
+  "Premier Chain Girdle",
+  3
+ ],
+ "272495": [
+  "Premier Chain Gauntlets",
+  3
+ ],
+ "272496": [
+  "Premier Chain Boots",
+  3
+ ],
+ "272497": [
+  "Premier Linked Wristguards",
+  3
+ ],
+ "272498": [
+  "Premier Warlord's Magus Cowl",
+  4
+ ],
+ "272499": [
+  "Premier General's Magus Trousers",
+  4
+ ],
+ "272500": [
+  "Premier Warlord's Magus Raiment",
+  4
+ ],
+ "272501": [
+  "Premier General's Magus Amice",
+  4
+ ],
+ "272502": [
+  "Premier Legionnaire's Magus Sash",
+  4
+ ],
+ "272503": [
+  "Premier Legionnaire's Magus Cuffs",
+  4
+ ],
+ "272504": [
+  "Premier Centurion's Magus Boots",
+  4
+ ],
+ "272505": [
+  "Premier Champion's Magus Handguards",
+  4
+ ],
+ "272506": [
+  "Premier Warlord's Mortarplate Armor",
+  4
+ ],
+ "272507": [
+  "Premier Warlord's Mortarplate Headpiece",
+  4
+ ],
+ "272508": [
+  "Premier General's Mortarplate Leggings",
+  4
+ ],
+ "272509": [
+  "Premier General's Mortarplate Shoulders",
+  4
+ ],
+ "272510": [
+  "Premier Centurion's Mortarplate Boots",
+  4
+ ],
+ "272511": [
+  "Premier Legionnaire's Mortarplate Armguards",
+  4
+ ],
+ "272512": [
+  "Premier Legionnaire's Mortarplate Girdle",
+  4
+ ],
+ "272513": [
+  "Premier Champion's Mortarplate Gauntlets",
+  4
+ ],
+ "272514": [
+  "Premier Warlord's Dragonhide Hauberk",
+  4
+ ],
+ "272515": [
+  "Premier Warlord's Dragonhide Helmet",
+  4
+ ],
+ "272516": [
+  "Premier General's Dragonhide Epaulets",
+  4
+ ],
+ "272517": [
+  "Premier General's Dragonhide Leggings",
+  4
+ ],
+ "272518": [
+  "Premier Legionnaire's Dragonhide Bracers",
+  4
+ ],
+ "272519": [
+  "Premier Centurion's Dragonhide Boots",
+  4
+ ],
+ "272520": [
+  "Premier Champion's Dragonhide Gloves",
+  4
+ ],
+ "272521": [
+  "Premier Legionnaire's Dragonhide Belt",
+  4
+ ],
+ "272522": [
+  "Premier Legionnaire's Shadowhide Girdle",
+  4
+ ],
+ "272523": [
+  "Premier Centurion's Shadowhide Treads",
+  4
+ ],
+ "272524": [
+  "Premier Legionnaire's Shadowhide Armsplints",
+  4
+ ],
+ "272525": [
+  "Premier Champion's Shadowhide Mitts",
+  4
+ ],
+ "272526": [
+  "Premier Warlord's Shadowhide Helm",
+  4
+ ],
+ "272527": [
+  "Premier General's Shadowhide Spaulders",
+  4
+ ],
+ "272528": [
+  "Premier Warlord's Shadowhide Breastplate",
+  4
+ ],
+ "272529": [
+  "Premier General's Shadowhide Legguards",
+  4
+ ],
+ "272530": [
+  "Premier Warlord's Chain Chestpiece",
+  4
+ ],
+ "272531": [
+  "Premier Warlord's Chain Helmet",
+  4
+ ],
+ "272532": [
+  "Premier General's Chain Legguards",
+  4
+ ],
+ "272533": [
+  "Premier General's Chain Shoulders",
+  4
+ ],
+ "272534": [
+  "Premier Centurion's Chain Sabatons",
+  4
+ ],
+ "272535": [
+  "Premier Legionnaire's Chain Wristguards",
+  4
+ ],
+ "272536": [
+  "Premier Champion's Chain Gloves",
+  4
+ ],
+ "272537": [
+  "Premier Legionnaire's Chain Girdle",
+  4
+ ],
+ "272538": [
+  "Premier Centurion's Linked Boots",
+  4
+ ],
+ "272539": [
+  "Premier Champion's Linked Gauntlets",
+  4
+ ],
+ "272540": [
+  "Premier Legionnaire's Linked Waistband",
+  4
+ ],
+ "272541": [
+  "Premier Legionnaire's Linked Bracers",
+  4
+ ],
+ "272542": [
+  "Premier Warlord's Linked Armor",
+  4
+ ],
+ "272543": [
+  "Premier Warlord's Linked Helm",
+  4
+ ],
+ "272544": [
+  "Premier General's Linked Leggings",
+  4
+ ],
+ "272545": [
+  "Premier General's Linked Spaulders",
+  4
+ ],
+ "272548": [
+  "Premier Felweave Robe",
+  3
+ ],
+ "272549": [
+  "Premier Felweave Shoulders",
+  3
+ ],
+ "272550": [
+  "Premier Felweave Belt",
+  3
+ ],
+ "272551": [
+  "Premier Felweave Bracers",
+  3
+ ],
+ "272552": [
+  "Premier Felweave Boots",
+  3
+ ],
+ "272553": [
+  "Premier Felweave Gloves",
+  3
+ ],
+ "272554": [
+  "Premier Centurion's Felweave Boots",
+  4
+ ],
+ "272555": [
+  "Premier Legionnaire's Felweave Bracers",
+  4
+ ],
+ "272556": [
+  "Premier Champion's Felweave Gloves",
+  4
+ ],
+ "272557": [
+  "Premier Legionnaire's Felweave Belt",
+  4
+ ],
+ "272558": [
+  "Premier General's Felweave Mantle",
+  4
+ ],
+ "272559": [
+  "Premier Warlord's Felweave Hood",
+  4
+ ],
+ "272560": [
+  "Premier Warlord's Felweave Robe",
+  4
+ ],
+ "272561": [
+  "Premier General's Felweave Pants",
+  4
+ ],
+ "272562": [
+  "Premier Satin Cowl",
+  3
+ ],
+ "272563": [
+  "Premier Satin Trousers",
+  3
+ ],
+ "272564": [
+  "Premier Satin Vestments",
+  3
+ ],
+ "272565": [
+  "Premier Satin Shoulderpads",
+  3
+ ],
+ "272566": [
+  "Premier Satin Sash",
+  3
+ ],
+ "272567": [
+  "Premier Satin Cuffs",
+  3
+ ],
+ "272568": [
+  "Premier Satin Boots",
+  3
+ ],
+ "272569": [
+  "Premier Satin Gloves",
+  3
+ ],
+ "272570": [
+  "Premier Centurion's Satin Boots",
+  4
+ ],
+ "272571": [
+  "Premier Legionnaire's Satin Bracers",
+  4
+ ],
+ "272572": [
+  "Premier Champion's Satin Gloves",
+  4
+ ],
+ "272573": [
+  "Premier Legionnaire's Satin Cinch",
+  4
+ ],
+ "272574": [
+  "Premier General's Satin Mantle",
+  4
+ ],
+ "272575": [
+  "Premier Warlord's Satin Cowl",
+  4
+ ],
+ "272576": [
+  "Premier Warlord's Satin Robes",
+  4
+ ],
+ "272577": [
+  "Premier General's Satin Leggings",
+  4
+ ],
+ "272578": [
+  "Premier Sergeant's Cloak",
+  3
+ ],
+ "272579": [
+  "Premier Mortarplate Bracers",
+  3
+ ],
+ "272582": [
+  "Premier Dragonhide Armguards",
+  3
+ ],
+ "272589": [
+  "Premier Sergeant's Cape",
+  3
+ ],
+ "272591": [
+  "Premier High Warlord's Shield Wall",
+  4
+ ],
+ "272592": [
+  "Premier High Warlord's Cleaver",
+  4
+ ],
+ "272593": [
+  "Premier High Warlord's Battle Axe",
+  4
+ ],
+ "272594": [
+  "Premier High Warlord's Recurve",
+  4
+ ],
+ "272595": [
+  "Premier High Warlord's Crossbow",
+  4
+ ],
+ "272596": [
+  "Premier High Warlord's Razor",
+  4
+ ],
+ "272597": [
+  "Premier High Warlord's Right Claw",
+  4
+ ],
+ "272598": [
+  "Premier High Warlord's Left Claw",
+  4
+ ],
+ "272599": [
+  "Premier High Warlord's Street Sweeper",
+  4
+ ],
+ "272600": [
+  "Premier High Warlord's Bludgeon",
+  4
+ ],
+ "272601": [
+  "Premier High Warlord's Pulverizer",
+  4
+ ],
+ "272602": [
+  "Premier High Warlord's Pig Sticker",
+  4
+ ],
+ "272603": [
+  "Premier High Warlord's War Staff",
+  4
+ ],
+ "272604": [
+  "Premier High Warlord's Greatsword",
+  4
+ ],
+ "272606": [
+  "Premier Kodohide Treads",
+  3
+ ],
+ "272608": [
+  "Premier Shadowhide Walkers",
+  3
+ ],
+ "272609": [
+  "Premier Linked Greaves",
+  3
+ ],
+ "272611": [
+  "Premier Silken Walkers",
+  3
+ ],
+ "272614": [
+  "Premier Dragonhide Grips",
+  3
+ ],
+ "272617": [
+  "Premier Mail Vices",
+  3
+ ],
+ "272619": [
+  "Premier Silken Handwraps",
+  3
+ ],
+ "272625": [
+  "Premier Linked Hauberk",
+  3
+ ],
+ "272626": [
+  "Premier Kodohide Chestpiece",
+  3
+ ],
+ "272627": [
+  "Premier Kodohide Leggings",
+  3
+ ],
+ "272630": [
+  "Premier Felweave Legguards",
+  3
+ ],
+ "272634": [
+  "Premier Silken Tunic",
+  3
+ ],
+ "272636": [
+  "Premier Mail Legguards",
+  3
+ ],
+ "272637": [
+  "Premier Mortarplate Shoulders",
+  3
+ ],
+ "272640": [
+  "Premier Chain Shoulders",
+  3
+ ],
+ "272641": [
+  "Premier Kodohide Headguard",
+  3
+ ],
+ "272642": [
+  "Premier Kodohide Shoulders",
+  3
+ ],
+ "272643": [
+  "Premier Felweave Cowl",
+  3
+ ],
+ "272647": [
+  "Premier Linked Headguard",
+  3
+ ],
+ "272648": [
+  "Premier Mail Pauldrons",
+  3
+ ],
+ "272649": [
+  "Premier Silken Hood",
+  3
+ ],
+ "272650": [
+  "Premier Silken Mantle",
+  3
+ ],
+ "272656": [
+  "Premier Lunarhide Leggings",
+  3
+ ],
+ "272657": [
+  "Premier Dreadweave Legguards",
+  3
+ ],
+ "272663": [
+  "Premier Silken Legguards",
+  3
+ ],
+ "272669": [
+  "Premier Lunarhide Headguard",
+  3
+ ],
+ "272670": [
+  "Premier Lunarhide Shoulders",
+  3
+ ],
+ "272671": [
+  "Premier Dreadweave Cowl",
+  3
+ ],
+ "272677": [
+  "Premier Mooncloth Hood",
+  3
+ ],
+ "272678": [
+  "Premier Mooncloth Mantle",
+  3
+ ],
+ "272680": [
+  "Premier Magus Mantle",
+  3
+ ],
+ "272681": [
+  "Premier High Warlord's Battle Mace",
+  4
+ ],
+ "272682": [
+  "Premier High Warlord's Destroyer",
+  4
+ ],
+ "272683": [
+  "Premier High Warlord's Spellblade",
+  4
+ ],
+ "272684": [
+  "Premier High Warlord's Quickblade",
+  4
+ ],
+ "272685": [
+  "Premier High Warlord's Tome of Destruction",
+  4
+ ],
+ "272686": [
+  "Premier High Warlord's Tome of Mending",
+  4
+ ],
+ "272693": [
+  "Premier Grand Marshal's Longsword",
+  4
+ ],
+ "272694": [
+  "Private's Tabard",
+  1
+ ],
+ "272695": [
+  "Knight's Colors",
+  1
+ ],
+ "272698": [
+  "Premier Sergeant's Cloak",
+  3
+ ],
+ "272699": [
+  "Premier Sergeant's Cape",
+  3
+ ],
+ "272700": [
+  "Premier Silk Sash",
+  3
+ ],
+ "272701": [
+  "Premier Silk Boots",
+  3
+ ],
+ "272702": [
+  "Premier Silk Cuffs",
+  3
+ ],
+ "272703": [
+  "Premier Silk Gloves",
+  3
+ ],
+ "272704": [
+  "Premier Leather Boots",
+  3
+ ],
+ "272705": [
+  "Premier Beasthide Footwraps",
+  3
+ ],
+ "272706": [
+  "Premier Leather Bracers",
+  3
+ ],
+ "272707": [
+  "Premier Beasthide Armsplints",
+  3
+ ],
+ "272708": [
+  "Premier Leather Gauntlets",
+  3
+ ],
+ "272709": [
+  "Premier Beasthide Gloves",
+  3
+ ],
+ "272710": [
+  "Premier Leather Belt",
+  3
+ ],
+ "272711": [
+  "Premier Beasthide Girdle",
+  3
+ ],
+ "272712": [
+  "Premier Chainmail Girdle",
+  3
+ ],
+ "272713": [
+  "Premier Chainmail Boots",
+  3
+ ],
+ "272715": [
+  "Premier Chainmail Gauntlets",
+  3
+ ],
+ "272716": [
+  "Premier Plate Boots",
+  3
+ ],
+ "272717": [
+  "Premier Plate Gauntlets",
+  3
+ ],
+ "272718": [
+  "Premier Chevalier Sabatons",
+  3
+ ],
+ "272719": [
+  "Premier Chevalier Gauntlets",
+  3
+ ],
+ "272720": [
+  "Premier Chevalier Cinch",
+  3
+ ],
+ "272721": [
+  "Premier Chevalier Armsplints",
+  3
+ ],
+ "272722": [
+  "Premier Silk Raiment",
+  3
+ ],
+ "272723": [
+  "Premier Silk Leggings",
+  3
+ ],
+ "272724": [
+  "Premier Silk Spaulders",
+  3
+ ],
+ "272725": [
+  "Premier Silk Crown",
+  3
+ ],
+ "272726": [
+  "Premier Leather Armor",
+  3
+ ],
+ "272727": [
+  "Premier Leather Veil",
+  3
+ ],
+ "272728": [
+  "Premier Leather Legguards",
+  3
+ ],
+ "272729": [
+  "Premier Leather Spaulders",
+  3
+ ],
+ "272730": [
+  "Premier Beasthide Tunic",
+  3
+ ],
+ "272731": [
+  "Premier Beasthide Leggings",
+  3
+ ],
+ "272732": [
+  "Premier Beasthide Epaulets",
+  3
+ ],
+ "272733": [
+  "Premier Beasthide Shroud",
+  3
+ ],
+ "272734": [
+  "Premier Chainmail Hauberk",
+  3
+ ],
+ "272735": [
+  "Premier Chainmail Leggings",
+  3
+ ],
+ "272736": [
+  "Premier Chainmail Pauldrons",
+  3
+ ],
+ "272737": [
+  "Premier Chainmail Helmet",
+  3
+ ],
+ "272738": [
+  "Premier Plate Helm",
+  3
+ ],
+ "272739": [
+  "Premier Plate Chestguard",
+  3
+ ],
+ "272740": [
+  "Premier Plate Leggings",
+  3
+ ],
+ "272741": [
+  "Premier Plate Pauldrons",
+  3
+ ],
+ "272742": [
+  "Premier Chevalier Breastplate",
+  3
+ ],
+ "272743": [
+  "Premier Chevalier Headguard",
+  3
+ ],
+ "272744": [
+  "Premier Chevalier Leggings",
+  3
+ ],
+ "272745": [
+  "Premier Chevalier Shoulders",
+  3
+ ],
+ "272746": [
+  "Premier Knight-Champion's Silk Footwraps",
+  4
+ ],
+ "272747": [
+  "Premier Knight-Captain's Silk Bracers",
+  4
+ ],
+ "272748": [
+  "Premier Knight-Captain's Silk Sash",
+  4
+ ],
+ "272749": [
+  "Premier Lieutenant Commander's Silk Gloves",
+  4
+ ],
+ "272750": [
+  "Premier Field Marshal's Silk Coronet",
+  4
+ ],
+ "272751": [
+  "Premier Marshal's Silk Leggings",
+  4
+ ],
+ "272752": [
+  "Premier Field Marshal's Silk Vestments",
+  4
+ ],
+ "272753": [
+  "Premier Marshal's Silk Spaulders",
+  4
+ ],
+ "272754": [
+  "Premier Knight-Captain's Beasthide Bracers",
+  4
+ ],
+ "272755": [
+  "Premier Knight-Champion's Leather Footguards",
+  4
+ ],
+ "272756": [
+  "Premier Knight-Captain's Beasthide Waistguard",
+  4
+ ],
+ "272757": [
+  "Premier Lieutenant Commander's Beasthide Gauntlets",
+  4
+ ],
+ "272758": [
+  "Premier Marshal's Beasthide Spaulders",
+  4
+ ],
+ "272759": [
+  "Premier Marshal's Beasthide Legguards",
+  4
+ ],
+ "272760": [
+  "Premier Field Marshal's Beasthide Helmet",
+  4
+ ],
+ "272761": [
+  "Premier Field Marshal's Beasthide Breastplate",
+  4
+ ],
+ "272762": [
+  "Premier Field Marshal's Leather Chestpiece",
+  4
+ ],
+ "272763": [
+  "Premier Lieutenant Commander's Leather Handgrips",
+  4
+ ],
+ "272764": [
+  "Premier Field Marshal's Leather Mask",
+  4
+ ],
+ "272765": [
+  "Premier Marshal's Leather Leggings",
+  4
+ ],
+ "272766": [
+  "Premier Marshal's Leather Epaulets",
+  4
+ ],
+ "272767": [
+  "Premier Knight-Captain's Leather Cinch",
+  4
+ ],
+ "272768": [
+  "Premier Knight-Champion's Beasthide Boots",
+  4
+ ],
+ "272769": [
+  "Premier Knight-Captain's Leather Armsplints",
+  4
+ ],
+ "272770": [
+  "Premier Knight-Captain's Chainmail Bracers",
+  4
+ ],
+ "272771": [
+  "Premier Knight-Champion's Chainmail Boots",
+  4
+ ],
+ "272772": [
+  "Premier Lieutenant Commander's Chainmail Grips",
+  4
+ ],
+ "272773": [
+  "Premier Knight-Captain's Chainmail Girdle",
+  4
+ ],
+ "272774": [
+  "Premier Field Marshal's Chainmail Helm",
+  4
+ ],
+ "272775": [
+  "Premier Field Marshal's Chainmail Breastplate",
+  4
+ ],
+ "272776": [
+  "Premier Marshal's Chainmail Legguards",
+  4
+ ],
+ "272777": [
+  "Premier Marshal's Chainmail Spaulders",
+  4
+ ],
+ "272778": [
+  "Premier Knight-Captain's Chevalier Armguards",
+  4
+ ],
+ "272779": [
+  "Premier Knight-Captain's Chevalier Belt",
+  4
+ ],
+ "272780": [
+  "Premier Lieutenant Commander's Chevalier Gloves",
+  4
+ ],
+ "272781": [
+  "Premier Knight-Champion's Chevalier Boots",
+  4
+ ],
+ "272782": [
+  "Premier Field Marshal's Chevalier Chestplate",
+  4
+ ],
+ "272783": [
+  "Premier Field Marshal's Chevalier Faceguard",
+  4
+ ],
+ "272784": [
+  "Premier Marshal's Chevalier Legplates",
+  4
+ ],
+ "272785": [
+  "Premier Marshal's Chevalier Pauldrons",
+  4
+ ],
+ "272786": [
+  "Premier Field Marshal's Plate Armor",
+  4
+ ],
+ "272787": [
+  "Premier Field Marshal's Plate Helm",
+  4
+ ],
+ "272788": [
+  "Premier Marshal's Plate Legguards",
+  4
+ ],
+ "272789": [
+  "Premier Marshal's Plate Shoulderguards",
+  4
+ ],
+ "272790": [
+  "Premier Knight-Captain's Plate Bracers",
+  4
+ ],
+ "272791": [
+  "Premier Knight-Captain's Plate Girdle",
+  4
+ ],
+ "272792": [
+  "Premier Knight-Champion's Plate Boots",
+  4
+ ],
+ "272793": [
+  "Premier Lieutenant Commander's Plate Gauntlets",
+  4
+ ],
+ "272794": [
+  "Premier Dreadweave Boots",
+  3
+ ],
+ "272795": [
+  "Premier Dreadweave Bracers",
+  3
+ ],
+ "272796": [
+  "Premier Dreadweave Gloves",
+  3
+ ],
+ "272797": [
+  "Premier Dreadweave Belt",
+  3
+ ],
+ "272800": [
+  "Premier Dreadweave Robe",
+  3
+ ],
+ "272801": [
+  "Premier Dreadweave Mantle",
+  3
+ ],
+ "272802": [
+  "Premier Field Marshal's Dreadweave Coronal",
+  4
+ ],
+ "272803": [
+  "Premier Marshal's Dreadweave Leggings",
+  4
+ ],
+ "272804": [
+  "Premier Marshal's Dreadweave Shoulders",
+  4
+ ],
+ "272805": [
+  "Premier Field Marshal's Dreadweave Robe",
+  4
+ ],
+ "272806": [
+  "Premier Knight-Captain's Dreadweave Cuffs",
+  4
+ ],
+ "272807": [
+  "Premier Knight-Champion's Dreadweave Boots",
+  4
+ ],
+ "272808": [
+  "Premier Lieutenant Commander's Dreadweave Gloves",
+  4
+ ],
+ "272809": [
+  "Premier Knight-Captain's Dreadweave Sash",
+  4
+ ],
+ "272810": [
+  "Premier Voidcloth Boots",
+  3
+ ],
+ "272811": [
+  "Premier Voidcloth Cuffs",
+  3
+ ],
+ "272812": [
+  "Premier Voidcloth Gloves",
+  3
+ ],
+ "272813": [
+  "Premier Voidcloth Cord",
+  3
+ ],
+ "272814": [
+  "Premier Voidcloth Diadem",
+  3
+ ],
+ "272815": [
+  "Premier Voidcloth Leggings",
+  3
+ ],
+ "272816": [
+  "Premier Voidcloth Robes",
+  3
+ ],
+ "272817": [
+  "Premier Voidcloth Amice",
+  3
+ ],
+ "272818": [
+  "Premier Field Marshal's Voidcloth Headdress",
+  4
+ ],
+ "272819": [
+  "Premier Marshal's Voidcloth Pants",
+  4
+ ],
+ "272820": [
+  "Premier Marshal's Voidcloth Mantle",
+  4
+ ],
+ "272821": [
+  "Premier Field Marshal's Voidcloth Vestments",
+  4
+ ],
+ "272822": [
+  "Premier Knight-Captain's Voidcloth Bracers",
+  4
+ ],
+ "272823": [
+  "Premier Knight-Champion's Voidcloth Sandals",
+  4
+ ],
+ "272824": [
+  "Premier Lieutenant Commander's Voidcloth Gloves",
+  4
+ ],
+ "272825": [
+  "Premier Knight-Captain's Voidcloth Sash",
+  4
+ ],
+ "272828": [
+  "Premier Plate Wristguards",
+  3
+ ],
+ "272830": [
+  "Premier Chainmail Armguards",
+  3
+ ],
+ "272834": [
+  "Premier Dreamhide Armsplints",
+  3
+ ],
+ "272835": [
+  "Premier Lunarhide Armsplints",
+  3
+ ],
+ "272838": [
+  "Premier Grand Marshal's Aegis",
+  4
+ ],
+ "272839": [
+  "Premier Grand Marshal's Handaxe",
+  4
+ ],
+ "272840": [
+  "Premier Grand Marshal's Sunderer",
+  4
+ ],
+ "272841": [
+  "Premier Grand Marshal's Bullseye",
+  4
+ ],
+ "272842": [
+  "Premier Grand Marshal's Repeater",
+  4
+ ],
+ "272843": [
+  "Premier Grand Marshal's Dirk",
+  4
+ ],
+ "272844": [
+  "Premier Grand Marshal's Right Hand Blade",
+  4
+ ],
+ "272845": [
+  "Premier Grand Marshal's Left Hand Blade",
+  4
+ ],
+ "272846": [
+  "Premier Grand Marshal's Hand Cannon",
+  4
+ ],
+ "272847": [
+  "Premier Grand Marshal's Punisher",
+  4
+ ],
+ "272848": [
+  "Premier Grand Marshal's Battle Hammer",
+  4
+ ],
+ "272849": [
+  "Premier Grand Marshal's Glaive",
+  4
+ ],
+ "272850": [
+  "Premier Grand Marshal's Stave",
+  4
+ ],
+ "272851": [
+  "Premier Grand Marshal's Claymore",
+  4
+ ],
+ "272852": [
+  "Premier Luminous Breastplate",
+  3
+ ],
+ "272853": [
+  "Premier Luminous Leggings",
+  3
+ ],
+ "272854": [
+  "Premier Luminous Headguard",
+  3
+ ],
+ "272855": [
+  "Premier Luminous Shoulders",
+  3
+ ],
+ "272856": [
+  "Premier Grand Marshal's Mageblade",
+  4
+ ],
+ "272857": [
+  "Premier Grand Marshal's Warhammer",
+  4
+ ],
+ "272858": [
+  "Premier Grand Marshal's Demolisher",
+  4
+ ],
+ "272859": [
+  "Premier Grand Marshal's Swiftblade",
+  4
+ ],
+ "272957": [
+  "Theramore Shoulderguards",
+  4
+ ],
+ "272958": [
+  "Darkspear Shoulderguards",
+  4
+ ],
+ "273324": [
+  "Premier Mortarplate Girdle",
+  3
+ ],
+ "273325": [
+  "Premier Plate Girdle",
+  3
+ ],
+ "273327": [
+  "Premier Knight-Captain's Luminous Armguards",
+  4
+ ],
+ "273328": [
+  "Premier Knight-Captain's Luminous Belt",
+  4
+ ],
+ "273329": [
+  "Premier Lieutenant Commander's Luminous Gloves",
+  4
+ ],
+ "273330": [
+  "Premier Knight-Champion's Luminous Boots",
+  4
+ ],
+ "273331": [
+  "Premier Field Marshal's Luminous Chestplate",
+  4
+ ],
+ "273332": [
+  "Premier Field Marshal's Luminous Faceguard",
+  4
+ ],
+ "273333": [
+  "Premier Marshal's Luminous Legplates",
+  4
+ ],
+ "273334": [
+  "Premier Marshal's Luminous Pauldrons",
+  4
+ ],
+ "273336": [
+  "Premier Centurion's Mail Boots",
+  4
+ ],
+ "273337": [
+  "Premier Champion's Mail Gauntlets",
+  4
+ ],
+ "273338": [
+  "Premier Legionnaire's Mail Waistband",
+  4
+ ],
+ "273339": [
+  "Premier Legionnaire's Mail Bracers",
+  4
+ ],
+ "273340": [
+  "Premier Warlord's Mail Armor",
+  4
+ ],
+ "273341": [
+  "Premier Warlord's Mail Helm",
+  4
+ ],
+ "273342": [
+  "Premier General's Mail Leggings",
+  4
+ ],
+ "273343": [
+  "Premier General's Mail Spaulders",
+  4
+ ],
+ "273344": [
+  "Premier Centurion's Ringmail Boots",
+  4
+ ],
+ "273345": [
+  "Premier Champion's Ringmail Gauntlets",
+  4
+ ],
+ "273346": [
+  "Premier Legionnaire's Ringmail Waistband",
+  4
+ ],
+ "273347": [
+  "Premier Legionnaire's Ringmail Bracers",
+  4
+ ],
+ "273348": [
+  "Premier Warlord's Ringmail Armor",
+  4
+ ],
+ "273349": [
+  "Premier Warlord's Ringmail Helm",
+  4
+ ],
+ "273350": [
+  "Premier General's Ringmail Leggings",
+  4
+ ],
+ "273351": [
+  "Premier General's Ringmail Spaulders",
+  4
+ ],
+ "273352": [
+  "Premier Linked Girdle",
+  3
+ ],
+ "273353": [
+  "Premier Mail Wristguards",
+  3
+ ],
+ "273355": [
+  "Premier Ringmail Walkers",
+  3
+ ],
+ "273356": [
+  "Premier Ringmail Helm",
+  3
+ ],
+ "273357": [
+  "Premier Ringmail Chestpiece",
+  3
+ ],
+ "273358": [
+  "Premier Ringmail Vices",
+  3
+ ],
+ "273359": [
+  "Premier Ringmail Legguards",
+  3
+ ],
+ "273360": [
+  "Premier Ringmail Pauldrons",
+  3
+ ],
+ "273361": [
+  "Premier Ringmail Wristguards",
+  3
+ ],
+ "273362": [
+  "Premier Ringmail Girdle",
+  3
+ ],
+ "273363": [
+  "Premier Luminous Gauntlets",
+  3
+ ],
+ "273364": [
+  "Premier Luminous Armsplints",
+  3
+ ],
+ "273365": [
+  "Premier Luminous Sabatons",
+  3
+ ],
+ "273366": [
+  "Premier Luminous Cinch",
+  3
+ ],
+ "273367": [
+  "Premier Kodohide Waistband",
+  3
+ ],
+ "273368": [
+  "Premier Lunarhide Gloves",
+  3
+ ],
+ "273369": [
+  "Premier Lunarhide Girdle",
+  3
+ ],
+ "273370": [
+  "Premier Lunarhide Footwraps",
+  3
+ ],
+ "273371": [
+  "Premier Lunarhide Tunic",
+  3
+ ],
+ "273372": [
+  "Premier Mail Girdle",
+  3
+ ],
+ "273373": [
+  "Premier Dreamhide Leggings",
+  3
+ ],
+ "273374": [
+  "Premier Dreamhide Headguard",
+  3
+ ],
+ "273375": [
+  "Premier Dreamhide Shoulders",
+  3
+ ],
+ "273377": [
+  "Premier Dreamhide Gloves",
+  3
+ ],
+ "273378": [
+  "Premier Dreamhide Girdle",
+  3
+ ],
+ "273379": [
+  "Premier Dreamhide Footwraps",
+  3
+ ],
+ "273380": [
+  "Premier Dreamhide Tunic",
+  3
+ ],
+ "273381": [
+  "Premier Wyrmhide Armguards",
+  3
+ ],
+ "273382": [
+  "Premier Wyrmhide Gauntlets",
+  3
+ ],
+ "273383": [
+  "Premier Wyrmhide Treads",
+  3
+ ],
+ "273384": [
+  "Premier Wyrmhide Chestpiece",
+  3
+ ],
+ "273385": [
+  "Premier Wyrmhide Leggings",
+  3
+ ],
+ "273386": [
+  "Premier Wyrmhide Headguard",
+  3
+ ],
+ "273387": [
+  "Premier Wyrmhide Shoulders",
+  3
+ ],
+ "273388": [
+  "Premier Wyrmhide Waistband",
+  3
+ ],
+ "273389": [
+  "Premier Knight-Captain's Lunarhide Bracers",
+  4
+ ],
+ "273390": [
+  "Premier Knight-Captain's Lunarhide Waistguard",
+  4
+ ],
+ "273391": [
+  "Premier Lieutenant Commander's Lunarhide Gauntlets",
+  4
+ ],
+ "273392": [
+  "Premier Marshal's Lunarhide Spaulders",
+  4
+ ],
+ "273393": [
+  "Premier Marshal's Lunarhide Legguards",
+  4
+ ],
+ "273394": [
+  "Premier Field Marshal's Lunarhide Helmet",
+  4
+ ],
+ "273395": [
+  "Premier Field Marshal's Lunarhide Breastplate",
+  4
+ ],
+ "273396": [
+  "Premier Knight-Champion's Lunarhide Boots",
+  4
+ ],
+ "273397": [
+  "Premier Knight-Captain's Dreamhide Bracers",
+  4
+ ],
+ "273398": [
+  "Premier Knight-Captain's Dreamhide Waistguard",
+  4
+ ],
+ "273399": [
+  "Premier Lieutenant Commander's Dreamhide Gauntlets",
+  4
+ ],
+ "273400": [
+  "Premier Marshal's Dreamhide Spaulders",
+  4
+ ],
+ "273401": [
+  "Premier Marshal's Dreamhide Legguards",
+  4
+ ],
+ "273402": [
+  "Premier Field Marshal's Dreamhide Helmet",
+  4
+ ],
+ "273403": [
+  "Premier Field Marshal's Dreamhide Breastplate",
+  4
+ ],
+ "273404": [
+  "Premier Knight-Champion's Dreamhide Boots",
+  4
+ ],
+ "273405": [
+  "Premier Warlord's Wyrmhide Hauberk",
+  4
+ ],
+ "273406": [
+  "Premier Warlord's Wyrmhide Helmet",
+  4
+ ],
+ "273407": [
+  "Premier General's Wyrmhide Epaulets",
+  4
+ ],
+ "273408": [
+  "Premier General's Wyrmhide Leggings",
+  4
+ ],
+ "273409": [
+  "Premier Legionnaire's Wyrmhide Bracers",
+  4
+ ],
+ "273410": [
+  "Premier Centurion's Wyrmhide Boots",
+  4
+ ],
+ "273411": [
+  "Premier Champion's Wyrmhide Gloves",
+  4
+ ],
+ "273412": [
+  "Premier Legionnaire's Wyrmhide Belt",
+  4
+ ],
+ "273413": [
+  "Premier Warlord's Kodohide Hauberk",
+  4
+ ],
+ "273414": [
+  "Premier Warlord's Kodohide Helmet",
+  4
+ ],
+ "273415": [
+  "Premier General's Kodohide Epaulets",
+  4
+ ],
+ "273416": [
+  "Premier General's Kodohide Leggings",
+  4
+ ],
+ "273417": [
+  "Premier Legionnaire's Kodohide Bracers",
+  4
+ ],
+ "273418": [
+  "Premier Centurion's Kodohide Boots",
+  4
+ ],
+ "273419": [
+  "Premier Champion's Kodohide Gloves",
+  4
+ ],
+ "273420": [
+  "Premier Legionnaire's Kodohide Belt",
+  4
+ ],
+ "273421": [
+  "Premier Field Marshal's Mooncloth Headdress",
+  4
+ ],
+ "273422": [
+  "Premier Marshal's Mooncloth Pants",
+  4
+ ],
+ "273423": [
+  "Premier Marshal's Mooncloth Mantle",
+  4
+ ],
+ "273424": [
+  "Premier Field Marshal's Mooncloth Vestments",
+  4
+ ],
+ "273425": [
+  "Premier Knight-Captain's Mooncloth Bracers",
+  4
+ ],
+ "273426": [
+  "Premier Knight-Champion's Mooncloth Sandals",
+  4
+ ],
+ "273427": [
+  "Premier Lieutenant Commander's Mooncloth Gloves",
+  4
+ ],
+ "273428": [
+  "Premier Knight-Captain's Mooncloth Sash",
+  4
+ ],
+ "273429": [
+  "Premier Centurion's Silken Boots",
+  4
+ ],
+ "273430": [
+  "Premier Legionnaire's Silken Bracers",
+  4
+ ],
+ "273431": [
+  "Premier Champion's Silken Gloves",
+  4
+ ],
+ "273432": [
+  "Premier Legionnaire's Silken Cinch",
+  4
+ ],
+ "273433": [
+  "Premier General's Silken Mantle",
+  4
+ ],
+ "273434": [
+  "Premier Warlord's Silken Cowl",
+  4
+ ],
+ "273435": [
+  "Premier Warlord's Silken Robes",
+  4
+ ],
+ "273436": [
+  "Premier General's Silken Leggings",
+  4
+ ],
+ "273443": [
+  "Premier Mooncloth Boots",
+  3
+ ],
+ "273444": [
+  "Premier Mooncloth Cuffs",
+  3
+ ],
+ "273445": [
+  "Premier Mooncloth Gloves",
+  3
+ ],
+ "273447": [
+  "Premier Mooncloth Leggings",
+  3
+ ],
+ "273448": [
+  "Premier Mooncloth Robes",
+  3
+ ],
+ "273449": [
+  "Premier Mooncloth Cord",
+  3
+ ],
+ "273450": [
+  "Premier Silken Cuffs",
+  3
+ ],
+ "274176": [
+  "Premier Scalemail Walkers",
+  3
+ ],
+ "274177": [
+  "Premier Flatmail Grips",
+  3
+ ],
+ "274178": [
+  "Premier Scalemail Helm",
+  3
+ ],
+ "274179": [
+  "Premier Scalemail Chestpiece",
+  3
+ ],
+ "274180": [
+  "Premier Flatmail Leggings",
+  3
+ ],
+ "274181": [
+  "Premier Flatmail Shoulders",
+  3
+ ],
+ "274182": [
+  "Premier Flatmail Wristguards",
+  3
+ ],
+ "274183": [
+  "Premier Knight-Champion's Flatmail Boots",
+  4
+ ],
+ "274184": [
+  "Premier Lieutenant Commander's Flatmail Gauntlets",
+  4
+ ],
+ "274185": [
+  "Premier Knight-Captain's Flatmail Waistband",
+  4
+ ],
+ "274186": [
+  "Premier Knight-Captain's Flatmail Bracers",
+  4
+ ],
+ "274187": [
+  "Premier Field Marshal's Flatmail Armor",
+  4
+ ],
+ "274188": [
+  "Premier Field Marshal's Flatmail Helm",
+  4
+ ],
+ "274189": [
+  "Premier Marshal's Flatmail Leggings",
+  4
+ ],
+ "274190": [
+  "Premier Marshal's Flatmail Spaulders",
+  4
+ ],
+ "274192": [
+  "Premier Flatmail Greaves",
+  3
+ ],
+ "274193": [
+  "Premier Scalemail Vices",
+  3
+ ],
+ "274194": [
+  "Premier Flatmail Hauberk",
+  3
+ ],
+ "274195": [
+  "Premier Scalemail Legguards",
+  3
+ ],
+ "274196": [
+  "Premier Flatmail Headguard",
+  3
+ ],
+ "274197": [
+  "Premier Scalemail Pauldrons",
+  3
+ ],
+ "274198": [
+  "Premier Knight-Champion's Scalemail Boots",
+  4
+ ],
+ "274199": [
+  "Premier Lieutenant Commander's Scalemail Gauntlets",
+  4
+ ],
+ "274200": [
+  "Premier Knight-Captain's Scalemail Waistband",
+  4
+ ],
+ "274201": [
+  "Premier Knight-Captain's Scalemail Bracers",
+  4
+ ],
+ "274202": [
+  "Premier Field Marshal's Scalemail Armor",
+  4
+ ],
+ "274203": [
+  "Premier Field Marshal's Scalemail Helm",
+  4
+ ],
+ "274204": [
+  "Premier Marshal's Scalemail Leggings",
+  4
+ ],
+ "274205": [
+  "Premier Marshal's Scalemail Spaulders",
+  4
+ ],
+ "274206": [
+  "Premier Knight-Champion's Linkmail Boots",
+  4
+ ],
+ "274207": [
+  "Premier Lieutenant Commander's Linkmail Gauntlets",
+  4
+ ],
+ "274208": [
+  "Premier Knight-Captain's Linkmail Waistband",
+  4
+ ],
+ "274209": [
+  "Premier Knight-Captain's Linkmail Bracers",
+  4
+ ],
+ "274210": [
+  "Premier Field Marshal's Linkmail Armor",
+  4
+ ],
+ "274211": [
+  "Premier Field Marshal's Linkmail Helm",
+  4
+ ],
+ "274212": [
+  "Premier Marshal's Linkmail Leggings",
+  4
+ ],
+ "274213": [
+  "Premier Marshal's Linkmail Spaulders",
+  4
+ ],
+ "274214": [
+  "Premier Flatmail Girdle",
+  3
+ ],
+ "274215": [
+  "Premier Scalemail Wristguards",
+  3
+ ],
+ "274217": [
+  "Premier Linkmail Walkers",
+  3
+ ],
+ "274218": [
+  "Premier Linkmail Helm",
+  3
+ ],
+ "274219": [
+  "Premier Linkmail Chestpiece",
+  3
+ ],
+ "274220": [
+  "Premier Linkmail Vices",
+  3
+ ],
+ "274221": [
+  "Premier Linkmail Legguards",
+  3
+ ],
+ "274222": [
+  "Premier Linkmail Pauldrons",
+  3
+ ],
+ "274223": [
+  "Premier Linkmail Wristguards",
+  3
+ ],
+ "274224": [
+  "Premier Linkmail Girdle",
+  3
+ ],
+ "274225": [
+  "Premier Scalemail Girdle",
+  3
+ ],
+ "274226": [
+  "Premier Scaled Sabatons",
+  3
+ ],
+ "274227": [
+  "Premier Scaled Gauntlets",
+  3
+ ],
+ "274228": [
+  "Premier Scaled Cinch",
+  3
+ ],
+ "274229": [
+  "Premier Scaled Armsplints",
+  3
+ ],
+ "274230": [
+  "Premier Scaled Breastplate",
+  3
+ ],
+ "274231": [
+  "Premier Scaled Headguard",
+  3
+ ],
+ "274232": [
+  "Premier Scaled Leggings",
+  3
+ ],
+ "274233": [
+  "Premier Scaled Shoulders",
+  3
+ ],
+ "274234": [
+  "Premier Legionnaire's Scaled Armguards",
+  4
+ ],
+ "274235": [
+  "Premier Legionnaire's Scaled Belt",
+  4
+ ],
+ "274236": [
+  "Premier Champion's Scaled Gloves",
+  4
+ ],
+ "274237": [
+  "Premier Centurion's Scaled Boots",
+  4
+ ],
+ "274238": [
+  "Premier Warlord's Scaled Chestplate",
+  4
+ ],
+ "274239": [
+  "Premier Warlord's Scaled Faceguard",
+  4
+ ],
+ "274240": [
+  "Premier General's Scaled Legplates",
+  4
+ ],
+ "274241": [
+  "Premier General's Scaled Pauldrons",
+  4
+ ],
+ "274244": [
+  "Premier Lamellar Breastplate",
+  3
+ ],
+ "274245": [
+  "Premier Lamellar Leggings",
+  3
+ ],
+ "274246": [
+  "Premier Lamellar Headguard",
+  3
+ ],
+ "274247": [
+  "Premier Lamellar Shoulders",
+  3
+ ],
+ "274248": [
+  "Premier Legionnaire's Lamellar Armguards",
+  4
+ ],
+ "274249": [
+  "Premier Legionnaire's Lamellar Belt",
+  4
+ ],
+ "274250": [
+  "Premier Champion's Lamellar Gloves",
+  4
+ ],
+ "274251": [
+  "Premier Centurion's Lamellar Boots",
+  4
+ ],
+ "274252": [
+  "Premier Warlord's Lamellar Chestplate",
+  4
+ ],
+ "274253": [
+  "Premier Warlord's Lamellar Faceguard",
+  4
+ ],
+ "274254": [
+  "Premier General's Lamellar Legplates",
+  4
+ ],
+ "274255": [
+  "Premier General's Lamellar Pauldrons",
+  4
+ ],
+ "274256": [
+  "Premier Lamellar Gauntlets",
+  3
+ ],
+ "274257": [
+  "Premier Lamellar Armsplints",
+  3
+ ],
+ "274258": [
+  "Premier Lamellar Sabatons",
+  3
+ ],
+ "274259": [
+  "Premier Lamellar Cinch",
+  3
+ ],
+ "274444": [
+  "Greater Insignia of the Horde",
+  3
+ ],
+ "274445": [
+  "Greater Insignia of the Alliance",
+  3
+ ],
+ "274895": [
+  "Darkspear Islands Mark of Honor",
+  2
+ ],
+ "274968": [
+  "Premier Senior Sergeant's Insignia",
+  3
+ ],
+ "274969": [
+  "Premier Master Sergeant's Insignia",
+  3
+ ],
+ "275229": [
+  "Premier Emboldened Shoulder Seal",
+  4
+ ],
+ "275238": [
+  "Premier Emboldened Chest Seal",
+  4
+ ],
+ "275239": [
+  "Premier Emboldened Hands Seal",
+  4
+ ],
+ "275240": [
+  "Premier Emboldened Wrist Seal",
+  4
+ ],
+ "275241": [
+  "Premier Emboldened Head Seal",
+  4
+ ],
+ "275242": [
+  "Premier Emboldened Legs Seal",
+  4
+ ],
+ "275243": [
+  "Premier Emboldened Feet Seal",
+  4
+ ],
+ "275244": [
+  "Premier Emboldened Belt Seal",
+  4
+ ],
+ "275437": [
+  "Premier Silken Sash",
+  3
+ ],
+ "276502": [
+  "Darkspear Battle Tabard",
+  1
+ ],
+ "276504": [
+  "Theramore Battle Tabard",
+  1
+ ],
+ "278157": [
+  "Premier Grand Marshal's Tome of Restoration",
+  4
+ ],
+ "278158": [
+  "Premier Grand Marshal's Tome of Power",
+  4
+ ],
+ "278468": [
+  "Premier Grand Marshal's Barricade",
+  4
+ ],
+ "278469": [
+  "Premier High Warlord's Barricade",
   4
  ]
 }

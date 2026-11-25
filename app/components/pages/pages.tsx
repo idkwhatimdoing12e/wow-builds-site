@@ -21,6 +21,8 @@ import Overview from "@/app/components/journal/Overview";
 import JournalHome from "@/app/components/journal/JournalHome";
 import HomeEmblems, { type EmblemText } from "@/app/components/journal/HomeEmblems";
 import TierSetsView, { type TierClassView } from "@/app/components/journal/TierSetsView";
+import { BattlegroundView, HonorRanksView, PvpCards } from "@/app/components/journal/PvpViews";
+import { getBattleground, getHonor, pvpCards } from "@/app/lib/pvp";
 import HomeHero, { DownloadBanner } from "@/app/components/site/HomeHero";
 import BluePosts from "@/app/components/site/BluePosts";
 
@@ -203,17 +205,31 @@ export function chainPageMetadata(slug: string, lang: Lang): Metadata {
   };
 }
 
-/** The Onyxia Attunement and Cozy Sleeping Bag pages: the dungeon page with its Quests tab only, under the home tabs. */
-export function ChainPageBody({ slug, lang }: { slug: string; lang: Lang }) {
+/**
+ * The Onyxia Attunement and Cozy Sleeping Bag pages: the dungeon page with its
+ * Quests tab only, under the home tabs. Alterac Valley's quests too, under the
+ * PvP tab, with "Back to the rewards" to its battleground's page.
+ */
+export function ChainPageBody({ slug, lang, back }: { slug: string; lang: Lang; back?: string }) {
   const d = getLocalizedChainPage(slug, lang);
   const kind = chainPageKind(slug);
   if (!d || !kind) notFound();
   const dict = dictFor(lang);
+  const tabs = (
+    <>
+      {back && (
+        <Link href={href(lang, back)} className="wf-btn wf-btn-red wf-btn-sm pv-back-rewards">
+          {dict.PVP_BACK_REWARDS ?? "Back to the rewards"}
+        </Link>
+      )}
+      <HomeEmblems text={emblemText(dict)} active={kind} />
+    </>
+  );
   return (
     <I18nProvider lang={lang} dict={dict}>
       <div className="journal wf-page ej">
         <Window title={dict.DUNGEON_JOURNAL} homeHref={href(lang, "/")}>
-          <DungeonView d={d} tabs={<HomeEmblems text={emblemText(dict)} active={kind} />} />
+          <DungeonView d={d} tabs={tabs} />
         </Window>
         <AdSlot />
       </div>
@@ -289,3 +305,105 @@ export function TierSetsBody({ lang }: { lang: Lang }) {
     </I18nProvider>
   );
 }
+
+/* ---------- PvP (the addon's PvP tab) ---------- */
+
+export function pvpMetadata(lang: Lang): Metadata {
+  const dict = dictFor(lang);
+  const title = lang === "en" ? "PvP rewards: battlegrounds, Honor and ranks (WoW Forever)" : `${dict.PVP_TITLE} - ${dict.PVP_BATTLEGROUNDS}`;
+  const description = dict.s_pvp_meta;
+  return {
+    title,
+    description,
+    alternates: alternates(lang, "/pvp"),
+    openGraph: { title: `${title} - ${SITE_NAME}`, description, url: `${SITE_URL}${href(lang, "/pvp")}` },
+  };
+}
+
+/** The PvP tab: the battlegrounds' cards and Honor & Ranks. */
+export function PvpBody({ lang }: { lang: Lang }) {
+  const dict = dictFor(lang);
+  return (
+    <I18nProvider lang={lang} dict={dict}>
+      <div className="journal wf-page ej">
+        <Window title={dict.DUNGEON_JOURNAL} homeHref={href(lang, "/")}>
+          <div className="wf-dview">
+            <div className="wf-crumb wf-crumb-tabs">
+              <HomeEmblems text={emblemText(dict)} active="pvp" />
+            </div>
+            <PvpCards cards={pvpCards(lang)} />
+          </div>
+        </Window>
+        <AdSlot />
+      </div>
+    </I18nProvider>
+  );
+}
+
+export function pvpPageMetadata(slug: string, lang: Lang): Metadata {
+  const dict = dictFor(lang);
+  const path = `/pvp/${slug}`;
+  let title: string;
+  let description: string;
+  if (slug === "honor-and-ranks") {
+    title = lang === "en" ? "Honor & Ranks: Premier gear and rank rewards (WoW Forever)" : `${dict.PVP_HONOR_TITLE} - ${dict.PVP_HONOR_META}`;
+    description = lang === "en"
+      ? "Every class's Premier PvP gear for both factions, the seals that make it epic, what each PvP rank unlocks, Marks of Honor and Field of Honor on WoW Forever."
+      : dict.PVP_PREMIER_TEXT ?? dict.PVP_HONOR_META;
+  } else {
+    const bg = getBattleground(slug, lang, (p) => p);
+    if (!bg) return {};
+    title = lang === "en" ? `${bg.name} rewards and reputation (WoW Forever)` : `${bg.name} - ${dict.PVP_TITLE}`;
+    const a = bg.sides.Alliance;
+    const h = bg.sides.Horde;
+    description = lang === "en"
+      ? `Everything ${a.factionName} (${a.vendor.name}) and ${h.factionName} (${h.vendor.name}) sell for ${bg.name} on WoW Forever, by the reputation it needs, with every level version.`
+      : `${bg.name}: ${a.factionName}, ${h.factionName}. ${dict.s_pvp_tip}.`;
+  }
+  return {
+    title,
+    description: description.slice(0, 160),
+    alternates: alternates(lang, path),
+    openGraph: { title: `${title} - ${SITE_NAME}`, description, url: `${SITE_URL}${href(lang, path)}` },
+  };
+}
+
+/** A battleground's rewards page, or Honor & Ranks. */
+export function PvpPageBody({ slug, lang }: { slug: string; lang: Lang }) {
+  const dict = dictFor(lang);
+  const cards = pvpCards(lang);
+  const honor = slug === "honor-and-ranks" ? getHonor(lang) : null;
+  const bg = honor ? null : getBattleground(slug, lang, (p) => href(lang, p));
+  if (!honor && !bg) notFound();
+  return (
+    <I18nProvider lang={lang} dict={dict}>
+      <div className="journal wf-page ej">
+        <Window title={dict.DUNGEON_JOURNAL} homeHref={href(lang, "/")}>
+          <div className="wf-dview">
+            <div className="wf-crumb wf-crumb-tabs">
+              <HomeEmblems text={emblemText(dict)} active="pvp" />
+            </div>
+            {honor ? <HonorRanksView honor={honor} cards={cards} /> : <BattlegroundView bg={bg!} cards={cards} />}
+          </div>
+        </Window>
+        <AdSlot />
+      </div>
+    </I18nProvider>
+  );
+}
+
+/** A battleground's quests page (Alterac Valley), at /pvp/<slug>/quests. */
+export function pvpQuestsMetadata(slug: string, lang: Lang, page: string): Metadata {
+  const meta = chainPageMetadata(page, lang);
+  const path = `/pvp/${slug}/quests`;
+  const dict = dictFor(lang);
+  const d = getLocalizedChainPage(page, lang);
+  const title = lang === "en" ? `${d?.name ?? ""} quests: insignia ranks and battle quests (WoW Forever)` : `${d?.name ?? ""} - ${dict.QUESTS}`;
+  return {
+    ...meta,
+    title,
+    alternates: alternates(lang, path),
+    openGraph: { ...meta.openGraph, title: `${title} - ${SITE_NAME}`, url: `${SITE_URL}${href(lang, path)}` },
+  };
+}
+

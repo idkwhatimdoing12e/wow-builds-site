@@ -17,6 +17,7 @@ import {
   type RewardTuple,
 } from "./journal";
 import { itemIconSrc, itemSlug } from "./items";
+import { pvpItemSources, type PvpItemSource } from "./pvp";
 import type { ItemTip, TooltipLine } from "./item-tip";
 
 /** How the item is tied to a dungeon, boss or quest. */
@@ -31,7 +32,8 @@ export type SourceKind =
   | "later" // reward later in the quest's chain
   | "starts" // starts the quest
   | "needed" // the quest needs it ("You will need")
-  | "provided"; // the quest hands it to you
+  | "provided" // the quest hands it to you
+  | "pvp"; // a battleground quartermaster, the Honor vendors, a PvP rank
 
 export interface ItemSource {
   kind: SourceKind;
@@ -43,6 +45,8 @@ export interface ItemSource {
   quest?: { id: number; name: string; slug?: string; faction?: string };
   /** The addon's own note on the drop or reward ("Alliance only", a drop source, ...). */
   note?: string;
+  /** PvP: the page (a battleground's or Honor & Ranks), the side, who sells it and what it needs. */
+  pvp?: PvpItemSource;
 }
 
 export interface ItemNotes {
@@ -115,7 +119,8 @@ function buildIndex(): Map<number, ItemEntry> {
     // Loot rows know the slot and the addon's tooltip lines; rewards do not.
     if (extra.slot && !e.slot) e.slot = extra.slot;
     if (extra.tip?.length && !e.tip) e.tip = extra.tip;
-    const key = [id, source.kind, source.dungeon?.slug ?? "", source.boss?.name ?? "", source.quest?.id ?? ""].join("|");
+    const pvp = source.pvp ? `${source.pvp.href} ${source.pvp.faction} ${source.pvp.note}` : "";
+    const key = [id, source.kind, source.dungeon?.slug ?? "", source.boss?.name ?? "", source.quest?.id ?? "", pvp].join("|");
     if (seen.has(key)) return;
     seen.add(key);
     e.sources.push(source);
@@ -182,6 +187,13 @@ function buildIndex(): Map<number, ItemEntry> {
     }
   }
 
+  // PvP: the battlegrounds' quartermasters and Honor & Ranks (the PvP tab).
+  for (const [id, { item, sources }] of pvpItemSources()) {
+    for (const src of sources) {
+      add(id, item.name, item.quality, { kind: "pvp", pvp: src });
+    }
+  }
+
   for (const e of out.values()) {
     // "Head" / "Leather" from the tooltip's slot row, for items no loot list gives a slot.
     if (!e.slot && e.lines && !SLOTS[String(e.id)]) {
@@ -204,13 +216,16 @@ export function itemTip(e: ItemEntry): ItemTip {
   const drop = e.sources.find((s) => s.kind === "drop" || s.kind === "shared" || s.kind === "recipe");
   const trash = e.sources.find((s) => s.kind === "trash");
   const reward = e.sources.find((s) => s.kind === "reward" || s.kind === "choice" || s.kind === "also" || s.kind === "later");
+  const pvp = e.sources.find((s) => s.kind === "pvp")?.pvp;
   const source = drop
     ? `Dropped by ${drop.boss?.name} (${drop.dungeon?.name})`
     : trash
       ? `Dropped by trash in ${trash.dungeon?.name}`
       : reward
         ? `Reward from ${reward.quest?.name}`
-        : undefined;
+        : pvp
+          ? `PvP: ${pvp.page}`
+          : undefined;
   return {
     id: e.id,
     name: e.name,

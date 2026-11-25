@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useHref, useT } from "@/app/components/i18n/I18n";
+import { useFaction } from "./useFaction";
 
 export interface EmblemText {
   dungeonsTitle: string;
@@ -10,7 +11,7 @@ export interface EmblemText {
 }
 
 /** Which of the home tabs is open. */
-export type HomeTab = "dungeons" | "sleeping-bag" | "onyxia" | "tier";
+export type HomeTab = "dungeons" | "sleeping-bag" | "onyxia" | "tier" | "pvp";
 
 /**
  * The pages the tabs open. The two quest chains are the addon's own pages
@@ -20,6 +21,7 @@ export const HOME_TAB_PATHS: Record<Exclude<HomeTab, "dungeons">, string> = {
   "sleeping-bag": "/cozy-sleeping-bag",
   onyxia: "/onyxia-attunement",
   tier: "/tier-sets",
+  pvp: "/pvp",
 };
 
 /**
@@ -27,17 +29,26 @@ export const HOME_TAB_PATHS: Record<Exclude<HomeTab, "dungeons">, string> = {
  * "hometabs"), working as tabs:
  * - the WoW Forever emblem: the dungeon list;
  * - the Raids medallion, greyed out until raids are added;
- * - the Cozy Sleeping Bag, Onyxia Attunement and Tier Sets icons: their pages.
+ * - the Cozy Sleeping Bag, Onyxia Attunement and Tier Sets icons: their pages;
+ * - PvP (Systems/PvP.lua): the battlegrounds, with the game's own PvP tab
+ *   icon for the side picked (the gold fist on blue, or on red).
  * The open page's icon is lit (the emblem's gold ring and brighter halo).
  */
 export default function HomeEmblems({ text, active = "dungeons" }: { text: EmblemText; active?: HomeTab }) {
   const h = useHref();
   const t = useT();
+  const faction = useFaction();
   const tabs: { key: Exclude<HomeTab, "dungeons">; icon: string; title: string; tip: string }[] = [
     { key: "sleeping-bag", icon: "/journal/icons/inv_misc_bag_bigbagofenchantments.webp", title: t.or("SLEEPING_BAG_TITLE", "Cozy Sleeping Bag"), tip: t.or("SLEEPING_BAG_HOW", "How to get Sleeping Bag") },
     { key: "onyxia", icon: "/journal/ui/onyxia-icon.png", title: t.or("ATTUNE_ONYXIA", "Onyxia Attunement"), tip: t.or("ONYXIA_ICON_TIP", "") },
     // The Tier Sets icon: the Vest of Elements (Tier 0 shaman chest).
     { key: "tier", icon: "/journal/icons/inv_chest_chain_11.webp", title: t.or("TIER_TITLE", "Tier Sets"), tip: t.or("TIER_ICON_TIP", "") },
+    {
+      key: "pvp",
+      icon: `/journal/icons/inv_sidetab_honor_${faction === "Horde" ? "horde" : "alliance"}_c60.webp`,
+      title: t.or("PVP_TITLE", "PvP"),
+      tip: t.or("s_pvp_tip", ""),
+    },
   ];
   return (
     <div className="wf-emblems">

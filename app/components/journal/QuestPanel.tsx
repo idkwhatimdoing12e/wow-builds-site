@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useHref, useT, type T } from "@/app/components/i18n/I18n";
 import { zonePin } from "@/app/lib/journal-shared";
-import type { ChainStepFull, ItemRef, Quest, RewardTuple } from "@/app/lib/journal";
+import type { ChainStepFull, ItemRef, Quest, RepNeed, RewardTuple } from "@/app/lib/journal";
 import ItemLink, { ItemIcon } from "./ItemLink";
 import { FactionCrest } from "./Window";
 import ZoneMap from "./ZoneMap";
@@ -36,6 +36,29 @@ export function QuestTick({ className, label }: { className?: string; label?: st
         <path d="M4 12.5 L9.5 18 L20 6" />
       </svg>
     </span>
+  );
+}
+
+/**
+ * "Requires Friendly with Stormpike Guard", above the objective, as the addon
+ * writes a quest's reputation needs (Systems/QuestText.lua, PlaceRepNeeds);
+ * "Exalted 999 / 1000" when it needs that far into the standing.
+ */
+function RepNeeds({ needs }: { needs?: RepNeed[] }) {
+  const t = useT();
+  if (!needs?.length) return null;
+  return (
+    <>
+      {needs.map((n, i) => {
+        let standing = t.or(`s_standing_${n.standing}`, "");
+        if (n.value) standing += ` ${n.value} / ${n.standing >= 8 ? 1000 : n.value}`;
+        return (
+          <p key={i} className="wp-rep-need">
+            {t("REP_REQUIRES", standing, n.name)}
+          </p>
+        );
+      })}
+    </>
   );
 }
 
@@ -187,6 +210,7 @@ export default function QuestPanel({
       )}
 
       {q.warning && <p className="wp-warning">{q.warning}</p>}
+      <RepNeeds needs={q.repNeeds} />
 
       <div className="wp-sub">{t("OBJECTIVE")}</div>
       <p className="wp-text">{q.objective}</p>
@@ -386,6 +410,7 @@ export function PrereqPanel({
         {t("REQUIRED_PREREQUISITE")}{d.requires ? <>&nbsp; | &nbsp;{t("AVAILABLE_FROM_LEVEL", d.requires)}</> : null}
         <span className="wp-note">{t("s_step_of", index + 1, total)}</span>
       </p>
+      <RepNeeds needs={d.repNeeds} />
 
       <div className="wp-sub">{t("OBJECTIVE")}</div>
       <p className="wp-text wp-pre">{body}</p>

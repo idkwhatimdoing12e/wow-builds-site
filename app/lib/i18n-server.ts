@@ -14,7 +14,8 @@ import zhCN from "@/data/locales/zhCN.json";
 import zhTW from "@/data/locales/zhTW.json";
 import { langInfo, type Lang, type Locale } from "./i18n";
 import { JOURNAL_STRINGS } from "./journal-strings";
-import { chainPageKind, getChainPage, getDungeon, type ChainStepFull, type Dungeon, type DungeonSummary, type Quest } from "./journal";
+import { chainPageKind, getChainPage, getDungeon, type ChainStepFull, type Dungeon, type DungeonSummary, type Quest, type RepNeed } from "./journal";
+import { bgName, factionName } from "./pvp";
 
 interface LocaleDoc {
   ui: Record<string, string>;
@@ -59,9 +60,10 @@ export function dictFor(lang: Lang): Record<string, string> {
     const v = (lang !== "en" && ui[key]) || en[key];
     if (v) out[key] = v;
   }
-  // Tier 0.5's spec names (TIER05_SPEC_<CLASS>_<ROLE>), every one the addon has.
+  // Tier 0.5's spec names (TIER05_SPEC_<CLASS>_<ROLE>), every one the addon has,
+  // and the PvP pages' strings (Systems/PvP.lua, PvPRewards.lua).
   for (const key of Object.keys(en)) {
-    if (!key.startsWith("TIER05_SPEC_")) continue;
+    if (!key.startsWith("TIER05_SPEC_") && !key.startsWith("PVP_") && key !== "REP_REQUIRES") continue;
     const v = (lang !== "en" && ui[key]) || en[key];
     if (v) out[key] = v;
   }
@@ -90,8 +92,14 @@ function questText(id: number, lang: Lang) {
   return lang === "en" ? undefined : doc(lang).quests?.[String(id)];
 }
 
+/** A quest's reputation needs with the factions' names in the language (the two Alterac Valley ones the addon translates). */
+function localizeReps(reps: RepNeed[] | undefined, lang: Lang): RepNeed[] | undefined {
+  return reps?.map((r) => ({ ...r, name: factionName(r.faction, r.name, lang) }));
+}
+
 function localizeStep(s: ChainStepFull, lang: Lang): ChainStepFull {
   const t = questText(s.id, lang);
+  if (s.detail?.repNeeds) s = { ...s, detail: { ...s.detail, repNeeds: localizeReps(s.detail.repNeeds, lang) } };
   if (!t) return s;
   return {
     ...s,
@@ -122,6 +130,7 @@ export function localizeQuest(q: Quest, lang: Lang): Quest {
     turnin: t?.turnin || q.turnin,
     note: t?.note || q.note,
     warning: t?.warning || q.warning,
+    ...(q.repNeeds ? { repNeeds: localizeReps(q.repNeeds, lang) } : {}),
     chain: q.chain.map((s) => localizeStep(s, lang)),
     related: q.related.map((r) => ({ ...r, name: questText(r.id, lang)?.name || r.name })),
     dungeonName: dungeonText(q.dungeonName, lang).name,
@@ -179,7 +188,8 @@ export function getLocalizedChainPage(slug: string, lang: Lang): Dungeon | null 
   if (!d) return null;
   const kind = chainPageKind(slug);
   const key = kind === "onyxia" ? "ATTUNE_ONYXIA" : kind === "sleeping-bag" ? "SLEEPING_BAG_TITLE" : "";
-  const name = (key && ((lang !== "en" && doc(lang).ui[key]) || DOCS.enUS.ui[key])) || d.name;
+  // Alterac Valley's quests: the battleground's name, as the addon titles the page.
+  const name = kind === "pvp" ? bgName("AV", lang) : (key && ((lang !== "en" && doc(lang).ui[key]) || DOCS.enUS.ui[key])) || d.name;
   return { ...d, name, quests: d.quests.map((q) => localizeQuest(q, lang)) };
 }
 

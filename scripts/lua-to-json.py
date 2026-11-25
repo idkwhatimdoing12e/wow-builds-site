@@ -30,6 +30,7 @@ DATA_FILES = [
     "Data/QuestShareability.lua",
     "Data/QuestUpdates.lua",
     "Data/DungeonAliases.lua",
+    "Data/PvPRewards.lua",
     "UI/ThemeData.lua",
 ]
 
@@ -80,6 +81,27 @@ def lua_to_py(obj, lua, depth=0):
             continue
         out[str(k)] = lua_to_py(raw, lua, depth + 1)
     return out
+
+
+def merge_strings(lua, fdj, path, name):
+    """A Systems/ file's "local strings = { enUS = {...}, ... }" table, merged
+    into FDJ.Locales as the game does (never over a key already set)."""
+    if not os.path.exists(path):
+        return
+    lines = open(path, encoding="utf-8").read().split("\n")
+    for i, line in enumerate(lines):
+        m = re.match(r"^(\s*)local strings = \{\s*$", line)
+        if not m:
+            continue
+        end = next((j for j in range(i + 1, len(lines)) if lines[j].rstrip() == m.group(1) + "}"), None)
+        if end is None:
+            continue
+        block = "\n".join(lines[i:end + 1]) + """
+for loc, entries in pairs(strings) do
+    local t = FDJ.Locales[loc]
+    if t then for k, v in pairs(entries) do if type(v) == "string" and t[k] == nil then t[k] = v end end end
+end"""
+        lua.eval("function(src, name, FDJ) return load(src, '@' .. name, 't', setmetatable({ FDJ = FDJ }, { __index = _G })) end")(block, name, fdj)()
 
 
 def main():
@@ -150,6 +172,37 @@ return { classes = CLASS_ORDER, tier0 = T0, tier05 = T05, pieceQuest = PIECE_QUE
             tier = lua.eval("function(src) return load(src, '@Systems/TierSets.lua (sets)') end")(block)()
             print("loaded TIER_SETS from Systems/TierSets.lua")
 
+    # PvP (Systems/PvP.lua): the battlegrounds' cards (key, opening level,
+    # level range, team size, loading screen and its cut) and their names in
+    # the game's languages. Run just those two tables.
+    pvp_bgs = None
+    pv = os.path.join(addon_dir, "Systems", "PvP.lua")
+    if os.path.exists(pv):
+        src = open(pv, encoding="utf-8").read()
+        bgs = re.search(r"^local BGS = \{.*?^\}", src, re.S | re.M)
+        names = re.search(r"^local NAMES = \{.*?^\}", src, re.S | re.M)
+        lvl = re.search(r"^local PVP_LEVEL = (\d+)", src, re.M)
+        if bgs and names:
+            level = lvl.group(1) if lvl else "10"
+            block = f"{bgs.group(0)}\n{names.group(0)}\nreturn {{ battlegrounds = BGS, names = NAMES, level = {level} }}"
+            pvp_bgs = lua.eval("function(src) return load(src, '@Systems/PvP.lua (BGS)') end")(block)()
+            print("loaded the battlegrounds from Systems/PvP.lua")
+
+    # Alterac Valley's quests (Systems/PvPQuests.lua) are a quest-chain page
+    # the addon builds when it loads (FDJ.DB["Alterac Valley Quests"], with
+    # its chains and steps). It writes the objectives from the PvP pages'
+    # English strings: merge those first, then run the file up to the part
+    # that needs the game.
+    pq = os.path.join(addon_dir, "Systems", "PvPQuests.lua")
+    if os.path.exists(pq):
+        lua.execute("local FDJ = _G.ForeverDungeonJournal_NS; FDJ.Locales = FDJ.Locales or {}; FDJ.Locales.enUS = FDJ.Locales.enUS or {}")
+        for fn in ("PvP.lua", "PvPRewards.lua"):
+            merge_strings(lua, fdj, os.path.join(addon_dir, "Systems", fn), f"Systems/{fn}")
+        src = open(pq, encoding="utf-8").read()
+        cut = re.search(r"^-- -+ opening it", src, re.M)
+        lua.eval("function(src) return load(src, '@Systems/PvPQuests.lua') end")(src[: cut.start()] if cut else src)()
+        print(f"loaded {fdj['PVP_AV_PAGE']} from Systems/PvPQuests.lua")
+
     # The Cozy Sleeping Bag's chain differs by faction: step 1 is a quest of
     # each side's own and step 2 starts at that side's Nailed Plank. The data
     # files leave it set for the Alliance; switch to the Horde, keep what
@@ -183,8 +236,19 @@ return { classes = CLASS_ORDER, tier0 = T0, tier05 = T05, pieceQuest = PIECE_QUE
 
     if tier is not None:
         result["TIER_SETS"] = lua_to_py(tier, lua)
+    # PvP: the battlegrounds and the rewards, quests and names of Data/PvPRewards.lua.
+    pvp = {}
+    if pvp_bgs is not None:
+        pvp.update(lua_to_py(pvp_bgs, lua))
+    for key in ("PVP_REWARDS", "PVP_QUESTS", "PVP_HONOR", "PVP_ITEM_NAMES", "PVP_QUEST_NPCS",
+                "PVP_QUEST_NPC_NAMES", "PVP_QUEST_INFO", "PVP_QUEST_FACTIONS", "PVP_QUEST_TEXT",
+                "PVP_QUEST_NAMES", "PVP_INSIGNIA_NAMES", "PVP_FACTION_NAMES"):
+        if fdj[key] is not None:
+            pvp[key[4:].lower()] = lua_to_py(fdj[key], lua)
+    if pvp:
+        result["PVP"] = pvp
     result["FACTION_VARIANTS"] = variants
-    for key in ("SLEEPING_BAG_PAGE", "ONYXIA_PAGE", "SLEEPING_BAG_ITEM"):
+    for key in ("SLEEPING_BAG_PAGE", "ONYXIA_PAGE", "SLEEPING_BAG_ITEM", "PVP_AV_PAGE"):
         if fdj[key] is not None:
             result.setdefault("PAGES", {})[key] = fdj[key]
 
