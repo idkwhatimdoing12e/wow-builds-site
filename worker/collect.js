@@ -28,13 +28,21 @@ const int = (v, min, max) => Number.isInteger(v) && v >= min && v <= max;
 const str = (v, max) => typeof v === "string" && v.length > 0 && v.length <= max;
 const maybeStr = (v, max) => (str(v, max) ? v : null);
 
+// [[itemID, count, rarity?, name?], ...]. Rarity (0-7, -1 unknown) and the
+// item's name as the loot window shows it are optional: when they don't fit
+// they are dropped, not the item.
 function items(list) {
   if (list === undefined) return [];
   if (!Array.isArray(list) || list.length > 40) return null;
   const out = [];
   for (const e of list) {
     if (!Array.isArray(e) || !int(e[0], 1, 9999999) || !int(e[1], 0, 10000)) return null;
-    out.push([e[0], e[1]]);
+    const row = [e[0], e[1]];
+    const quality = int(e[2], -1, 7) ? e[2] : -1;
+    const name = str(e[3], 100) ? e[3] : null;
+    if (quality >= 0 || name) row.push(quality);
+    if (name) row.push(name);
+    out.push(row);
   }
   return out;
 }
@@ -53,7 +61,8 @@ function check(r, nowSec) {
     if (r.k === "kill") return { ...out, boss: r.boss === 1 ? 1 : 0 };
     const list = items(r.i);
     if (!list) return null;
-    return { ...out, o: r.o === 1 ? 1 : 0, i: list, money: r.money === 1 ? 1 : 0 };
+    const nm = r.o === 1 ? null : maybeStr(r.nm, 80); // the mob's name, in the player's language
+    return { ...out, o: r.o === 1 ? 1 : 0, i: list, money: r.money === 1 ? 1 : 0, nm };
   }
   if (r.k === "unit") {
     if (!int(r.n, 1, 9999999) || !int(r.lv, -1, 100) || !int(r.m, 1, 9999999)) return null;
@@ -137,6 +146,7 @@ export async function collect(request, env) {
   // a bigger stack) is merged by a separate UPDATE that is not counted.
   const statements = [];
   const counted = [];
+  const seenItems = new Set(); // item names: one statement per item and language
   const add = (stmt, count = false) => {
     statements.push(stmt);
     counted.push(count);
@@ -150,6 +160,20 @@ export async function collect(request, env) {
         true,
       );
       if (r.money) add(db.prepare("UPDATE collect_corpses SET money = 1 WHERE guid = ? AND money = 0").bind(r.g));
+      if (r.nm && r.loc) {
+        add(db.prepare("INSERT INTO collect_names (npc, locale, name) VALUES (?1, ?2, ?3) ON CONFLICT(npc, locale) DO UPDATE SET name = ?3 WHERE name <> ?3").bind(r.n, r.loc, r.nm));
+      }
+      for (const [item, , quality, name] of r.i) {
+        const key = `${item}:${r.loc}`;
+        if (!r.loc || seenItems.has(key) || (quality === undefined && !name)) continue;
+        seenItems.add(key);
+        add(db.prepare(
+          `INSERT INTO collect_items (item, locale, name, quality, install) VALUES (?1, ?2, ?3, ?4, ?5)
+           ON CONFLICT(item, locale) DO UPDATE SET name = COALESCE(?3, name),
+             quality = CASE WHEN ?4 >= 0 THEN ?4 ELSE quality END, install = ?5
+           WHERE COALESCE(?3, name) IS NOT name OR (CASE WHEN ?4 >= 0 THEN ?4 ELSE quality END) IS NOT quality`,
+        ).bind(item, r.loc, name || null, quality === undefined ? -1 : quality, install));
+      }
       for (const [item, qty] of r.i) {
         add(db.prepare("INSERT INTO collect_drops (guid, item, qty) VALUES (?, ?, ?) ON CONFLICT(guid, item) DO NOTHING").bind(r.g, item, qty), true);
         add(db.prepare("UPDATE collect_drops SET qty = ?3 WHERE guid = ?1 AND item = ?2 AND qty < ?3").bind(r.g, item, qty));
@@ -283,6 +307,20 @@ export async function collectSummary(request, env) {
     // English names first, else any language the creature was seen in
     const names = await all(db, "SELECT npc, name FROM collect_names ORDER BY CASE WHEN locale IN ('enUS', 'enGB') THEN 1 ELSE 0 END");
     const nameOf = new Map(names.map((n) => [n.npc, n.name]));
+    // Item names and rarity from players' loot windows: English rows win, else
+    // any language (rarity is the same in all); the page falls back to the journal.
+    const itemRows = await all(
+      db,
+      `SELECT item, name, quality FROM collect_items WHERE item IN (SELECT DISTINCT item FROM collect_drops)
+       ORDER BY CASE WHEN locale IN ('enUS', 'enGB') THEN 1 ELSE 0 END`,
+    );
+    const itemOf = new Map();
+    for (const row of itemRows) {
+      const it = itemOf.get(row.item) || { name: null, quality: null };
+      if (row.name) it.name = row.name;
+      if (row.quality != null && row.quality >= 0) it.quality = row.quality;
+      itemOf.set(row.item, it);
+    }
     const killsOf = new Map(kills.map((k) => [`${k.npc}:${k.map}`, k]));
     const sources = opened.map((s) => {
       const k = s.object ? null : killsOf.get(`${s.npc}:${s.map}`);
@@ -290,6 +328,8 @@ export async function collectSummary(request, env) {
         .filter((d) => d.npc === s.npc && d.object === s.object && d.map === s.map)
         .map((d) => ({
           item: d.item,
+          name: itemOf.get(d.item)?.name ?? null,
+          quality: itemOf.get(d.item)?.quality ?? null,
           corpses: d.corpses,
           qty: d.qty,
           perOpened: Math.round((d.corpses / s.opened) * 1000) / 10,
@@ -405,6 +445,26 @@ async function get(params) {
 }
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const wh = (kind, id) => '<a href="https://www.wowhead.com/forever/' + kind + "=" + id + '" target="_blank" rel="noopener">' + id + "</a>";
+// Item names and rarity: from players' loot windows (the summary), else the
+// journal's own item list (this site's search index), loaded once.
+let journal = null;
+async function journalItems() {
+  if (journal) return journal;
+  journal = new Map();
+  try {
+    const list = await (await fetch("/search-index/en")).json();
+    for (const e of list) if (e.t === "i" && e.id) journal.set(e.id, { name: e.n, quality: e.q });
+  } catch (e) {}
+  return journal;
+}
+const QC = ["#9d9d9d", "#ffffff", "#1eff00", "#0070dd", "#a335ee", "#ff8000", "#e6cc80", "#00ccff"];
+function itemCell(i, j) {
+  const f = j.get(i.item) || {};
+  const name = i.name || f.name;
+  const q = i.quality != null ? i.quality : f.quality;
+  const from = !i.name && f.name ? ' <span class=muted>(journal)</span>' : "";
+  return (name ? '<span style="color:' + (QC[q] || "#e9e2d0") + '">' + esc(name) + "</span> " : "") + '<span class=muted>' + wh("item", i.item) + "</span>" + from;
+}
 function table(head, rows) {
   return "<table><tr>" + head.map((h) => "<th>" + h + "</th>").join("") + "</tr>" + rows.map((r) => "<tr>" + r.map((c) => "<td>" + c + "</td>").join("") + "</tr>").join("") + "</table>";
 }
@@ -419,10 +479,10 @@ async function load() {
         [[d.installs, d.blocked, d.corpses, d.drops, d.kills, d.units, d.quests]]) +
         "<div class=src>Corpses per instance map</div>" + table(["Map", "Corpses"], d.maps.map((m) => [m.map, m.corpses]));
     } else if (view === "loot") {
-      const d = await get(map ? { view, map } : { view });
+      const [d, j] = await Promise.all([get(map ? { view, map } : { view }), journalItems()]);
       out.innerHTML = d.sources.map((s) => '<div class=src>' + (s.object ? "Object " + s.npc : esc(s.name || "NPC") + " (" + wh("npc", s.npc) + ")") +
         ' <span class=muted>map ' + s.map + " · opened " + s.opened + (s.kills != null ? " · kills " + s.kills : "") + (s.boss ? " · boss" : "") + "</span></div>" +
-        table(["Item", "Corpses", "Total qty", "% of opened", "% of kills"], s.items.map((i) => [wh("item", i.item), i.corpses, i.qty, i.perOpened + "%", i.perKill == null ? "" : i.perKill + "%"]))).join("") || "<p class=muted>Nothing yet.</p>";
+        table(["Item", "Corpses", "Total qty", "% of opened", "% of kills"], s.items.map((i) => [itemCell(i, j), i.corpses, i.qty, i.perOpened + "%", i.perKill == null ? "" : i.perKill + "%"]))).join("") || "<p class=muted>Nothing yet.</p>";
     } else if (view === "units") {
       const d = await get(map ? { view, map } : { view });
       out.innerHTML = table(["NPC", "Name", "Level", "Rank", "Map", "Seen"], d.units.map((u) => [wh("npc", u.npc), esc(u.names.enUS || Object.values(u.names)[0] || ""),
