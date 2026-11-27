@@ -58,3 +58,6 @@ scripts/item-dump/.cache/
 
 # local Worker secrets (wrangler dev)
 .dev.vars
+
+# the companion review page's names, made from data/ by npm run build
+/worker/collect-lookup.json

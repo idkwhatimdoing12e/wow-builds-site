@@ -13,6 +13,7 @@
 // what it sent before is left out of every summary.
 
 import { fail, json } from "./util.js";
+import LOOKUP from "./collect-lookup.json";
 
 const MAX_BODY = 512 * 1024;
 const MAX_RECORDS = 500;
@@ -246,6 +247,34 @@ async function admin(request, env) {
 
 const NOT_BLOCKED = "install NOT IN (SELECT id FROM collect_installs WHERE blocked = 1)";
 
+// Instance map IDs (GetInstanceInfo), as the addon's FDJ.INSTANCE_ID_TO_DUNGEON
+// (Core/Journal.lua) plus the dungeons and raids it doesn't list.
+const MAPS = {
+  33: "Shadowfang Keep", 34: "The Stockade", 36: "The Deadmines", 43: "Wailing Caverns", 47: "Razorfen Kraul",
+  48: "Blackfathom Deeps", 70: "Uldaman", 90: "Gnomeregan", 109: "Sunken Temple", 129: "Razorfen Downs",
+  189: "Scarlet Monastery", 209: "Zul'Farrak", 229: "Blackrock Spire", 230: "Blackrock Depths", 249: "Onyxia's Lair",
+  289: "Scholomance", 329: "Stratholme", 349: "Maraudon", 389: "Ragefire Chasm", 409: "Molten Core", 429: "Dire Maul",
+  2959: "City of Dalaran", 2970: "The Drowned City", 2974: "Blackmaw Hold", 2994: "Alcaz Prison",
+  2998: "Excavation Site: Wetlands", 2999: "Ruins of Lordaeron", 3001: "Shaper's Terrace", 3039: "Krol'dok Stronghold",
+  3065: "Hall of Thanes",
+};
+const dungeonOf = (map) => (map != null && MAPS[map]) || null;
+// The journal's bosses, quests and item icons (worker/collect-lookup.json, made
+// by scripts/collect-lookup.mjs on every build).
+const journalBoss = (npc) => LOOKUP.bosses[npc] || null;
+const journalQuest = (quest) => LOOKUP.quests[quest] || null;
+const iconOf = (item) => LOOKUP.icons[item] || null;
+/** A creature's name: players' games first (English, else any language), then the journal. */
+function mobName(npc, playerName) {
+  if (playerName) return { displayName: playerName, nameFrom: "players" };
+  const b = journalBoss(npc);
+  return b && b[0] ? { displayName: b[0], nameFrom: "journal" } : { displayName: null, nameFrom: null };
+}
+async function englishFirstNames(db) {
+  const rows = await all(db, "SELECT npc, name FROM collect_names ORDER BY CASE WHEN locale IN ('enUS', 'enGB') THEN 1 ELSE 0 END");
+  return new Map(rows.map((n) => [n.npc, n.name]));
+}
+
 async function all(db, sql, ...args) {
   const r = await db.prepare(sql).bind(...args).all();
   return r.results || [];
@@ -275,7 +304,19 @@ export async function collectSummary(request, env) {
       db,
       `SELECT map, COUNT(*) AS corpses FROM collect_corpses WHERE ${NOT_BLOCKED} GROUP BY map ORDER BY corpses DESC`,
     );
+    for (const m of maps) m.dungeon = dungeonOf(m.map);
+    // every instance with loot, kills or creature levels: the page's dungeon list
+    const allMaps = (
+      await all(
+        db,
+        `SELECT map FROM collect_corpses WHERE ${NOT_BLOCKED} UNION SELECT map FROM collect_kills WHERE ${NOT_BLOCKED}
+         UNION SELECT map FROM collect_units WHERE map IS NOT NULL AND ${NOT_BLOCKED}`,
+      )
+    )
+      .map((r) => ({ map: r.map, dungeon: dungeonOf(r.map) }))
+      .sort((a, b) => (a.dungeon === null) - (b.dungeon === null) || (a.dungeon || "").localeCompare(b.dungeon || "") || a.map - b.map);
     return json({
+      allMaps,
       installs: await count("collect_installs"),
       blocked: (await db.prepare("SELECT COUNT(*) AS n FROM collect_installs WHERE blocked = 1").first()).n,
       corpses: await count("collect_corpses"),
@@ -305,8 +346,7 @@ export async function collectSummary(request, env) {
       `SELECT npc, map, COUNT(*) AS kills, MAX(boss) AS boss FROM collect_kills WHERE ${NOT_BLOCKED} ${map ? `AND map = ${map}` : ""} GROUP BY npc, map`,
     );
     // English names first, else any language the creature was seen in
-    const names = await all(db, "SELECT npc, name FROM collect_names ORDER BY CASE WHEN locale IN ('enUS', 'enGB') THEN 1 ELSE 0 END");
-    const nameOf = new Map(names.map((n) => [n.npc, n.name]));
+    const nameOf = await englishFirstNames(db);
     // Item names and rarity from players' loot windows: English rows win, else
     // any language (rarity is the same in all); the page falls back to the journal.
     const itemRows = await all(
@@ -330,13 +370,22 @@ export async function collectSummary(request, env) {
           item: d.item,
           name: itemOf.get(d.item)?.name ?? null,
           quality: itemOf.get(d.item)?.quality ?? null,
+          icon: iconOf(d.item),
           corpses: d.corpses,
           qty: d.qty,
           perOpened: Math.round((d.corpses / s.opened) * 1000) / 10,
           perKill: k && k.kills ? Math.round((d.corpses / k.kills) * 1000) / 10 : null,
         }))
         .sort((a, b) => b.corpses - a.corpses);
-      return { npc: s.npc, object: s.object, map: s.map, name: s.object ? null : nameOf.get(s.npc) || null, opened: s.opened, money: s.money, kills: k ? k.kills : null, boss: k ? k.boss : 0, items: list };
+      const name = s.object ? null : nameOf.get(s.npc) || null;
+      const isJournalBoss = !s.object && !!journalBoss(s.npc);
+      return {
+        npc: s.npc, object: s.object, map: s.map, name, opened: s.opened, money: s.money, kills: k ? k.kills : null, boss: k ? k.boss : 0, items: list,
+        ...(s.object ? { displayName: null, nameFrom: null } : mobName(s.npc, name)),
+        journalBoss: isJournalBoss,
+        skull: isJournalBoss || !!(k && k.boss),
+        dungeon: dungeonOf(s.map),
+      };
     });
     return json({ map, sources });
   }
@@ -354,7 +403,17 @@ export async function collectSummary(request, env) {
       if (!byNpc.has(n.npc)) byNpc.set(n.npc, {});
       byNpc.get(n.npc)[n.locale] = n.name;
     }
-    return json({ units: rows.map((r) => ({ ...r, names: byNpc.get(r.npc) || {} })) });
+    const bossKills = new Set(
+      (await all(db, `SELECT DISTINCT npc FROM collect_kills WHERE boss = 1 AND ${NOT_BLOCKED}`)).map((r) => r.npc),
+    );
+    return json({
+      units: rows.map((r) => {
+        const names = byNpc.get(r.npc) || {};
+        const player = names.enUS || names.enGB || Object.values(names)[0] || null;
+        const isJournalBoss = !!journalBoss(r.npc);
+        return { ...r, names, ...mobName(r.npc, player), journalBoss: isJournalBoss, skull: isJournalBoss || bossKills.has(r.npc), dungeon: dungeonOf(r.map) };
+      }),
+    });
   }
 
   if (view === "quests") {
@@ -365,15 +424,23 @@ export async function collectSummary(request, env) {
         `SELECT kind, locale, install, t, data FROM collect_quests WHERE quest = ? AND ${NOT_BLOCKED} ORDER BY t DESC LIMIT 100`,
         quest,
       );
-      return json({ quest, records: rows.map((r) => ({ ...r, data: JSON.parse(r.data) })) });
+      const jq = journalQuest(quest);
+      return json({ quest, journalName: jq ? jq[0] : null, records: rows.map((r) => ({ ...r, data: JSON.parse(r.data) })) });
     }
     const rows = await all(
       db,
       `SELECT quest, kind, COUNT(DISTINCT install) AS installs, COUNT(*) AS records, MAX(t) AS last,
-         (SELECT json_extract(data, '$.ti') FROM collect_quests q2 WHERE q2.quest = q.quest AND q2.locale IN ('enUS', 'enGB') AND json_extract(data, '$.ti') IS NOT NULL LIMIT 1) AS title
+         (SELECT json_extract(data, '$.ti') FROM collect_quests q2 WHERE q2.quest = q.quest AND q2.locale IN ('enUS', 'enGB') AND json_extract(data, '$.ti') IS NOT NULL LIMIT 1) AS title,
+         MAX(json_extract(data, '$.m')) AS map
        FROM collect_quests q WHERE ${NOT_BLOCKED} GROUP BY quest, kind ORDER BY last DESC LIMIT 5000`,
     );
-    return json({ quests: rows });
+    // the quest's name: as players' games show it in English, else the journal's
+    return json({
+      quests: rows.map((r) => {
+        const jq = journalQuest(r.quest);
+        return { ...r, journalName: jq ? jq[0] : null, name: r.title || (jq ? jq[0] : null), dungeon: jq ? jq[1] : dungeonOf(r.map) };
+      }),
+    });
   }
 
   if (view === "installs") {
@@ -408,34 +475,56 @@ const ADMIN_HTML = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex"><title>Companion data</title>
 <style>
-body{margin:0;font:14px/1.45 system-ui,sans-serif;background:#15120e;color:#e9e2d0}
-header{padding:14px 20px;background:#221c14;border-bottom:1px solid #3a3022;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-h1{font-size:17px;margin:0 16px 0 0;color:#f0c35a}
-button,input{font:inherit;background:#2c2419;color:#e9e2d0;border:1px solid #4a3d2a;border-radius:6px;padding:6px 10px}
+body{margin:0;font:15px/1.55 system-ui,sans-serif;background:#15120e;color:#e9e2d0}
+header{position:sticky;top:0;z-index:2;padding:14px 24px;background:#221c14;border-bottom:1px solid #3a3022;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+h1{font-size:18px;margin:0 18px 0 0;color:#f0c35a}
+button,input,select{font:inherit;background:#2c2419;color:#e9e2d0;border:1px solid #4a3d2a;border-radius:6px;padding:7px 12px}
+select{min-width:220px}
 button.on{background:#f0c35a;color:#15120e;border-color:#f0c35a}
-main{padding:16px 20px}
-table{border-collapse:collapse;width:100%;margin:8px 0 22px}
-th,td{text-align:left;padding:5px 8px;border-bottom:1px solid #2e261b;vertical-align:top}
-th{color:#bfae8a;font-weight:600}
-.src{margin:18px 0 4px;font-weight:600;color:#f0c35a}
+main{padding:22px 28px 40px;max-width:1180px}
+table{border-collapse:collapse;width:100%;margin:6px 0 4px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #2e261b;vertical-align:middle}
+th{color:#bfae8a;font-weight:600;font-size:13.5px}
+td.n,th.n{text-align:right;white-space:nowrap}
+h2.dg{font-size:19px;color:#f0c35a;margin:26px 0 12px;padding-bottom:6px;border-bottom:1px solid #3a3022}
+h2.dg:first-child{margin-top:4px}
+.card{background:#1d1812;border:1px solid #3a3022;border-radius:10px;padding:14px 18px 10px;margin:0 0 16px}
+.card h3{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0;font-size:17px;color:#f3e7c9}
+.card .meta{color:#9a8f78;font-size:13.5px;margin:2px 0 8px}
+.id{font-size:12.5px;font-weight:400}
+.unk,a.unk{color:#8a8070}
+.card table{table-layout:fixed}
+.card th.n{width:90px}
+.card th.pct{width:210px}
+.skull{flex:none;width:18px;height:18px;color:#e9e2d0}
+.it{display:flex;align-items:center;gap:10px;min-width:0}
+.it img{flex:none;width:26px;height:26px;border-radius:4px;box-shadow:0 0 0 1px #000,0 0 0 2px #4a3d2a;background:#000}
+.pct{width:200px}
+.bar{display:flex;align-items:center;gap:10px}
+.bar span{width:52px;text-align:right;font-variant-numeric:tabular-nums}
+.bar b{flex:1;min-width:70px;height:5px;background:#2e261b;border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:#d9a441;border-radius:3px}
 .muted{color:#9a8f78}
-pre{white-space:pre-wrap;background:#1d1812;padding:10px;border-radius:6px}
+.src{margin:22px 0 8px;font-weight:600;color:#f0c35a;font-size:16px}
+.nm{display:inline-flex;align-items:center;gap:6px}
+pre{white-space:pre-wrap;background:#1d1812;padding:12px;border-radius:8px}
 a{color:#7fb3ff}
 </style></head><body>
 <header><h1>Companion data</h1>
 <button data-v="overview">Overview</button><button data-v="loot">Loot</button><button data-v="units">Levels</button>
 <button data-v="quests">Quests</button><button data-v="installs">Installs</button>
-<input id="map" placeholder="instance map ID" size="14"><button id="key">Key</button></header>
+<select id="map" aria-label="Dungeon"><option value="">All dungeons</option></select><button id="key">Key</button></header>
 <main id="out"><p class="muted">Loading…</p></main>
 <script>
 const out = document.getElementById("out");
+const mapSel = document.getElementById("map");
 let view = "overview";
 function key() {
   let k = sessionStorage.getItem("djkey");
   if (!k) { k = prompt("Admin key"); if (k) sessionStorage.setItem("djkey", k); }
   return k || "";
 }
-document.getElementById("key").onclick = () => { sessionStorage.removeItem("djkey"); load(); };
+document.getElementById("key").onclick = () => { sessionStorage.removeItem("djkey"); dungeonsLoaded = false; load(); };
 async function get(params) {
   const r = await fetch("/api/collect/summary?" + new URLSearchParams(params), { headers: { Authorization: "Bearer " + key() } });
   if (r.status === 404) { sessionStorage.removeItem("djkey"); throw new Error("Wrong key"); }
@@ -445,6 +534,13 @@ async function get(params) {
 }
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const wh = (kind, id) => '<a href="https://www.wowhead.com/forever/' + kind + "=" + id + '" target="_blank" rel="noopener">' + id + "</a>";
+const SKULL = '<svg class="skull" viewBox="0 0 24 24" aria-label="Boss" role="img"><path fill="currentColor" d="M12 2C7 2 3.5 5.6 3.5 10.2c0 2.7 1.3 4.6 3 5.7V19a1 1 0 0 0 1 1H9v-2h1.5v2h3v-2H15v2h1.5a1 1 0 0 0 1-1v-3.1c1.7-1.1 3-3 3-5.7C20.5 5.6 17 2 12 2Zm-3.5 11a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/></svg>';
+const dungeonName = (dungeon, map) => dungeon ? esc(dungeon) : map != null ? '<span class=unk>Map ' + map + "</span>" : '<span class=unk>Unknown</span>';
+/** A creature: skull for a boss, its name, or "NPC 8904" in grey. */
+function mobLabel(m) {
+  if (m.object) return '<span class=unk>Object ' + m.npc + "</span>";
+  return '<span class=nm>' + (m.skull ? SKULL : "") + (m.displayName ? esc(m.displayName) : '<span class=unk>NPC ' + m.npc + "</span>") + "</span>";
+}
 // Item names and rarity: from players' loot windows (the summary), else the
 // journal's own item list (this site's search index), loaded once.
 let journal = null;
@@ -453,7 +549,7 @@ async function journalItems() {
   journal = new Map();
   try {
     const list = await (await fetch("/search-index/en")).json();
-    for (const e of list) if (e.t === "i" && e.id) journal.set(e.id, { name: e.n, quality: e.q });
+    for (const e of list) if (e.t === "i" && e.id) journal.set(e.id, { name: e.n, quality: e.q, icon: e.i });
   } catch (e) {}
   return journal;
 }
@@ -463,43 +559,84 @@ function itemCell(i, j) {
   const name = i.name || f.name;
   const q = i.quality != null ? i.quality : f.quality;
   const from = !i.name && f.name ? ' <span class=muted>(journal)</span>' : "";
-  return (name ? '<span style="color:' + (QC[q] || "#e9e2d0") + '">' + esc(name) + "</span> " : "") + '<span class=muted>' + wh("item", i.item) + "</span>" + from;
+  const icon = i.icon ? "/journal/icons/" + i.icon + ".webp" : f.icon || "/journal/icons/inv_misc_questionmark.webp";
+  return '<div class=it><img src="' + esc(icon) + '" alt="" loading="lazy"><div>' +
+    (name ? '<span style="color:' + (QC[q] || "#e9e2d0") + '">' + esc(name) + "</span> " : "") + '<span class="muted id">' + wh("item", i.item) + "</span>" + from + "</div></div>";
 }
-function table(head, rows) {
-  return "<table><tr>" + head.map((h) => "<th>" + h + "</th>").join("") + "</tr>" + rows.map((r) => "<tr>" + r.map((c) => "<td>" + c + "</td>").join("") + "</tr>").join("") + "</table>";
+const pct = (v) => v == null ? "" : '<div class=bar><span>' + v + '%</span><b><i style="width:' + Math.max(1, Math.min(100, v)) + '%"></i></b></div>';
+function table(head, rows, cls) {
+  cls = cls || [];
+  const td = (c, k, tag) => "<" + tag + (cls[k] ? ' class="' + cls[k] + '"' : "") + ">" + c + "</" + tag + ">";
+  return "<table><tr>" + head.map((h, k) => td(h, k, "th")).join("") + "</tr>" + rows.map((r) => "<tr>" + r.map((c, k) => td(c, k, "td")).join("") + "</tr>").join("") + "</table>";
+}
+/** Rows grouped under a heading per dungeon, in the order they come. */
+function byDungeon(rows, render) {
+  const groups = new Map();
+  for (const r of rows) {
+    const k = r.dungeon || "map " + r.map;
+    if (!groups.has(k)) groups.set(k, { dungeon: r.dungeon, map: r.map, rows: [] });
+    groups.get(k).rows.push(r);
+  }
+  // named dungeons A to Z, then unknown maps by number
+  const order = (a, b) => (!a.dungeon) - (!b.dungeon) || (a.dungeon || "").localeCompare(b.dungeon || "") || (a.map ?? 0) - (b.map ?? 0);
+  return [...groups.values()].sort(order).map((g) => '<h2 class=dg>' + dungeonName(g.dungeon, g.map) + "</h2>" + render(g.rows)).join("");
+}
+// The dungeons with data, for the list in the header.
+let dungeonsLoaded = false;
+async function loadDungeons(d) {
+  if (dungeonsLoaded || !d || !d.allMaps) return;
+  dungeonsLoaded = true;
+  const chosen = mapSel.value;
+  mapSel.innerHTML = '<option value="">All dungeons</option>' + d.allMaps.map((m) => '<option value="' + m.map + '">' + esc(m.dungeon || "Map " + m.map) + "</option>").join("");
+  mapSel.value = chosen;
+}
+function lootCard(s, j) {
+  const hasKills = !!s.kills;
+  const items = s.items.slice().sort((a, b) => b.perOpened - a.perOpened || b.corpses - a.corpses);
+  const head = ["Item", "Corpses", "Total qty", "% of opened"].concat(hasKills ? ["% of kills"] : []);
+  const cls = ["", "n", "n", "pct", "pct"];
+  // an unknown mob's grey "NPC 8904" is its own Wowhead link; a named one gets the ID beside it
+  const title = !s.object && !s.displayName
+    ? '<span class=nm>' + (s.skull ? SKULL : "") + '<a class=unk href="https://www.wowhead.com/forever/npc=' + s.npc + '" target="_blank" rel="noopener">NPC ' + s.npc + "</a></span>"
+    : mobLabel(s) + (s.object ? "" : ' <span class="muted id">' + wh("npc", s.npc) + "</span>");
+  return '<div class=card><h3>' + title + "</h3>" +
+    '<div class=meta>opened ' + s.opened + (hasKills ? " · kills " + s.kills : "") + (s.money ? " · coins in " + s.money : "") + "</div>" +
+    table(head, items.map((i) => [itemCell(i, j), i.corpses, i.qty, pct(i.perOpened)].concat(hasKills ? [pct(i.perKill)] : [])), cls) + "</div>";
 }
 async function load() {
   document.querySelectorAll("header button[data-v]").forEach((b) => b.classList.toggle("on", b.dataset.v === view));
-  const map = document.getElementById("map").value.trim();
+  const map = mapSel.value;
   out.innerHTML = '<p class="muted">Loading…</p>';
   try {
+    if (!dungeonsLoaded) loadDungeons(await get({ view: "overview" }));
     if (view === "overview") {
       const d = await get({ view });
       out.innerHTML = table(["Installs", "Blocked", "Corpses", "Drops", "Kills", "Creatures", "Quest records"],
         [[d.installs, d.blocked, d.corpses, d.drops, d.kills, d.units, d.quests]]) +
-        "<div class=src>Corpses per instance map</div>" + table(["Map", "Corpses"], d.maps.map((m) => [m.map, m.corpses]));
+        "<div class=src>Corpses per dungeon</div>" + table(["Dungeon", "Map", "Corpses"], d.maps.map((m) => [dungeonName(m.dungeon, m.map), m.map, m.corpses]), ["", "n", "n"]);
     } else if (view === "loot") {
       const [d, j] = await Promise.all([get(map ? { view, map } : { view }), journalItems()]);
-      out.innerHTML = d.sources.map((s) => '<div class=src>' + (s.object ? "Object " + s.npc : esc(s.name || "NPC") + " (" + wh("npc", s.npc) + ")") +
-        ' <span class=muted>map ' + s.map + " · opened " + s.opened + (s.kills != null ? " · kills " + s.kills : "") + (s.boss ? " · boss" : "") + "</span></div>" +
-        table(["Item", "Corpses", "Total qty", "% of opened", "% of kills"], s.items.map((i) => [itemCell(i, j), i.corpses, i.qty, i.perOpened + "%", i.perKill == null ? "" : i.perKill + "%"]))).join("") || "<p class=muted>Nothing yet.</p>";
+      const order = (a, b) => (b.skull ? 1 : 0) - (a.skull ? 1 : 0) || a.object - b.object || b.opened - a.opened;
+      out.innerHTML = byDungeon(d.sources, (rows) => rows.slice().sort(order).map((s) => lootCard(s, j)).join("")) || "<p class=muted>Nothing yet.</p>";
     } else if (view === "units") {
       const d = await get(map ? { view, map } : { view });
-      out.innerHTML = table(["NPC", "Name", "Level", "Rank", "Map", "Seen"], d.units.map((u) => [wh("npc", u.npc), esc(u.names.enUS || Object.values(u.names)[0] || ""),
-        u.minLevel === u.maxLevel ? (u.minLevel === -1 ? "??" : u.minLevel) : u.minLevel + "–" + u.maxLevel, esc(u.ranks || ""), u.map ?? "", u.seen]));
+      const order = (a, b) => (b.skull ? 1 : 0) - (a.skull ? 1 : 0) || String(a.displayName || "~").localeCompare(String(b.displayName || "~")) || a.npc - b.npc;
+      out.innerHTML = byDungeon(d.units, (rows) => table(["Creature", "NPC", "Level", "Rank", "Seen"], rows.slice().sort(order).map((u) => [mobLabel(u), wh("npc", u.npc),
+        u.minLevel === u.maxLevel ? (u.minLevel === -1 ? "??" : u.minLevel) : u.minLevel + "–" + u.maxLevel, esc(u.ranks || ""), u.seen]), ["", "n", "n", "", "n"])) || "<p class=muted>Nothing yet.</p>";
     } else if (view === "quests") {
       const d = await get({ view });
-      out.innerHTML = table(["Quest", "Title", "Kind", "Installs", "Records", ""], d.quests.map((q) => [wh("quest", q.quest), esc(q.title || ""),
-        { qa: "accepted", qt: "handed in", qo: "progress inside" }[q.kind] || q.kind, q.installs, q.records, '<button data-q="' + q.quest + '">Records</button>']));
+      const kinds = { qa: "accepted", qt: "handed in", qo: "progress inside" };
+      out.innerHTML = table(["Quest", "ID", "Dungeon", "Kind", "Installs", "Records", ""], d.quests.map((q) => [q.name ? esc(q.name) : '<span class=unk>Quest ' + q.quest + "</span>", wh("quest", q.quest),
+        q.dungeon ? esc(q.dungeon) : "", kinds[q.kind] || esc(q.kind), q.installs, q.records, '<button data-q="' + q.quest + '">Records</button>']), ["", "n", "", "", "n", "n", ""]) || "<p class=muted>Nothing yet.</p>";
       out.querySelectorAll("button[data-q]").forEach((b) => b.onclick = async () => {
         const r = await get({ view, quest: b.dataset.q });
-        out.innerHTML = '<button id="back">Back</button><pre>' + esc(JSON.stringify(r.records, null, 1)) + "</pre>";
+        out.innerHTML = '<button id="back">Back</button><div class=src>' + (r.journalName ? esc(r.journalName) + " " : "") + '<span class="muted id">' + wh("quest", r.quest) + "</span></div><pre>" + esc(JSON.stringify(r.records, null, 1)) + "</pre>";
         document.getElementById("back").onclick = load;
       });
     } else if (view === "installs") {
       const d = await get({ view });
       out.innerHTML = table(["Install", "App", "Last seen", "Uploads", "Records", ""], d.installs.map((i) => [esc(i.id), esc(i.app || ""),
-        new Date(i.last_seen).toLocaleString(), i.uploads, i.records, '<button data-i="' + esc(i.id) + '" data-b="' + (i.blocked ? 0 : 1) + '">' + (i.blocked ? "Unblock" : "Block") + "</button>"]));
+        new Date(i.last_seen).toLocaleString(), i.uploads, i.records, '<button data-i="' + esc(i.id) + '" data-b="' + (i.blocked ? 0 : 1) + '">' + (i.blocked ? "Unblock" : "Block") + "</button>"]), ["", "", "", "n", "n", ""]);
       out.querySelectorAll("button[data-i]").forEach((b) => b.onclick = async () => {
         await fetch("/api/collect/installs/" + b.dataset.i + "/" + (b.dataset.b === "1" ? "block" : "unblock"), { method: "POST", headers: { Authorization: "Bearer " + key() } });
         load();
@@ -508,6 +645,6 @@ async function load() {
   } catch (e) { out.innerHTML = "<p>" + esc(e.message) + "</p>"; }
 }
 document.querySelectorAll("header button[data-v]").forEach((b) => b.onclick = () => { view = b.dataset.v; load(); });
-document.getElementById("map").onchange = load;
+mapSel.onchange = load;
 load();
 </script></body></html>`;
