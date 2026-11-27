@@ -10,7 +10,7 @@ const CONTROLLER = { email: CONTACT_EMAIL };
 // Google Analytics > Admin > Data collection and modification > Data retention.
 // "2 months" is Google's default; change both lines if it is set to 14 months.
 const GA_RETENTION = { en: "2 months", de: "2 Monate" };
-const UPDATED = { en: "24 November 2026", de: "24. November 2026" };
+const UPDATED = { en: "27 November 2026", de: "27. November 2026" };
 // ------------------------------------------------------------------------------
 
 function Ext({ href, children }: { href: string; children: React.ReactNode }) {
@@ -232,7 +232,22 @@ function English() {
         {SHOW_COMMENTS && " Commenting needs a Discord account, which Discord only allows from age 13 (older in some countries)."}
       </p>
 
-      <h2 className="wp-sub pv-h">15. Changes</h2>
+      <h2 className="wp-sub pv-h">15. Dungeon Journal Companion</h2>
+      <p className="wp-text">
+        If you use the optional Dungeon Journal Companion app, it sends what its addon records inside dungeons and raids
+        to foreverjournal.pro: the items in corpses and chests you loot, the creatures you kill and the level and rank
+        they show, and the dungeon and raid quests you accept, progress and hand in, with their rewards. Each record also
+        includes your game’s language and your character’s level. No character names, realm names, account names, chat,
+        or anything from outside dungeons and raids is sent.
+      </p>
+      <p className="wp-text">
+        The app has a random ID so the same kill sent by several group members counts once and a bad source can be
+        blocked. That ID isn’t linked to your Discord account or anything else, and the site doesn’t store your IP address
+        with these uploads. The data is used to check and improve the Dungeon Journal’s loot, boss levels and quests. You
+        can pause the app, see what it sent last, or uninstall it from its own page at any time.
+      </p>
+
+      <h2 className="wp-sub pv-h">16. Changes</h2>
       <p className="wp-text">
         I update this page when the site changes. The date at the top shows the current version.
       </p>
@@ -457,7 +472,24 @@ function Deutsch() {
           " Zum Kommentieren brauchst du ein Discord-Konto, das Discord erst ab 13 Jahren erlaubt (in manchen Ländern ab einem höheren Alter)."}
       </p>
 
-      <h2 className="wp-sub pv-h">15. Änderungen</h2>
+      <h2 className="wp-sub pv-h">15. Dungeon Journal Companion</h2>
+      <p className="wp-text">
+        Wenn du die optionale App Dungeon Journal Companion nutzt, schickt sie an foreverjournal.pro, was ihr Addon in
+        Dungeons und Schlachtzügen aufzeichnet: die Gegenstände in Leichen und Truhen, die du plünderst, die Kreaturen,
+        die du tötest, mit der Stufe und dem Rang, die sie anzeigen, und die Dungeon- und Schlachtzugsquests, die du
+        annimmst, voranbringst und abgibst, mit ihren Belohnungen. Jeder Eintrag enthält außerdem die Sprache deines
+        Spiels und die Stufe deines Charakters. Charakternamen, Realmnamen, Kontonamen, Chat oder irgendetwas von
+        außerhalb von Dungeons und Schlachtzügen werden nicht geschickt.
+      </p>
+      <p className="wp-text">
+        Die App hat eine zufällige ID, damit derselbe Kill, den mehrere Gruppenmitglieder schicken, nur einmal zählt und
+        eine fehlerhafte Quelle gesperrt werden kann. Diese ID ist nicht mit deinem Discord-Konto oder irgendetwas anderem
+        verknüpft, und die Seite speichert deine IP-Adresse nicht zusammen mit diesen Uploads. Die Daten dienen dazu,
+        Beute, Bossstufen und Quests im Dungeon Journal zu prüfen und zu verbessern. Du kannst die App jederzeit auf ihrer
+        eigenen Seite pausieren, sehen, was sie zuletzt geschickt hat, oder sie deinstallieren.
+      </p>
+
+      <h2 className="wp-sub pv-h">16. Änderungen</h2>
       <p className="wp-text">
         Ich passe diese Seite an, wenn sich die Website ändert. Das Datum oben zeigt die aktuelle Fassung.
       </p>

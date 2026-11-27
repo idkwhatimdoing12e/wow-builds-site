@@ -2,7 +2,8 @@
 // wrangler.jsonc's assets.run_worker_first, which come here first:
 //
 // - /api/*: blue posts from Blizzard's forum (blue.js), Discord sign-in and
-//   accounts (auth.js), comments (comments.js), kept in D1 (env.DB).
+//   accounts (auth.js), comments (comments.js), kept in D1 (env.DB), and the
+//   companion app's uploads from players' games (collect.js).
 // - /blue/<topic>-<slug> and /<lang>/blue/...: a blue post's page. There is
 //   one static page for all of them (/blue-post); it reads the thread's
 //   number from the address and asks /api/blue/<topic> for the rest.
@@ -11,6 +12,7 @@ import { bluePosts, blueTopic } from "./blue.js";
 import { addCharacter, callback, deleteAccount, devLogin, login, logout, me, removeCharacter, selectCharacter } from "./auth.js";
 import { addComment, commentCounts, deleteComment, listComments, moderationQueue, reportComment, restoreComment, setBan } from "./comments.js";
 import { fail, imageHostAllowed, json } from "./util.js";
+import { collect, collectAdminPage, collectBlock, collectSummary } from "./collect.js";
 
 const LANGS = new Set(["de", "fr", "es", "it", "pt", "ru", "ko", "zh-cn", "zh-tw"]);
 
@@ -19,6 +21,14 @@ async function api(request, env, ctx, path) {
   let r;
 
   if (path === "/api/img" && m === "GET") return image(request, ctx);
+
+  // The Dungeon Journal Companion app's uploads, and their review (collect.js).
+  if (path === "/api/collect" && m === "POST") return collect(request, env);
+  if (path === "/api/collect/summary" && m === "GET") return collectSummary(request, env);
+  if (path === "/api/collect/admin" && m === "GET") return collectAdminPage(env);
+  if ((r = path.match(/^\/api\/collect\/installs\/([A-Za-z0-9_-]{16,64})\/(block|unblock)$/)) && m === "POST") {
+    return collectBlock(request, env, r[1], r[2] === "block");
+  }
 
   const commentsLive = env.COMMENTS_LIVE === "1";
 
