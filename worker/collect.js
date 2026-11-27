@@ -22,7 +22,7 @@ const KINDS = new Set(["loot", "kill", "unit", "qa", "qt", "qo"]);
 const RANKS = new Set(["worldboss", "rareelite", "elite", "rare", "normal", "trivial", "minus"]);
 const LOCALES = new Set(["enUS", "enGB", "deDE", "frFR", "esES", "esMX", "itIT", "ptBR", "ruRU", "koKR", "zhCN", "zhTW"]);
 // Creature-0-<server>-<map>-<zone>-<id>-<spawn>, GameObject-... the same.
-const GUID = /^(Creature|Vehicle|GameObject)-0-(\d{1,6})-(\d{1,7})-(\d{1,7})-(\d{1,8})-([0-9A-F]{6,12})$/;
+const GUID = /^(Creature|Vehicle|GameObject)-0-(\d{1,10})-(\d{1,10})-(\d{1,10})-(\d{1,10})-([0-9A-F]{6,16})$/;
 
 const int = (v, min, max) => Number.isInteger(v) && v >= min && v <= max;
 const str = (v, max) => typeof v === "string" && v.length > 0 && v.length <= max;
